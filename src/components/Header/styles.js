@@ -12,7 +12,24 @@ export const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  padding-left: ${props =>  props.big?"304px":"32px"};
+  // padding-left: ${props =>  props.big?"304px":"32px"};
+  padding-left: 304px;
+  @media (max-width: 890px) {
+    padding-left: 32px;
+  }
+`
+
+export const HeaderTitleHamburger = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  span {
+    padding-top: 4px;
+    display: none;
+    @media (max-width: 890px) {
+      display: inline-block;
+    }
+  }
 `
 
 export const HeaderTitle = styled.h1`

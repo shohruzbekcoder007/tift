@@ -127,7 +127,7 @@ const teacher_Links = [
 
 export default function Sidebar() {
   return (
-    <SidebarWrapper>
+    <SidebarWrapper type="small">
       <SidebarHeader>
         <img src={logo} alt="logo" />
       </SidebarHeader>

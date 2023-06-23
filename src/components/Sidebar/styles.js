@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const SidebarWrapper = styled.div`
+    transition: .5s;
     width: 272px;
     height: 100vh;
     position: fixed;
@@ -8,6 +9,12 @@ export const SidebarWrapper = styled.div`
     top: 0;
     background-color: #fff;
     border-right: 1px solid ${props => props.theme.color.stroke_color};
+    @media (max-width: 890px) {
+        transition: .5s;
+        width: 0;
+        overflow: hidden;
+        width: ${props =>  props.type=="big"?"272px":"0px"};
+    }
 `
 
 export const SidebarHeader = styled.div`
