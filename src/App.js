@@ -7,6 +7,7 @@ import TeacherDashboard from './components/TeacherDashboard';
 import VideoGuide from './components/VideoGuide';
 import ClassScheduleTeacher from './components/ClassScheduleTeacher';
 import DashboardDetail from './components/TeacherDashboard/DashboardDetail'
+import Thesis from "./components/Thesis"
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="filingapplication" element={<p>filing-application</p>}/>
             <Route path="sciences" element={<p>sciences</p>}/>
             <Route path="classschedule" element={<ClassScheduleTeacher/>}/>
-            <Route path="diploma" element={<p>diploma</p>}/>
+            <Route path="diploma" element={<Thesis/>}/>
             <Route path="request" element={<p>request</p>}/>
             <Route path="coursemanagement" element={<p>coursemanagement</p>}/>
             <Route path="videoguide" element={<VideoGuide/>}/>
