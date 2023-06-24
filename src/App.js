@@ -10,6 +10,8 @@ import DashboardDetail from './components/TeacherDashboard/DashboardDetail'
 import Thesis from "./components/Thesis"
 import { ThemeProvider as MuiTheme } from '@mui/material/styles'
 import muiTheme from './theme/muiTheme'
+import Questionnaire from './components/Questionnaire'
+// import {TabsUnstyled} from "@mui/base"
 
 function App() {
   return (
@@ -24,7 +26,7 @@ function App() {
               <Route path="sciences" element={<p>sciences</p>} />
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
-              <Route path="request" element={<p>request</p>} />
+              <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<p>coursemanagement</p>} />
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="details/:id" element={<DashboardDetail />} />

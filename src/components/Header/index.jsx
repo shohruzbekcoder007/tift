@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
 
-export default function Header({ chageType }) {
+export default function Header() {
   const dispatch = useDispatch()
   return (
     <div>
