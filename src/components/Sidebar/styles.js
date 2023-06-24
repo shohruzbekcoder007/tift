@@ -13,7 +13,7 @@ export const SidebarWrapper = styled.div`
         transition: .5s;
         width: 0;
         overflow: hidden;
-        width: ${props =>  props.type=="big"?"272px":"0px"};
+        width: ${props =>  props.type==="big"?"272px":"0px"};
     }
 `
 
@@ -23,10 +23,21 @@ export const SidebarHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    span {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        display: none;
+        @media (max-width: 890px) {
+            display: inline-block;
+        }
+    }
 `
 
 export const SidebarLinkList = styled.ul`
     padding: 20px;
+    height: calc(100% - 96px);
+    overflow-y: auto;
 `
 
 export const SidebarLinkListItem = styled.li`

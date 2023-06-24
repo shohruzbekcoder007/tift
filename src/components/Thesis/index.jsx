@@ -1,6 +1,6 @@
 import React from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
-import { Button, Paper } from '@mui/material'
+import { Button, MenuItem, Paper, Select } from '@mui/material'
 import { ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 
@@ -17,7 +17,7 @@ export default function Thesis() {
             >
                 <ThesisHeader>
                     <div>
-
+                        
                     </div>
                     <div style={{display: 'flex', gap: "10px"}}>
                         <CustomizedInput callback_func={(val) => {console.log(val)}}/>

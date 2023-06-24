@@ -1,5 +1,5 @@
 import React from 'react'
-import { ClassScheduleTableWrapper, TrBox, TrBoxFooter, TrBoxHeader } from './styles'
+import { ClassScheduleTableWrapper } from './styles'
 import TableWeek from './TableWeek'
 
 export default function ClassScheduleTable() {
@@ -24,18 +24,5 @@ export default function ClassScheduleTable() {
                 </tbody>
             </table>
         </ClassScheduleTableWrapper>
-    )
-}
-
-
-const ScheduleTableBox = () => {
-    return (
-        <TrBox>
-            <TrBoxHeader>DT loyihalarini boshqarish</TrBoxHeader>
-            <TrBoxFooter>
-                <span className="group">SPM001</span>
-                <span className="room">E-202</span>
-            </TrBoxFooter>
-        </TrBox>
     )
 }
