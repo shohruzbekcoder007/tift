@@ -12,6 +12,7 @@ import { ThemeProvider as MuiTheme } from '@mui/material/styles'
 import muiTheme from './theme/muiTheme'
 import Questionnaire from './components/Questionnaire'
 // import {TabsUnstyled} from "@mui/base"
+import Profile from './components/Profile/Index'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
               <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<p>coursemanagement</p>} />
               <Route path="videoguide" element={<VideoGuide />} />
+              <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
           </Routes>

@@ -17,6 +17,8 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 890px) {
     padding-left: 32px;
   }
+  z-index: 99;
+
 `
 
 export const HeaderTitleHamburger = styled.div`
@@ -44,6 +46,17 @@ export const HeaderAccount = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+
+  svg {
+    color: #1A1818;
+  }
+
+  .active div {
+    background-color: ${props => props.theme.color.main_color} !important;
+  }
+  .active svg {
+    color: white;
+  }
 `
 
 export const HeaderAccountTime = styled.p`
@@ -55,6 +68,7 @@ export const HeaderAccountTime = styled.p`
   padding: 16px;
   background: ${props => props.theme.color.secondary_color};
   border-radius: 10px;
+  
 `
 
 export const HeaderAccountItem = styled.div`
@@ -65,4 +79,7 @@ export const HeaderAccountItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  
+
 `
