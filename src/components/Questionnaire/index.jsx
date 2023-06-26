@@ -4,6 +4,8 @@ import QuestionnaireTabs from './QuestionnaireTabs'
 
 export default function Questionnaire() {
   return (
-    <ContentWrapper><QuestionnaireTabs/></ContentWrapper>
+    <ContentWrapper>
+      <QuestionnaireTabs/>
+    </ContentWrapper>
   )
 }

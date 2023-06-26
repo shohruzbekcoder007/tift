@@ -7,6 +7,7 @@ export const SidebarWrapper = styled.div`
     position: fixed;
     left: 0;
     top: 0;
+    z-index: 100;
     background-color: #fff;
     border-right: 1px solid ${props => props.theme.color.stroke_color};
     @media (max-width: 890px) {

@@ -9,7 +9,6 @@ import { setSidebar } from '../../redux/action/sidebarActions'
 export default function Header() {
   const dispatch = useDispatch()
   return (
-    <div>
       <HeaderWrapper 
         // big='true'
       >
@@ -43,6 +42,5 @@ export default function Header() {
           </HeaderAccountItem>
         </HeaderAccount>
       </HeaderWrapper>
-    </div>
   )
 }
