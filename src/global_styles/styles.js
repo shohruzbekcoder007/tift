@@ -60,6 +60,7 @@ export const ClassScheduleTableWrapper = styled.div`
                 line-height: 170%;
                 color: #6A6A6A;
                 font-weight: 500;
+                min-width: 80px;
             }
         }
         tr {
@@ -69,6 +70,7 @@ export const ClassScheduleTableWrapper = styled.div`
                 line-height: 170%;
                 color: #6A6A6A;
                 font-weight: 500;
+                min-width: 80px;
             }
         }
         tr.hr-tr {
