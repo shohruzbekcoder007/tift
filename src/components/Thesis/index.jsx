@@ -57,7 +57,7 @@ export default function Thesis() {
                             </svg>
                             }
                         >
-                            Rasmiylashtirish 
+                            Qo'shish 
                         </Button>
                     </div>
                 </ThesisHeader>

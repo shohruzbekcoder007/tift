@@ -1,13 +1,33 @@
 import React from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
-import { Pagination, Paper } from '@mui/material'
+import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton } from './styles'
+import { AttendSearchButton, ModalBox } from './styles'
+import Modal from '@mui/material/Modal'
+import { Box } from '@mui/system'
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 export default function Attend() {
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     return (
         <ContentWrapper>
             <Paper
@@ -26,6 +46,7 @@ export default function Attend() {
                         <CustomizedInput callback_func={(val) => { console.log(val) }} />
                         <Button
                             variant="contained"
+                            onClick={handleOpen}
                             sx={{
                                 textTransform: "capitalize",
                                 boxShadow: "none",
@@ -163,9 +184,9 @@ export default function Attend() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 4, 5].map(elem => {
+                                    [1, 2, 3, 4, 5].map((elem, index) => {
                                         return (
-                                            <tr>
+                                            <tr key={index}>
                                                 <th>1494</th>
                                                 <th>SWD002</th>
                                                 <th style={{ width: "100px" }}>31-03-2023</th>
@@ -232,6 +253,22 @@ export default function Attend() {
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
                     <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
                 </BoxFooter>
+                <Modal
+                    keepMounted
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="keep-mounted-modal-title"
+                    aria-describedby="keep-mounted-modal-description"
+                >
+                    <ModalBox sx={style}>
+                        <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
+                            Text in a modal
+                        </Typography>
+                        <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
+                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </ModalBox>
+                </Modal>
             </Paper>
         </ContentWrapper>
     )

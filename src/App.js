@@ -14,6 +14,7 @@ import Questionnaire from './components/Questionnaire'
 import FilingApplication from './components/FilingApplication'
 import Attend from './components/Attend'
 import TeacherSciences from './components/TeacherSciences'
+import CourseManagement from './components/CourseManagement'
 // import {TabsUnstyled} from "@mui/base"
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />
-              <Route path="coursemanagement" element={<p>coursemanagement</p>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
             </Route>
