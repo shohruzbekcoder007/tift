@@ -15,6 +15,7 @@ import FilingApplication from './components/FilingApplication'
 import Attend from './components/Attend'
 import TeacherSciences from './components/TeacherSciences'
 import CourseManagement from './components/CourseManagement'
+import Login from './components/Login'
 // import {TabsUnstyled} from "@mui/base"
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<p>login</p>}/>
+            <Route path="/" element={<Login/>}/>
             <Route path="teacher" element={<Main />}>
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="nb" element={<Attend/>} />
