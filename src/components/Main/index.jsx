@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { MainWrapper } from '../../global_styles/styles'
 import Header from '../Header'
 import Sidebar from '../Sidebar'
