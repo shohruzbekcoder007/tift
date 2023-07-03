@@ -9,9 +9,8 @@ import { setSidebar } from '../../redux/action/sidebarActions'
 export default function Header() {
   const dispatch = useDispatch()
   return (
-    <div>
-      <HeaderWrapper
-      // big='true'
+      <HeaderWrapper 
+        // big='true'
       >
         <HeaderTitleHamburger>
           <span
@@ -57,6 +56,5 @@ export default function Header() {
           </NavLink>
         </HeaderAccount>
       </HeaderWrapper>
-    </div>
   )
 }

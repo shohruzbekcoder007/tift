@@ -4,12 +4,12 @@ import Header from '../Header'
 import Sidebar from '../Sidebar'
 import { Outlet } from 'react-router-dom'
 
-export default function Main() {
+export default function MainStudent() {
     
     return (
         <MainWrapper>
             <Header/>
-            <Sidebar role={'teacher'}/>
+            <Sidebar role={'student'}/>
             <Outlet/>
         </MainWrapper>
     )

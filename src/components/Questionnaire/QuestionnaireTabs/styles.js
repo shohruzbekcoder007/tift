@@ -5,27 +5,28 @@ import { Tab as TabUnstyled, tabClasses as tabUnstyledClasses } from "@mui/base"
 
 export const Tab = styled(TabUnstyled)`
   cursor: pointer;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2em;
-  line-height: 25px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
   background-color: transparent;
-  width: 100%;
-  padding: 18px 22px;
+  width: 180px;
+  padding: 6px 8px;
   border: none;
-  border-radius: 7px;
+  border-radius: 100px;
   display: flex;
   justify-content: center;
-  color: #a5a5a5;
+  color: #4A5568;
   &:hover {
-    color: #768fdb;
+    color: #039E51;
   }
 
   &.${tabUnstyledClasses.selected} {
     background-color: #fff;
     box-shadow: 0px 0px 40px rgba(227, 234, 255, 0.67);
-    border-radius: 10px;
-    color: #4364cc;
+    border-radius: 100px;
+    margin: 4px;
+    font-weight: 600;
+    color: #202327;
   }
 
   &.${buttonUnstyledClasses.disabled} {
@@ -35,10 +36,11 @@ export const Tab = styled(TabUnstyled)`
 `;
 
 export const TabsList = styled(TabsListUnstyled)`
-  width: 100%;
-  background: #f7f9ff;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  width: 360px;
+  margin: 0 auto;
+  background: #7676801F;
+  border-radius: 100px;
+  margin-bottom: 22px;
   display: flex;
   align-items: center;
   justify-content: center;

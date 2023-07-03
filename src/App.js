@@ -11,7 +11,13 @@ import Thesis from "./components/Thesis"
 import { ThemeProvider as MuiTheme } from '@mui/material/styles'
 import muiTheme from './theme/muiTheme'
 import Questionnaire from './components/Questionnaire'
-// import {TabsUnstyled} from "@mui/base"
+import FilingApplication from './components/FilingApplication'
+import Attend from './components/Attend'
+import TeacherSciences from './components/TeacherSciences'
+import CourseManagement from './components/CourseManagement'
+import Login from './components/Login'
+import DiplomaTopics from './components/DiplomaTopics'
+import MainStudent from './components/MainStudent'
 import Profile from './components/Profile/Index'
 
 function App() {
@@ -20,16 +26,35 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Main />}>
-              <Route index element={<TeacherDashboard />} />
-              <Route path="nb" element={<p>NB larni tugirlash</p>} />
-              <Route path="filingapplication" element={<p>filing-application</p>} />
-              <Route path="sciences" element={<p>sciences</p>} />
+            <Route path="/" element={<Login/>}/>
+            <Route path="teacher" element={<Main />}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              <Route path="nb" element={<Attend/>} />
+              <Route path="filingapplication" element={<FilingApplication/>} />
+              <Route path="sciences" element={<TeacherSciences />} />
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />
-              <Route path="coursemanagement" element={<p>coursemanagement</p>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="details/:id" element={<DashboardDetail />} />
+            </Route>
+
+            <Route path="student" element={<MainStudent />}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              {/* <Route path="nb" element={<Attend/>} />
+              <Route path="filingapplication" element={<FilingApplication/>} />
+              <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="classschedule" element={<ClassScheduleTeacher />} />
+              <Route path="diploma" element={<Thesis />} />
+              <Route path="request" element={<Questionnaire/>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
+              <Route path="videoguide" element={<VideoGuide />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>

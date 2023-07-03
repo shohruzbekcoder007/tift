@@ -12,6 +12,7 @@ export const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
+  z-index: 99;
   // padding-left: ${props =>  props.big?"304px":"32px"};
   padding-left: 304px;
   @media (max-width: 890px) {
