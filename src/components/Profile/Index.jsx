@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { Button } from '@mui/material';
 
-export default function Index() {
+export default function Profile() {
   const [Lang, setLang] = React.useState('');
 
   const handleChange = (event) => {

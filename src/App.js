@@ -18,7 +18,7 @@ import CourseManagement from './components/CourseManagement'
 import Login from './components/Login'
 import DiplomaTopics from './components/DiplomaTopics'
 import MainStudent from './components/MainStudent'
-import Profile from './components/Profile/Index'
+import Profile from './components/Profile'
 
 function App() {
   return (
