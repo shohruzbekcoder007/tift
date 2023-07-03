@@ -3,7 +3,7 @@ import { TrBox, TrBoxFooter, TrBoxHeader } from './styles'
 
 export default function TableWeek({ weekNumber }) {
   return (
-    <div>
+    <>
         <tr>
                         <th rowSpan={6}>{weekNumber}</th>
                         <th>1</th>
@@ -63,7 +63,7 @@ export default function TableWeek({ weekNumber }) {
                     <tr className='hr-tr'>
                         <th colSpan={8}></th>
                     </tr>
-    </div>
+    </>
   )
 }
 
