@@ -5,7 +5,6 @@ export const TeacherDashboardWrapper = styled.div`
   height: auto;
   border-radius: 10px;
   padding: 0.8rem 1rem;
-  margin: 1rem 0;
   background-color: #FFF;
 `
 

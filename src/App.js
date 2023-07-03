@@ -18,6 +18,7 @@ import CourseManagement from './components/CourseManagement'
 import Login from './components/Login'
 import DiplomaTopics from './components/DiplomaTopics'
 import MainStudent from './components/MainStudent'
+import Profile from './components/Profile/Index'
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
               <Route path="diploma/:id" element={<DiplomaTopics />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
 
             <Route path="student" element={<MainStudent />}>
@@ -52,6 +55,8 @@ function App() {
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
               <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
+              <Route path="profile" element={<Profile />} />
+              <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
           </Routes>
         </BrowserRouter>
