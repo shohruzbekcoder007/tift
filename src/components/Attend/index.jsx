@@ -9,6 +9,7 @@ import { AttendSearchButton } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
+import listLanguage from './language.json'
 
 export default function Attend() {
 
@@ -57,7 +58,7 @@ export default function Attend() {
                             </svg>
                             }
                         >
-                            Rasmiylashtirish
+                            {listLanguage.clearance["uz"]}
                         </Button>
                     </AttendSearchButton>
                 </BoxHeader>
