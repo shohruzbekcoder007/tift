@@ -61,14 +61,14 @@ export const ProfileButtonGroup = styled.div`
 export const ProfileButton = styled.button`
   width: 45%;
   height: 45px;
-  text-aligin: center;
+  text-aligin: center; 
   background-color: white;
   border-radius: 10px;
   border: 3px solid ${props => props.theme.color.main_color} !important;
   cursor: pointer;
 
   @media (max-width: 576px){ 
-    width
+    // width
   }
 `
 
