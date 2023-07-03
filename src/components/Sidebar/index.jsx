@@ -203,7 +203,7 @@ const student_Links = [
     </svg>
     ,
     text: "Qayta o’qish",
-    to: "dashboard4"
+    to: "readagain"
   },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
