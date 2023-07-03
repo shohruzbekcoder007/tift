@@ -10,7 +10,7 @@ export default function TableWeek({ weekNumber }) {
                         <th><ScheduleTableBox/></th>
                         <th><ScheduleTableBox/></th>
                         <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
+                        <th><ScheduleTableBox/></th>    
                         <th><ScheduleTableBox/></th>
                         <th><ScheduleTableBox/></th>
                     </tr>
