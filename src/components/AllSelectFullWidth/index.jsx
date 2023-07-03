@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export default function AllSelect({chageValueFunction, selectOptions}) {
+export default function AllSelectFullWidth({chageValueFunction, selectOptions, width="100%"}) {
 
     const [age, setAge] = React.useState(selectOptions[0].value);
 
@@ -14,18 +14,22 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
 
     return (
         <div>
-            <FormControl sx={{ 
-                display: 'flex', 
-                flexDirection: 'row', 
-                alignItems: 'center', 
-                gap: "10px" 
-            }}>
+            <FormControl 
+                sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'row', 
+                    alignItems: 'center', 
+                    gap: "10px",
+                    minWidth: "100%"
+                }}
+                style={{minWidth: 120}}
+            >
                 <Select
                     labelId="demo-simple-select-autowidth-label"
                     id="demo-simple-select-autowidth"
                     value={age}
                     onChange={handleChange}
-                    // autoWidth
+                    fullWidth
                     sx={{
                         padding: "14px 10px",
                         backgroundColor: "#F6F6F6",
@@ -36,6 +40,7 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
                         borderRadius: "10px",
                         // minWidth: '70px',
                         '& .MuiInputBase-root': {
+                            // width: "100%",
                             borderColor: "red",
                             outlineColor: "red",
                         },

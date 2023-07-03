@@ -5,21 +5,10 @@ import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton, ModalBox } from './styles'
+import { AttendSearchButton } from './styles'
+import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import Modal from '@mui/material/Modal'
-import { Box } from '@mui/system'
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+import AllSelectFullWidth from '../AllSelectFullWidth'
 
 export default function Attend() {
 
@@ -260,13 +249,147 @@ export default function Attend() {
                     aria-labelledby="keep-mounted-modal-title"
                     aria-describedby="keep-mounted-modal-description"
                 >
-                    <ModalBox sx={style}>
-                        <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                            Text in a modal
+                    <ModalBox>
+                        <ModalHeader>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "20px",
+                                    fontWeight: 600,
+                                    color: "#000"
+                                }}
+                            >
+                                Rasmiylashtirish
+                            </Typography>
+                            <span
+                                onClick={handleClose}
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                                </svg>
+                            </span>
+                        </ModalHeader>
+                        <Typography
+                            id="keep-mounted-modal-description"
+                            sx={{
+                                mt: "20px",
+                                bgcolor: "#F6F6F6",
+                                padding: "10px",
+                                borderRadius: "10px",
+                                fontSize: "14px",
+                                fontWeight: "400",
+                                lineHeight: "150%",
+                                color: "#1A1818",
+                                mb: "20px"
+                            }}
+                        >
+                            NB ni to'g'irlash uchun quyidagi vazifalarni amalga oshirishingiz kerak bo'ladi.1. Arizani shakllantirish uchun ma'lumotni to'ldirish (arizani topshirishning oxirgi muddati NB qo'yilgandan keyin 7 kun).2. "Saqlash" tugmachasini bosgandan so'ng, arizangiz shakllantiriladi va kredit bo'limiga yuboriladi. Arizangiz statusi "Navbatda" bo'ladi.3. Arizangiz ko'rib chiqilgandan so'ng, ikki xil statusda bo'lishi mumkin: "rad etilgan" yoki "tasdiqlangan". Sizning arizangiz tasdiqlangan bo'lsa, siz elektron murojaat faylini yuklab olishingiz mumkin.4. Elektron faylni chop eting, ko'rsatilgan joyga imzo qo'ying va kredit bo'limiga olib keling.
                         </Typography>
-                        <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                Patok
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => console.log(val)}
+                                selectOptions={[{
+                                    name: "name",
+                                    value: 12,
+                                }]}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                Kalendar reja
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => console.log(val)}
+                                selectOptions={[{
+                                    name: "name",
+                                    value: 12,
+                                }]}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                Para
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => console.log(val)}
+                                selectOptions={[{
+                                    name: "name",
+                                    value: 12,
+                                }]}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                Studentlar
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => console.log(val)}
+                                selectOptions={[{
+                                    name: "Japparov To'rabek",
+                                    value: 12,
+                                }]}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalButtons>
+                            <Button
+                                sx={{ width: "50%", textTransform: "none" }}
+                                variant="outlined"
+                                onClick={handleClose}
+                            >
+                                Bekor qilish
+                            </Button>
+                            <Button
+                                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                                variant="contained"
+                            >
+                                Saqlash
+                            </Button>
+                        </ModalButtons>
                     </ModalBox>
                 </Modal>
             </Paper>

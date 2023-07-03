@@ -1,6 +1,7 @@
 import React from 'react'
 import { ClassScheduleTableWrapper, TrHeaderBox } from '../../global_styles/styles'
 import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
 
 export default function DiplomaTable() {
     return (
@@ -76,17 +77,19 @@ export default function DiplomaTable() {
                         <th>01-06-2023 13:58</th>
                         <th>SPM201</th>
                         <th>
-                            <Button 
-                                variant="contained"
-                                sx={{
-                                    borderRadius: "10px",
-                                    textTransform: "capitalize",
-                                    boxShadow: "none",
-                                    padding: "6px 10px"
-                                }}
-                            >
-                                Diplom mavzulari
-                            </Button>
+                        <Link to={'/teacher/diploma/1'}>
+                                <Button 
+                                    variant="contained"
+                                    sx={{
+                                        borderRadius: "10px",
+                                        textTransform: "capitalize",
+                                        boxShadow: "none",
+                                        padding: "6px 10px"
+                                    }}
+                                >
+                                    Diplom mavzulari
+                                </Button>
+                            </Link>
                         </th>
                     </tr>
                     <tr>
@@ -95,17 +98,19 @@ export default function DiplomaTable() {
                         <th>01-06-2023 13:58</th>
                         <th>SPM201</th>
                         <th>
-                            <Button 
-                                variant="contained"
-                                sx={{
-                                    borderRadius: "10px",
-                                    textTransform: "capitalize",
-                                    boxShadow: "none",
-                                    padding: "6px 10px"
-                                }}
-                            >
-                                Diplom mavzulari
-                            </Button>
+                            <Link to={'/teacher/diploma/1'}>
+                                <Button 
+                                    variant="contained"
+                                    sx={{
+                                        borderRadius: "10px",
+                                        textTransform: "capitalize",
+                                        boxShadow: "none",
+                                        padding: "6px 10px"
+                                    }}
+                                >
+                                    Diplom mavzulari
+                                </Button>
+                            </Link>
                         </th>
                     </tr>
                 </tbody>

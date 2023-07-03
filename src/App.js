@@ -16,7 +16,8 @@ import Attend from './components/Attend'
 import TeacherSciences from './components/TeacherSciences'
 import CourseManagement from './components/CourseManagement'
 import Login from './components/Login'
-// import {TabsUnstyled} from "@mui/base"
+import DiplomaTopics from './components/DiplomaTopics'
+import MainStudent from './components/MainStudent'
 
 function App() {
   return (
@@ -36,6 +37,21 @@ function App() {
               <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} />
+            </Route>
+
+            <Route path="student" element={<MainStudent />}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              {/* <Route path="nb" element={<Attend/>} />
+              <Route path="filingapplication" element={<FilingApplication/>} />
+              <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="classschedule" element={<ClassScheduleTeacher />} />
+              <Route path="diploma" element={<Thesis />} />
+              <Route path="request" element={<Questionnaire/>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
+              <Route path="videoguide" element={<VideoGuide />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
             </Route>
           </Routes>
         </BrowserRouter>
