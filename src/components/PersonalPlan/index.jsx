@@ -1,6 +1,6 @@
 import React from 'react'
 import { ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
-import { PersonalPlanWrapper } from './styles'
+import { PersonalPlanPaper, PersonalPlanWrapper } from './styles'
 import { Paper, Typography } from '@mui/material'
 import { TableTHHeader } from '../DiplomaTable'
 
@@ -17,16 +17,91 @@ export default function PersonalPlan() {
     )
 }
 
+// const Semester = ({ title }) => {
+//     return (
+//         <Paper
+//             elevation={0}
+//             sx={{
+//                 width: 'calc(50% - 18px)',
+//                 padding: "20px",
+//                 borderRadius: "10px"
+//             }}
+//             md={{
+//                 width: '100%',
+//                 padding: "20px",
+//                 borderRadius: "10px"
+//             }}
+//         >
+//             <Typography
+//                 sx={{
+//                     color: "#000000",
+//                     fontWeight: "600",
+//                     fontSize: "20px",
+//                     lineHeight: "normal",
+//                     mb: "16px"
+//                 }}
+//             >
+//                { title }
+//             </Typography>
+//             <ClassScheduleTableWrapper>
+//                 <table>
+//                     <thead>
+//                         <tr>
+//                             <TableTHHeader
+//                                 text="Fan"
+//                                 iconc={null}
+//                             />
+//                             <TableTHHeader
+//                                 text="Kredit"
+//                                 iconc={null}
+//                             />
+//                             <TableTHHeader
+//                                 text="Olingan baho"
+//                                 iconc={null}
+//                             />
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         <tr>
+//                             <th>Fizika I</th>
+//                             <th>6</th>
+//                             <th>4</th>
+//                         </tr>
+//                         <tr>
+//                             <th>Hisob (Calculus)</th>
+//                             <th>8</th>
+//                             <th>4</th>
+//                         </tr>
+//                         <tr>
+//                             <th>Dasturlash I</th>
+//                             <th>6</th>
+//                             <th>4</th>
+//                         </tr>
+//                         <tr>
+//                             <th>Ingliz tili I</th>
+//                             <th>4</th>
+//                             <th>4</th>
+//                         </tr>
+//                         <tr>
+//                             <th>O'zbekiston tarixi I</th>
+//                             <th>4</th>
+//                             <th>4</th>
+//                         </tr>
+//                         <tr>
+//                             <th>Jismoniy tarbiya</th>
+//                             <th>0</th>
+//                             <th>4</th>
+//                         </tr>
+//                     </tbody>
+//                 </table>
+//             </ClassScheduleTableWrapper>
+//         </Paper>
+//     )
+// }
+
 const Semester = ({ title }) => {
     return (
-        <Paper
-            elevation={0}
-            sx={{
-                width: 'calc(50% - 18px)',
-                padding: "20px",
-                borderRadius: "10px"
-            }}
-        >
+        <PersonalPlanPaper>
             <Typography
                 sx={{
                     color: "#000000",
@@ -90,6 +165,6 @@ const Semester = ({ title }) => {
                     </tbody>
                 </table>
             </ClassScheduleTableWrapper>
-        </Paper>
+        </PersonalPlanPaper>
     )
 }
