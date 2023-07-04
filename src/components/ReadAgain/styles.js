@@ -15,3 +15,10 @@ export const ReadAgainLeft = styled.div`
 export const ReadAgainReight = styled.div`
     width: 356px;
 `
+
+export const ReadAgainReightSumma = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+`

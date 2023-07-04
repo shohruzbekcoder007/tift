@@ -20,6 +20,7 @@ import DiplomaTopics from './components/DiplomaTopics'
 import MainStudent from './components/MainStudent'
 import Profile from './components/Profile'
 import ReadAgain from './components/ReadAgain'
+import PersonalPlan from './components/PersonalPlan'
 
 function App() {
   return (
@@ -47,8 +48,8 @@ function App() {
             <Route path="student" element={<MainStudent />}>
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="readagain" element={<ReadAgain/>} />
-              {/* <Route path="filingapplication" element={<FilingApplication/>} />
-              <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="personalplan" element={<PersonalPlan/>} />
+              {/* <Route path="sciences" element={<TeacherSciences />} />
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />

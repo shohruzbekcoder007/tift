@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ContentWrapper, BoxHeader, ClassScheduleTableWrapper } from '../../global_styles/styles'
 import { Button, Paper, Typography } from '@mui/material'
 import { ReadAgainLeft, ReadAgainReight, ReadAgainReightSumma, ReadAgainWrapper } from './styles'
 import { TableTHHeader } from '../DiplomaTable'
 
 export default function ReadAgain() {
+
+  const [totalSumma, setTotalSumma] = useState(0)
+  const [oneKredit, setOneKredit] = useState(375650)
+
+  const summaTotal = (summa) => {
+    setTotalSumma(totalSumma + summa)
+  }
+
+  const subtractionTotal = (summa) => {
+    setTotalSumma(totalSumma - summa)
+  }
+
   return (
     <ContentWrapper>
       <ReadAgainWrapper>
@@ -53,101 +65,12 @@ export default function ReadAgain() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th>Kompyuterni tashkillashtirish</th>
-                    <th>6</th>
-                    <th>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          width: "181px"
-                        }}
-                      >
-                        Tanlash
-                      </Button>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>Ma‘lumotlar bazasi</th>
-                    <th>6</th>
-                    <th>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          width: "181px"
-                        }}
-                      >
-                        Tanlash
-                      </Button>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>Algoritmlarni loyihalash</th>
-                    <th>6</th>
-                    <th>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          width: "181px"
-                        }}
-                      >
-                        Tanlash
-                      </Button>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>Sun'iy intellektga kirish</th>
-                    <th>6</th>
-                    <th>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          width: "181px"
-                        }}
-                      >
-                        Tanlash
-                      </Button>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th>Ehtimollar va statistika</th>
-                    <th>6</th>
-                    <th>
-                      <Button
-                        variant="contained"
-                        size="small"
-                        color="secondary"
-                        sx={{
-                          textTransform: "none",
-                          borderRadius: "10px",
-                          boxShadow: "none",
-                          width: "181px"
-                        }}
-                      >
-                        Tanlash
-                      </Button>
-                    </th>
-                  </tr>
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
                 </tbody>
               </table>
             </ClassScheduleTableWrapper>
@@ -163,23 +86,105 @@ export default function ReadAgain() {
             }}
           >
             <Typography
-                sx={{
-                    color: "#6A6A6A",
-                    fontWeight: "400",
-                    fontSize: "14px",
-                    lineHeight: "150%"
-                }}
+              sx={{
+                color: "#6A6A6A",
+                fontWeight: "400",
+                fontSize: "14px",
+                lineHeight: "150%"
+              }}
             >
-                Kontrakt summasi = {'7 091 940'} so’m <br/>
-                1 kredit = {'118 199'} so’m
+              Kontrakt summasi = {'7 091 940'} so’m <br />
+              1 kredit = {oneKredit} so’m
             </Typography>
             <ReadAgainReightSumma>
-              <span>1</span>
-              <span>2</span>
+              <Typography
+                sx={{
+                  color: "#000000",
+                  fontWeight: "600",
+                  fontSize: "20px",
+                  lineHeight: "normal"
+                }}
+              >
+                Jami:
+              </Typography>
+              <Typography
+                sx={{
+                  color: "#000000",
+                  fontWeight: "600",
+                  fontSize: "20px",
+                  lineHeight: "normal"
+                }}
+              >
+                {totalSumma} so'm
+              </Typography>
             </ReadAgainReightSumma>
+            {
+              totalSumma != 0 ?
+                <Button
+                  variant="contained"
+                  size="small"
+                  sx={{
+                    textTransform: "none",
+                    borderRadius: "10px",
+                    boxShadow: "none",
+                    width: "100%",
+                    padding: "14px",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    lineHeight: "normal",
+                    marginTop: "32px"
+                  }}
+                >
+                  To‘lov
+                </Button> : null
+            }
           </Paper>
         </ReadAgainReight>
       </ReadAgainWrapper>
     </ContentWrapper>
+  )
+}
+
+const ReadAgainOneScience = ({ kredit, oneKreditSumma, addFunction, subtractionFunction }) => {
+
+  const [addButton, setAddButton] = useState(true)
+
+  return (
+    <tr>
+      <th>Kompyuterni tashkillashtirish</th>
+      <th>{kredit}</th>
+      <th>
+        {
+          addButton ?
+            <Button
+              variant="contained"
+              size="small"
+              color="secondary"
+              sx={{
+                textTransform: "none",
+                borderRadius: "10px",
+                boxShadow: "none",
+                width: "181px"
+              }}
+              onClick={() => { addFunction(oneKreditSumma * 6); setAddButton(false); }}
+            >
+              Tanlash
+            </Button> :
+            <Button
+              variant="contained"
+              size="small"
+              sx={{
+                textTransform: "none",
+                borderRadius: "10px",
+                boxShadow: "none",
+                width: "181px"
+              }}
+              onClick={() => { subtractionFunction(oneKreditSumma * 6); setAddButton(true); }}
+            >
+              Bekor qilish
+            </Button>
+        }
+      </th>
+    </tr>
   )
 }
