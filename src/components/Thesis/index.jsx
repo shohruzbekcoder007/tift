@@ -9,7 +9,7 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
-
+import listLanguage from '../PageSelector/language.json'
 export default function Thesis() {
 
     const [open, setOpen] = React.useState(false);

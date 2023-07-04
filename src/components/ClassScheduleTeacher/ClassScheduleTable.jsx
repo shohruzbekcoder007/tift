@@ -1,21 +1,21 @@
 import React from 'react'
 import { ClassScheduleTableWrapper } from './styles'
 import TableWeek from './TableWeek'
-
+import listLanguage from './language.json'
 export default function ClassScheduleTable() {
     return (
         <ClassScheduleTableWrapper>
             <table>
                 <thead>
                     <tr>
-                        <th>Hafta</th>
-                        <th>Juftlik</th>
-                        <th>Dushanba</th>
-                        <th>Seshanba</th>
-                        <th>Chorshanba</th>
-                        <th>Payshanba</th>
-                        <th>Juma</th>
-                        <th>Shanba</th>
+                        <th>{listLanguage.Week['ru']}</th>
+                        <th>{listLanguage.Couple['ru']}</th>
+                        <th>{listLanguage.Monday['ru']}</th>
+                        <th>{listLanguage.Tuesday['ru']}</th>
+                        <th>{listLanguage.Wednesday['ru']}</th>
+                        <th>{listLanguage.thursday['ru']}</th>
+                        <th>{listLanguage.Friday['ru']}</th>
+                        <th>{listLanguage.saturday['ru']}</th>
                     </tr>
                 </thead>
                 <tbody>

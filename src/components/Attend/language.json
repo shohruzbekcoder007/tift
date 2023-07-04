@@ -3,5 +3,75 @@
         "uz": "Rasmiylashtirish",
         "ru": "Oформление",
         "eng": "Clearance"
+    },
+    "ClearanceText": {
+        "uz": "NB ni to'g'irlash uchun quyidagi vazifalarni amalga oshirishingiz kerak bo'ladi.1. Arizani shakllantirish uchun ma'lumotni to'ldirish (arizani topshirishning oxirgi muddati NB qo'yilgandan keyin 7 kun).2. 'Saqlash' tugmachasini bosgandan so'ng, arizangiz shakllantiriladi va kredit bo'limiga yuboriladi. Arizangiz statusi 'Navbatda' bo'ladi.3. Arizangiz ko'rib chiqilgandan so'ng, ikki xil statusda bo'lishi mumkin: 'rad etilgan' yoki 'tasdiqlangan'. Sizning arizangiz tasdiqlangan bo'lsa, siz elektron murojaat faylini yuklab olishingiz mumkin.4. Elektron faylni chop eting, ko'rsatilgan joyga imzo qo'ying va kredit bo'limiga olib keling.",
+        "ru": "Для исправления NB вам потребуется выполнить следующие задачи.1. Заполнение сведений для формирования заявки (срок подачи заявки – 7 дней после размещения НБ). После нажатия кнопки «Сохранить» ваша заявка будет создана и отправлена ​​в кредитный отдел. Статус вашего приложения будет «Ожидание».3. После того, как ваша заявка будет обработана, она может находиться в одном из двух статусов: «отклонено» или «одобрено». Если ваша заявка одобрена, вы можете загрузить файл электронной заявки. Распечатайте электронный файл, распишитесь в указанном месте и принесите в кредитный отдел.",
+        "eng": "To correct NB, you will need to perform the following tasks.1. Filling out the information to form the application (the deadline for submitting the application is 7 days after the NB is placed). 2. After clicking the 'Save' button, your application will be created and sent to the credit department. Your application status will be 'Pending'.3. Once your application has been processed, it can be in one of two statuses: 'rejected' or 'approved'. If your application is approved, you can download the electronic application file. 4. Print the electronic file, sign in the indicated place and bring it to the credit department."
+    },
+    "Search": {
+        "uz": "Qidirish",
+        "ru": "поиск",
+        "eng": "Search"
+    },
+    "Patok": {
+        "uz": "Patok",
+        "ru": "Паток",
+        "eng": "Patok"
+    },
+    "Calendar": {
+        "uz": "Kalendar reja",
+        "ru": "Календарный план",
+        "eng": "Calendar plan"
+    },
+    "Para": {
+        "uz": "Para",
+        "ru": "Пара",
+        "eng": "Para"
+    },
+    "Students": {
+        "uz": "Studentlar",
+        "ru": "Студенты",
+        "eng": "Students"
+    },
+   
+    "Confirmed": {
+        "uz": "Tasdiqlangan",
+        "ru": "Подтвержденный",
+        "eng": "Confirmed"
+    },
+    "Separation": {
+        "uz": "Fanni ajratish",
+        "ru": "Разделение науки",
+        "eng": "Separation of science"
+    },
+    "Status": {
+        "uz": "Status",
+        "ru": "Статус",
+        "eng": "Status"
+    },
+    "Theme": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Theme"
+    },
+    "Date": {
+        "uz": "Sana",
+        "ru": "Дата",
+        "eng": "Date"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранять",
+        "eng": "Save"
     }
+
+    
+    
+    
 }

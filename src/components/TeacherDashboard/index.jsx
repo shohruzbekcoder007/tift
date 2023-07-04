@@ -2,6 +2,7 @@ import React from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { TeacherDashboardButton, TeacherDashboardDate, TeacherDashboardSubTItle, TeacherDashboardTitle, TeacherDashboardWrapper } from './styles'
 import { Link } from 'react-router-dom'
+import listLanguage from './language.json'
 
 export default function TeacherDashboard() {
   return (
@@ -18,7 +19,7 @@ export default function TeacherDashboard() {
          </TeacherDashboardSubTItle>
           <Link to={'/teacher/dashboard/1'}>
             <TeacherDashboardButton>
-            Batafsil 
+            {listLanguage.Detail["ru"]}
           </TeacherDashboardButton>
           </Link>
       </TeacherDashboardWrapper>

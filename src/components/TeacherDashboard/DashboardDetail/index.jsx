@@ -2,6 +2,7 @@ import React from 'react'
 import { ContentWrapper } from '../../../global_styles/styles'
 import { DashboardDetailWrapper, DetailWrapperBody, DetailWrapperDate, DetailWrapperTitle } from './styles'
 import { useParams } from 'react-router-dom'
+import listLanguage from '../language.json'
 
 export default function Index() {
   const {id} = useParams()
@@ -16,7 +17,7 @@ export default function Index() {
         </DetailWrapperBody>
         <hr />
         <DetailWrapperDate>
-        — Nashr qilingan sana 04.06.2022
+        — {listLanguage.DetailDate["ru"]} 04.06.2022
         </DetailWrapperDate>
       </DashboardDetailWrapper>
     </ContentWrapper>

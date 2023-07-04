@@ -2,6 +2,7 @@ import React from "react"
 import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 import search from '../../imgs/input_search.png'
+import listLanguage from '../Attend/language.json'
 
 const CssTextField = withStyles({
     root: {
@@ -57,7 +58,7 @@ export default function CustomizedInput({ label, callback_func }) {
                 id="custom-css-outlined-input"
                 // helperText="Incorrect entry."
                 onChange={event => { callback_func(event.target.value) }}
-                placeholder="Qidirish"
+                placeholder={listLanguage.Search['ru']}
             />
         </div>
     );

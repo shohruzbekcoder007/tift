@@ -1,0 +1,43 @@
+{
+  "Week": {
+    "uz": "Hafta",
+    "ru": "Неделя",
+    "eng": "Week"
+},
+  "Couple": {
+    "uz": "Juftlik",
+    "ru": "Пара",
+    "eng": "Couple"
+},
+  "Monday": {
+    "uz": "Dushanba",
+    "ru": "Понедельник",
+    "eng": "Monday"
+},
+"Tuesday": {
+  "uz": "Seshanba",
+  "ru": "Вторник",
+  "eng": "Tuesday"
+},
+"Wednesday": {
+  "uz": "Chorshanba",
+  "ru": "Среда",
+  "eng": "Wednesday"
+},
+"thursday": {
+  "uz": "payshanba",
+  "ru": "четверг",
+  "eng": "thursday"
+},  
+"Friday": {
+  "uz": "Juma",
+  "ru": "Пятница",
+  "eng": "Friday"
+},
+"saturday": {
+  "uz": "shanba",
+  "ru": "суббота",
+  "eng": "saturday"
+}
+
+}

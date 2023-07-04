@@ -1,0 +1,37 @@
+{
+  "Year": {
+    "uz": "Yil",
+    "ru": "год",
+    "eng": "Year"
+},
+"Degree": {
+  "uz": "Daraja",
+  "ru": "Степень",
+  "eng": "Degree"
+},
+"NumberStudents": {
+  "uz": "Talabalar soni  ",
+  "ru": "Количество студентов",
+  "eng": "Number of students"
+},
+"Curriculum": {
+  "uz": "O’quv reja",
+  "ru": "Учебный план",
+  "eng": "Curriculum"
+},
+"DiplomTopics": {
+  "uz": "Diplom Mavzulari",
+  "ru": "Темы дипломов",
+  "eng": "Diplom Topics"
+},
+"Week": {
+  "uz": "Hafta",
+  "ru": "Неделя",
+  "eng": "Week"
+},
+"Week": {
+  "uz": "Hafta",
+  "ru": "Неделя",
+  "eng": "Week"
+}
+}

@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { SelectorText } from './styles';
+import listLanguage from './language.json'
 
 export default function PageSelector({chageValueFunction}) {
     const [age, setAge] = React.useState(10);
@@ -57,7 +58,7 @@ export default function PageSelector({chageValueFunction}) {
                     <MenuItem value={50}>50</MenuItem>
                     <MenuItem value={100}>100</MenuItem>
                 </Select>
-                <SelectorText>qatorni ko'rsatish</SelectorText>
+                <SelectorText>{listLanguage.Row['ru']}</SelectorText>
             </FormControl>
         </div>
     );

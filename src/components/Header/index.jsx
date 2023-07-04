@@ -5,7 +5,7 @@ import video_iconc from "./../../imgs/video-iconc.png"
 import { NavLink } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
-
+import listLanguage from './language.json'
 export default function Header() {
   const dispatch = useDispatch()
   return (
@@ -24,7 +24,7 @@ export default function Header() {
         </HeaderTitleHamburger>
         <HeaderAccount>
           <HeaderAccountTime>
-            Server vaqti: 06.06.23
+          {listLanguage.ServerTime['ru']} 06.06.23
           </HeaderAccountTime>
           <HeaderAccountItem>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">

@@ -1,0 +1,12 @@
+{
+  "Detail": {
+      "uz": "Batafsil",
+      "ru": "деталях",
+      "eng": "detail"
+  },
+  "DetailDate":{
+    "uz": "Nashr qilingan sana",
+    "ru": "Дата публикации",
+    "eng": "Date of publication"
+  }
+}
