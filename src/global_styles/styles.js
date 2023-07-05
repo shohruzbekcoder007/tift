@@ -13,6 +13,9 @@ export const ContentWrapper = styled.div`
     display: flex;
     gap: 18px;
     flex-wrap: wrap;
+    @media (max-width: 600px) {
+        padding: 15px;
+    }
 `
 
 export const BoxHeader = styled.div`

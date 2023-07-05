@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
+import { setTitle } from '../../redux/action/titleActions'
 
 
 const teacher_Links = [
@@ -311,7 +312,7 @@ const student_Links = [
     </svg>
     ,
     text: "Diplom ishi",
-    to: "dashboard8"
+    to: "thesisresult"
   }
 ]
 
@@ -359,6 +360,9 @@ export default function Sidebar({ role }) {
 
 
 const ListItem = ({ img, text, to }) => {
+
+  const dispatch = useDispatch()
+
   return (
     <SidebarLinkListItem>
       <NavLink
@@ -366,6 +370,7 @@ const ListItem = ({ img, text, to }) => {
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? "active" : ""
         }
+        onClick={() => { dispatch(setSidebar('small')); dispatch(setTitle(text)); }}
       >
         <SidebarLinkListItemImg>
           {img}
