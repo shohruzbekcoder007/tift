@@ -23,6 +23,7 @@ import ReadAgain from './components/ReadAgain'
 import PersonalPlan from './components/PersonalPlan'
 import Olympics from './components/Olympics'
 import ThesisResult from './components/ThesisResult'
+import Information from './components/Information'
 
 function App() {
   return (
@@ -53,7 +54,8 @@ function App() {
               <Route path="personalplan" element={<PersonalPlan/>} />
               <Route path="olympics" element={<Olympics />} />
               <Route path="thesisresult" element={<ThesisResult />} />
-              {/* <Route path="diploma" element={<Thesis />} />
+              <Route path="information" element={<Information />} />
+              {/* <Route path="Information" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
