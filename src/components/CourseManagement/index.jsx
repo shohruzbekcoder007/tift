@@ -105,9 +105,9 @@ export default function CourseManagement() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2].map(elem => {
+                                    [1, 2].map((elem, index) => {
                                         return (
-                                            <tr>
+                                            <tr key={index}>
                                                 <th>APM1416</th>
                                                 <th>DT loyihalarini boshqarish (UZL)</th>
                                                 <th>Axborot texnologiyalarining dasturiy ta’minoti</th>
