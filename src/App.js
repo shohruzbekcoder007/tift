@@ -21,6 +21,8 @@ import MainStudent from './components/MainStudent'
 import Profile from './components/Profile'
 import ReadAgain from './components/ReadAgain'
 import PersonalPlan from './components/PersonalPlan'
+import Olympics from './components/Olympics'
+import ThesisResult from './components/ThesisResult'
 
 function App() {
   return (
@@ -49,9 +51,9 @@ function App() {
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="readagain" element={<ReadAgain/>} />
               <Route path="personalplan" element={<PersonalPlan/>} />
-              {/* <Route path="sciences" element={<TeacherSciences />} />
-              <Route path="classschedule" element={<ClassScheduleTeacher />} />
-              <Route path="diploma" element={<Thesis />} />
+              <Route path="olympics" element={<Olympics />} />
+              <Route path="thesisresult" element={<ThesisResult />} />
+              {/* <Route path="diploma" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
