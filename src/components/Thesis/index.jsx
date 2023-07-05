@@ -9,7 +9,7 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
-import listLanguage from '../PageSelector/language.json'
+import listLanguage from '../DiplomaTable/language.json'
 export default function Thesis() {
 
     const [open, setOpen] = React.useState(false);
@@ -66,7 +66,7 @@ export default function Thesis() {
                             </svg>
                             }
                         >
-                            Qo'shish 
+                            {listLanguage.Add['ru']} 
                         </Button>
                     </div>
                 </ThesisHeader>
@@ -98,7 +98,7 @@ export default function Thesis() {
                                     color: "#000",
                                 }}
                             >
-                                Qo'shish
+                                {listLanguage.Add['ru']} 
                             </Typography>
                             <span
                                 onClick={handleClose}
@@ -121,7 +121,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            O’quv reja
+                            {listLanguage.Curriculum['ru']}
                         </Typography>
                         <AllSelectFullWidth
                             chageValueFunction={val => console.log(val)}
@@ -143,7 +143,8 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            Daraja
+                                                        {listLanguage.Degree['ru']}
+
                         </Typography>
                         <AllSelectFullWidth
                             chageValueFunction={val => console.log(val)}
@@ -165,7 +166,8 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            Talabalar soni
+                                                        {listLanguage.NumberStudents['ru']}
+
                         </Typography>
                         <CustomizedInputSimple callback_func={val=>console.log(val)}/>
                     </ModalSelectWrapper>
@@ -175,13 +177,15 @@ export default function Thesis() {
                             variant="outlined"
                             onClick={handleClose}
                         >
-                            Bekor qilish
+                                                        {listLanguage.Cancel['ru']}
+
                         </Button>
                         <Button
                             sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
                         >
-                            Saqlash
+                                                                                    {listLanguage.Save['ru']}
+
                         </Button>
                     </ModalButtons>
                 </ModalBox>

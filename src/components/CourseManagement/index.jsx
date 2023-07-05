@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from './styles'
-
+import listLanguage from './language.json'
 export default function CourseManagement() {
     return (
         <ContentWrapper>
@@ -136,7 +136,7 @@ export default function CourseManagement() {
                                                         </svg>
                                                         }
                                                     >
-                                                        Taqvim rejasi
+                                                        {listLanguage.CalendarPlan['ru']}
                                                     </Button>
                                                 </th>
                                             </tr>

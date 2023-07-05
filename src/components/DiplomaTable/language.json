@@ -24,14 +24,24 @@
   "ru": "Темы дипломов",
   "eng": "Diplom Topics"
 },
-"Week": {
-  "uz": "Hafta",
-  "ru": "Неделя",
-  "eng": "Week"
+"Add": {
+  "uz": "Qo'shish",
+  "ru": "добавлять",
+  "eng": "Add"
 },
 "Week": {
   "uz": "Hafta",
   "ru": "Неделя",
   "eng": "Week"
+},
+"Cancel": {
+  "uz": "Bekor qilish",
+  "ru": "Отмена",
+  "eng": "Cancel"
+},
+"Save": {
+  "uz": "Saqlash",
+  "ru": "Сохранять",
+  "eng": "Save"
 }
 }
