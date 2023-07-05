@@ -7,6 +7,9 @@ const muiTheme = createTheme({
         },
         blackButton: {
             main: "#1A1818"
+        },
+        secondary: {
+            main: "#F6F6F6"
         }
     },
     text: {
