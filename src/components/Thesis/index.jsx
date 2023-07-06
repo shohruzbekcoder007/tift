@@ -39,9 +39,9 @@ export default function Thesis() {
                 }}
             >
                 <ThesisHeader>
-                    <PageSelector chageValueFunction={chageRowHadler}/>
-                    <div style={{display: 'flex', gap: "10px"}}>
-                        <CustomizedInput callback_func={chageSearch}/>
+                    <PageSelector chageValueFunction={chageRowHadler} />
+                    <div style={{ display: 'flex', gap: "10px" }}>
+                        <CustomizedInput callback_func={chageSearch} />
                         <Button
                             variant="contained"
                             sx={{
@@ -66,16 +66,16 @@ export default function Thesis() {
                             </svg>
                             }
                         >
-                            {listLanguage.Add['ru']} 
+                            {listLanguage.Add['ru']}
                         </Button>
                     </div>
                 </ThesisHeader>
                 <ThesisBody>
-                    <DiplomaTable/>
+                    <DiplomaTable />
                 </ThesisBody>
                 <BoxFooter>
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle}/>
+                    <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
                 </BoxFooter>
             </Paper>
             <Modal
@@ -98,7 +98,7 @@ export default function Thesis() {
                                     color: "#000",
                                 }}
                             >
-                                {listLanguage.Add['ru']} 
+                                {listLanguage.Add['ru']}
                             </Typography>
                             <span
                                 onClick={handleClose}
@@ -143,7 +143,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                                                        {listLanguage.Degree['ru']}
+                            {listLanguage.Degree['ru']}
 
                         </Typography>
                         <AllSelectFullWidth
@@ -166,10 +166,10 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                                                        {listLanguage.NumberStudents['ru']}
+                            {listLanguage.NumberStudents['ru']}
 
                         </Typography>
-                        <CustomizedInputSimple callback_func={val=>console.log(val)}/>
+                        <CustomizedInputSimple callback_func={val => console.log(val)} />
                     </ModalSelectWrapper>
                     <ModalButtons>
                         <Button
@@ -177,14 +177,14 @@ export default function Thesis() {
                             variant="outlined"
                             onClick={handleClose}
                         >
-                                                        {listLanguage.Cancel['ru']}
+                            {listLanguage.Cancel['ru']}
 
                         </Button>
                         <Button
                             sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
                         >
-                                                                                    {listLanguage.Save['ru']}
+                            {listLanguage.Save['ru']}
 
                         </Button>
                     </ModalButtons>
