@@ -26,6 +26,9 @@ import Olympics from './components/Olympics'
 import ThesisResult from './components/ThesisResult'
 import Information from './components/Information'
 import QuestionnaireTeacher from './components/QuestionnaireTeacher'
+import StudentSciences from './components/StudentSciences'
+import StudentSciencesMain from './components/StudentSciences/StudentSciencesMain'
+import Attendance from './components/StudentSciences/Attendance'
 import Final from './components/Final/Final'
 
 function App() {
@@ -60,6 +63,11 @@ function App() {
               <Route path="thesisresult" element={<ThesisResult />} />
               <Route path="information" element={<Information />} />
               <Route path="request" element={<QuestionnaireTeacher/>} />
+              <Route path="sciences" element={<StudentSciences />}>
+                <Route index element={<StudentSciencesMain />} />
+                <Route path="attendance" element={<Attendance />} />
+                {/* Attendance */}
+              </Route>
               <Route path="final" element={<Final/>} />
               {/* <Route path="Information" element={<Thesis />} />
               <Route path="request" element={<Questionnaire/>} />

@@ -1,0 +1,22 @@
+{
+    "practice": {
+      "uz": "Amaldagi",
+      "ru": "На практике",
+      "eng": "In practice"
+    },
+    "Completed": {
+      "uz": "Tugallangan",
+      "ru": "Завершенный",
+      "eng": "Completed"
+    },
+    "currentQuestionnaires": {
+      "uz": "Amaldagi so‘rovnomalar mavjud emas",
+      "ru": "Нет актуальных анкет",
+      "eng": "There are no current questionnaires"
+    },
+    "completedSurveys": {
+      "uz": "Tugallangan so‘rovnomalar mavjud emas!",
+      "ru": "Заполненных опросов нет!",
+      "eng": "No completed surveys available!"
+    }
+  }
