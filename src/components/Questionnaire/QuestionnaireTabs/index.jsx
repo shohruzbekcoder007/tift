@@ -4,6 +4,7 @@ import { TabPanel } from "@mui/base"
 import { Tab, TabsList } from "./styles"
 import EmptyPanel from "../EmptyPanel";
 import listLanguage from './language.json'
+
 export default function QuestionnaireTabs() {
     return (
         <Tabs defaultValue={0} style={{ width: "100%" }}>
