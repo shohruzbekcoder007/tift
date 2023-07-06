@@ -12,8 +12,7 @@ export default function Attendance() {
                     fontWeight: 600,
                     color: "#151515",
                     fontStyle: "normal",
-                    lineHeight: "normal",
-                    mb: "16px"
+                    lineHeight: "normal"
                 }}
             >
                 Davomat

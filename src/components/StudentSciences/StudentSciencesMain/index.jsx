@@ -150,7 +150,7 @@ export default function StudentSciencesMain() {
                                                         </svg>
                                                         }
                                                     >
-                                                        Delete
+                                                        Vazifalar
                                                     </Button>
                                                 </th>
                                                 <th>
