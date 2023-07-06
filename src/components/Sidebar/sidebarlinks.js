@@ -165,7 +165,7 @@ export const student_Links = [
         </defs>
       </svg>,
       text: "Mening fanlarim",
-      to: "dashboard2"
+      to: "sciences"
     },
     {
       img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -259,7 +259,7 @@ export const student_Links = [
         </defs>
       </svg>,
       text: "So’rovnoma",
-      to: "dashboard8"
+      to: "request"
     },
     {
       img: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
