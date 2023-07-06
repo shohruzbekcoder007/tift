@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const HeaderWrapper = styled.div`
   width: 400px;
-  height: 406px;
+  height: auto;
   background-color: #fff;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px 20px;
   .hr {
     width:100%;
     height: 2px;

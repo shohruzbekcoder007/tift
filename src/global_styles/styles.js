@@ -24,6 +24,15 @@ export const BoxHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    .qoidalar {
+        width: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: ${props => props.theme.color.secondary_color};
+        border-radius: 10px;
+        cursor:pointer;
+    }
 `
 
 export const BoxFooter = styled.div`
