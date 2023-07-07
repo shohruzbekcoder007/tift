@@ -30,6 +30,7 @@ import StudentSciences from './components/StudentSciences'
 import StudentSciencesMain from './components/StudentSciences/StudentSciencesMain'
 import Attendance from './components/StudentSciences/Attendance'
 import Final from './components/Final/Final'
+import CalendarDayWeek from './components/CalendarDayWeek'
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
               <Route path="thesisresult" element={<ThesisResult />} />
               <Route path="information" element={<Information />} />
               <Route path="request" element={<QuestionnaireTeacher/>} />
+              <Route path="sciencescalendar" element={<CalendarDayWeek/>} />
               <Route path="sciences" element={<StudentSciences />}>
                 <Route index element={<StudentSciencesMain />} />
                 <Route path="attendance" element={<Attendance />} />
