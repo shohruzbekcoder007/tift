@@ -1,12 +1,12 @@
 import React from 'react'
-import { SidebarHeader, SidebarLinkList, SidebarLinkListItem, SidebarLinkListItemImg, SidebarLinkListItemText, SidebarWrapper } from './styles'
+import { SidebarHeader, SidebarLinkList, SidebarLinkListItem, SidebarLinkListItemImg, SidebarLinkListItemText, SidebarLinksHead, SidebarWrapper } from './styles'
 import logo from './../../imgs/Logo.png'
 import { NavLink } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
 import { setTitle } from '../../redux/action/titleActions'
-import { student_Links, teacher_Links } from './sidebarlinks'
+import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links } from './sidebarlinks'
 
 
 export default function Sidebar({ role }) {
@@ -26,29 +26,33 @@ export default function Sidebar({ role }) {
       </SidebarHeader>
       <SidebarLinkList>
         {
-          role == "teacher" ? teacher_Links.map((elem, index) => {
-            return (
-              <ListItem
-                key={index}
-                img={elem.img}
-                text={elem.text}
-                to={elem.to}
-              />
-            )
-          }) : student_Links.map((elem, index) => {
-            return (
-              <ListItem
-                key={index}
-                img={elem.img}
-                text={elem.text}
-                to={elem.to}
-              />
-            )
+          chageLinks(role).map((elem, index) => {
+            if(elem.type && elem.type === "link_header"){
+              return <SidebarLinksHead>{elem.text}</SidebarLinksHead>
+            }else{
+              return (
+                <ListItem
+                  key={index}
+                  img={elem.img}
+                  text={elem.text}
+                  to={elem.to}
+                />
+              )
+            }
           })
         }
       </SidebarLinkList>
     </SidebarWrapper>
   )
+}
+
+const chageLinks = (role) => {
+  if(role==="teacher") return teacher_Links
+  if(role==="student") return student_Links
+  if(role==="department") return headofthedepartment_Links
+  if(role==="tutor") return tutor_Links
+  if(role==="dekan") return dekan_Links
+  return []
 }
 
 

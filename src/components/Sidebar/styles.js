@@ -85,3 +85,12 @@ export const SidebarLinkListItemText = styled.span`
         color: #FFF
     }
 `
+
+export const SidebarLinksHead = styled.li`
+    color: #000;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 10px;
+`

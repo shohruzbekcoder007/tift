@@ -3,6 +3,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'; 
 import interactionPlugin from '@fullcalendar/interaction';
 import uzLocale from '@fullcalendar/core/locales/uz';
+import { ContentWrapper } from '../../global_styles/styles';
+import { Paper } from '@mui/material';
  
 const events = [ 
   { 
@@ -27,20 +29,21 @@ const events = [
     start: '2023-07-07T13:00:00', 
     end: '2023-07-07T18:00:00', 
     allDay: false
-  }, 
-  { 
-    id: 4, 
-    title: 'event 4', 
-    start: '2023-07-07T00:45:00', 
-    end: '2023-07-07T01:00:00',
-    backgroundColor: "green",
-    allDay: false
   }
 ]; 
  
 function CalendarDayWeek() { 
   return ( 
-    <div className="CalendarDayWeek"> 
+    <ContentWrapper> 
+      <Paper
+                elevation={0}
+                sx={{
+                    width: '100%',
+                    padding: "20px",
+                    borderRadius: "10px",
+                    // backgroundColor: "transparent"
+                }}
+            >
       <FullCalendar 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} 
         initialView="timeGridWeek"
@@ -69,7 +72,8 @@ function CalendarDayWeek() {
         eventClick={(e) => console.log(e.event.id)}
         locale={uzLocale}
       /> 
-    </div> 
+      </Paper>
+    </ContentWrapper> 
   ); 
 } 
  

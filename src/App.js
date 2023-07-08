@@ -4,7 +4,6 @@ import defaultTheme from './theme/defaultTheme'
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
-import StudentDashboard from './components/TeacherDashboard/Student'
 import VideoGuide from './components/VideoGuide'
 import ClassScheduleTeacher from './components/ClassScheduleTeacher'
 import DashboardDetail from './components/TeacherDashboard/DashboardDetail'
@@ -31,6 +30,9 @@ import StudentSciencesMain from './components/StudentSciences/StudentSciencesMai
 import Attendance from './components/StudentSciences/Attendance'
 import Final from './components/Final/Final'
 import CalendarDayWeek from './components/CalendarDayWeek'
+import MainDekan from './components/MainDekan'
+import MainTutor from './components/MainTutor'
+import MainDepartment from './components/MainDepartment'
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login/>}/>
+            
             <Route path="teacher" element={<Main />}>
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="nb" element={<Attend/>} />
@@ -46,17 +49,17 @@ function App() {
               <Route path="sciences" element={<TeacherSciences />} />
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} />
               <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
-              <Route path="diploma/:id" element={<DiplomaTopics />} />
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
 
             <Route path="student" element={<MainStudent />}>
-              <Route path="dashboard" element={<StudentDashboard />} />
+              <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
               <Route path="readagain" element={<ReadAgain/>} />
               <Route path="personalplan" element={<PersonalPlan/>} />
@@ -68,18 +71,34 @@ function App() {
               <Route path="sciences" element={<StudentSciences />}>
                 <Route index element={<StudentSciencesMain />} />
                 <Route path="attendance" element={<Attendance />} />
-                {/* Attendance */}
               </Route>
               <Route path="final" element={<Final/>} />
-              {/* <Route path="Information" element={<Thesis />} />
-              <Route path="request" element={<Questionnaire/>} />
-              <Route path="coursemanagement" element={<CourseManagement/>} />
-              <Route path="videoguide" element={<VideoGuide />} />
-              <Route path="dashboard/:id" element={<DashboardDetail />} />
-              <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
+
+            <Route path="dekan" element={<MainDekan/>}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+            </Route>
+
+            <Route path="tutor" element={<MainTutor/>}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+            </Route>
+
+            <Route path="department" element={<MainDepartment/>}>
+              <Route path="dashboard" element={<TeacherDashboard />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="classschedule" element={<ClassScheduleTeacher />} />
+              <Route path="filingapplication" element={<FilingApplication/>} />
+              <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="diploma" element={<Thesis />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} />
+              <Route path="request" element={<Questionnaire/>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
+            </Route>
+
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

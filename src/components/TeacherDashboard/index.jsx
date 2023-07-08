@@ -17,7 +17,7 @@ export default function TeacherDashboard() {
          <TeacherDashboardSubTItle>
            Hurmatli professor-o‘qituvchilar! O‘quv yilini iyul oyidan kechiktirmasdan tugatish uchun 02.07.2022 sanadan keyin o‘tkazilishi kerak...
          </TeacherDashboardSubTItle>
-          <Link to={'/teacher/dashboard/1'}>
+          <Link to={'1'}>
             <TeacherDashboardButton>
             {listLanguage.Detail["ru"]}
           </TeacherDashboardButton>
