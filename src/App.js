@@ -33,6 +33,8 @@ import CalendarDayWeek from './components/CalendarDayWeek'
 import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
+import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
+import CalendarPlan from './components/TeacherSciences/CalendarPlan'
 
 function App() {
   return (
@@ -46,7 +48,10 @@ function App() {
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="nb" element={<Attend/>} />
               <Route path="filingapplication" element={<FilingApplication/>} />
-              <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="sciences" element={<TeacherSciences />}>
+                <Route index element={<TeacherSciencesMain />} />
+                <Route path="calendarplan" element={<CalendarPlan />} />
+              </Route>
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
               <Route path="diploma/:id" element={<DiplomaTopics />} />
