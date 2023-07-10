@@ -28,7 +28,7 @@ return (
       <PageSelector chageValueFunction={(val)=> {
         console.log(val)
         }} />
-        <div style={{display: 'flex', width: "70%", justifyContent: "space-between"}}>
+        <div style={{display: 'flex', flexWrap: 'wrap', width: "70%", justifyContent: "space-between"}}>
           <div onClick={handleOpen} className='qoidalar'>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_78_20514)">

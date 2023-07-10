@@ -29,6 +29,8 @@ import StudentSciences from './components/StudentSciences'
 import StudentSciencesMain from './components/StudentSciences/StudentSciencesMain'
 import Attendance from './components/StudentSciences/Attendance'
 import Final from './components/Final/Final'
+import ScienceSelection from './components/ScienceSelection/ScienceSelection'
+import Student_services from './components/Student_services/Student_services'
 import CalendarDayWeek from './components/CalendarDayWeek'
 import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
@@ -78,6 +80,14 @@ function App() {
                 <Route path="attendance" element={<Attendance />} />
               </Route>
               <Route path="final" element={<Final/>} />
+              <Route path="ScienceSelection" element={<ScienceSelection/>} />
+              <Route path="services" element={<Student_services/>} />
+              {/* <Route path="Information" element={<Thesis />} />
+              <Route path="request" element={<Questionnaire/>} />
+              <Route path="coursemanagement" element={<CourseManagement/>} />
+              <Route path="videoguide" element={<VideoGuide />} />
+              <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
