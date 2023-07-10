@@ -32,6 +32,10 @@ export const BoxHeader = styled.div`
         background-color: ${props => props.theme.color.secondary_color};
         border-radius: 10px;
         cursor:pointer;
+
+    }
+    @media (max-width: 575px){
+        display: block;
     }
 `
 
