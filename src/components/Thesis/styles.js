@@ -6,6 +6,9 @@ export const ThesisHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    @media (max-width: 576px) {
+        display: block;
+    }
 `
 
 export const ThesisBody = styled.div`

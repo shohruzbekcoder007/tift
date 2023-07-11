@@ -34,6 +34,10 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
                         fontWeight: '500',
                         color: '#151515',
                         borderRadius: "10px",
+                        '@media screen and (max-width: 576px)': { 
+                            fontSize: "12px", 
+                            margin: "0.3rem 0"
+                          }, 
                         // minWidth: '70px',
                         '& .MuiInputBase-root': {
                             borderColor: "red",
@@ -54,7 +58,7 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
                 >
                     {
                         selectOptions.map((elem, index) => {
-                            return <MenuItem key={index} value={elem.value}>{elem.name}</MenuItem>
+                            return <MenuItem  key={index} value={elem.value}>{elem.name}</MenuItem>
                         })
                     }
                 </Select>

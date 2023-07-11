@@ -6,6 +6,9 @@ export const ThesisHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
+    @media (max-width: 576px) {
+        display: block;
+    }
 `
 
 export const ThesisBody = styled.div`
@@ -24,4 +27,12 @@ export const ThesisFooterText = styled.p`
     color: #151515;
     font-weight: ${props => props.theme.text.subtitle1.font_weight};
     font-size: ${props => props.theme.text.subtitle1.font_size};
+`
+
+export const ThesisHeaderRight = styled.div`
+    display: flex;
+    gap: 10px;
+    @media (max-width: 576px){ 
+        display: grid;
+    }
 `

@@ -7,4 +7,7 @@ export const FilingApplicationHeader = styled.div`
     justify-content: space-between;
     /* gap: 20px; */
     margin-bottom: 24px;
+    @media(max-width: 991px){
+        display: block;
+    }
 `

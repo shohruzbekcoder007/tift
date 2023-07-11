@@ -36,6 +36,10 @@ export default function PageSelector({chageValueFunction}) {
                         color: '#151515',
                         borderRadius: "10px",
                         // minWidth: '70px',
+                        '@media screen and (max-width: 576px)': { 
+                            fontSize: "12px", 
+                            margin: "0.5rem 0"
+                          }, 
                         '& .MuiInputBase-root': {
                             borderColor: "red",
                             outlineColor: "red",

@@ -37,7 +37,10 @@ import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan from './components/TeacherSciences/CalendarPlan'
-
+import Applications from './components/Applications/applications'
+import Patoks from './components/Patoks/Patoks'
+import Final_Dep from './components/Final_Dep/Final_Dep'
+import Questions from './components/Questions/Questions'
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
@@ -83,11 +86,10 @@ function App() {
               <Route path="ScienceSelection" element={<ScienceSelection/>} />
               <Route path="services" element={<Student_services/>} />
               {/* <Route path="Information" element={<Thesis />} />
-              <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<CourseManagement/>} />
               <Route path="videoguide" element={<VideoGuide />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
-              <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
+            <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
@@ -112,6 +114,12 @@ function App() {
               <Route path="diploma/:id" element={<DiplomaTopics />} />
               <Route path="request" element={<Questionnaire/>} />
               <Route path="coursemanagement" element={<CourseManagement/>} />
+              <Route path="applications" element={<Applications/>} />
+              <Route path="patoks" element={<Patoks/>} />
+              <Route path="final" element={<StudentSciences/>} >
+                <Route index element={<Final_Dep />} />
+                <Route path='questions' element={<Questions />} />
+              </Route>
             </Route>
 
           </Routes>

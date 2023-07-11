@@ -2,7 +2,7 @@ import React from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { BoxFooter, BoxFooterText } from '../../global_styles/styles'
 import { Button, Pagination, Paper, Typography } from '@mui/material'
-import { ThesisBody, ThesisHeader } from './styles'
+import { ThesisBody, ThesisHeader, ThesisHeaderRight } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
 import DiplomaTable from '../DiplomaTable'
@@ -39,7 +39,7 @@ export default function Student_services() {
       >
         <ThesisHeader>
           <PageSelector chageValueFunction={chageRowHadler} />
-          <div style={{ display: 'flex', gap: "10px" }}>
+          <ThesisHeaderRight >
             <CustomizedInput callback_func={chageSearch} />
             <Button
               variant="contained"
@@ -56,7 +56,7 @@ export default function Student_services() {
             >
               Ariza berish
             </Button>
-          </div>
+          </ThesisHeaderRight>
         </ThesisHeader>
         <ThesisBody>
           <ServicesTable />
@@ -86,7 +86,8 @@ export default function Student_services() {
                   color: "#000",
                 }}
               >
-                Ariza Berish                            </Typography>
+                Ariza Berish
+              </Typography>
               <span
                 onClick={handleClose}
               >

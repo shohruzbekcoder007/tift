@@ -10,7 +10,7 @@ const defaultTheme = {
     },
     text: {
         subtitle1: {
-            font_size: '16px',
+            font_size: '14px',
             font_weight: '500'
         },
         H1: {
