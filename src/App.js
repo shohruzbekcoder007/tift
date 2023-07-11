@@ -42,6 +42,7 @@ import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
 import Questions from './components/Questions/Questions'
 import ThematicBlock from './components/TeacherSciences/ThematicBlock'
+
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
@@ -89,11 +90,6 @@ function App() {
               <Route path="final" element={<Final/>} />
               <Route path="ScienceSelection" element={<ScienceSelection/>} />
               <Route path="services" element={<Student_services/>} />
-              {/* <Route path="Information" element={<Thesis />} />
-              <Route path="coursemanagement" element={<CourseManagement/>} />
-              <Route path="videoguide" element={<VideoGuide />} />
-              <Route path="dashboard/:id" element={<DashboardDetail />} />
-            <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>
