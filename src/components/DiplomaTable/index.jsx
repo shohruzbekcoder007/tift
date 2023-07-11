@@ -77,7 +77,7 @@ export default function DiplomaTable() {
                         <th>01-06-2023 13:58</th>
                         <th>SPM201</th>
                         <th>
-                        <Link to={'diploma/1'}>
+                        <Link to={'1'}>
                                 <Button 
                                     variant="contained"
                                     sx={{
@@ -98,7 +98,7 @@ export default function DiplomaTable() {
                         <th>01-06-2023 13:58</th>
                         <th>SPM201</th>
                         <th>
-                            <Link to={'diploma/1'}>
+                            <Link to={'1'}>
                                 <Button 
                                     variant="contained"
                                     sx={{
