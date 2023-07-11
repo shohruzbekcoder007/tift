@@ -37,15 +37,11 @@ import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan from './components/TeacherSciences/CalendarPlan'
-<<<<<<< HEAD
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
 import Questions from './components/Questions/Questions'
-=======
 import ThematicBlock from './components/TeacherSciences/ThematicBlock'
-
->>>>>>> d5992e6e5b2ebb5d04c1d278b32a4b952275eaf3
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
