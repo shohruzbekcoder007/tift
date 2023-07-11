@@ -3,6 +3,7 @@ import React from 'react'
 import { BoxBody, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { TableTHHeader } from '../../DiplomaTable'
 import { TeacherSciencesButtonBox } from '../styles'
+import { UnableToSpecify } from './styles'
 
 export default function CalendarPlan() {
   return (
@@ -158,22 +159,22 @@ export default function CalendarPlan() {
             </tbody>
           </table>
           <Typography
-                    variant='h2'
-                    sx={{
-                      color: '#000',
-                      fontSize: '16px',
-                      fontStyle: 'normal',
-                      fontWeight: '500',
-                      lineHeight: 'normal',
-                      padding: '20px 10px',
-                      width: "100%",
-                      borderRight: "1px solid #eee",
-                      borderLeft: "1px solid #eee",
-                    }}
-                  >
-                    Ko’chirilgan vaqt
-                  </Typography>
-                  <table>
+            variant='h2'
+            sx={{
+              color: '#000',
+              fontSize: '16px',
+              fontStyle: 'normal',
+              fontWeight: '500',
+              lineHeight: 'normal',
+              padding: '20px 10px',
+              width: "100%",
+              borderRight: "1px solid #eee",
+              borderLeft: "1px solid #eee",
+            }}
+          >
+            Ko’chirilgan vaqt
+          </Typography>
+          <table>
             <thead>
               <tr>
                 <TableTHHeader
@@ -204,29 +205,20 @@ export default function CalendarPlan() {
                       <th>29-05-2023</th>
                       <th style={{ width: "200px" }}>
                         <TeacherSciencesButtonBox>
-                          <Button
-                            variant="contained"
-                            size="small"
-                            // color="secondary"
-                            sx={{
-                              textTransform: "none",
-                              borderRadius: "10px",
-                              boxShadow: "none",
-                              width: "181px"
-                            }}
-                            startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                              <g clipPath="url(#clip0_493_1779)">
-                                <path d="M12.1427 6.06533C12.4007 6.328 12.3967 6.75 12.1333 7.008L9.18267 9.90467C8.66067 10.4167 7.98867 10.672 7.316 10.672C6.65067 10.672 5.98533 10.4213 5.46533 9.91933L4.19933 8.67467C3.93667 8.41667 3.93333 7.99467 4.19133 7.732C4.44867 7.46867 4.872 7.46533 5.134 7.724L6.396 8.96467C6.91333 9.46467 7.73 9.462 8.25 8.95267L11.2 6.05667C11.462 5.798 11.8827 5.80267 12.1427 6.06533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
+                          <UnableToSpecify>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clipPath="url(#clip0_579_2448)">
+                                <path d="M10.665 5.33337C10.54 5.20839 10.3704 5.13818 10.1937 5.13818C10.0169 5.13818 9.84736 5.20839 9.72234 5.33337L7.99834 7.05738L6.27434 5.33337C6.1486 5.21194 5.9802 5.14474 5.80541 5.14626C5.63061 5.14778 5.4634 5.21789 5.33979 5.3415C5.21619 5.4651 5.14608 5.63231 5.14456 5.80711C5.14304 5.98191 5.21023 6.15031 5.33167 6.27604L7.05567 8.00004L5.33167 9.72404C5.21023 9.84978 5.14304 10.0182 5.14456 10.193C5.14608 10.3678 5.21619 10.535 5.33979 10.6586C5.4634 10.7822 5.63061 10.8523 5.80541 10.8538C5.9802 10.8553 6.1486 10.7881 6.27434 10.6667L7.99834 8.94271L9.72234 10.6667C9.84807 10.7881 10.0165 10.8553 10.1913 10.8538C10.3661 10.8523 10.5333 10.7822 10.6569 10.6586C10.7805 10.535 10.8506 10.3678 10.8521 10.193C10.8536 10.0182 10.7864 9.84978 10.665 9.72404L8.94101 8.00004L10.665 6.27604C10.79 6.15102 10.8602 5.98148 10.8602 5.80471C10.8602 5.62793 10.79 5.45839 10.665 5.33337Z" fill="#F41B35" />
+                                <path d="M8 0C6.41775 0 4.87103 0.469192 3.55544 1.34824C2.23985 2.22729 1.21447 3.47672 0.608967 4.93853C0.00346629 6.40034 -0.15496 8.00888 0.153721 9.56072C0.462403 11.1126 1.22433 12.538 2.34315 13.6569C3.46197 14.7757 4.88743 15.5376 6.43928 15.8463C7.99113 16.155 9.59966 15.9965 11.0615 15.391C12.5233 14.7855 13.7727 13.7602 14.6518 12.4446C15.5308 11.129 16 9.58225 16 8C15.9977 5.87897 15.1541 3.84547 13.6543 2.34568C12.1545 0.845886 10.121 0.00229405 8 0ZM8 14.6667C6.68146 14.6667 5.39253 14.2757 4.2962 13.5431C3.19987 12.8106 2.34539 11.7694 1.84081 10.5512C1.33622 9.33305 1.2042 7.99261 1.46144 6.6994C1.71867 5.40619 2.35361 4.21831 3.28596 3.28596C4.21831 2.3536 5.4062 1.71867 6.6994 1.46143C7.99261 1.2042 9.33305 1.33622 10.5512 1.8408C11.7694 2.34539 12.8106 3.19987 13.5431 4.2962C14.2757 5.39253 14.6667 6.68146 14.6667 8C14.6647 9.76752 13.9617 11.4621 12.7119 12.7119C11.4621 13.9617 9.76752 14.6647 8 14.6667Z" fill="#F41B35" />
                               </g>
                               <defs>
-                                <clipPath id="clip0_493_1779">
+                                <clipPath id="clip0_579_2448">
                                   <rect width="16" height="16" fill="white" />
                                 </clipPath>
                               </defs>
-                            </svg>}
-                          >
-                            O'tganlikni belgilash
-                          </Button>
+                            </svg>
+                            <p>Belgilash mumkin emas</p>
+                          </UnableToSpecify>
                           <Button
                             variant="contained"
                             size="small"

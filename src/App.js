@@ -37,6 +37,7 @@ import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan from './components/TeacherSciences/CalendarPlan'
+import ThematicBlock from './components/TeacherSciences/ThematicBlock'
 
 function App() {
   return (
@@ -53,6 +54,7 @@ function App() {
               <Route path="sciences" element={<TeacherSciences />}>
                 <Route index element={<TeacherSciencesMain />} />
                 <Route path="calendarplan" element={<CalendarPlan />} />
+                <Route path="thematicblock" element={<ThematicBlock />} />
               </Route>
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
