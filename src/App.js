@@ -36,7 +36,7 @@ import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
-import CalendarPlan from './components/TeacherSciences/CalendarPlan'
+import CalendarPlan, { CalendarPlanMain} from './components/TeacherSciences/CalendarPlan'
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
@@ -56,8 +56,10 @@ function App() {
               <Route path="filingapplication" element={<FilingApplication/>} />
               <Route path="sciences" element={<TeacherSciences />}>
                 <Route index element={<TeacherSciencesMain />} />
-                <Route path="calendarplan" element={<CalendarPlan />} />
-                <Route path="thematicblock" element={<ThematicBlock />} />
+                <Route path="calendarplan" element={<CalendarPlanMain/>} >
+                  <Route index element={<CalendarPlan />} />
+                  <Route path="thematicblock" element={<ThematicBlock />} />
+                </Route>
               </Route>
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
