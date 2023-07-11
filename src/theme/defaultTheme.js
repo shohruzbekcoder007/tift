@@ -17,6 +17,10 @@ const defaultTheme = {
             font_size: '24px',
             font_weight: '600'
         },
+        H2: {
+            font_size: '20px',
+            font_weight: '600'
+        },
         subtitle4: {
             font_size: '12px',
             font_weight: '400'

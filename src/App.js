@@ -42,7 +42,6 @@ import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
 import Questions from './components/Questions/Questions'
 import ThematicBlock from './components/TeacherSciences/ThematicBlock'
-
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
