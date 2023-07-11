@@ -1,10 +1,12 @@
 import styled from "styled-components";
 
 export const BoxHeaderApp = styled.div`
-    width: 50%;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: space-between; */
+    justify-content: flex-start;
+    gap: 32px;
     margin-bottom: 20px;
     .qoidalar {
         width: 150px;
