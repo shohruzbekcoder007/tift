@@ -42,6 +42,10 @@ import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
 import Questions from './components/Questions/Questions'
 import ThematicBlock from './components/TeacherSciences/ThematicBlock'
+import DekanGroups from './components/DekanGroups/DekanGroups'
+import Appropriation from './components/Appropriation/Appropriation'
+import DekanStudents from './components/DekanStudents/DekanStudents'
+import DekanStatistic from './components/DekanStatistic/DekanStatistic'
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
@@ -99,6 +103,12 @@ function App() {
             <Route path="dekan" element={<MainDekan/>}>
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="groups" element={<StudentSciences />} >
+                <Route index element={<DekanGroups />}/>
+                <Route path='appropriation' element={<Appropriation />}/>
+                <Route path='students' element={<DekanStudents />} />
+              </Route>
+              <Route path='statistika' element={<DekanStatistic/>}/>
             </Route>
 
             <Route path="tutor" element={<MainTutor/>}>
