@@ -36,7 +36,7 @@ import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
-import CalendarPlan from './components/TeacherSciences/CalendarPlan'
+import CalendarPlan, { CalendarPlanMain} from './components/TeacherSciences/CalendarPlan'
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
@@ -46,6 +46,7 @@ import DekanGroups from './components/DekanGroups/DekanGroups'
 import Appropriation from './components/Appropriation/Appropriation'
 import DekanStudents from './components/DekanStudents/DekanStudents'
 import DekanStatistic from './components/DekanStatistic/DekanStatistic'
+
 function App() {
   return (
     <MuiTheme theme={muiTheme}>
@@ -60,8 +61,10 @@ function App() {
               <Route path="filingapplication" element={<FilingApplication/>} />
               <Route path="sciences" element={<TeacherSciences />}>
                 <Route index element={<TeacherSciencesMain />} />
-                <Route path="calendarplan" element={<CalendarPlan />} />
-                <Route path="thematicblock" element={<ThematicBlock />} />
+                <Route path="calendarplan" element={<CalendarPlanMain/>} >
+                  <Route index element={<CalendarPlan />} />
+                  <Route path="thematicblock" element={<ThematicBlock />} />
+                </Route>
               </Route>
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="diploma" element={<Thesis />} />
@@ -91,11 +94,6 @@ function App() {
               <Route path="final" element={<Final/>} />
               <Route path="ScienceSelection" element={<ScienceSelection/>} />
               <Route path="services" element={<Student_services/>} />
-              {/* <Route path="Information" element={<Thesis />} />
-              <Route path="coursemanagement" element={<CourseManagement/>} />
-              <Route path="videoguide" element={<VideoGuide />} />
-              <Route path="dashboard/:id" element={<DashboardDetail />} />
-            <Route path="diploma/:id" element={<DiplomaTopics />} /> */}
               <Route path="profile" element={<Profile />} />
               <Route path="details/:id" element={<DashboardDetail />} />
             </Route>

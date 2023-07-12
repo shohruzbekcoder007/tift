@@ -10,8 +10,12 @@ const defaultTheme = {
     },
     text: {
         subtitle1: {
-            font_size: '14px',
+            font_size: '16px',
             font_weight: '500'
+        },
+        subtitle2: {
+            font_size: '14px',
+            font_weight: '400'
         },
         H1: {
             font_size: '24px',
