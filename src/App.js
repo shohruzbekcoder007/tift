@@ -117,9 +117,12 @@ function App() {
             <Route path="department" element={<MainDepartment/>}>
               <Route path="dashboard" element={<TeacherDashboard />} />
               <Route path="dashboard/:id" element={<DashboardDetail />} />
+              <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
               <Route path="classschedule" element={<ClassScheduleTeacher />} />
               <Route path="filingapplication" element={<FilingApplication/>} />
               <Route path="sciences" element={<TeacherSciences />} />
+              <Route path="Ddiploma" element={<Thesis />} />
+              <Route path="Ddiploma/:id" element={<DiplomaTopics />} />
               <Route path="diploma" element={<Thesis />} />
               <Route path="diploma/:id" element={<DiplomaTopics />} />
               <Route path="request" element={<Questionnaire/>} />
