@@ -24,6 +24,10 @@ export const DekanStatisticCard = styled.div`
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
    }
 `
+export const DekanStatisticCardIcon = styled.span`
+  width: 50px;
+  height: 50px;
+`
 export const DekanStatisticCardTitle = styled.h3`
   font-size: 14px;
   font-weight: 500;

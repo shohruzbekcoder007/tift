@@ -1,12 +1,13 @@
 import React from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
-import { DekanStatisticCard, DekanStatisticCardTitle, DekanStatisticCol, DekanStatisticRow } from './style'
+import { DekanStatisticCard, DekanStatisticCardIcon, DekanStatisticCardTitle, DekanStatisticCol, DekanStatisticRow } from './style'
 export default function DekanStatistic() {
   return (
     <ContentWrapper>
       <DekanStatisticRow>
         <DekanStatisticCol>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28594)">
@@ -21,6 +22,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
             <DekanStatisticCardTitle>
               Kontingent
             </DekanStatisticCardTitle>
@@ -28,6 +30,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol>
         <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28600)">
@@ -40,6 +43,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Yakuniy natijalar
@@ -48,6 +52,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28605)">
@@ -64,6 +69,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Yakuniy Savollar
@@ -72,6 +78,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28612)">
@@ -86,6 +93,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
             <DekanStatisticCardTitle>
               Yo’nalish bo’yicha talabalar soni
             </DekanStatisticCardTitle>
@@ -94,6 +102,7 @@ export default function DekanStatistic() {
 
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28612)">
@@ -108,6 +117,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
             <DekanStatisticCardTitle>
               Barcha talabalar
             </DekanStatisticCardTitle>
@@ -115,6 +125,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28600)">
@@ -127,6 +138,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Baholarni eksport qilish
@@ -135,6 +147,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28630)">
@@ -147,6 +160,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
 
             <DekanStatisticCardTitle>
@@ -156,6 +170,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28594)">
@@ -170,6 +185,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
             <DekanStatisticCardTitle>
               NB, taqvim reja, qarzdorlar, baholar
             </DekanStatisticCardTitle>
@@ -178,6 +194,7 @@ export default function DekanStatistic() {
 
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28642)">
@@ -190,6 +207,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Oraliq nazorat qo’ymagan o‘qituvchi/
@@ -198,6 +216,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28647)">
@@ -210,6 +229,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
 
             <DekanStatisticCardTitle>
@@ -219,6 +239,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" link="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28652)">
@@ -231,6 +252,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
 
 
@@ -241,6 +263,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28657)">
@@ -253,6 +276,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Video darslar
@@ -262,6 +286,7 @@ export default function DekanStatistic() {
 
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28663)">
@@ -274,6 +299,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               O’qituvchilar
@@ -282,6 +308,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <path d="M29 12H15C12.243 12 10 14.243 10 17V27C10 29.757 12.243 32 15 32H29C31.757 32 34 29.757 34 27V17C34 14.243 31.757 12 29 12ZM12 20H16V24H12V20ZM18 20H32V24H18V20ZM32 17V18H18V14H29C30.654 14 32 15.346 32 17ZM15 14H16V18H12V17C12 15.346 13.346 14 15 14ZM12 27V26H16V30H15C13.346 30 12 28.654 12 27ZM29 30H18V26H32V27C32 28.654 30.654 30 29 30Z" fill="url(#pattern0)" />
@@ -289,6 +316,7 @@ export default function DekanStatistic() {
               <defs>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
 
             <DekanStatisticCardTitle>
@@ -298,6 +326,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28673)">
@@ -311,6 +340,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
             <DekanStatisticCardTitle>
               Dars qoldirgan talabalar
             </DekanStatisticCardTitle>
@@ -318,6 +348,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>
+            <DekanStatisticCardIcon>
             <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
               <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
               <g clip-path="url(#clip0_78_28678)">
@@ -330,6 +361,7 @@ export default function DekanStatistic() {
                 </clipPath>
               </defs>
             </svg>
+            </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
               Qatnashmagan talabalar statistikasi
