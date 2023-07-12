@@ -4,11 +4,11 @@ export const DekanStatisticRow = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
 `
 export const DekanStatisticCol = styled.div`
-   flex-basis: 25%;
-   padding: 0 10px;
-   margin: ${props => props.size ? "1rem 0 0 0" : 0};
+   width: 263px;
 `
 export const DekanStatisticCard = styled.div`
    width: 100%;
@@ -16,7 +16,7 @@ export const DekanStatisticCard = styled.div`
    display: flex;
    gap: 10px;
    align-items: center;
-   padding: 1.3rem 1rem;
+   padding: 20px;
    border-radius: 10px;
    cursor: pointer;
    transition: 0.3s ease-in-out;
