@@ -1,42 +1,73 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import * as React from 'react'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
 import { useNavigate } from "react-router-dom"
-import axios from '../../utils/baseUrl'
-import { token_url } from '../../utils/API_urls';
+import axios, { headerConfig } from '../../utils/baseUrl'
+import { token_url, user_me } from '../../utils/API_urls'
 
+const getToken = (url, data, successfulFunction, errorFunction) => {
+  axios.post(
+    url,
+    data
+  )
+  .then((response) => {
+    successfulFunction(response)
+  })
+  .catch((error) => {
+    errorFunction(error)
+    
+  });
+}
+
+const getRole = (url, successfulFunction, errorFunction) => {
+  axios.get(url, {
+    headers: headerConfig(),
+  }).then(response => {
+    successfulFunction(response.data)
+  }).catch((error) => {
+    errorFunction(error)
+  })
+}
 
 export default function Login() {
 
   let navigate = useNavigate()
 
+  const successfulFunctionGetToken = (response) => {
+    sessionStorage.setItem('access_token',response.data.access)
+    getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
+  }
+
+  const errorFunctionGetToken = (error) => {
+    console.log({ errorMessage: error.toString() });
+    console.error("There was an error!", error);
+  }
+
+  const successfulFunctionGetRole = (response) => {
+    if(response.role){
+      if(response.role[0] === "student"){
+        navigate('/student/dashboard')
+      }
+    }
+  }
+
+  const errorFunctionGetRole = (error) => {
+    console.log({ errorMessage: error.toString() });
+    console.error("There was an error!", error);
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    getToken(token_url, {
       username: data.get('username'),
       password: data.get('password'),
-    });
-    navigate('teacher/dashboard')
-    axios.post(
-      token_url,
-      {
-        username: data.get('username'),
-        password: data.get('password'),
-      }
-    )
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((error) => {
-      console.log({ errorMessage: error.toString() });
-      console.error("There was an error!", error);
-    });
+    }, successfulFunctionGetToken, errorFunctionGetToken)
   };
 
   return (
