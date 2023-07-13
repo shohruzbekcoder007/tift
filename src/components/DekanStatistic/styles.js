@@ -28,8 +28,10 @@ export const DekanStatisticCardIcon = styled.span`
   width: 50px;
   height: 50px;
 `
+
 export const DekanStatisticCardTitle = styled.h3`
   font-size: 14px;
   font-weight: 500;
   line-height: normal;
+  color: black;
 `

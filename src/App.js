@@ -46,6 +46,7 @@ import DekanGroups from './components/DekanGroups/DekanGroups'
 import Appropriation from './components/Appropriation/Appropriation'
 import DekanStudents from './components/DekanStudents/DekanStudents'
 import DekanStatistic from './components/DekanStatistic/DekanStatistic'
+import Kontingent from './components/StatistikaList/Kontingent/Kontingent'
 
 function App() {
   return (
@@ -106,7 +107,10 @@ function App() {
                 <Route path='appropriation' element={<Appropriation />}/>
                 <Route path='students' element={<DekanStudents />} />
               </Route>
-              <Route path='statistika' element={<DekanStatistic/>}/>
+              <Route path='statistika' element={<StudentSciences/>}>
+                <Route index element={<DekanStatistic/>}/>
+                <Route path='kontingent' element={<Kontingent/>}/>
+              </Route>
             </Route>
 
             <Route path="tutor" element={<MainTutor/>}>
