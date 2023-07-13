@@ -22,7 +22,7 @@ export default function Login() {
       username: data.get('email'),
       password: data.get('password'),
     });
-    // navigate('teacher/dashboard')
+    navigate('teacher/dashboard')
     axios.post(
       token_url,
       {
