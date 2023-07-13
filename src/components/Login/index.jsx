@@ -9,10 +9,14 @@ import Container from '@mui/material/Container'
 import { useNavigate } from "react-router-dom"
 import { token_url, user_me } from '../../utils/API_urls'
 import { getRole, getToken } from './requests'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/action/userActions'
+import { getRole as getRoleUser } from '../../utils/getRole'
 
 export default function Login() {
 
   let navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const successfulFunctionGetToken = (response) => {
     sessionStorage.setItem('access_token',response.data.access)
@@ -25,11 +29,9 @@ export default function Login() {
   }
 
   const successfulFunctionGetRole = (response) => {
-    if(response.role){
-      if(response.role[0] === "student"){
-        navigate('/student/dashboard')
-      }
-    }
+    dispatch(setUser(response))
+    const user_role = getRoleUser(response)
+    navigate(`/${user_role}/dashboard`)
   }
 
   const errorFunctionGetRole = (error) => {
@@ -44,7 +46,7 @@ export default function Login() {
       username: data.get('username'),
       password: data.get('password'),
     }, successfulFunctionGetToken, errorFunctionGetToken)
-  };
+  }
 
   return (
       <Container component="main" maxWidth="xs">
@@ -96,4 +98,5 @@ export default function Login() {
         </Box>
       </Container>
   );
+  
 }
