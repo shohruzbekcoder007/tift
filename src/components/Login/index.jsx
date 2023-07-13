@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react' 
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -7,32 +7,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { useNavigate } from "react-router-dom"
-import axios, { headerConfig } from '../../utils/baseUrl'
 import { token_url, user_me } from '../../utils/API_urls'
-
-const getToken = (url, data, successfulFunction, errorFunction) => {
-  axios.post(
-    url,
-    data
-  )
-  .then((response) => {
-    successfulFunction(response)
-  })
-  .catch((error) => {
-    errorFunction(error)
-    
-  });
-}
-
-const getRole = (url, successfulFunction, errorFunction) => {
-  axios.get(url, {
-    headers: headerConfig(),
-  }).then(response => {
-    successfulFunction(response.data)
-  }).catch((error) => {
-    errorFunction(error)
-  })
-}
+import { getRole, getToken } from './requests'
 
 export default function Login() {
 
