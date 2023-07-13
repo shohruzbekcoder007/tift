@@ -19,14 +19,18 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get('email'),
+      username: data.get('username'),
       password: data.get('password'),
     });
+<<<<<<< HEAD
   // navigate('teacher/dashboard')
+=======
+    navigate('teacher/dashboard')
+>>>>>>> fa834dd425f761f36c0261e8223ee9c1a4d7dd24
     axios.post(
       token_url,
       {
-        username: data.get('email'),
+        username: data.get('username'),
         password: data.get('password'),
       }
     )
@@ -61,10 +65,10 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="username"
               label="User name"
-              name="email"
-              autoComplete="email"
+              name="username"
+              autoComplete="username"
               autoFocus
             />
             <TextField

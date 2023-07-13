@@ -13,7 +13,7 @@ export const HeaderWrapper = styled.div`
   top: 0;
   right: 0;
   z-index: 99;
-  // padding-left: ${props =>  props.big?"304px":"32px"};
+  // padding-left: ${props => props.big ? "304px" : "32px"};
   padding-left: 304px;
   @media (max-width: 890px) {
     padding-left: 32px;
@@ -47,6 +47,7 @@ export const HeaderAccount = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+  transition: all 0.2s ease 0s;
 
   svg {
     color: #1A1818;
@@ -58,6 +59,24 @@ export const HeaderAccount = styled.div`
   .active svg {
     color: white;
   }
+
+  @media (max-width: 685px) {
+      position: absolute;
+      top: 95px;
+      background: #fff;
+      width: 100%;
+      left: 0;
+      box-shadow: 1px 26px 28px -21px #ccc;
+      border-top: 1px solid #ccc;
+      height: ${props => props.open ? 'auto' : '0'};
+      padding: ${props => props.open ? '15px' : '0'};
+      transition: all 0.2s ease 0s;
+      overflow: hidden;
+    }
+    @media (max-width: 350px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 `
 
 export const HeaderAccountTime = styled.p`
@@ -69,7 +88,10 @@ export const HeaderAccountTime = styled.p`
   padding: 16px;
   background: ${props => props.theme.color.secondary_color};
   border-radius: 10px;
-  
+  @media (max-width: 350px) {
+      width: 100%;
+      text-align: center;
+    }
 `
 
 export const HeaderAccountItem = styled.div`
@@ -80,7 +102,12 @@ export const HeaderAccountItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
 
-  
-
+export const TreeDots = styled.span`
+  display: none;
+  cursor: pointer;
+  @media (max-width: 685px) {
+    display: block;
+  }
 `
