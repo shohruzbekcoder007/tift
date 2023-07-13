@@ -37,6 +37,14 @@ export default function Login() {
     console.error("There was an error!", error);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    getToken(token_url, {
+      username: data.get('username'),
+      password: data.get('password'),
+    }, successfulFunctionGetToken, errorFunctionGetToken)
+  };
 
   return (
       <Container component="main" maxWidth="xs">
