@@ -37,30 +37,6 @@ export default function Login() {
     console.error("There was an error!", error);
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    getToken(token_url, {
-      username: data.get('username'),
-      password: data.get('password'),
-    });
-  // navigate('teacher/dashboard')
-    navigate('teacher/dashboard')
-    axios.post(
-      token_url,
-      {
-        username: data.get('username'),
-        password: data.get('password'),
-      }
-    )
-    .then((response) => {
-      console.log(response.data)
-    })
-    .catch((error) => {
-      console.log({ errorMessage: error.toString() });
-      console.error("There was an error!", error);
-    });
-  };
 
   return (
       <Container component="main" maxWidth="xs">
