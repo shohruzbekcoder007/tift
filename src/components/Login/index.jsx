@@ -67,7 +67,6 @@ export default function Login() {
     getToken(token_url, {
       username: data.get('username'),
       password: data.get('password'),
-<<<<<<< HEAD
     });
   // navigate('teacher/dashboard')
     navigate('teacher/dashboard')
@@ -85,9 +84,6 @@ export default function Login() {
       console.log({ errorMessage: error.toString() });
       console.error("There was an error!", error);
     });
-=======
-    }, successfulFunctionGetToken, errorFunctionGetToken)
->>>>>>> ee8fbf3f21c0073b35733028cbe0e59de5b90aa0
   };
 
   return (
