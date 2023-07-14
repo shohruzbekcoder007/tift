@@ -32,6 +32,7 @@ export default function DekanStatistic() {
           </Link>
         </DekanStatisticCol>
         <DekanStatisticCol>
+          <Link to={'finalresult'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -52,8 +53,10 @@ export default function DekanStatistic() {
               Yakuniy natijalar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol>
+          <Link to={'finalquestion'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -78,6 +81,7 @@ export default function DekanStatistic() {
               Yakuniy Savollar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol>
           <DekanStatisticCard>
@@ -127,6 +131,7 @@ export default function DekanStatistic() {
           </DekanStatisticCard>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'exportgrades'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -147,9 +152,11 @@ export default function DekanStatistic() {
               Baholarni eksport qilish
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
-          <DekanStatisticCard>
+        <Link to={'materials'}>
+        <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
                 <rect width="44" height="44" rx="10" fill="#35AB41" fill-opacity="0.1" />
@@ -164,14 +171,14 @@ export default function DekanStatistic() {
                 </defs>
               </svg>
             </DekanStatisticCardIcon>
-
-
             <DekanStatisticCardTitle>
               Materiallar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+        </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'calendarplans'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -193,6 +200,7 @@ export default function DekanStatistic() {
               NB, taqvim reja, qarzdorlar, baholar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
 
         <DekanStatisticCol size={true}>

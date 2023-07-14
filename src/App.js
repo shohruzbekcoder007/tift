@@ -37,6 +37,7 @@ import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan, { CalendarPlanMain} from './components/TeacherSciences/CalendarPlan'
+import CalendarPlans from './components/StatistikaList/CalendarPlan/CalendarPlans'
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
@@ -47,6 +48,10 @@ import Appropriation from './components/Appropriation/Appropriation'
 import DekanStudents from './components/DekanStudents/DekanStudents'
 import DekanStatistic from './components/DekanStatistic/DekanStatistic'
 import Kontingent from './components/StatistikaList/Kontingent/Kontingent'
+import FinalQuestion from './components/StatistikaList/FinalQuestion/FinalQuestion'
+import FinalResults from './components/StatistikaList/FinalResults/FinalResults'
+import ExportGrades from './components/StatistikaList/ExportGrades/ExportGrades'
+import Materials from './components/StatistikaList/Materials/Materials'
 
 function App() {
   return (
@@ -110,6 +115,11 @@ function App() {
               <Route path='statistika' element={<StudentSciences/>}>
                 <Route index element={<DekanStatistic/>}/>
                 <Route path='kontingent' element={<Kontingent/>}/>
+                <Route path='finalquestion' element={<FinalQuestion/>}/>
+                <Route path='finalresult' element={<FinalResults/>}/>
+                <Route path='exportgrades' element={<ExportGrades/>}/>
+                <Route path='materials' element={<Materials/>}/>
+                <Route path='calendarplans' element={<CalendarPlans/>}/>
               </Route>
             </Route>
 

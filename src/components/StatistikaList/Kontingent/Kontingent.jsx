@@ -69,7 +69,7 @@ export default function Kontingent() {
                     />
                 </BoxHeader>
                 <BoxBody>
-                    Goo Brat
+                    Goo brat
                 </BoxBody>
                 <BoxFooter>
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
