@@ -28,7 +28,7 @@ export default function Sidebar({ role }) {
         {
           chageLinks(role).map((elem, index) => {
             if(elem.type && elem.type === "link_header"){
-              return <SidebarLinksHead>{elem.text}</SidebarLinksHead>
+              return <SidebarLinksHead key={index}>{elem.text}</SidebarLinksHead>
             }else{
               return (
                 <ListItem
