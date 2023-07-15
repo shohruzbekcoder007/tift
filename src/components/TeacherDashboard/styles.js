@@ -2,7 +2,11 @@ import styled from 'styled-components';
 
 export const TeacherDashboardInformations = styled.div`
   padding-bottom: 52px;
-  width: 100%5;
+  width: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
 `
 
 export const TeacherDashboardWrapper = styled.div`
@@ -11,6 +15,9 @@ export const TeacherDashboardWrapper = styled.div`
   border-radius: 10px;
   padding: 0.8rem 1rem;
   background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 export const TeacherDashboardDate = styled.p`

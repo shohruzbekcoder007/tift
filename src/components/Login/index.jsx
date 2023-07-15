@@ -58,8 +58,8 @@ export default function Login() {
   }
 
   const successfulFunctionGetRole = (response) => {
-    dispatch(setUser(response))
-    const user_role = getRoleUser(response)
+    dispatch(setUser(response.data))
+    const user_role = getRoleUser(response.data)
     setPageLoading(false)
     navigate(`/${user_role}/dashboard`)
   }
