@@ -48,6 +48,10 @@ export const PasswordInput = styled.input`
   border-radius: 10px;
   border: none;
   outline: none;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; 
 `
 
 export const ProfileButtonGroup = styled.div`
@@ -73,7 +77,7 @@ export const ProfileButton = styled.button`
 `
 
 
-export const ProfileLogOut = styled.div`
+export const ProfileLogOut = styled.a`
   display: flex;
   place-items:center;
   max-width: 454px;

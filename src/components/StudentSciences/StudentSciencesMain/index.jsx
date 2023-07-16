@@ -6,6 +6,8 @@ import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
+import AllSelect from '../../AllSelect'
+import { StudentSciencesMainHeader } from './styles'
 
 export default function StudentSciencesMain() {
   return (
@@ -17,12 +19,31 @@ export default function StudentSciencesMain() {
                     borderRadius: "10px"
                 }}
             >
+
                 <BoxHeader>
-                    <PageSelector chageValueFunction={(val) => {
-                        console.log(val)
-                    }} />
-                    <CustomizedInput callback_func={(val) => { console.log(val) }} />
+                <AllSelect chageValueFunction={val => { console.log(val) }}
+                        selectOptions={[
+                            {
+                                value: "1",
+                                name: "2022-2023 Ikkinchi semestr uchun qayta o’qish"
+                            },
+                            {
+                                value: "2",
+                                name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
+                            },
+                            {
+                                value: "3",
+                                name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
+                            }
+                        ]}
+                    />
                 </BoxHeader>
+                <StudentSciencesMainHeader>
+                        <PageSelector chageValueFunction={(val) => {
+                            console.log(val)
+                        }} />
+                    <CustomizedInput callback_func={(val) => { console.log(val) }} />
+                </StudentSciencesMainHeader>
                 <BoxBody>
                     <ClassScheduleTableWrapper>
                         <table>

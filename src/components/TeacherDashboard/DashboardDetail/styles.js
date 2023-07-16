@@ -15,7 +15,7 @@ export const DetailWrapperTitle = styled.h3`
 `
 
 export const DetailWrapperBody = styled.p`
-  font-size: ${props => props.theme.text.subtitle1.font_size};
+  font-size: 18px;
   color: ${props => props.theme.color.secondary_text_color};
   margin: 1rem 0;
 `
@@ -26,5 +26,7 @@ export const DetailWrapperDate = styled.div`
   justify-content: end;
   color: ${props => props.theme.color.black};
   font-size: ${props => props.theme.text.subtitle1.font_size};
+  font-weight: 500;
+  line-height: 158.523%; 
   margin: 1rem 0;
   `

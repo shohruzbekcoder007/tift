@@ -34,11 +34,6 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
                         fontWeight: '500',
                         color: '#151515',
                         borderRadius: "10px",
-                        '@media screen and (max-width: 576px)': { 
-                            fontSize: "12px", 
-                            margin: "0.3rem 0"
-                          }, 
-                        // minWidth: '70px',
                         '& .MuiInputBase-root': {
                             borderColor: "red",
                             outlineColor: "red",
@@ -47,6 +42,9 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
                             padding: 0,
                             color: "#151515",
                             paddingRight: "22px !important",
+                            // whiteSpace: 'nowrap',
+                            // overflow: 'hidden',
+                            // textOverflow: 'ellipsis'
                         },
                         '& .MuiOutlinedInput-notchedOutline': {
                             borderColor: "#F6F6F6",
