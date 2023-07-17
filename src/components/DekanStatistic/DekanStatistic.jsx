@@ -204,6 +204,7 @@ export default function DekanStatistic() {
         </DekanStatisticCol>
 
         <DekanStatisticCol size={true}>
+          <Link to={'intermediate'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -221,11 +222,13 @@ export default function DekanStatistic() {
             </DekanStatisticCardIcon>
 
             <DekanStatisticCardTitle>
-              Oraliq nazorat qo’ymagan o‘qituvchi/
+              Oraliq nazorat qo’ymagan o‘qituvchilar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'intermediateresult'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -247,8 +250,10 @@ export default function DekanStatistic() {
               Oraliq nazorat natijalari
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'ungradedtasks'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" link="http://www.w3.org/1999/xlink">
@@ -271,8 +276,10 @@ export default function DekanStatistic() {
               Muddati o‘tgan, baho qo’yilmagan  vazifalar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'videolessons'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -293,9 +300,11 @@ export default function DekanStatistic() {
               Video darslar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
 
         <DekanStatisticCol size={true}>
+          <Link to={'teachers'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -316,8 +325,10 @@ export default function DekanStatistic() {
               O’qituvchilar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'lessontable'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -334,8 +345,10 @@ export default function DekanStatistic() {
               Dars jadvali
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
+          <Link to={'missedclasses'}>
           <DekanStatisticCard>
             <DekanStatisticCardIcon>
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
@@ -356,6 +369,7 @@ export default function DekanStatistic() {
               Dars qoldirgan talabalar
             </DekanStatisticCardTitle>
           </DekanStatisticCard>
+          </Link>
         </DekanStatisticCol>
         <DekanStatisticCol size={true}>
           <DekanStatisticCard>

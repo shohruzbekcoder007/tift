@@ -37,7 +37,7 @@ import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
-import CalendarPlan, { CalendarPlanMain} from './components/TeacherSciences/CalendarPlan'
+import CalendarPlan, { CalendarPlanMain } from './components/TeacherSciences/CalendarPlan'
 import CalendarPlans from './components/StatistikaList/CalendarPlan/CalendarPlans'
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
@@ -53,6 +53,15 @@ import FinalQuestion from './components/StatistikaList/FinalQuestion/FinalQuesti
 import FinalResults from './components/StatistikaList/FinalResults/FinalResults'
 import ExportGrades from './components/StatistikaList/ExportGrades/ExportGrades'
 import Materials from './components/StatistikaList/Materials/Materials'
+import Intermediate from './components/StatistikaList/Intermediate/Intermediate'
+import IntermediateResult from './components/StatistikaList/IntermediateResult/IntermediateResult'
+import UngradedTasks from './components/StatistikaList/UngradedTasks/UngradedTasks'
+import VideoLessons from './components/StatistikaList/VideoLessons/VideoLessons'
+import DTechers from './components/StatistikaList/DTechers/DTechers'
+import Outlet from './components/StatistikaList/Outlet/Outlet'
+import MyLessons from './components/StatistikaList/DTechers/MyLessons'
+import LessonTable from './components/StatistikaList/LessonTable/LessonTable'
+import MissedClasses from './components/StatistikaList/MissedClasses/MissedClasses'
 
 function App() {
 
@@ -121,13 +130,23 @@ function App() {
                   <Route path='statistika' element={<StudentSciences />}>
                     <Route index element={<DekanStatistic />} />
                     <Route path='kontingent' element={<Kontingent />} />
-                <Route path='finalquestion' element={<FinalQuestion/>}/>
-                <Route path='finalresult' element={<FinalResults/>}/>
-                <Route path='exportgrades' element={<ExportGrades/>}/>
-                <Route path='materials' element={<Materials/>}/>
-                <Route path='calendarplans' element={<CalendarPlans/>}/>
+                    <Route path='finalquestion' element={<FinalQuestion />} />
+                    <Route path='finalresult' element={<FinalResults />} />
+                    <Route path='exportgrades' element={<ExportGrades />} />
+                    <Route path='materials' element={<Materials />} />
+                    <Route path='calendarplans' element={<CalendarPlans />} />
+                    <Route path='intermediate' element={<Intermediate />} />
+                    <Route path='intermediateresult' element={<IntermediateResult />} />
+                    <Route path='ungradedtasks' element={<UngradedTasks />} />
+                    <Route path='videolessons' element={<VideoLessons />} />
+                    <Route path='teachers' element={<Outlet />}>
+                      <Route index element={<DTechers />} />
+                      <Route path='mylessons' element={<MyLessons />} />
+                    </Route>
+                    <Route path='lessontable' element={<LessonTable/>}/>
+                    <Route path='missedclasses' element={<MissedClasses/>}/>
                   </Route>
-                </Route>
+                </Route> 
 
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
@@ -155,7 +174,7 @@ function App() {
                   </Route>
                 </Route>
               </>
-            ):<></>}
+            ) : <></>}
             <Route path="*" element={<Navigate to={user ? "/" : "/"} />} />
 
           </Routes>
