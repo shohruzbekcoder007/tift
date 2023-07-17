@@ -62,6 +62,7 @@ import Outlet from './components/StatistikaList/Outlet/Outlet'
 import MyLessons from './components/StatistikaList/DTechers/MyLessons'
 import LessonTable from './components/StatistikaList/LessonTable/LessonTable'
 import MissedClasses from './components/StatistikaList/MissedClasses/MissedClasses'
+import { getRole } from './utils/getRole'
 
 function App() {
 
@@ -75,6 +76,7 @@ function App() {
             <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
+                {user && getRole(user) === "teacher" && 
                 <Route path="teacher" element={<Main />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="nb" element={<Attend />} />
@@ -95,9 +97,10 @@ function App() {
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
-                </Route>
+                </Route>}
 
-                <Route path="student" element={<MainStudent />}>
+                {user && getRole(user) === "student" && 
+                  <Route path="student" element={<MainStudent />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="readagain" element={<ReadAgain />} />
@@ -117,9 +120,10 @@ function App() {
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
-                </Route>
+                </Route>}
 
-                <Route path="dekan" element={<MainDekan />}>
+                {user && getRole(user) === "dekan" && 
+                  <Route path="dekan" element={<MainDekan />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="groups" element={<StudentSciences />} >
@@ -146,14 +150,16 @@ function App() {
                     <Route path='lessontable' element={<LessonTable/>}/>
                     <Route path='missedclasses' element={<MissedClasses/>}/>
                   </Route>
-                </Route> 
+                </Route>}
 
-                <Route path="tutor" element={<MainTutor />}>
+                {user && getRole(user) === "tutor" && 
+                  <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
-                </Route>
+                </Route>}
 
-                <Route path="department" element={<MainDepartment />}>
+                {user && getRole(user) === "department" && 
+                  <Route path="department" element={<MainDepartment />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
@@ -172,7 +178,7 @@ function App() {
                     <Route index element={<Final_Dep />} />
                     <Route path='questions' element={<Questions />} />
                   </Route>
-                </Route>
+                </Route>}
               </>
             ) : <></>}
             <Route path="*" element={<Navigate to={user ? "/" : "/"} />} />

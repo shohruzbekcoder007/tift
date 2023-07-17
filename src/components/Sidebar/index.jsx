@@ -12,6 +12,7 @@ import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, d
 export default function Sidebar({ role }) {
 
   const sidebar = useSelector((state) => state.sidebar);
+  const language = useSelector(state => state.language)
   const dispatch = useDispatch()
 
   return (
@@ -28,13 +29,13 @@ export default function Sidebar({ role }) {
         {
           chageLinks(role).map((elem, index) => {
             if(elem.type && elem.type === "link_header"){
-              return <SidebarLinksHead>{elem.text}</SidebarLinksHead>
+              return <SidebarLinksHead key={index}>{elem.text[language]}</SidebarLinksHead>
             }else{
               return (
                 <ListItem
                   key={index}
                   img={elem.img}
-                  text={elem.text}
+                  text={elem.text[language]}
                   to={elem.to}
                 />
               )

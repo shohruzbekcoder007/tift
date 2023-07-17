@@ -24,22 +24,7 @@ export const BoxHeader = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
-    .qoidalar {
-        width: 150px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: ${props => props.theme.color.secondary_color};
-        border-radius: 10px;
-        cursor:pointer;
-        @media (max-width: 576px){
-            margin: 0.3rem 0;
-        }
-    }
-    @media (max-width: 575px){
-        display: block;
-    }
+    flex-wrap: wrap;
 `
 
 export const BoxFooter = styled.div`
@@ -47,6 +32,11 @@ export const BoxFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 780){
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-end;
+    }
 `
 
 export const BoxFooterText = styled.p`

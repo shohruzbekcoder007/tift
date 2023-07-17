@@ -1,23 +1,26 @@
 import React from 'react'
 import { ContentWrapper } from '../../../global_styles/styles'
 import { DashboardDetailWrapper, DetailWrapperBody, DetailWrapperDate, DetailWrapperTitle } from './styles'
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import listLanguage from '../language.json'
+import { useLocation } from "react-router-dom";
 
 export default function Index() {
-  const {id} = useParams()
+  // const {id} = useParams()
+  let { state } = useLocation();
+  
   return (
     <ContentWrapper>
       <DashboardDetailWrapper>
         <DetailWrapperTitle>
-          Dars mashg'ulotlarini ko'chirish!
+          {state.element.title}
         </DetailWrapperTitle>
         <DetailWrapperBody>
-        Hurmatli professor-o‘qituvchilar! O‘quv yilini iyul oyidan kechiktirmasdan tugatish uchun 02.07.2022 sanadan keyin o‘tkazilishi kerak bo‘lgan barcha dars mashg‘ulotlarini undan oldingi kunlarga ko‘chirishingizni so'raymiz. Talabalar bir nechta fanlardan darslarga qatnashishlarini hamda u fanlarni ham ko‘chirilishi sababli, talabalar bilan oldindan kelishib, birinchi smenadagi darslarni 4-juftlikka, ikkinchi smenadagi darslarni esa 3-juftlikka ko‘chirishingizni so‘raymiz. (Dars Jadvalida ko'chirilgan o'zgarishlar ko'rsatilmaydi, lekin talaba tegishli fanning "taqvim rejasi" sahifasi orqali bir nechta o'zgartirilgan sanalardagi kun va juftlik bilan tanishishi mumkin).Shuni ham ta'kidlash kerakki, auditoriya mashg'ulotlari 02.07.2022 sanada tugashi sababli, barcha topshiriqlarni topshirishning muddatlari 25.06.2022 dan kechiktirmay belgilanishi kerak. Tizimda muddati 25.06.2022 sanadan keyinga qo'yilgan barcha vazifalar 25.06.2022 ga ko'chiriladi.
+          {state.element.description}
         </DetailWrapperBody>
         <hr />
         <DetailWrapperDate>
-        — {listLanguage.DetailDate["ru"]} 04.06.2022
+        — {listLanguage.DetailDate["ru"]} {`${new Date(state.element.created_at).getDate()}.${new Date(state.element.created_at).getMonth() + 1}.${new Date(state.element.created_at).getFullYear()}`}
         </DetailWrapperDate>
       </DashboardDetailWrapper>
     </ContentWrapper>

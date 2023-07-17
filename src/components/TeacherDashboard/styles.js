@@ -1,11 +1,23 @@
 import styled from 'styled-components';
 
+export const TeacherDashboardInformations = styled.div`
+  padding-bottom: 52px;
+  width: 100%;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+`
+
 export const TeacherDashboardWrapper = styled.div`
   width: 356px;
   height: auto;
   border-radius: 10px;
   padding: 0.8rem 1rem;
   background-color: #FFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 export const TeacherDashboardDate = styled.p`
@@ -32,4 +44,17 @@ export const TeacherDashboardButton = styled.button`
   font-weight: ${props => props.theme.text.H1.font_weight};
   cursor: pointer;
   color: ${props => props.theme.color.black};
+`
+
+export const TeacherDashboardPagination = styled.div`
+  height: 52px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 32px;
 `
