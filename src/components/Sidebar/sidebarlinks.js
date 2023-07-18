@@ -52,7 +52,7 @@ export const teacher_Links = [
     text: {
       uz: "Ariza berish",
       ru: "Ariza berish ru",
-      ung: "Ariza berish eng",
+      eng: "Ariza berish eng",
     },
     to: "filingapplication"
   },
