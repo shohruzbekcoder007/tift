@@ -15,8 +15,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Dashboard",
-      ru: "Dashboard ru",
-      eng: "Dashboard eng"
+      ru: "Панель",
+      eng: "Dashboard"
     },
     to: "dashboard"
   },
@@ -33,8 +33,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "NB to’g’irlash",
-      ru: "NB to’g’irlash ru",
-      eng: "NB to’g’irlash eng"
+      ru: "Коррекция NB",
+      eng: "NB correction"
     },
     to: "nb"
   },
@@ -51,8 +51,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Ariza berish",
-      ru: "Ariza berish ru",
-      eng: "Ariza berish eng",
+      ru: "Подавать заявление",
+      eng: "Filing application",
     },
     to: "filingapplication"
   },
@@ -69,8 +69,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Mening fanlarim",
-      ru: "Mening fanlarim ru",
-      eng: "Mening fanlarim eng",
+      ru: "Мои науки",
+      eng: "My sciences",
     },
     to: "sciences"
   },
@@ -87,8 +87,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Dars jadvali",
-      ru: "Dars jadvali ru",
-      eng: "Dars jadvali eng"
+      ru: "Расписание урок",
+      eng: "Class schedule"
     },
     to: "classschedule"
   },
@@ -105,8 +105,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Diplom ishi",
-      ru: "Diplom ishi ru",
-      eng: "Diplom ishi eng"
+      ru: "Дипломная работа",
+      eng: "Diploma work"
     },
     to: "diploma"
   },
@@ -127,8 +127,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "So’rovnoma",
-      ru: "So’rovnoma ru",
-      eng: "So’rovnoma"
+      ru: "Анкета",
+      eng: "Questionnaire"
     },
     to: "request"
   },
@@ -145,8 +145,8 @@ export const teacher_Links = [
     </svg>,
     text: {
       uz: "Kurslarni boshqarish",
-      ru: "Kurslarni boshqarish ru",
-      eng: "Kurslarni boshqarish eng"
+      ru: "Управление курсом",
+      eng: "Course management"
     },
     to: "coursemanagement"
   }
@@ -169,8 +169,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Dashboard",
-      ru: "Dashboard ru",
-      eng: "Dashboard eng"
+      ru: "Панель",
+      eng: "Dashboard"
     },
     to: "dashboard"
   },
@@ -188,8 +188,8 @@ export const student_Links = [
     ,
     text: {
       uz: "Fan tanlov",
-      ru: "Fan tanlov ru",
-      eng: "Fan tanlov eng"
+      ru: "Наука выбор",
+      eng: "Science selection"
     },
     to: "ScienceSelection"
   },
@@ -206,8 +206,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Mening fanlarim",
-      ru: "Mening fanlarim ru",
-      eng: "Mening fanlarim eng",
+      ru: "Мои науки",
+      eng: "My sciences",
     },
     to: "sciences"
   },
@@ -224,8 +224,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Dars jadvali",
-      ru: "Dars jadvali ru",
-      eng: "Dars jadvali eng"
+      ru: "Расписание урок",
+      eng: "Class schedule"
     },
     to: "sciencescalendar"
   },
@@ -243,8 +243,8 @@ export const student_Links = [
     ,
     text: {
       uz: "Qayta o’qish",
-      ru: "Qayta o’qish ru",
-      eng: "Qayta o’qish eng"
+      ru: "Прочитай заново",
+      eng: "Read again"
     },
     to: "readagain"
   },
@@ -263,8 +263,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Yakuniy",
-      ru: "Yakuniy ru",
-      eng: "Yakuniy eng"
+      ru: "Финал",
+      eng: "Final"
     },
     to: "final"
   },
@@ -281,8 +281,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Invidual shaxsiy reja",
-      ru: "Invidual shaxsiy reja ru",
-      eng: "Invidual shaxsiy reja eng"
+      ru: "Индивидуальный персональный план",
+      eng: "Individual personal plan"
     },
     to: "personalplan"
   },
@@ -302,8 +302,8 @@ export const student_Links = [
     ,
     text: {
       uz: "Ma’lumot",
-      ru: "Ma’lumot ru",
-      eng: "Ma’lumot eng"
+      ru: "Информация",
+      eng: "Information"
     },
     to: "information"
   },
@@ -324,8 +324,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "So’rovnoma",
-      ru: "So’rovnoma ru",
-      eng: "So’rovnoma eng"
+      ru: "Анкета",
+      eng: "Questionnaire"
     },
     to: "request"
   },
@@ -342,8 +342,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Talaba xizmatlari",
-      ru: "Talaba xizmatlari ru",
-      eng: "Talaba xizmatlari eng"
+      ru: "Студенческие услуги",
+      eng: "Student services"
     },
     to: "services"
   },
@@ -360,8 +360,8 @@ export const student_Links = [
     </svg>,
     text: {
       uz: "Olimpiadalar",
-      ru: "Olimpiadalar ru",
-      eng: "Olimpiadalar eng"
+      ru: "Олимпийские игры",
+      eng: "Olympics"
     },
     to: "olympics"
   },
@@ -379,8 +379,8 @@ export const student_Links = [
     ,
     text: {
       uz: "Diplom ishi",
-      ru: "Diplom ishi ru",
-      eng: "Diplom ishi eng"
+      ru: "Дипломная работа",
+      eng: "Diploma work"
     },
     to: "thesisresult"
   }
@@ -391,8 +391,8 @@ export const headofthedepartment_Links = [
     img: null,
     text: {
       uz: "KAFEDRA MUDIRI",
-      ru: "KAFEDRA MUDIRI ru",
-      eng: "KAFEDRA MUDIRI eng"
+      ru: "ГЛАВА ДЕПАРТАМЕНТА",
+      eng: "HEAD OF THE DEPARTMENT"
     },
     to: null,
     type: 'link_header'
@@ -413,8 +413,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Dashboard",
-      ru: "Dashboard ru",
-      eng: "Dashboard eng"
+      ru: "Панель",
+      eng: "Dashboard"
     },
     to: "dashboard"
   },
@@ -431,8 +431,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Dars jadvali",
-      ru: "Dars jadvali ru",
-      eng: "Dars jadvali eng"
+      ru: "Расписание урок",
+      eng: "Class schedule"
     },
     to: "Dclassschedule"
   },
@@ -450,8 +450,8 @@ export const headofthedepartment_Links = [
     ,
     text: {
       uz: "Dars o’tishga arizalar",
-      ru: "Dars o’tishga arizalar ru",
-      eng: "Dars o’tishga arizalar eng"
+      ru: "Заявки на занятия",
+      eng: "Applications for classes"
     },
     to: "applications"
   },
@@ -469,8 +469,8 @@ export const headofthedepartment_Links = [
     ,
     text: {
       uz: "Patoklar",
-      ru: "Patoklar ru",
-      eng: "Patoklar eng"
+      ru: "Патокс",
+      eng: "Patoks"
     },
     to: "patoks"
   },
@@ -489,8 +489,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Yakuniy",
-      ru: "Yakuniy ru",
-      eng: "Yakuniy eng"
+      ru: "Финал",
+      eng: "Final"
     },
     to: "final"
   },
@@ -507,8 +507,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Diplom ishi",
-      ru: "Diplom ishi ru",
-      eng: "Diplom ishi eng"
+      ru: "Дипломная работа",
+      eng: "Diploma work"
     },
     to: "Ddiploma"
   },
@@ -526,8 +526,8 @@ export const headofthedepartment_Links = [
     ,
     text: {
       uz: "Materiallar",
-      ru: "Materiallar ru",
-      eng: "Materiallar eng"
+      ru: "Материалы",
+      eng: "Materials"
     },
     to: "materials"
   },
@@ -535,8 +535,8 @@ export const headofthedepartment_Links = [
     img: null,
     text: {
       uz: "Bildirgi",
-      ru: "Bildirgi ru",
-      eng: "Bildirgi eng"
+      ru: "Уведомление",
+      eng: "Notification"
     },
     to: null,
     type: 'link_header'
@@ -554,8 +554,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "NB to’g’irlash",
-      ru: "NB to’g’irlash ru",
-      eng: "NB to’g’irlash eng"
+      ru: "Коррекция NB",
+      eng: "NB correction"
     },
     to: "nb"
   },
@@ -563,8 +563,8 @@ export const headofthedepartment_Links = [
     img: null,
     text: {
       uz: "O'qituvchi",
-      ru: "O'qituvchi ru",
-      eng: "O'qituvchi eng"
+      ru: "Учитель",
+      eng: "Teacher"
     },
     to: null,
     type: 'link_header'
@@ -582,8 +582,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Ariza berish",
-      ru: "Ariza berish ru",
-      eng: "Ariza berish eng",
+      ru: "Подавать заявление",
+      eng: "Filing application",
     },
     to: "filingapplication"
   },
@@ -600,8 +600,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Mening fanlarim",
-      ru: "Mening fanlarim ru",
-      eng: "Mening fanlarim eng",
+      ru: "Мои науки",
+      eng: "My sciences",
     },
     to: "sciences"
   },
@@ -618,8 +618,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Dars jadvali",
-      ru: "Dars jadvali ru",
-      eng: "Dars jadvali eng"
+      ru: "Расписание урок",
+      eng: "Class schedule"
     },
     to: "classschedule"
   },
@@ -636,8 +636,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Diplom ishi",
-      ru: "Diplom ishi ru",
-      eng: "Diplom ishi eng"
+      ru: "Дипломная работа",
+      eng: "Diploma work"
     },
     to: "diploma"
   },
@@ -658,8 +658,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "So’rovnoma",
-      ru: "So’rovnoma ru",
-      eng: "So’rovnoma eng"
+      ru: "Анкета",
+      eng: "Questionnaire"
     },
     to: "request"
   },
@@ -676,8 +676,8 @@ export const headofthedepartment_Links = [
     </svg>,
     text: {
       uz: "Kurslarni boshqarish",
-      ru: "Kurslarni boshqarish ru",
-      eng: "Kurslarni boshqarish eng"
+      ru: "Управление курсом",
+      eng: "Course management"
     },
     to: "coursemanagement"
   }
@@ -700,14 +700,18 @@ export const tutor_Links = [
     </svg>,
     text: {
       uz: "Dashboard",
-      ru: "Dashboard ru",
-      eng: "Dashboard eng"
+      ru: "Панель",
+      eng: "Dashboard"
     },
     to: "dashboard"
   },
   {
     img: null,
-    text: "Bildirgi",
+    text: {
+      uz: "Bildirgi",
+      ru: "Уведомление",
+      eng: "Notification"
+    },
     to: null,
     type: 'link_header'
   },
@@ -724,8 +728,8 @@ export const tutor_Links = [
     </svg>,
     text: {
       uz: "Guruhlar",
-      ru: "Guruhlar ru",
-      eng: "Guruhlar eng"
+      ru: "Группы",
+      eng: "Groups"
     },
     to: "groups"
   }
@@ -748,8 +752,8 @@ export const dekan_Links = [
     </svg>,
     text: {
       uz: "Dashboard",
-      ru: "Dashboard ru",
-      eng: "Dashboard eng"
+      ru: "Панель",
+      eng: "Dashboard"
     },
     to: "dashboard"
   },
@@ -757,8 +761,8 @@ export const dekan_Links = [
     img: null,
     text: {
       uz: "Dekanat",
-      ru: "Dekanat ru",
-      eng: "Dekanat eng"
+      ru: "благочиние",
+      eng: "Deanery"
     },
     to: null,
     type: 'link_header'
@@ -777,8 +781,8 @@ export const dekan_Links = [
     </svg>,
     text: {
       uz: "Talabalar",
-      ru: "Talabalar ru",
-      eng: "Talabalar eng"
+      ru: "Студенты",
+      eng: "Students"
     },
     to: "students"
   },
@@ -795,8 +799,8 @@ export const dekan_Links = [
     </svg>,
     text: {
       uz: "Guruhlar",
-      ru: "Guruhlar ru",
-      eng: "Guruhlar eng"
+      ru: "Группы",
+      eng: "Groups"
     },
     to: "groups"
   },
@@ -818,30 +822,30 @@ export const dekan_Links = [
     ,
     text: {
       uz: "Statistika",
-      ru: "Statistika ru",
-      eng: "Statistika eng"
+      ru: "Статистика",
+      eng: "Statistics"
     },
     to: "statistika"
   },
   {
-    img: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_627_12630)">
-        <path d="M12 0C9.62663 0 7.30655 0.703788 5.33316 2.02236C3.35977 3.34094 1.8217 5.21509 0.913451 7.4078C0.00519943 9.60051 -0.232441 12.0133 0.230582 14.3411C0.693605 16.6689 1.83649 18.8071 3.51472 20.4853C5.19295 22.1635 7.33115 23.3064 9.65892 23.7694C11.9867 24.2324 14.3995 23.9948 16.5922 23.0866C18.7849 22.1783 20.6591 20.6402 21.9776 18.6668C23.2962 16.6935 24 14.3734 24 12C23.9966 8.81846 22.7312 5.76821 20.4815 3.51852C18.2318 1.26883 15.1815 0.00344108 12 0ZM12 22C10.0222 22 8.08879 21.4135 6.4443 20.3147C4.79981 19.2159 3.51809 17.6541 2.76121 15.8268C2.00433 13.9996 1.8063 11.9889 2.19215 10.0491C2.578 8.10929 3.53041 6.32746 4.92894 4.92893C6.32746 3.53041 8.10929 2.578 10.0491 2.19215C11.9889 1.8063 13.9996 2.00433 15.8268 2.7612C17.6541 3.51808 19.2159 4.79981 20.3147 6.4443C21.4135 8.08879 22 10.0222 22 12C21.9971 14.6513 20.9426 17.1931 19.0679 19.0679C17.1931 20.9426 14.6513 21.9971 12 22Z" fill="#6A6A6A" />
-        <path d="M12.717 5.06283C12.1403 4.95776 11.5476 4.98072 10.9808 5.13007C10.414 5.27943 9.88691 5.55154 9.43689 5.92714C8.98688 6.30274 8.62491 6.77265 8.37661 7.30363C8.12831 7.83461 7.99974 8.41367 8 8.99983C8 9.26505 8.10536 9.5194 8.29289 9.70694C8.48043 9.89448 8.73478 9.99983 9 9.99983C9.26522 9.99983 9.51957 9.89448 9.70711 9.70694C9.89464 9.5194 10 9.26505 10 8.99983C9.99975 8.70561 10.0644 8.41495 10.1894 8.14859C10.3144 7.88223 10.4966 7.64672 10.723 7.45886C10.9495 7.271 11.2146 7.13542 11.4994 7.06178C11.7843 6.98814 12.0819 6.97825 12.371 7.03283C12.766 7.10952 13.1293 7.30222 13.4142 7.58632C13.6992 7.87043 13.8931 8.23304 13.971 8.62783C14.0497 9.04224 13.9954 9.47091 13.8158 9.85257C13.6362 10.2342 13.3405 10.5493 12.971 10.7528C12.3592 11.1073 11.8536 11.6193 11.5069 12.2356C11.1603 12.8519 10.9852 13.5499 11 14.2568V14.9998C11 15.265 11.1054 15.5194 11.2929 15.7069C11.4804 15.8945 11.7348 15.9998 12 15.9998C12.2652 15.9998 12.5196 15.8945 12.7071 15.7069C12.8946 15.5194 13 15.265 13 14.9998V14.2568C12.9875 13.9088 13.0668 13.5637 13.2301 13.2561C13.3933 12.9486 13.6347 12.6894 13.93 12.5048C14.6545 12.1069 15.238 11.4943 15.6001 10.7512C15.9622 10.0082 16.0853 9.17119 15.9523 8.35536C15.8193 7.53952 15.4368 6.78492 14.8575 6.19533C14.2782 5.60573 13.5304 5.2101 12.717 5.06283Z" fill="#6A6A6A" />
-        <path d="M13 18C13 17.4477 12.5523 17 12 17C11.4477 17 11 17.4477 11 18C11 18.5523 11.4477 19 12 19C12.5523 19 13 18.5523 13 18Z" fill="#6A6A6A" />
+        <path d="M12 0C9.62663 0 7.30655 0.703788 5.33316 2.02236C3.35977 3.34094 1.8217 5.21509 0.913451 7.4078C0.00519943 9.60051 -0.232441 12.0133 0.230582 14.3411C0.693605 16.6689 1.83649 18.8071 3.51472 20.4853C5.19295 22.1635 7.33115 23.3064 9.65892 23.7694C11.9867 24.2324 14.3995 23.9948 16.5922 23.0866C18.7849 22.1783 20.6591 20.6402 21.9776 18.6668C23.2962 16.6935 24 14.3734 24 12C23.9966 8.81846 22.7312 5.76821 20.4815 3.51852C18.2318 1.26883 15.1815 0.00344108 12 0ZM12 22C10.0222 22 8.08879 21.4135 6.4443 20.3147C4.79981 19.2159 3.51809 17.6541 2.76121 15.8268C2.00433 13.9996 1.8063 11.9889 2.19215 10.0491C2.578 8.10929 3.53041 6.32746 4.92894 4.92893C6.32746 3.53041 8.10929 2.578 10.0491 2.19215C11.9889 1.8063 13.9996 2.00433 15.8268 2.7612C17.6541 3.51808 19.2159 4.79981 20.3147 6.4443C21.4135 8.08879 22 10.0222 22 12C21.9971 14.6513 20.9426 17.1931 19.0679 19.0679C17.1931 20.9426 14.6513 21.9971 12 22Z" fill="currentcolor" />
+        <path d="M12.717 5.06283C12.1403 4.95776 11.5476 4.98072 10.9808 5.13007C10.414 5.27943 9.88691 5.55154 9.43689 5.92714C8.98688 6.30274 8.62491 6.77265 8.37661 7.30363C8.12831 7.83461 7.99974 8.41367 8 8.99983C8 9.26505 8.10536 9.5194 8.29289 9.70694C8.48043 9.89448 8.73478 9.99983 9 9.99983C9.26522 9.99983 9.51957 9.89448 9.70711 9.70694C9.89464 9.5194 10 9.26505 10 8.99983C9.99975 8.70561 10.0644 8.41495 10.1894 8.14859C10.3144 7.88223 10.4966 7.64672 10.723 7.45886C10.9495 7.271 11.2146 7.13542 11.4994 7.06178C11.7843 6.98814 12.0819 6.97825 12.371 7.03283C12.766 7.10952 13.1293 7.30222 13.4142 7.58632C13.6992 7.87043 13.8931 8.23304 13.971 8.62783C14.0497 9.04224 13.9954 9.47091 13.8158 9.85257C13.6362 10.2342 13.3405 10.5493 12.971 10.7528C12.3592 11.1073 11.8536 11.6193 11.5069 12.2356C11.1603 12.8519 10.9852 13.5499 11 14.2568V14.9998C11 15.265 11.1054 15.5194 11.2929 15.7069C11.4804 15.8945 11.7348 15.9998 12 15.9998C12.2652 15.9998 12.5196 15.8945 12.7071 15.7069C12.8946 15.5194 13 15.265 13 14.9998V14.2568C12.9875 13.9088 13.0668 13.5637 13.2301 13.2561C13.3933 12.9486 13.6347 12.6894 13.93 12.5048C14.6545 12.1069 15.238 11.4943 15.6001 10.7512C15.9622 10.0082 16.0853 9.17119 15.9523 8.35536C15.8193 7.53952 15.4368 6.78492 14.8575 6.19533C14.2782 5.60573 13.5304 5.2101 12.717 5.06283Z" fill="currentcolor" />
+        <path d="M13 18C13 17.4477 12.5523 17 12 17C11.4477 17 11 17.4477 11 18C11 18.5523 11.4477 19 12 19C12.5523 19 13 18.5523 13 18Z" fill="currentcolor" />
       </g>
       <defs>
         <clipPath id="clip0_627_12630">
-          <rect width="24" height="24" fill="white" />
+          <rect width="24" height="24" fill="currentcolor" />
         </clipPath>
       </defs>
     </svg>,
     text: {
       uz: "Savollar",
-      ru: "Savollar ru",
-      eng: "Savollar eng"
+      ru: "Вопросы",
+      eng: "Questions"
     },
-    to: "questions"
+    to: "dekanquestions"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -856,8 +860,8 @@ export const dekan_Links = [
     </svg>,
     text: {
       uz: "Dars jadvali",
-      ru: "Dars jadvali ru",
-      eng: "Dars jadvali eng"
+      ru: "Расписание урок",
+      eng: "Class schedule"
     },
     to: "classschedule"
   },
@@ -865,10 +869,10 @@ export const dekan_Links = [
     img: null,
     text: {
       uz: "Olimpiada",
-      ru: "Olimpiada ru",
-      eng: "Olimpiada eng"
+      ru: "Олимпийские игры",
+      eng: "Olympics"
     },
-    to: null,
+    to: 'null',
     type: 'link_header'
   },
   {
@@ -884,9 +888,9 @@ export const dekan_Links = [
     </svg>,
     text: {
       uz: "Olimpiadalar",
-      ru: "Olimpiadalar ru",
-      eng: "Olimpiadalar eng"
+      ru: "Олимпийские игры",
+      eng: "Olympics"
     },
-    to: "olympics"
+    to: "dekanolympics"
   }
 ]

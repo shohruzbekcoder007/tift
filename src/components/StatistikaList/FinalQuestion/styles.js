@@ -9,4 +9,5 @@ export const CardWrapper = styled.div`
     background-color:${props => props.theme.color.secondary_color};
     border-radius: 10px;
     cursor: pointer;
+    color: black;
 `

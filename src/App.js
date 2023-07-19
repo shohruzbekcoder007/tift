@@ -63,6 +63,9 @@ import MyLessons from './components/StatistikaList/DTechers/MyLessons'
 import LessonTable from './components/StatistikaList/LessonTable/LessonTable'
 import MissedClasses from './components/StatistikaList/MissedClasses/MissedClasses'
 import { getRole } from './utils/getRole'
+import DekanQuestions from './components/DekanQuestions/DekanQuestions'
+import Template from './components/DekanQuestions/Template'
+import DekanOlympics from './components/DekanOlympics/DekanOlympics'
 
 function App() {
 
@@ -76,109 +79,118 @@ function App() {
             <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
-                {user && getRole(user) === "teacher" && 
-                <Route path="teacher" element={<Main />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="nb" element={<Attend />} />
-                  <Route path="filingapplication" element={<FilingApplication />} />
-                  <Route path="sciences" element={<TeacherSciences />}>
-                    <Route index element={<TeacherSciencesMain />} />
-                    <Route path="calendarplan" element={<CalendarPlanMain />} >
-                      <Route index element={<CalendarPlan />} />
-                      <Route path="thematicblock" element={<ThematicBlock />} />
+                {user && getRole(user) === "teacher" &&
+                  <Route path="teacher" element={<Main />}>
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="nb" element={<Attend />} />
+                    <Route path="filingapplication" element={<FilingApplication />} />
+                    <Route path="sciences" element={<TeacherSciences />}>
+                      <Route index element={<TeacherSciencesMain />} />
+                      <Route path="calendarplan" element={<CalendarPlanMain />} >
+                        <Route index element={<CalendarPlan />} />
+                        <Route path="thematicblock" element={<ThematicBlock />} />
+                      </Route>
                     </Route>
-                  </Route>
-                  <Route path="classschedule" element={<ClassScheduleTeacher />} />
-                  <Route path="diploma" element={<Thesis />} />
-                  <Route path="diploma/:id" element={<DiplomaTopics />} />
-                  <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<CourseManagement />} />
-                  <Route path="videoguide" element={<VideoGuide />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="details/:id" element={<DashboardDetail />} />
-                </Route>}
+                    <Route path="classschedule" element={<ClassScheduleTeacher />} />
+                    <Route path="diploma" element={<Thesis />} />
+                    <Route path="diploma/:id" element={<DiplomaTopics />} />
+                    <Route path="request" element={<Questionnaire />} />
+                    <Route path="coursemanagement" element={<CourseManagement />} />
+                    <Route path="videoguide" element={<VideoGuide />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="details/:id" element={<DashboardDetail />} />
+                  </Route>}
 
-                {user && getRole(user) === "student" && 
+                {user && getRole(user) === "student" &&
                   <Route path="student" element={<MainStudent />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="readagain" element={<ReadAgain />} />
-                  <Route path="personalplan" element={<PersonalPlan />} />
-                  <Route path="olympics" element={<Olympics />} />
-                  <Route path="thesisresult" element={<ThesisResult />} />
-                  <Route path="information" element={<Information />} />
-                  <Route path="request" element={<QuestionnaireTeacher />} />
-                  <Route path="sciencescalendar" element={<CalendarDayWeek />} />
-                  <Route path="sciences" element={<StudentSciences />}>
-                    <Route index element={<StudentSciencesMain />} />
-                    <Route path="attendance" element={<Attendance />} />
-                  </Route>
-                  <Route path="final" element={<Final />} />
-                  <Route path="ScienceSelection" element={<ScienceSelection />} />
-                  <Route path="services" element={<Student_services />} />
-                  <Route path="videoguide" element={<VideoGuide />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="details/:id" element={<DashboardDetail />} />
-                </Route>}
-
-                {user && getRole(user) === "dekan" && 
-                  <Route path="dekan" element={<MainDekan />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="groups" element={<StudentSciences />} >
-                    <Route index element={<DekanGroups />} />
-                    <Route path='appropriation' element={<Appropriation />} />
-                    <Route path='students' element={<DekanStudents />} />
-                  </Route>
-                  <Route path='statistika' element={<StudentSciences />}>
-                    <Route index element={<DekanStatistic />} />
-                    <Route path='kontingent' element={<Kontingent />} />
-                    <Route path='finalquestion' element={<FinalQuestion />} />
-                    <Route path='finalresult' element={<FinalResults />} />
-                    <Route path='exportgrades' element={<ExportGrades />} />
-                    <Route path='materials' element={<Materials />} />
-                    <Route path='calendarplans' element={<CalendarPlans />} />
-                    <Route path='intermediate' element={<Intermediate />} />
-                    <Route path='intermediateresult' element={<IntermediateResult />} />
-                    <Route path='ungradedtasks' element={<UngradedTasks />} />
-                    <Route path='videolessons' element={<VideoLessons />} />
-                    <Route path='teachers' element={<Outlet />}>
-                      <Route index element={<DTechers />} />
-                      <Route path='mylessons' element={<MyLessons />} />
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                    <Route path="readagain" element={<ReadAgain />} />
+                    <Route path="personalplan" element={<PersonalPlan />} />
+                    <Route path="olympics" element={<Olympics />} />
+                    <Route path="thesisresult" element={<ThesisResult />} />
+                    <Route path="information" element={<Information />} />
+                    <Route path="request" element={<QuestionnaireTeacher />} />
+                    <Route path="sciencescalendar" element={<CalendarDayWeek />} />
+                    <Route path="sciences" element={<StudentSciences />}>
+                      <Route index element={<StudentSciencesMain />} />
+                      <Route path="attendance" element={<Attendance />} />
                     </Route>
-                    <Route path='lessontable' element={<LessonTable/>}/>
-                    <Route path='missedclasses' element={<MissedClasses/>}/>
-                  </Route>
-                </Route>}
+                    <Route path="final" element={<Final />} />
+                    <Route path="ScienceSelection" element={<ScienceSelection />} />
+                    <Route path="services" element={<Student_services />} />
+                    <Route path="videoguide" element={<VideoGuide />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="details/:id" element={<DashboardDetail />} />
+                  </Route>}
 
-                {user && getRole(user) === "tutor" && 
+                {user && getRole(user) === "dekan" &&
+                  <Route path="dekan" element={<MainDekan />}>
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="videoguide" element={<VideoGuide />} />
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                    <Route path="groups" element={<StudentSciences />} >
+                      <Route index element={<DekanGroups />} />
+                      <Route path='appropriation' element={<Appropriation />} />
+                      <Route path='students' element={<DekanStudents />} />
+                    </Route>
+                    <Route path='statistika' element={<StudentSciences />}>
+                      <Route index element={<DekanStatistic />} />
+                      <Route path='kontingent' element={<Kontingent />} />
+                      <Route path='finalquestion' element={<FinalQuestion />} />
+                      <Route path='finalresult' element={<FinalResults />} />
+                      <Route path='exportgrades' element={<ExportGrades />} />
+                      <Route path='materials' element={<Materials />} />
+                      <Route path='calendarplans' element={<CalendarPlans />} />
+                      <Route path='intermediate' element={<Intermediate />} />
+                      <Route path='intermediateresult' element={<IntermediateResult />} />
+                      <Route path='ungradedtasks' element={<UngradedTasks />} />
+                      <Route path='videolessons' element={<VideoLessons />} />
+                      <Route path='teachers' element={<Outlet />}>
+                        <Route index element={<DTechers />} />
+                        <Route path='mylessons' element={<MyLessons />} />
+                      </Route>
+                      <Route path='lessontable' element={<LessonTable />} />
+                      <Route path='missedclasses' element={<MissedClasses />} />
+                    </Route>
+                    <Route path='dekanquestions' element={<StudentSciences/>}>
+                     <Route index element={<DekanQuestions />} />
+                     <Route path='template' element={<Template />} />
+                    </Route>
+                    <Route path='dekanolympics' element={<StudentSciences/>}>
+                     <Route index element={<DekanOlympics />} />
+                    </Route>
+                  </Route>}
+
+                {user && getRole(user) === "tutor" &&
                   <Route path="tutor" element={<MainTutor />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
-                </Route>}
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  </Route>}
 
-                {user && getRole(user) === "department" && 
+                {user && getRole(user) === "department" &&
                   <Route path="department" element={<MainDepartment />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
-                  <Route path="classschedule" element={<ClassScheduleTeacher />} />
-                  <Route path="filingapplication" element={<FilingApplication />} />
-                  <Route path="sciences" element={<TeacherSciences />} />
-                  <Route path="Ddiploma" element={<Thesis />} />
-                  <Route path="Ddiploma/:id" element={<DiplomaTopics />} />
-                  <Route path="diploma" element={<Thesis />} />
-                  <Route path="diploma/:id" element={<DiplomaTopics />} />
-                  <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<CourseManagement />} />
-                  <Route path="applications" element={<Applications />} />
-                  <Route path="patoks" element={<Patoks />} />
-                  <Route path="final" element={<StudentSciences />} >
-                    <Route index element={<Final_Dep />} />
-                    <Route path='questions' element={<Questions />} />
-                  </Route>
-                </Route>}
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                    <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
+                    <Route path="classschedule" element={<ClassScheduleTeacher />} />
+                    <Route path="filingapplication" element={<FilingApplication />} />
+                    <Route path="sciences" element={<TeacherSciences />} />
+                    <Route path="Ddiploma" element={<Thesis />} />
+                    <Route path="Ddiploma/:id" element={<DiplomaTopics />} />
+                    <Route path="diploma" element={<Thesis />} />
+                    <Route path="diploma/:id" element={<DiplomaTopics />} />
+                    <Route path="request" element={<Questionnaire />} />
+                    <Route path="coursemanagement" element={<CourseManagement />} />
+                    <Route path="applications" element={<Applications />} />
+                    <Route path="patoks" element={<Patoks />} />
+                    <Route path="final" element={<StudentSciences />} >
+                      <Route index element={<Final_Dep />} />
+                      <Route path='questions' element={<Questions />} />
+                    </Route>
+                  </Route>}
               </>
             ) : <></>}
             <Route path="*" element={<Navigate to={user ? "/" : "/"} />} />
