@@ -1,5 +1,5 @@
-import React from 'react'
-import { useSelector } from "react-redux"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
@@ -62,14 +62,30 @@ import Outlet from './components/StatistikaList/Outlet/Outlet'
 import MyLessons from './components/StatistikaList/DTechers/MyLessons'
 import LessonTable from './components/StatistikaList/LessonTable/LessonTable'
 import MissedClasses from './components/StatistikaList/MissedClasses/MissedClasses'
-import { getRole } from './utils/getRole'
+import { getRole } from './components/Login/requests'
 import DekanQuestions from './components/DekanQuestions/DekanQuestions'
 import Template from './components/DekanQuestions/Template'
 import DekanOlympics from './components/DekanOlympics/DekanOlympics'
+import { user_me } from './utils/API_urls'
+import { setUser } from './redux/action/userActions'
+import PageNotFound from './components/PageNotFound'
 
 function App() {
 
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
+
+  const successfulFunctionGetRole = (response) => {
+    dispatch(setUser(response.data))
+  }
+
+  const errorFunctionGetRole = (error) => {
+    console.log(error)
+  }
+
+  useEffect(() => {
+    getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
+  }, [])
 
   return (
     <MuiTheme theme={muiTheme}>
@@ -79,8 +95,8 @@ function App() {
             <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
-                {user && getRole(user) === "teacher" &&
-                  <Route path="teacher" element={<Main />}>
+                {true &&
+                  <Route path="teacher" element={<Main user={user}/>}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="nb" element={<Attend />} />
                     <Route path="filingapplication" element={<FilingApplication />} />
@@ -102,8 +118,8 @@ function App() {
                     <Route path="details/:id" element={<DashboardDetail />} />
                   </Route>}
 
-                {user && getRole(user) === "student" &&
-                  <Route path="student" element={<MainStudent />}>
+                {true &&
+                  <Route path="student" element={<MainStudent/>}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                     <Route path="readagain" element={<ReadAgain />} />
@@ -125,7 +141,7 @@ function App() {
                     <Route path="details/:id" element={<DashboardDetail />} />
                   </Route>}
 
-                {user && getRole(user) === "dekan" &&
+                {true &&
                   <Route path="dekan" element={<MainDekan />}>
                     <Route path="profile" element={<Profile />} />
                     <Route path="videoguide" element={<VideoGuide />} />
@@ -164,13 +180,13 @@ function App() {
                     </Route>
                   </Route>}
 
-                {user && getRole(user) === "tutor" &&
+                {true &&
                   <Route path="tutor" element={<MainTutor />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                   </Route>}
 
-                {user && getRole(user) === "department" &&
+                {true &&
                   <Route path="department" element={<MainDepartment />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -193,12 +209,14 @@ function App() {
                   </Route>}
               </>
             ) : <></>}
+            <Route path="pagenotfound" element={<PageNotFound />} />
             <Route path="*" element={<Navigate to={user ? "/" : "/"} />} />
 
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
     </MuiTheme>
+    
   );
 }
 
