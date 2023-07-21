@@ -35,8 +35,7 @@ export default function Profile() {
             id="demo-simple-select"
             value={Lang}
             label="Til"
-            onChange={handleChange}
-          >
+            onChange={handleChange}>
             <MenuItem selected value={"uz"}>O'zbekcha</MenuItem>
             <MenuItem value={"ru"}>Русский</MenuItem>
             <MenuItem value={"eng"}>English</MenuItem>

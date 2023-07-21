@@ -3,6 +3,7 @@ import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 import search from '../../imgs/input_search.png'
 import listLanguage from '../Attend/language.json'
+import { useSelector } from "react-redux"
 
 const CssTextField = withStyles({
     root: {
@@ -48,6 +49,8 @@ const CssTextField = withStyles({
 })(TextField);
 
 export default function CustomizedInput({ label, callback_func }) {
+    const language = useSelector(state => state.language)
+
     return (
         <div style={{ position: "relative" }}>
             <img src={search} style={{position: "absolute", top: "12px", left: "12px", zIndex: "2"}} alt="search iconc" />
@@ -58,7 +61,7 @@ export default function CustomizedInput({ label, callback_func }) {
                 id="custom-css-outlined-input"
                 // helperText="Incorrect entry."
                 onChange={event => { callback_func(event.target.value) }}
-                placeholder={listLanguage.Search['ru']}
+                placeholder={listLanguage.Search[language]}
             />
         </div>
     );

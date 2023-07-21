@@ -4,9 +4,11 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { SelectorText } from './styles';
 import listLanguage from './language.json'
+import { useSelector } from 'react-redux';
 
 export default function PageSelector({chageValueFunction}) {
     const [age, setAge] = React.useState(10);
+    const language = useSelector(state => state.language)
 
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -62,7 +64,7 @@ export default function PageSelector({chageValueFunction}) {
                     <MenuItem value={50}>50</MenuItem>
                     <MenuItem value={100}>100</MenuItem>
                 </Select>
-                <SelectorText>{listLanguage.Row['ru']}</SelectorText>
+                <SelectorText>{listLanguage.Row[language]}</SelectorText>
             </FormControl>
         </div>
     );

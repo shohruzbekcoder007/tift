@@ -1,0 +1,17 @@
+{
+  "Science": {
+    "uz": "Fan",
+    "ru": "Наука",
+    "eng": "Science"
+},
+"Teacher": {
+  "uz": "O'qituvchi",
+  "ru": "Учитель",
+  "eng": "Teacher"
+},
+"Attendance": {
+  "uz": "Davomat",
+  "ru": "Посещаемость",
+  "eng": "Attendance"
+}
+}
