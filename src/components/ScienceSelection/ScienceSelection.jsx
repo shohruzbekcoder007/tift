@@ -1,13 +1,16 @@
 import React from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { CardWrapper, CardWrapperTitle } from './style'
-
+import languagelist from './language.json'
+import { useSelector } from 'react-redux'
 export default function ScienceSelection() {
+  const language = useSelector(state => state.language)
+
   return (
     <ContentWrapper>
       <CardWrapper>
         <CardWrapperTitle>
-          Kalendar planni belgilash va davomatni qo'yish muddati: 2 kun
+          {languagelist.Title[language]}
         </CardWrapperTitle>
       </CardWrapper>
     </ContentWrapper>
