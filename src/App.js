@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
@@ -63,20 +63,32 @@ import MyLessons from './components/StatistikaList/DTechers/MyLessons'
 import LessonTable from './components/StatistikaList/LessonTable/LessonTable'
 import MissedClasses from './components/StatistikaList/MissedClasses/MissedClasses'
 import { getRole } from './utils/getRole'
+import { getRole as getRoleF } from './components/Login/requests'
 import DekanQuestions from './components/DekanQuestions/DekanQuestions'
 import Template from './components/DekanQuestions/Template'
 import DekanOlympics from './components/DekanOlympics/DekanOlympics'
+import { user_me } from './utils/API_urls'
+import { useDispatch } from 'react-redux'
+import { setUser } from './redux/action/userActions'
 
 function App() {
 
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
+  const [me, setMe] = useState(null)
+
+  useEffect(() => {
+    getRoleF(user_me, (response)=>{setMe(response.data); dispatch(setUser(response.data))}, err => {console.log(err)})
+  },[])
 
   return (
     <MuiTheme theme={muiTheme}>
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
+
             <Route path="/" element={<Login />} />
+            
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 {user && getRole(user) === "teacher" &&

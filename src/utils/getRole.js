@@ -1,4 +1,7 @@
 export const getRole = (user) => {
+  if(!user){
+    return ''
+  }
     if (user.role) {
       if (user.role[0] === "student") {
         return 'student'
