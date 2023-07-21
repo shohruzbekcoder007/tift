@@ -45,7 +45,6 @@ export default function Login() {
   };
 
   const successfulFunctionGetToken = (response) => {
-    console.log(response.data)
     sessionStorage.setItem('access_token', response.data.access)
     setHaveatoken(true)
     getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
