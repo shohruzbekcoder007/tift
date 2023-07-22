@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 export const StudentTasksBox = styled.div`
-    width: 24%;
+    width: 250px;
     display: grid;
     place-items: center;
     gap: 10px;
@@ -10,6 +10,10 @@ export const StudentTasksBox = styled.div`
     flex-wrap: wrap;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     padding: 1rem 0;
+    @media (max-width: 768px) {
+      width: 150px;
+      margin: 1em 0;
+    }
 `
 
 export const StudentAIButton = styled.button`

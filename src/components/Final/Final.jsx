@@ -29,7 +29,7 @@ export default function Final() {
             console.log(val)
           }} />
           <div style={{ display: 'flex', flexWrap: 'wrap', width: "70%", justifyContent: "space-between" }}>
-            <div onClick={handleOpen} className='qoidalar'>
+            <div onClick={handleOpen} style={{display: 'flex', alignItems: 'center', cursor: "pointer"}}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_78_20514)">
                   <path

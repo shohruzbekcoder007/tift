@@ -39,6 +39,7 @@ import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan, { CalendarPlanMain } from './components/TeacherSciences/CalendarPlan'
 import CalendarPlans from './components/StatistikaList/CalendarPlan/CalendarPlans'
+import CalendarStudent from './components/StudentSciences/CalendarPlan/CalendarPlan'
 import Applications from './components/Applications/applications'
 import Patoks from './components/Patoks/Patoks'
 import Final_Dep from './components/Final_Dep/Final_Dep'
@@ -134,7 +135,7 @@ function App() {
                       <Route index element={<StudentSciencesMain />} />
                       <Route path="attendance" element={<Attendance />} />
                       <Route path="tasks" element={<Tasks />} />
-                      <Route path="calendarplan" element={<CalendarPlan />} />
+                      <Route path="calendarplan" element={<CalendarStudent />} />
                     </Route>
                     <Route path="final" element={<Final />} />
                     <Route path="ScienceSelection" element={<ScienceSelection />} />
