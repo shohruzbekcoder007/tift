@@ -1,7 +1,5 @@
 export const getRole = (user) => {
 
-  console.log(user, "<---user get role")
-
     if (user?.role) {
       if (user.role[0] === "student") {
         return 'student'

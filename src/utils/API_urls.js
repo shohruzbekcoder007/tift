@@ -7,3 +7,9 @@ export const user_me = "/users/me/"
 
 // teacher 
 export const get_news = "/teacher/news"
+
+// student
+export const my_sciences = "/student/my-sciences" 
+
+// semester 
+export const my_semesters = '/my-semesters/'

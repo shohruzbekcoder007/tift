@@ -213,7 +213,7 @@ function App() {
               </>
             ) : <></>}
             <Route path="pagenotfound" element={<PageNotFound />} />
-            <Route path="*" element={<Navigate to={user ? "/" : "/"} />} />
+            <Route path="*" element={<Navigate to={user ? "/" : "pagenotfound"} />} />
 
           </Routes>
         </BrowserRouter>

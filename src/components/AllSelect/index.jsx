@@ -1,16 +1,20 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 export default function AllSelect({chageValueFunction, selectOptions}) {
 
-    const [age, setAge] = React.useState(selectOptions[0].value);
+    const [age, setAge] = React.useState(selectOptions[0]?.value || 0);
 
     const handleChange = (event) => {
         setAge(event.target.value);
         chageValueFunction(event.target.value)
     };
+
+    useEffect( () => {
+        setAge(selectOptions[0]?.value || 0)
+    }, [selectOptions])
 
     return (
         <div>

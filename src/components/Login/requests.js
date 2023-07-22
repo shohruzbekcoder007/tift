@@ -9,7 +9,6 @@ export const getToken = (url, data, successfulFunction, errorFunction) => {
     })
     .catch((error) => {
         errorFunction(error)
-
     });
 }
 

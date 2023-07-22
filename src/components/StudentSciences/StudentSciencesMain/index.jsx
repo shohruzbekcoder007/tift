@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -9,9 +9,52 @@ import { Link } from 'react-router-dom'
 import AllSelect from '../../AllSelect'
 import { StudentSciencesMainHeader } from './styles'
 import { useSelector } from 'react-redux'
+import { getSciences, getSemester } from './requests'
+import { my_sciences, my_semesters } from '../../../utils/API_urls'
 
 export default function StudentSciencesMain() {
+
   const language = useSelector(state => state.language)
+  
+  const [semesters, setSemesters] = useState([])
+  const [sciences, setSciences] = useState([])
+  const [semester, setSemester] = useState(0)
+
+  const getSemesters = (response) => {
+    const semester_firstly = response.data.map(element => {
+      return {
+        value: element.id,
+        name: element.name
+      }
+    })
+    setSemester(semester_firstly[0].value)
+    setSemesters(semester_firstly)
+  }
+
+  const getSemestersEror = (error) => {console.log(error)}
+
+  const getSciensesArrayF = (response) => {
+    console.log(response.data)
+    setSciences(response.data)
+  }
+
+  const getSciensesArrayE = (error) => {
+    console.log(error)
+  }
+
+  const getSciensesArray = (semester_id) => {
+    getSciences(`${my_sciences}?semester=${semester_id}`, getSciensesArrayF, getSciensesArrayE)
+  }
+
+  useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+  }, [])
+
+  useEffect(() => {
+    if(semester != 0){
+      getSciensesArray(semester)
+    }
+  }, [semester])
 
   return (
     <Paper
@@ -24,21 +67,8 @@ export default function StudentSciencesMain() {
     >
 
       <BoxHeader>
-        <AllSelect chageValueFunction={val => { console.log(val) }}
-          selectOptions={[
-            {
-              value: "1",
-              name: "2022-2023 Ikkinchi semestr uchun qayta o’qish"
-            },
-            {
-              value: "2",
-              name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
-            },
-            {
-              value: "3",
-              name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
-            }
-          ]}
+        <AllSelect chageValueFunction={val => { setSemester(val) }}
+          selectOptions={semesters}
         />
       </BoxHeader>
       <StudentSciencesMainHeader>
@@ -128,6 +158,11 @@ export default function StudentSciencesMain() {
               </tr>
             </thead>
             <tbody>
+              {
+                <tr>
+                <th colSpan={5} align='center'>Ma’lumot yo’q</th>
+              </tr>
+              }
               {
                 [1, 2, 3, 4, 5].map((elem, index) => {
                   return (
