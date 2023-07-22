@@ -69,6 +69,7 @@ import DekanOlympics from './components/DekanOlympics/DekanOlympics'
 import { user_me } from './utils/API_urls'
 import { setUser } from './redux/action/userActions'
 import PageNotFound from './components/PageNotFound'
+import Tasks from './components/StudentSciences/Tasks/Tasks'
 
 function App() {
 
@@ -96,7 +97,7 @@ function App() {
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 {true &&
-                  <Route path="teacher" element={<Main user={user}/>}>
+                  <Route path="teacher" element={<Main user={user} />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="nb" element={<Attend />} />
                     <Route path="filingapplication" element={<FilingApplication />} />
@@ -119,7 +120,7 @@ function App() {
                   </Route>}
 
                 {true &&
-                  <Route path="student" element={<MainStudent/>}>
+                  <Route path="student" element={<MainStudent />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                     <Route path="readagain" element={<ReadAgain />} />
@@ -132,6 +133,8 @@ function App() {
                     <Route path="sciences" element={<StudentSciences />}>
                       <Route index element={<StudentSciencesMain />} />
                       <Route path="attendance" element={<Attendance />} />
+                      <Route path="tasks" element={<Tasks />} />
+                      <Route path="calendarplan" element={<CalendarPlan />} />
                     </Route>
                     <Route path="final" element={<Final />} />
                     <Route path="ScienceSelection" element={<ScienceSelection />} />
@@ -171,12 +174,12 @@ function App() {
                       <Route path='lessontable' element={<LessonTable />} />
                       <Route path='missedclasses' element={<MissedClasses />} />
                     </Route>
-                    <Route path='dekanquestions' element={<StudentSciences/>}>
-                     <Route index element={<DekanQuestions />} />
-                     <Route path='template' element={<Template />} />
+                    <Route path='dekanquestions' element={<StudentSciences />}>
+                      <Route index element={<DekanQuestions />} />
+                      <Route path='template' element={<Template />} />
                     </Route>
-                    <Route path='dekanolympics' element={<StudentSciences/>}>
-                     <Route index element={<DekanOlympics />} />
+                    <Route path='dekanolympics' element={<StudentSciences />}>
+                      <Route index element={<DekanOlympics />} />
                     </Route>
                   </Route>}
 
@@ -216,7 +219,7 @@ function App() {
         </BrowserRouter>
       </ThemeProvider>
     </MuiTheme>
-    
+
   );
 }
 

@@ -1,5 +1,5 @@
 .spinner:before {
-    transform: rotateX(60deg) rotateY(45deg) rotateZ(45deg);
+    transform: rotateX(90deg) rotateY(45deg) rotateZ(45deg);
     animation: 750ms rotateBefore infinite linear reverse;
   }
   .spinner:after {

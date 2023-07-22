@@ -152,6 +152,7 @@ export default function StudentSciencesMain() {
                         </Link>
                       </th>
                       <th>
+                        <Link to={'tasks'}>
                         <Button
                           variant="contained"
                           color="secondary"
@@ -176,6 +177,7 @@ export default function StudentSciencesMain() {
                         >
                           Vazifalar
                         </Button>
+                        </Link>
                       </th>
                       <th>
                         <Button
