@@ -7,9 +7,13 @@ export const user_me = "/users/me/"
 
 // teacher 
 export const get_news = "/teacher/news"
+export const teacher_syllabus = "/teacher/syllabus"
 
 // student
 export const my_sciences = "/student/my-sciences" 
 
 // semester 
 export const my_semesters = '/my-semesters/'
+
+// scienceshortname 
+export const scienceshortname = '/scienceshortname/'

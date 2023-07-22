@@ -95,7 +95,6 @@ function App() {
             <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
-                {true &&
                   <Route path="teacher" element={<Main user={user}/>}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="nb" element={<Attend />} />
@@ -116,9 +115,8 @@ function App() {
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="details/:id" element={<DashboardDetail />} />
-                  </Route>}
+                  </Route>
 
-                {true &&
                   <Route path="student" element={<MainStudent/>}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -139,9 +137,8 @@ function App() {
                     <Route path="videoguide" element={<VideoGuide />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="details/:id" element={<DashboardDetail />} />
-                  </Route>}
+                  </Route>
 
-                {true &&
                   <Route path="dekan" element={<MainDekan />}>
                     <Route path="profile" element={<Profile />} />
                     <Route path="videoguide" element={<VideoGuide />} />
@@ -178,15 +175,13 @@ function App() {
                     <Route path='dekanolympics' element={<StudentSciences/>}>
                      <Route index element={<DekanOlympics />} />
                     </Route>
-                  </Route>}
+                  </Route>
 
-                {true &&
                   <Route path="tutor" element={<MainTutor />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  </Route>}
+                  </Route>
 
-                {true &&
                   <Route path="department" element={<MainDepartment />}>
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -206,7 +201,7 @@ function App() {
                       <Route index element={<Final_Dep />} />
                       <Route path='questions' element={<Questions />} />
                     </Route>
-                  </Route>}
+                  </Route>
               </>
             ) : <></>}
             <Route path="pagenotfound" element={<PageNotFound />} />
