@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -11,12 +11,63 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import listLanguage from './language.json'
+import { getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
+import { my_semesters, scienceshortname, teacher_syllabus } from '../../utils/API_urls'
 
-export default function  FilingApplication() {
+export default function FilingApplication() {
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [semesters, setSemesters] = useState([])
+    const [sciences, setSciences] = useState([])
+    const [syllabus, setSyllabus] = useState([])
+    const [pageCount, setPageCount] = useState(1)
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+
+    const getSemesters = (response) => {
+        const semester_firstly = response.data.map(element => {
+            return {
+                value: element.id,
+                name: element.name
+            }
+        })
+        setSemesters(semester_firstly)
+    }
+
+    const getSemestersEror = (error) => { console.log(error) }
+
+    const getSciences = (response) => {
+        const new_sciences = response.data.map(elem => {
+            return {
+                name: elem.name,
+                value: elem.id
+            }
+        })
+        setSciences(new_sciences)
+    }
+
+    const getSciencesError = (error) => { console.log(error) }
+
+    const getSyllabus = (response) => {
+        setPageCount(response.data.page_count)
+        setSyllabus(response.data.results)
+    }
+
+    const getSyllabusError = (error) => { console.log(error) }
+
+    useEffect(() => {
+        getSemester(my_semesters, getSemesters, getSemestersEror)
+        getScienceShortName(scienceshortname, getSciences, getSciencesError)
+    }, [])
+
+    useEffect(() => {
+        if (semesters !== 0) {
+            getTeacherSyllabus(`${teacher_syllabus}?semester=2&page_size=${pageSize}&page=${page}`, getSyllabus, getSyllabusError)
+        }
+    }, [page, pageSize])
 
     return (
         <ContentWrapper>
@@ -74,25 +125,12 @@ export default function  FilingApplication() {
                     />
                     <AllSelect
                         chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: "2022-2023 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "2",
-                                name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "3",
-                                name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
-                            }
-                        ]}
+                        selectOptions={semesters}
                     />
                 </FilingApplicationHeader>
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
-                        console.log(val)
+                        setPageSize(val)
                     }} />
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
                 </BoxHeader>
@@ -115,7 +153,7 @@ export default function  FilingApplication() {
                                         </svg>}
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Lang['ru']}
+                                        text={listLanguage.science['ru']}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -130,7 +168,7 @@ export default function  FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.science['ru']}
+                                        text={listLanguage.Lang['ru']}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -175,7 +213,7 @@ export default function  FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text= {listLanguage.Patok['ru']}
+                                        text={listLanguage.Patok['ru']}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -207,148 +245,69 @@ export default function  FilingApplication() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th>1494</th>
-                                    <th>DT loyihalarini boshqarish</th>
-                                    <th>UZ</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>SPM201</th>
-                                    <th style={{ width: "400px" }}>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                marginRight: "20px"
-                                            }}
-                                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clipPath="url(#clip0_78_21972)">
-                                                    <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_78_21972">
-                                                        <rect width="16" height="16" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>}
-                                        >
-                                            {listLanguage.Confirmed['ru']}
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                backgroundColor: "blackButton.main"
-                                            }}
-                                            startIcon={null}
-                                        >
-                                            {listLanguage.Separation['ru']}
-                                        </Button>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>1494</th>
-                                    <th>DT loyihalarini boshqarish</th>
-                                    <th>UZ</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>SPM201</th>
-                                    <th style={{ width: "400px" }}>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                marginRight: "20px"
-                                            }}
-                                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clipPath="url(#clip0_78_21972)">
-                                                    <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_78_21972">
-                                                        <rect width="16" height="16" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>}
-                                        >
-                                            Tasdiqlangan
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                backgroundColor: "blackButton.main"
-                                            }}
-                                            startIcon={null}
-                                        >
-                                            Fanni ajratish
-                                        </Button>
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th>1494</th>
-                                    <th>DT loyihalarini boshqarish</th>
-                                    <th>UZ</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>01-06-2023 13:58</th>
-                                    <th>SPM201</th>
-                                    <th style={{ width: "400px" }}>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                marginRight: "20px"
-                                            }}
-                                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clipPath="url(#clip0_78_21972)">
-                                                    <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-                                                </g>
-                                                <defs>
-                                                    <clipPath id="clip0_78_21972">
-                                                        <rect width="16" height="16" fill="white" />
-                                                    </clipPath>
-                                                </defs>
-                                            </svg>}
-                                        >
-                                            Tasdiqlangan
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                borderRadius: "10px",
-                                                textTransform: "capitalize",
-                                                boxShadow: "none",
-                                                padding: "6px 12px",
-                                                backgroundColor: "blackButton.main"
-                                            }}
-                                            startIcon={null}
-                                        >
-                                            Fanni ajratish
-                                        </Button>
-                                    </th>
-                                </tr>
+
+                                {
+                                    syllabus?.length === 0 ?
+                                        <tr>
+                                            <th colSpan={7} align='center'>Ma’lumot yo’q</th>
+                                        </tr> :
+                                        syllabus.map((elem, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <th>{elem.id}</th>
+                                                    <th>{elem.department_science}</th>
+                                                    <th>{elem.lang_display}</th>
+                                                    <th>{elem.created_at}</th>
+                                                    <th>{elem.updated_at}</th>
+                                                    <th>SPM201</th>
+                                                    <th style={{ width: "400px" }}>
+                                                        <Button
+                                                            variant="contained"
+                                                            sx={{
+                                                                borderRadius: "10px",
+                                                                textTransform: "capitalize",
+                                                                boxShadow: "none",
+                                                                padding: "6px 12px",
+                                                                marginRight: "20px"
+                                                            }}
+                                                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g clipPath="url(#clip0_78_21972)">
+                                                                    <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_78_21972">
+                                                                        <rect width="16" height="16" fill="white" />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>}
+                                                        >
+                                                            {listLanguage.Confirmed['ru']}
+                                                        </Button>
+                                                        <Button
+                                                            variant="contained"
+                                                            sx={{
+                                                                borderRadius: "10px",
+                                                                textTransform: "capitalize",
+                                                                boxShadow: "none",
+                                                                padding: "6px 12px",
+                                                                backgroundColor: "blackButton.main"
+                                                            }}
+                                                            startIcon={null}
+                                                        >
+                                                            {listLanguage.Separation['ru']}
+                                                        </Button>
+                                                    </th>
+                                                </tr>
+                                            )
+                                        })
+                                }
                             </tbody>
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
             <Modal
@@ -398,10 +357,7 @@ export default function  FilingApplication() {
                         </Typography>
                         <AllSelectFullWidth
                             chageValueFunction={val => console.log(val)}
-                            selectOptions={[{
-                                name: "Matematika",
-                                value: 12,
-                            }]}
+                            selectOptions={sciences}
                         />
                     </ModalSelectWrapper>
                     <ModalSelectWrapper>
