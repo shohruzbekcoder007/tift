@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -7,7 +7,41 @@ import { TableTHHeader } from '../DiplomaTable'
 import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import { BoxHeaderApp } from './styles'
-export default function applications() {
+import  application_status from '../../dictionary/ application_status'
+import { my_semesters } from '../../utils/API_urls'
+import { getSemester } from './requests'
+
+export default function Applications() {
+
+const [status, setStatus] = useState(application_status[0].value)
+const [semesters, setSemesters] = useState([])
+const [semester, setSemester] = useState([])
+const [pageSize, setPageSize] = useState(10)
+
+const getSemesters = (response) => {
+    const semester_firstly = response.data.map(element => {
+        return {
+            value: element.id,
+            name: element.name
+        }
+    })
+    setSemester(semester_firstly[0].value)
+    setSemesters(semester_firstly)
+}
+
+const getSemestersEror = (error) => { console.log(error) }
+
+
+useEffect(() => {
+    console.log(application_status)
+    // setAllStatus()
+},[])
+
+useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+}, [])
+
+
   return (
     <ContentWrapper>
             <Paper
@@ -23,43 +57,22 @@ export default function applications() {
              <BoxHeaderApp>
                     <AllSelect
                         chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: "Tushgan"
-                            },
-                            {
-                                value: "2",
-                                name: "Tushgan"
-                            },
-                            {
-                                value: "3",
-                                name: "Tushgan"
+                        selectOptions={application_status.map(elem => {
+                            return {
+                                name: elem.uz,
+                                value: elem.value
                             }
-                        ]}
+                        })}
                     />
                     <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: "2022-2023 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "2",
-                                name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "3",
-                                name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
-                            }
-                        ]}
+                        chageValueFunction={val => { setSemester(val) }}
+                        selectOptions={semesters}
                     />
                 </BoxHeaderApp>
              </div>
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
-                        console.log(val)
+                        setPageSize(val)
                     }} />
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
                 </BoxHeader>

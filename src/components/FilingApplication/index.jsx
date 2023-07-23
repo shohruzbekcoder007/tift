@@ -11,8 +11,9 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import listLanguage from './language.json'
-import { getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
-import { my_semesters, scienceshortname, teacher_syllabus } from '../../utils/API_urls'
+import { createSyllabus, getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
+import { my_semesters, scienceshortname, syllabus_create, teacher_syllabus } from '../../utils/API_urls'
+import { MuiFileInput } from 'mui-file-input'
 
 export default function FilingApplication() {
 
@@ -21,11 +22,21 @@ export default function FilingApplication() {
     const handleClose = () => setOpen(false);
 
     const [semesters, setSemesters] = useState([])
+    const [semester, setSemester] = useState([])
     const [sciences, setSciences] = useState([])
     const [syllabus, setSyllabus] = useState([])
     const [pageCount, setPageCount] = useState(1)
+    const [science, setScience] = useState(null)
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
+
+
+    const [file, setFile] = useState(null);
+    const [lang, setLang] = useState("uz");
+
+    const setFileHandler = (newValue, info) => {
+        setFile(newValue)
+    }
 
     const getSemesters = (response) => {
         const semester_firstly = response.data.map(element => {
@@ -34,6 +45,7 @@ export default function FilingApplication() {
                 name: element.name
             }
         })
+        setSemester(semester_firstly[0].value)
         setSemesters(semester_firstly)
     }
 
@@ -46,26 +58,40 @@ export default function FilingApplication() {
                 value: elem.id
             }
         })
+        setScience(new_sciences[0].value)
         setSciences(new_sciences)
     }
 
     const getSciencesError = (error) => { console.log(error) }
 
     const getSyllabus = (response) => {
+        console.log(response)
         setPageCount(response.data.page_count)
         setSyllabus(response.data.results)
     }
 
     const getSyllabusError = (error) => { console.log(error) }
 
+    const handleSubmit = async (event) => {
+        
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append("syllabus_file", file);
+        formData.append("lang", lang);
+        formData.append("department_science", science)
+        formData.append("semester", semester)
+        console.log(formData.get("syllabus_file"))
+        createSyllabus(syllabus_create, formData, () => {}, () => {})
+      };
+
     useEffect(() => {
         getSemester(my_semesters, getSemesters, getSemestersEror)
         getScienceShortName(scienceshortname, getSciences, getSciencesError)
     }, [])
-
+ 
     useEffect(() => {
         if (semesters !== 0) {
-            getTeacherSyllabus(`${teacher_syllabus}?semester=2&page_size=${pageSize}&page=${page}`, getSyllabus, getSyllabusError)
+            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}`, getSyllabus, getSyllabusError)
         }
     }, [page, pageSize])
 
@@ -124,7 +150,7 @@ export default function FilingApplication() {
                         ]}
                     />
                     <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
+                        chageValueFunction={val => { setSemester(val) }}
                         selectOptions={semesters}
                     />
                 </FilingApplicationHeader>
@@ -244,8 +270,7 @@ export default function FilingApplication() {
                                     />
                                 </tr>
                             </thead>
-                            <tbody>
-
+                            {/* <tbody>
                                 {
                                     syllabus?.length === 0 ?
                                         <tr>
@@ -301,7 +326,7 @@ export default function FilingApplication() {
                                             )
                                         })
                                 }
-                            </tbody>
+                            </tbody> */}
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
@@ -317,87 +342,123 @@ export default function FilingApplication() {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <ModalBox>
-                    <div style={{ marginBottom: '20px' }}>
-                        <ModalHeader>
+                <form onSubmit={handleSubmit}>
+                    <ModalBox>
+                        <div style={{ marginBottom: '20px' }}>
+                            <ModalHeader>
+                                <Typography
+                                    id="keep-mounted-modal-title"
+                                    variant="h6"
+                                    component="h4"
+                                    sx={{
+                                        fontSize: "20px",
+                                        fontWeight: 600,
+                                        color: "#000",
+                                    }}
+                                >
+                                    {listLanguage.add['ru']}
+                                </Typography>
+                                <span
+                                    onClick={handleClose}
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                                    </svg>
+                                </span>
+                            </ModalHeader>
+                        </div>
+                        <ModalSelectWrapper>
                             <Typography
                                 id="keep-mounted-modal-title"
                                 variant="h6"
                                 component="h4"
                                 sx={{
-                                    fontSize: "20px",
+                                    fontSize: "16px",
                                     fontWeight: 600,
                                     color: "#000",
+                                    mb: "10px"
                                 }}
                             >
-                                {listLanguage.add['ru']}
+                                {listLanguage.science['ru']}
                             </Typography>
-                            <span
+                            <AllSelectFullWidth
+                                chageValueFunction={val => setScience(val)}
+                                selectOptions={sciences}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                {listLanguage.Lang['ru']}
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => setLang(val)}
+                                selectOptions={[
+                                    {
+                                        name: "O'zbek",
+                                        value: "uz",
+                                    },
+                                    {
+                                        name: "Ruscha",
+                                        value: "ru",
+                                    },
+                                    {
+                                        name: "English",
+                                        value: "en",
+                                    }
+                                ]}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                    id="keep-mounted-modal-title"
+                                    variant="h6"
+                                    component="h4"
+                                    sx={{
+                                        fontSize: "16px",
+                                        fontWeight: 600,
+                                        color: "#000",
+                                        mb: "10px"
+                                    }}
+                                >
+                                    File
+                                </Typography>
+                            <MuiFileInput
+                                placeholder="Fayl kiriting"
+                                value={file}
+                                onChange={setFileHandler}
+                                // getInputText={(value) => value ? 'Thanks!' : ''}
+                                fullWidth
+                            />
+                        </ModalSelectWrapper>
+                        <ModalButtons>
+                            <Button
+                                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                                variant="outlined"
                                 onClick={handleClose}
                             >
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                                </svg>
-                            </span>
-                        </ModalHeader>
-                    </div>
-                    <ModalSelectWrapper>
-                        <Typography
-                            id="keep-mounted-modal-title"
-                            variant="h6"
-                            component="h4"
-                            sx={{
-                                fontSize: "16px",
-                                fontWeight: 600,
-                                color: "#000",
-                                mb: "10px"
-                            }}
-                        >
-                            {listLanguage.science['ru']}
-                        </Typography>
-                        <AllSelectFullWidth
-                            chageValueFunction={val => console.log(val)}
-                            selectOptions={sciences}
-                        />
-                    </ModalSelectWrapper>
-                    <ModalSelectWrapper>
-                        <Typography
-                            id="keep-mounted-modal-title"
-                            variant="h6"
-                            component="h4"
-                            sx={{
-                                fontSize: "16px",
-                                fontWeight: 600,
-                                color: "#000",
-                                mb: "10px"
-                            }}
-                        >
-                            {listLanguage.Lang['ru']}
-                        </Typography>
-                        <AllSelectFullWidth
-                            chageValueFunction={val => console.log(val)}
-                            selectOptions={[{
-                                name: "English",
-                                value: 12,
-                            }]}
-                        />
-                    </ModalSelectWrapper>
-                    <ModalButtons>
-                        <Button
-                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-                            variant="outlined"
-                            onClick={handleClose}
-                        >
-                            {listLanguage.Cancel['ru']}
-                        </Button>
-                        <Button
-                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                            variant="contained"
-                        >
-                            {listLanguage.Save['ru']}
-                        </Button>
-                    </ModalButtons>
-                </ModalBox>
+                                {listLanguage.Cancel['ru']}
+                            </Button>
+                            <Button
+                                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                                variant="contained"
+                                type="submit"
+                            >
+                                {listLanguage.Save['ru']}
+                            </Button>
+                        </ModalButtons>
+                    </ModalBox>
+                </form>
+
             </Modal>
         </ContentWrapper>
     )
