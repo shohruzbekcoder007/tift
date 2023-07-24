@@ -6,24 +6,14 @@ export const HeaderWrapper = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 10px 20px;
-  .hr {
-    width:100%;
-    height: 2px;
-    background-color: ${props => props.theme.color.secondary_color}; !important;
-  }
-  .wrapper_body {
-    margin: 1.8rem 0;
-    display: flex;
-    justify-content: space-between;
-  }
-  margin: ${props => props.margin ? "0 1rem ": "0"};
+  margin: ${props => props.margin ? "0 1rem " : "0"};
 
   @media (max-width: 570px) {
     margin: 1rem 0;
     width: 100%;
   }
   `
-  export const HeaderWrapperTop = styled.div`
+export const HeaderWrapperTop = styled.div`
   width: 100%;
   height: 20%;
   background-color: #fff;
@@ -32,15 +22,22 @@ export const HeaderWrapper = styled.div`
   align-items: center;
   margin-bottom: 1.5rem;
 
-  .user_img {
+  img {
     width: 70px;
     height:70px;
     border-radius: 50%;
     background-color: ${props => props.theme.color.secondary_color};
     object-fit: contain;
   }
+  `
 
-  .edit_icon {
+export const HeaderWrapperTopDiv = styled.div`
+    display: block;
+  `
+export const HeaderWrapperH4 = styled.h4``
+export const HeaderWrapperP = styled.p``
+
+export const Edit_icon = styled.div`
     width: 35px;
     height: 35px;
     background-color: ${props => props.theme.color.main_color};
@@ -49,16 +46,28 @@ export const HeaderWrapper = styled.div`
     justify-content: center;
     border-radius: 5px;
     cursor: pointer;
-  }
-  `
+`
 
-  export const HeaderWrapperBottom = styled.div`
+export const Wrapper_body = styled.div`
+  margin: 1.8rem 0;
+  display: flex;
+  justify-content: space-between;
+`
+
+export const Hr = styled.hr`
+    width:100%;
+    height: 2px;
+    background-color: ${props => props.theme.color.secondary_color};
+`
+
+
+export const HeaderWrapperBottom = styled.div`
   height: 80%;
   width: 100%;
 
   `
 
-  export const Info_body = styled.div`
+export const Info_body = styled.div`
     display: flex;
     @media (max-width: 570px) {
       width: 100%;
@@ -67,7 +76,7 @@ export const HeaderWrapper = styled.div`
   `
 
 
-  export const ModalBoxInfo = styled.div`
+export const ModalBoxInfo = styled.div`
     border-radius: 10px;
     width: 1060px;
     position: absolute;
