@@ -29,3 +29,20 @@ export const getTeacherSyllabus = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const createSyllabus = (url, data, successfulFunction, errorFunction) => {
+    axios.post(
+        url,
+        data,
+        {
+            // "content-type": "multipart/form-data",
+            headers: headerConfig(),
+        }
+    ).then((response) => {
+        console.log(response)
+        successfulFunction(response)
+    })
+    .catch((error) => {
+        errorFunction(error)
+    });
+}

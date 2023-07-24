@@ -8,6 +8,8 @@ export const user_me = "/users/me/"
 // teacher 
 export const get_news = "/teacher/news"
 export const teacher_syllabus = "/teacher/syllabus"
+export const view_patok = "/teacher/view-patok/"
+export const syllabus_create = "/teacher/syllabus/create/"
 
 // student
 export const my_sciences = "/student/my-sciences" 
