@@ -22,7 +22,7 @@ export default function FilingApplication() {
     const handleClose = () => setOpen(false);
 
     const [semesters, setSemesters] = useState([])
-    const [semester, setSemester] = useState([])
+    const [semester, setSemester] = useState(0)
     const [sciences, setSciences] = useState([])
     const [syllabus, setSyllabus] = useState([])
     const [pageCount, setPageCount] = useState(1)
@@ -65,7 +65,6 @@ export default function FilingApplication() {
     const getSciencesError = (error) => { console.log(error) }
 
     const getSyllabus = (response) => {
-        console.log(response)
         setPageCount(response.data.page_count)
         setSyllabus(response.data.results)
     }
@@ -73,7 +72,7 @@ export default function FilingApplication() {
     const getSyllabusError = (error) => { console.log(error) }
 
     const handleSubmit = async (event) => {
-        
+
         event.preventDefault();
         const formData = new FormData();
         formData.append("syllabus_file", file);
@@ -81,14 +80,14 @@ export default function FilingApplication() {
         formData.append("department_science", science)
         formData.append("semester", semester)
         console.log(formData.get("syllabus_file"))
-        createSyllabus(syllabus_create, formData, () => {}, () => {})
-      };
+        createSyllabus(syllabus_create, formData, () => { }, () => { })
+    };
 
     useEffect(() => {
         getSemester(my_semesters, getSemesters, getSemestersEror)
         getScienceShortName(scienceshortname, getSciences, getSciencesError)
     }, [])
- 
+
     useEffect(() => {
         if (semesters !== 0) {
             getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}`, getSyllabus, getSyllabusError)
@@ -270,7 +269,7 @@ export default function FilingApplication() {
                                     />
                                 </tr>
                             </thead>
-                            {/* <tbody>
+                            <tbody>
                                 {
                                     syllabus?.length === 0 ?
                                         <tr>
@@ -284,31 +283,36 @@ export default function FilingApplication() {
                                                     <th>{elem.lang_display}</th>
                                                     <th>{elem.created_at}</th>
                                                     <th>{elem.updated_at}</th>
-                                                    <th>SPM201</th>
-                                                    <th style={{ width: "400px" }}>
-                                                        <Button
-                                                            variant="contained"
-                                                            sx={{
-                                                                borderRadius: "10px",
-                                                                textTransform: "capitalize",
-                                                                boxShadow: "none",
-                                                                padding: "6px 12px",
-                                                                marginRight: "20px"
-                                                            }}
-                                                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                <g clipPath="url(#clip0_78_21972)">
-                                                                    <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-                                                                </g>
-                                                                <defs>
-                                                                    <clipPath id="clip0_78_21972">
-                                                                        <rect width="16" height="16" fill="white" />
-                                                                    </clipPath>
-                                                                </defs>
-                                                            </svg>}
-                                                        >
-                                                            {listLanguage.Confirmed['ru']}
-                                                        </Button>
-                                                        <Button
+                                                    <th>{elem.groups}</th>
+                                                    <th>
+                                                        {
+                                                            elem.status_display === "Approved" ?
+                                                                <Button
+                                                                    variant="contained"
+                                                                    disabled
+                                                                    sx={{
+                                                                        borderRadius: "10px",
+                                                                        textTransform: "capitalize",
+                                                                        boxShadow: "none",
+                                                                        padding: "6px 12px",
+                                                                        marginRight: "20px"
+                                                                    }}
+                                                                    startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <g clipPath="url(#clip0_78_21972)">
+                                                                            <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
+                                                                        </g>
+                                                                        <defs>
+                                                                            <clipPath id="clip0_78_21972">
+                                                                                <rect width="16" height="16" fill="white" />
+                                                                            </clipPath>
+                                                                        </defs>
+                                                                    </svg>}
+                                                                >
+                                                                    {listLanguage.Confirmed['uz']}
+                                                                </Button> :
+                                                                <></>
+                                                        }
+                                                        {/* <Button
                                                             variant="contained"
                                                             sx={{
                                                                 borderRadius: "10px",
@@ -319,14 +323,14 @@ export default function FilingApplication() {
                                                             }}
                                                             startIcon={null}
                                                         >
-                                                            {listLanguage.Separation['ru']}
-                                                        </Button>
+                                                            {listLanguage.Separation['uz']}
+                                                        </Button> */}
                                                     </th>
                                                 </tr>
                                             )
                                         })
                                 }
-                            </tbody> */}
+                            </tbody>
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
@@ -420,18 +424,18 @@ export default function FilingApplication() {
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
                             <Typography
-                                    id="keep-mounted-modal-title"
-                                    variant="h6"
-                                    component="h4"
-                                    sx={{
-                                        fontSize: "16px",
-                                        fontWeight: 600,
-                                        color: "#000",
-                                        mb: "10px"
-                                    }}
-                                >
-                                    File
-                                </Typography>
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
+                                File
+                            </Typography>
                             <MuiFileInput
                                 placeholder="Fayl kiriting"
                                 value={file}

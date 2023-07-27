@@ -9,3 +9,4 @@ export const getSemester = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
