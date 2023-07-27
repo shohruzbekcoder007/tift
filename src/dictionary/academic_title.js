@@ -17,4 +17,4 @@ export default [
         ru: "katta ilmiy xodim ru",
         eng: "katta ilmiy xodim eng"
     }
-]
+] 
