@@ -37,7 +37,7 @@ export const HeaderWrapperTopDiv = styled.div`
 export const HeaderWrapperH4 = styled.h4``
 export const HeaderWrapperP = styled.p``
 
-export const Edit_icon = styled.div`
+export const EditIcon = styled.div`
     width: 35px;
     height: 35px;
     background-color: ${props => props.theme.color.main_color};
@@ -48,7 +48,7 @@ export const Edit_icon = styled.div`
     cursor: pointer;
 `
 
-export const Wrapper_body = styled.div`
+export const WrapperBody = styled.div`
   margin: 1.8rem 0;
   display: flex;
   justify-content: space-between;
@@ -67,7 +67,7 @@ export const HeaderWrapperBottom = styled.div`
 
   `
 
-export const Info_body = styled.div`
+export const InfoBody = styled.div`
     display: flex;
     @media (max-width: 570px) {
       width: 100%;

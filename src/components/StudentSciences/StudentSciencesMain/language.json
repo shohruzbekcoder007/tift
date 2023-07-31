@@ -3,15 +3,20 @@
     "uz": "Fan",
     "ru": "Наука",
     "eng": "Science"
-},
-"Teacher": {
-  "uz": "O'qituvchi",
-  "ru": "Учитель",
-  "eng": "Teacher"
-},
-"Attendance": {
-  "uz": "Davomat",
-  "ru": "Посещаемость",
-  "eng": "Attendance"
-}
+  },
+  "Teacher": {
+    "uz": "O'qituvchi",
+    "ru": "Учитель",
+    "eng": "Teacher"
+  },
+  "Attendance": {
+    "uz": "Davomat",
+    "ru": "Посещаемость",
+    "eng": "Attendance"
+  },
+  "Plan": {
+    "uz": "Reja",
+    "ru": "План",
+    "eng": "Plan"
+  }
 }

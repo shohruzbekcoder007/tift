@@ -2,15 +2,9 @@ import { Paper, Typography } from '@mui/material'
 import React from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { Pagination } from '@mui/material'
-import PageSelector from '../../PageSelector'
-import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom'
-import AllSelect from '../../AllSelect'
-import { StudentSciencesMainHeader } from '../StudentSciencesMain/styles'
 import { StudentAIButton, StudentTasksBox } from './styles'
-import { DekanGroupsButton } from '../../DekanGroups/styles'
 export default function Tasks() {
   return (
     <>
