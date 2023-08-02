@@ -3,15 +3,45 @@
     "uz": "Fan",
     "ru": "Наука",
     "eng": "Science"
-},
-"Teacher": {
-  "uz": "O'qituvchi",
-  "ru": "Учитель",
-  "eng": "Teacher"
-},
-"Attendance": {
-  "uz": "Davomat",
-  "ru": "Посещаемость",
-  "eng": "Attendance"
-}
+  },
+  "Teacher": {
+    "uz": "O'qituvchi",
+    "ru": "Учитель",
+    "eng": "Teacher"
+  },
+  "Attendance": {
+    "uz": "Davomat",
+    "ru": "Посещаемость",
+    "eng": "Attendance"
+  },
+  "Case": {
+    "uz": "Amal",
+    "ru": "Дело",
+    "eng": "Case"
+  },
+  "Plan": {
+    "uz": "Reja",
+    "ru": "План",
+    "eng": "Plan"
+  },
+  "Total": {
+    "uz": "Jami",
+    "ru": "Всего",
+    "eng": "Total"
+  },
+  "Ta": {
+    "uz": "ta",
+    "ru": "",
+    "eng": ""
+  },
+  "From": {
+    "uz": "1 dan",
+    "ru": "от 1 до",
+    "eng": "from 1 to"
+  },
+  "AreShown": {
+    "uz": "gachasi ko'rsatilmoqda",
+    "ru": "показано",
+    "eng": "are shown"
+  }
 }

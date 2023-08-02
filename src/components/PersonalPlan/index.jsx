@@ -3,23 +3,28 @@ import { ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/s
 import { PersonalPlanPaper, PersonalPlanWrapper } from './styles'
 import { Paper, Typography } from '@mui/material'
 import { TableTHHeader } from '../DiplomaTable'
+import { useSelector } from 'react-redux'
+import languageList from './language.json'
 
 export default function PersonalPlan() {
     return (
         <ContentWrapper>
             <PersonalPlanWrapper>
-                <Semester title="I-semestr"/>
-                <Semester title="II-semestr"/>
-                <Semester title="III-semestr"/>
-                <Semester title="IV-semestr"/>
+                <Semester title="I-semestr" />
+                <Semester title="II-semestr" />
+                <Semester title="III-semestr" />
+                <Semester title="IV-semestr" />
             </PersonalPlanWrapper>
         </ContentWrapper>
     )
 }
 
 const Semester = ({ title }) => {
+
+    const language = useSelector(state => state.language)
+
     return (
-        <PersonalPlanPaper elevation={0} sx={{borderRadius: "10px"}}>
+        <PersonalPlanPaper elevation={0} sx={{ borderRadius: "10px" }}>
             <Typography
                 sx={{
                     color: "#000000",
@@ -29,22 +34,22 @@ const Semester = ({ title }) => {
                     mb: "16px"
                 }}
             >
-               { title }
+                {title}
             </Typography>
             <ClassScheduleTableWrapper>
                 <table>
                     <thead>
                         <tr>
                             <TableTHHeader
-                                text="Fan"
+                                text={languageList.Science[language]}
                                 iconc={null}
                             />
                             <TableTHHeader
-                                text="Kredit"
+                                text={languageList.Credit[language]}
                                 iconc={null}
                             />
                             <TableTHHeader
-                                text="Olingan baho"
+                                text={languageList.Ball[language]}
                                 iconc={null}
                             />
                         </tr>

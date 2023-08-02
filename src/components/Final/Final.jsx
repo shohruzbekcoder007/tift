@@ -10,9 +10,14 @@ import Button from '@mui/material/Button'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
+import { useSelector } from 'react-redux'
 import listLanguage from '../Attend/language.json'
+import languageList from './language.json'
 
 export default function Final() {
+  const language = useSelector(state => state.language)
+
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -29,7 +34,7 @@ export default function Final() {
             console.log(val)
           }} />
           <div style={{ display: 'flex', flexWrap: 'wrap', width: "70%", justifyContent: "space-between" }}>
-            <div onClick={handleOpen} style={{display: 'flex', alignItems: 'center', cursor: "pointer"}}>
+            <div onClick={handleOpen} style={{ display: 'flex', alignItems: 'center', cursor: "pointer" }}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_78_20514)">
                   <path
@@ -42,7 +47,7 @@ export default function Final() {
                   </clipPath>
                 </defs>
               </svg>
-              <p style={{ margin: '0 0.5rem' }}>Qoidalar</p>
+              <p style={{ margin: '0 0.5rem' }}>{languageList.Rules[language]}</p>
             </div>
             <AllSelect chageValueFunction={val => { console.log(val) }}
               selectOptions={[
@@ -68,24 +73,24 @@ export default function Final() {
             <table>
               <thead>
                 <tr>
-                  <TableTHHeader text={"Mavzu"} iconc={null} />
-                  <TableTHHeader text={"Rahbat"} iconc={null} />
-                  <TableTHHeader text={"Taqdimot"} iconc={null} />
-                  <TableTHHeader text={"Diplom ishi"} iconc={null} />
-                  <TableTHHeader text={"Qo’shimcha"} iconc={null} />
-                  <TableTHHeader text={"Olingan baho"} iconc={null} />
+                  <TableTHHeader text={languageList.Science[language]} iconc={null} />
+                  <TableTHHeader text={languageList.Patok[language]} iconc={null} />
+                  <TableTHHeader text={languageList.Date[language]} iconc={null} />
+                  <TableTHHeader text={languageList.StartTime[language]} iconc={null} />
+                  <TableTHHeader text={languageList.Room[language]} iconc={null} />
+                  <TableTHHeader text={languageList.Ball[language]} iconc={null} />
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th colSpan={8} align='center'>Ma’lumot yo’q</th>
+                  <th colSpan={8} align='center'>{languageList.NoInfo[language]}</th>
                 </tr>
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`${languageList.Total[language]} 3 ${languageList.Ta[language]},${languageList.From[language]} 1 ${languageList.To[language]} 3 ${languageList.AreShown[language]}`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
         </BoxFooter>
       </Paper>

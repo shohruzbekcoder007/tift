@@ -3,23 +3,27 @@ import { Tabs } from '@mui/base';
 import { TabPanel } from "@mui/base"
 import { Tab, TabsList } from "./styles"
 // import EmptyPanel from "../EmptyPanel";
+import { useSelector } from 'react-redux'
 import listLanguage from './language.json'
 import { ContentWrapper } from "../../global_styles/styles";
 import EmptyPanel from "../Questionnaire/EmptyPanel";
 
 export default function QuestionnaireTeacher() {
+
+  const language = useSelector(state => state.language)
+
   return (
     <ContentWrapper>
       <Tabs defaultValue={0} style={{ width: "100%" }}>
         <TabsList>
-          <Tab>{listLanguage.practice['ru']}</Tab>
-          <Tab>{listLanguage.Completed['ru']}</Tab>
+          <Tab>{listLanguage.practice[language]}</Tab>
+          <Tab>{listLanguage.Completed[language]}</Tab>
         </TabsList>
         <TabPanel value={0}>
-          <EmptyPanel text={listLanguage.currentQuestionnaires['ru']} />
+          <EmptyPanel text={listLanguage.currentQuestionnaires[language]} />
         </TabPanel>
         <TabPanel value={1}>
-          <EmptyPanel text={listLanguage.completedSurveys['ru']} />
+          <EmptyPanel text={listLanguage.completedSurveys[language]} />
         </TabPanel>
       </Tabs>
     </ContentWrapper>

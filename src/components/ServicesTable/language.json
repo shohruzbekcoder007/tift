@@ -1,0 +1,17 @@
+{
+    "Type": {
+        "uz": "Turi",
+        "ru": "Тип",
+        "eng": "Type"
+    },
+    "When": {
+        "uz": "Qachon?",
+        "ru": "Когда?",
+        "eng": "When?"
+    },
+    "Status": {
+        "uz": "Holat",
+        "ru": "Положение",
+        "eng": "Status"
+    }
+}

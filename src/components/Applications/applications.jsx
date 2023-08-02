@@ -7,43 +7,43 @@ import { TableTHHeader } from '../DiplomaTable'
 import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import { BoxHeaderApp } from './styles'
-import  application_status from '../../dictionary/ application_status'
+import application_status from '../../dictionary/ application_status'
 import { my_semesters } from '../../utils/API_urls'
 import { getSemester } from './requests'
 
 export default function Applications() {
 
-const [status, setStatus] = useState(application_status[0].value)
-const [semesters, setSemesters] = useState([])
-const [semester, setSemester] = useState([])
-const [pageSize, setPageSize] = useState(10)
+    const [status, setStatus] = useState(application_status[0].value)
+    const [semesters, setSemesters] = useState([])
+    const [semester, setSemester] = useState([])
+    const [pageSize, setPageSize] = useState(10)
 
-const getSemesters = (response) => {
-    const semester_firstly = response.data.map(element => {
-        return {
-            value: element.id,
-            name: element.name
-        }
-    })
-    setSemester(semester_firstly[0].value)
-    setSemesters(semester_firstly)
-}
+    const getSemesters = (response) => {
+        const semester_firstly = response.data.map(element => {
+            return {
+                value: element.id,
+                name: element.name
+            }
+        })
+        setSemester(semester_firstly[0].value)
+        setSemesters(semester_firstly)
+    }
 
-const getSemestersEror = (error) => { console.log(error) }
-
-
-useEffect(() => {
-    console.log(application_status)
-    // setAllStatus()
-},[])
-
-useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
-}, [])
+    const getSemestersEror = (error) => { console.log(error) }
 
 
-  return (
-    <ContentWrapper>
+    useEffect(() => {
+        console.log(application_status)
+        // setAllStatus()
+    }, [])
+
+    useEffect(() => {
+        getSemester(my_semesters, getSemesters, getSemestersEror)
+    }, [])
+
+
+    return (
+        <ContentWrapper>
             <Paper
                 elevation={0}
                 sx={{
@@ -52,24 +52,24 @@ useEffect(() => {
                     borderRadius: "10px"
                 }}
             >
-              
-             <div style={{display: 'flex', justifyContent: 'start'}}>
-             <BoxHeaderApp>
-                    <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
-                        selectOptions={application_status.map(elem => {
-                            return {
-                                name: elem.uz,
-                                value: elem.value
-                            }
-                        })}
-                    />
-                    <AllSelect
-                        chageValueFunction={val => { setSemester(val) }}
-                        selectOptions={semesters}
-                    />
-                </BoxHeaderApp>
-             </div>
+
+                <div style={{ display: 'flex', justifyContent: 'start' }}>
+                    <BoxHeaderApp>
+                        <AllSelect
+                            chageValueFunction={val => { console.log(val) }}
+                            selectOptions={application_status.map(elem => {
+                                return {
+                                    name: elem.uz,
+                                    value: elem.value
+                                }
+                            })}
+                        />
+                        <AllSelect
+                            chageValueFunction={val => { setSemester(val) }}
+                            selectOptions={semesters}
+                        />
+                    </BoxHeaderApp>
+                </div>
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
                         setPageSize(val)
@@ -181,7 +181,7 @@ useEffect(() => {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2,3].map((elem, index) => {
+                                    [1, 2, 3].map((elem, index) => {
                                         return (
                                             <tr key={index}>
                                                 <th>1494</th>
@@ -199,18 +199,18 @@ useEffect(() => {
                                                             boxShadow: "none",
                                                             padding: "6px 6px",
                                                             marginRight: "20px",
-                                                          
+
                                                         }}
                                                         startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clipPath="url(#clip0_78_13120)">
-                                                        <path d="M4.66667 14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H4.66667C4.84348 1.33333 5.01305 1.2631 5.13807 1.13807C5.2631 1.01305 5.33333 0.843478 5.33333 0.666667C5.33333 0.489856 5.2631 0.320286 5.13807 0.195262C5.01305 0.0702379 4.84348 0 4.66667 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H4.66667C4.84348 16 5.01305 15.9298 5.13807 15.8047C5.2631 15.6797 5.33333 15.5101 5.33333 15.3333C5.33333 15.1565 5.2631 14.987 5.13807 14.8619C5.01305 14.7369 4.84348 14.6667 4.66667 14.6667Z" fill="white"/>
-                                                        <path d="M15.333 7.33339L4.81505 7.35472C4.87352 7.24612 4.94665 7.14607 5.03238 7.05739L7.61838 4.47139C7.68205 4.40989 7.73284 4.33633 7.76778 4.25499C7.80272 4.17365 7.82111 4.08617 7.82188 3.99766C7.82265 3.90914 7.80578 3.82135 7.77226 3.73942C7.73874 3.65749 7.68924 3.58305 7.62665 3.52046C7.56405 3.45786 7.48961 3.40836 7.40768 3.37484C7.32575 3.34132 7.23797 3.32445 7.14945 3.32522C7.06093 3.32599 6.97345 3.34438 6.89211 3.37932C6.81078 3.41426 6.73721 3.46505 6.67571 3.52872L4.08838 6.11472C3.58846 6.61479 3.30762 7.29295 3.30762 8.00005C3.30762 8.70716 3.58846 9.38531 4.08838 9.88539L6.67438 12.4714C6.73588 12.5351 6.80944 12.5858 6.89078 12.6208C6.97211 12.6557 7.05959 12.6741 7.14811 12.6749C7.23663 12.6757 7.32442 12.6588 7.40635 12.6253C7.48828 12.5917 7.56272 12.5422 7.62531 12.4797C7.68791 12.4171 7.73741 12.3426 7.77093 12.2607C7.80445 12.1788 7.82132 12.091 7.82055 12.0025C7.81978 11.9139 7.80139 11.8265 7.76645 11.7451C7.73151 11.6638 7.68072 11.5902 7.61705 11.5287L5.03105 8.94272C4.95644 8.86589 4.89131 8.78039 4.83705 8.68805L15.333 8.66672C15.5099 8.66672 15.6794 8.59648 15.8045 8.47146C15.9295 8.34643 15.9997 8.17687 15.9997 8.00005C15.9997 7.82324 15.9295 7.65367 15.8045 7.52865C15.6794 7.40363 15.5099 7.33339 15.333 7.33339Z" fill="white"/>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_78_13120">
-                                                        <rect width="16" height="16" fill="white"/>
-                                                        </clipPath>
-                                                        </defs>
+                                                            <g clipPath="url(#clip0_78_13120)">
+                                                                <path d="M4.66667 14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H4.66667C4.84348 1.33333 5.01305 1.2631 5.13807 1.13807C5.2631 1.01305 5.33333 0.843478 5.33333 0.666667C5.33333 0.489856 5.2631 0.320286 5.13807 0.195262C5.01305 0.0702379 4.84348 0 4.66667 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H4.66667C4.84348 16 5.01305 15.9298 5.13807 15.8047C5.2631 15.6797 5.33333 15.5101 5.33333 15.3333C5.33333 15.1565 5.2631 14.987 5.13807 14.8619C5.01305 14.7369 4.84348 14.6667 4.66667 14.6667Z" fill="white" />
+                                                                <path d="M15.333 7.33339L4.81505 7.35472C4.87352 7.24612 4.94665 7.14607 5.03238 7.05739L7.61838 4.47139C7.68205 4.40989 7.73284 4.33633 7.76778 4.25499C7.80272 4.17365 7.82111 4.08617 7.82188 3.99766C7.82265 3.90914 7.80578 3.82135 7.77226 3.73942C7.73874 3.65749 7.68924 3.58305 7.62665 3.52046C7.56405 3.45786 7.48961 3.40836 7.40768 3.37484C7.32575 3.34132 7.23797 3.32445 7.14945 3.32522C7.06093 3.32599 6.97345 3.34438 6.89211 3.37932C6.81078 3.41426 6.73721 3.46505 6.67571 3.52872L4.08838 6.11472C3.58846 6.61479 3.30762 7.29295 3.30762 8.00005C3.30762 8.70716 3.58846 9.38531 4.08838 9.88539L6.67438 12.4714C6.73588 12.5351 6.80944 12.5858 6.89078 12.6208C6.97211 12.6557 7.05959 12.6741 7.14811 12.6749C7.23663 12.6757 7.32442 12.6588 7.40635 12.6253C7.48828 12.5917 7.56272 12.5422 7.62531 12.4797C7.68791 12.4171 7.73741 12.3426 7.77093 12.2607C7.80445 12.1788 7.82132 12.091 7.82055 12.0025C7.81978 11.9139 7.80139 11.8265 7.76645 11.7451C7.73151 11.6638 7.68072 11.5902 7.61705 11.5287L5.03105 8.94272C4.95644 8.86589 4.89131 8.78039 4.83705 8.68805L15.333 8.66672C15.5099 8.66672 15.6794 8.59648 15.8045 8.47146C15.9295 8.34643 15.9997 8.17687 15.9997 8.00005C15.9997 7.82324 15.9295 7.65367 15.8045 7.52865C15.6794 7.40363 15.5099 7.33339 15.333 7.33339Z" fill="white" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_78_13120">
+                                                                    <rect width="16" height="16" fill="white" />
+                                                                </clipPath>
+                                                            </defs>
                                                         </svg>}
                                                     >
                                                     </Button>
@@ -229,5 +229,5 @@ useEffect(() => {
                 </BoxFooter>
             </Paper>
         </ContentWrapper>
-  )
+    )
 }

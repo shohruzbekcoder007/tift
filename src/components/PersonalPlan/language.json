@@ -1,0 +1,17 @@
+{
+    "Science": {
+        "uz": "Fan",
+        "ru": "Наука",
+        "eng": "Science"
+    },
+    "Ball": {
+        "uz": "Olingan baho",
+        "ru": "Оценка",
+        "eng": "Score"
+    },
+    "Credit": {
+        "uz": "Kredit",
+        "ru": "Кредит",
+        "eng": "Credit"
+    }
+}

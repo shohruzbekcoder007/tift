@@ -1,0 +1,112 @@
+{
+    "BirthDate": {
+        "uz": "Tug’ilgan sanasi",
+        "ru": "Дата рождения",
+        "eng": "Date of birth"
+    },
+    "Gender": {
+        "uz": "Jinsi",
+        "ru": "Пол",
+        "eng": "Gender"
+    },
+    "RatingBook": {
+        "uz": "Reyting daftarcha",
+        "ru": "Рейтинговая тетрадька",
+        "eng": "Rating notebook"
+    },
+    "Address": {
+        "uz": "Manzil",
+        "ru": "Адрес",
+        "eng": "Address"
+    },
+    "AddressTemporal": {
+        "uz": "Manzil (vaqtincha)",
+        "ru": "Адрес (временный)",
+        "eng": "Address (temporal)"
+    },
+    "Field": {
+        "uz": "Yo'nalish",
+        "ru": "специальность",
+        "eng": "Speciality"
+    },
+    "StudyLang": {
+        "uz": "O’qish tili",
+        "ru": "Язык обучения",
+        "eng": "Study language"
+    },
+    "Degree": {
+        "uz": "Darajasi",
+        "ru": "Степень",
+        "eng": "Degree"
+    },
+    "EducationForm": {
+        "uz": "Ta’lim shakli",
+        "ru": "Форма обучения",
+        "eng": "Form of education"
+    },
+    "Course": {
+        "uz": "Kurs",
+        "ru": "Курс",
+        "eng": "Course"
+    },
+    "Group": {
+        "uz": "Guruh",
+        "ru": "Группа",
+        "eng": "Group"
+    },
+    "Coach": {
+        "uz": "Murabbiy",
+        "ru": "Тренер",
+        "eng": "Coach"
+    },
+    "Scholar": {
+        "uz": "Stipendiya",
+        "ru": "Стипендия",
+        "eng": "Scholarship"
+    },
+    "Edit": {
+        "uz": "Tahrirlash",
+        "ru": "Редактировать",
+        "eng": "Edit"
+    },
+    "Region": {
+        "uz": "Viloyat*",
+        "ru": "Вилоят*",
+        "eng": "Region*"
+    },
+    "City": {
+        "uz": "Shahar*",
+        "ru": "Город*",
+        "eng": "City*"
+    },
+    "AddressInLatin": {
+        "uz": "Manzil (Lotin xarflarda)",
+        "ru": "Адрес (на Латинском)*",
+        "eng": "Adress (in Latin)*"
+    },
+    "TemporalRegion": {
+        "uz": "Viloyat (vaqtingcha)*",
+        "ru": "Вилоят (временный)*",
+        "eng": "Region (temporal)*"
+    },
+    "TemporalCity": {
+        "uz": "Shahar (vaqtingcha)*",
+        "ru": "Город (временный)*",
+        "eng": "City (temporal)*"
+    },
+    "TemporalAddressInLatin": {
+        "uz": "Manzil (vaqtingcha) (Lotin xarflarda)*",
+        "ru": "Адрес (временный) (на Латинском)*",
+        "eng": "Address (temporal) (in Latin)*"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "Theme": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Theme"
+    },
+    "Teacher": {
+        "uz": "Rahbar",
+        "ru": "Преподователь",
+        "eng": "Chief"
+    },
+    "Presentation": {
+        "uz": "Taqdimot",
+        "ru": "Презентация",
+        "eng": "Presetation"
+    },
+    "Additional": {
+        "uz": "Qo'shimcha",
+        "ru": "Дополнительно",
+        "eng": "Additional"
+    },
+    "DiplomaWork": {
+        "uz": "Diplom ishi",
+        "ru": "Дипломная работа",
+        "eng": "Diploma work"
+    },
+    "Score": {
+        "uz": "Olingan baho",
+        "ru": "Оценка",
+        "eng": "Score"
+    },
+    "NoInfo": {
+        "uz": "Ma’lumot yo’q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обший",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    }
+}
