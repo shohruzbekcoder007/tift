@@ -10,12 +10,16 @@ import { FilingApplicationHeader } from './styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
-import listLanguage from './language.json'
 import { createSyllabus, getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
 import { my_semesters, scienceshortname, syllabus_create, teacher_syllabus } from '../../utils/API_urls'
 import { MuiFileInput } from 'mui-file-input'
+import { useSelector } from 'react-redux'
+import listLanguage from './language.json'
 
 export default function FilingApplication() {
+
+    // language
+    const language = useSelector(state => state.language)
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -129,22 +133,22 @@ export default function FilingApplication() {
                         </svg>
                         }
                     >
-                        {listLanguage.add['ru']}
+                        {listLanguage.add[language]}
                     </Button>
                     <AllSelect
                         chageValueFunction={val => { console.log(val) }}
                         selectOptions={[
                             {
                                 value: "1",
-                                name: `${listLanguage.all['ru']}`
+                                name: `${listLanguage.all[language]}`
                             },
                             {
                                 value: "2",
-                                name: `${listLanguage.partially['ru']}`
+                                name: `${listLanguage.partially[language]}`
                             },
                             {
                                 value: "3",
-                                name: `${listLanguage.Half['ru']}`
+                                name: `${listLanguage.Half[language]}`
                             }
                         ]}
                     />
@@ -178,7 +182,7 @@ export default function FilingApplication() {
                                         </svg>}
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.science['ru']}
+                                        text={listLanguage.science[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -193,7 +197,7 @@ export default function FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Lang['ru']}
+                                        text={listLanguage.Lang[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -208,7 +212,7 @@ export default function FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.TimeApplication['ru']}
+                                        text={listLanguage.TimeApplication[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -223,7 +227,7 @@ export default function FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.EndDate['ru']}
+                                        text={listLanguage.EndDate[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -238,7 +242,7 @@ export default function FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Patok['ru']}
+                                        text={listLanguage.Patok[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -253,7 +257,7 @@ export default function FilingApplication() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Status['ru']}
+                                        text={listLanguage.Status[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -273,7 +277,7 @@ export default function FilingApplication() {
                                 {
                                     syllabus?.length === 0 ?
                                         <tr>
-                                            <th colSpan={7} align='center'>Ma’lumot yo’q</th>
+                                            <th colSpan={7} align='center'>{listLanguage.NoInfo[language]}</th>
                                         </tr> :
                                         syllabus.map((elem, index) => {
                                             return (
@@ -335,7 +339,7 @@ export default function FilingApplication() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]},${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
                     <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
@@ -360,7 +364,7 @@ export default function FilingApplication() {
                                         color: "#000",
                                     }}
                                 >
-                                    {listLanguage.add['ru']}
+                                    {listLanguage.add[language]}
                                 </Typography>
                                 <span
                                     onClick={handleClose}
@@ -383,7 +387,7 @@ export default function FilingApplication() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.science['ru']}
+                                {listLanguage.science[language]}
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setScience(val)}
@@ -402,17 +406,17 @@ export default function FilingApplication() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.Lang['ru']}
+                                {listLanguage.Lang[language]}
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setLang(val)}
                                 selectOptions={[
                                     {
-                                        name: "O'zbek",
+                                        name: "O'zbekcha",
                                         value: "uz",
                                     },
                                     {
-                                        name: "Ruscha",
+                                        name: "Русский",
                                         value: "ru",
                                     },
                                     {
@@ -434,10 +438,10 @@ export default function FilingApplication() {
                                     mb: "10px"
                                 }}
                             >
-                                File
+                                {listLanguage.File[language]}
                             </Typography>
                             <MuiFileInput
-                                placeholder="Fayl kiriting"
+                                placeholder={listLanguage.UploadFile[language]}
                                 value={file}
                                 onChange={setFileHandler}
                                 // getInputText={(value) => value ? 'Thanks!' : ''}
@@ -450,14 +454,14 @@ export default function FilingApplication() {
                                 variant="outlined"
                                 onClick={handleClose}
                             >
-                                {listLanguage.Cancel['ru']}
+                                {listLanguage.Cancel[language]}
                             </Button>
                             <Button
                                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                                 variant="contained"
                                 type="submit"
                             >
-                                {listLanguage.Save['ru']}
+                                {listLanguage.Save[language]}
                             </Button>
                         </ModalButtons>
                     </ModalBox>

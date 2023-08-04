@@ -1,72 +1,112 @@
 {
   "add": {
     "uz": "Qo'shish",
-    "ru": "Добавлять",
-    "en": "Add"
+    "ru": "Добавить",
+    "eng": "Add"
   },
   "Patok": {
     "uz": "Patok",
     "ru": "Паток",
     "eng": "Patok"
-},
-"Status": {
-  "uz": "Status",
-  "ru": "Статус",
-  "eng": "Status"
-},
-"all": {
-  "uz": "Barchasi",
-  "ru": "Все",
-  "eng": "All"
-},
-"partially": {
-  "uz": "Qisman",
-  "ru": "частично",
-  "eng": "partially"
-},
-"Half": {
-  "uz": "Yarmi",
-  "ru": "Половина",
-  "eng": "Half"
-},
-"EndDate": {
-  "uz": "Tugash sanasi",
-  "ru": "Дата окончания",
-  "eng": "End date"
-},
-"TimeApplication": {
-  "uz": "Ariza berilgan vaqt  ",
-  "ru": "Время применения",
-  "eng": "Time of application"
-},
-"Lang": {
-  "uz": "TIl",
-  "ru": "Язык",
-  "eng": "Language"
-},
-"science": {
-  "uz": "Fan",
-  "ru": "наука",
-  "eng": "science"
-},
-"Confirmed": {
-  "uz": "Tasdiqlangan",
-  "ru": "Подтвержденный",
-  "eng": "Confirmed"
-},
-"Separation": {
-  "uz": "Fanni ajratish",
-  "ru": "Разделение науки",
-  "eng": "Separation of science"
-},
-"Cancel": {
-  "uz": "Bekor qilish",
-  "ru": "Отмена",
-  "eng": "Cancel"
-},
-"Save": {
-  "uz": "Saqlash",
-  "ru": "Сохранять",
-  "eng": "Save"
-}
+  },
+  "Status": {
+    "uz": "Status",
+    "ru": "Статус",
+    "eng": "Status"
+  },
+  "all": {
+    "uz": "Barchasi",
+    "ru": "Все",
+    "eng": "All"
+  },
+  "partially": {
+    "uz": "Qisman",
+    "ru": "частично",
+    "eng": "partially"
+  },
+  "Half": {
+    "uz": "Yarmi",
+    "ru": "Половина",
+    "eng": "Half"
+  },
+  "EndDate": {
+    "uz": "Tugash sanasi",
+    "ru": "Дата окончания",
+    "eng": "End date"
+  },
+  "TimeApplication": {
+    "uz": "Ariza berilgan vaqt  ",
+    "ru": "Время применения",
+    "eng": "Time of application"
+  },
+  "Lang": {
+    "uz": "TIl",
+    "ru": "Язык",
+    "eng": "Language"
+  },
+  "science": {
+    "uz": "Fan",
+    "ru": "Наука",
+    "eng": "Science"
+  },
+  "Confirmed": {
+    "uz": "Tasdiqlangan",
+    "ru": "Подтвержденный",
+    "eng": "Confirmed"
+  },
+  "Separation": {
+    "uz": "Fanni ajratish",
+    "ru": "Разделение науки",
+    "eng": "Separation of science"
+  },
+  "Cancel": {
+    "uz": "Bekor qilish",
+    "ru": "Отмена",
+    "eng": "Cancel"
+  },
+  "Save": {
+    "uz": "Saqlash",
+    "ru": "Сохранять",
+    "eng": "Save"
+  },
+  "Total": {
+    "uz": "Jami",
+    "ru": "Обшее количетво",
+    "eng": "Total"
+  },
+  "Ta": {
+    "uz": "ta",
+    "ru": "",
+    "eng": ""
+  },
+  "From": {
+    "uz": "",
+    "ru": "от",
+    "eng": "from"
+  },
+  "To": {
+    "uz": "dan",
+    "ru": "до",
+    "eng": "to"
+  },
+  "AreShown": {
+    "uz": "gachasi ko'rsatilmoqda",
+    "ru": "показаны",
+    "eng": "are shown"
+  },
+  "NoInfo": {
+    "uz": "Ma'lumot yo'q",
+    "ru": "Нет информации",
+    "eng": "No information"
+  },
+  "File": {
+    "uz": "Fayl",
+    "ru": "Файл",
+    "eng": "File"
+  },
+  "UploadFile": {
+    "uz": "Faylni kiriting",
+    "ru": "Прикрепить файл",
+    "eng": "Upload file"
+  }
 }
