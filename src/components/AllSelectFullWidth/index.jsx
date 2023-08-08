@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export default function AllSelectFullWidth({chageValueFunction, selectOptions, width="100%"}) {
+export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions, width="100%"}) {
 
     const [age, setAge] = React.useState(selectOptions[0]?.value || 0);
 
@@ -70,4 +70,4 @@ export default function AllSelectFullWidth({chageValueFunction, selectOptions, w
             </FormControl>
         </div>
     );
-}
+})

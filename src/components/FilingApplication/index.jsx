@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import listLanguage from './language.json'
 import { createSyllabus, getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
-import { my_semesters, scienceshortname, syllabus_create, teacher_syllabus } from '../../utils/API_urls'
+import { my_semesters, teacher_sciences, syllabus_create, teacher_syllabus } from '../../utils/API_urls'
 import { MuiFileInput } from 'mui-file-input'
 
 export default function FilingApplication() {
@@ -85,7 +85,7 @@ export default function FilingApplication() {
 
     useEffect(() => {
         getSemester(my_semesters, getSemesters, getSemestersEror)
-        getScienceShortName(scienceshortname, getSciences, getSciencesError)
+        getScienceShortName(teacher_sciences, getSciences, getSciencesError)
     }, [])
 
     useEffect(() => {
