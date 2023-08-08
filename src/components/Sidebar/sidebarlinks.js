@@ -893,4 +893,4 @@ export const dekan_Links = [
     },
     to: "dekanolympics"
   }
-]
+
