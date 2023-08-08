@@ -7,7 +7,7 @@ export const getRole = (user) => {
       if (user?.role[0] === "dekan") {
         return 'dekan'
       }
-      if (user?.role[0] === "kafedra_mudir") {
+      if (user?.role[0] === "department_user") {
         return 'department'
       }
       if (user?.role[0] === "tyutor") {
@@ -15,6 +15,9 @@ export const getRole = (user) => {
       }
       if (user?.role[0] === "teacher") {
         return 'teacher'
+      }
+      if (user?.role[0] === "admin") {
+        return 'admin'
       }
     } else {
       return ''
