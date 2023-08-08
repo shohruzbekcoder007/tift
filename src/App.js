@@ -71,7 +71,10 @@ import { user_me } from './utils/API_urls'
 import { setUser } from './redux/action/userActions'
 import PageNotFound from './components/PageNotFound'
 import Tasks from './components/StudentSciences/Tasks/Tasks'
-
+import MainAdmin from './components/MainAdmin'
+import Variables from './components/AdminList/Variables'
+import Users from './components/AdminList/Users'
+import Admin_Attendance from './components/AdminList/Attendance'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -205,6 +208,16 @@ function App() {
                       <Route index element={<Final_Dep />} />
                       <Route path='questions' element={<Questions />} />
                     </Route>
+                  </Route>
+
+                  <Route path="admin" element={<MainAdmin />}>
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    <Route path="dashboard/:id" element={<DashboardDetail />} />
+                    <Route path="profile" element={<Profile />} />
+                    <Route path="videoguide" element={<VideoGuide />} />
+                    <Route path="variables" element={<Variables />} />
+                    <Route path="users" element={<Users />} />
+                    <Route path="attendance" element={<Admin_Attendance />} />
                   </Route>
               </>
             ) : <></>}
