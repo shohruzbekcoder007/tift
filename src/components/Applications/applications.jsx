@@ -23,7 +23,7 @@ const [syllabus, setSyllabus] = useState([])
 const [pageCount, setPageCount] = useState(1)
 const [page, setPage] = useState(1)
 
-const getSemesters = (response) => {
+const getSemesters = (response) =>  {
     const semester_firstly = response.data.map(element => {
         return {
             value: element.id,
