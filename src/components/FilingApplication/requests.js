@@ -35,8 +35,10 @@ export const createSyllabus = (url, data, successfulFunction, errorFunction) => 
         url,
         data,
         {
-            // "content-type": "multipart/form-data",
-            headers: headerConfig(),
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                "Content-Type": "multipart/form-data",
+              },
         }
     ).then((response) => {
         console.log(response)

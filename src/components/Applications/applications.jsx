@@ -7,16 +7,21 @@ import { TableTHHeader } from '../DiplomaTable'
 import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import { BoxHeaderApp } from './styles'
-import  application_status from '../../dictionary/ application_status'
-import { my_semesters } from '../../utils/API_urls'
+import  application_status from '../../dictionary/application_status'
+import { my_semesters, teacher_syllabus } from '../../utils/API_urls'
 import { getSemester } from './requests'
+import { getTeacherSyllabus } from './requests'
 
 export default function Applications() {
 
 const [status, setStatus] = useState(application_status[0].value)
 const [semesters, setSemesters] = useState([])
-const [semester, setSemester] = useState([])
+const [semester, setSemester] = useState(0)
 const [pageSize, setPageSize] = useState(10)
+const [allCount, setAllCount] = useState(0)
+const [syllabus, setSyllabus] = useState([])
+const [pageCount, setPageCount] = useState(1)
+const [page, setPage] = useState(1)
 
 const getSemesters = (response) => {
     const semester_firstly = response.data.map(element => {
@@ -31,11 +36,21 @@ const getSemesters = (response) => {
 
 const getSemestersEror = (error) => { console.log(error) }
 
+const getSyllabus = (response) => {
+    console.log(response)
+    setPageCount(response.data.page_count)
+    setAllCount(response.data.count)
+    setSyllabus(response.data.results)
+}
+
+const getSyllabusError = (error) => { console.log(error) }
+
 
 useEffect(() => {
-    console.log(application_status)
-    // setAllStatus()
-},[])
+    if (semester !== 0) {
+        getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${status!="all"?status:''}`, getSyllabus, getSyllabusError)
+    }
+}, [page, pageSize, semester, status])
 
 useEffect(() => {
     getSemester(my_semesters, getSemesters, getSemestersEror)
@@ -52,11 +67,10 @@ useEffect(() => {
                     borderRadius: "10px"
                 }}
             >
-              
              <div style={{display: 'flex', justifyContent: 'start'}}>
              <BoxHeaderApp>
                     <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
+                        chageValueFunction={val => { setStatus(val) }}
                         selectOptions={application_status.map(elem => {
                             return {
                                 name: elem.uz,
@@ -65,7 +79,7 @@ useEffect(() => {
                         })}
                     />
                     <AllSelect
-                        chageValueFunction={val => { setSemester(val) }}
+                        chageValueFunction={val => { setSemester(val); console.log(val) }}
                         selectOptions={semesters}
                     />
                 </BoxHeaderApp>
@@ -224,8 +238,8 @@ useEffect(() => {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + syllabus.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
         </ContentWrapper>

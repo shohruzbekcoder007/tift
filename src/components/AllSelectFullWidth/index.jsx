@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions, width="100%"}) {
+export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions}) {
 
     const [age, setAge] = React.useState(selectOptions[0]?.value || 0);
 
@@ -12,7 +12,7 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
         chageValueFunction(event.target.value)
     };
 
-    useEffect( () => {
+    useEffect(() => {
         setAge(selectOptions[0]?.value || 0)
     }, [selectOptions])
 

@@ -14,6 +14,9 @@ import listLanguage from './language.json'
 import { createSyllabus, getScienceShortName, getSemester, getTeacherSyllabus } from './requests'
 import { my_semesters, teacher_sciences, syllabus_create, teacher_syllabus } from '../../utils/API_urls'
 import { MuiFileInput } from 'mui-file-input'
+import  application_status from '../../dictionary/application_status'
+import { useSelector } from 'react-redux'
+import CreateStatus from './CreateStatus'
 
 export default function FilingApplication() {
 
@@ -27,12 +30,13 @@ export default function FilingApplication() {
     const [syllabus, setSyllabus] = useState([])
     const [pageCount, setPageCount] = useState(1)
     const [science, setScience] = useState(null)
+    const [status, setStatus] = useState('all')
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
-
-
+    const [allCount, setAllCount] = useState(0)
     const [file, setFile] = useState(null);
     const [lang, setLang] = useState("uz");
+    const langg = useSelector(state => state.language);
 
     const setFileHandler = (newValue, info) => {
         setFile(newValue)
@@ -66,6 +70,7 @@ export default function FilingApplication() {
 
     const getSyllabus = (response) => {
         setPageCount(response.data.page_count)
+        setAllCount(response.data.count)
         setSyllabus(response.data.results)
     }
 
@@ -77,7 +82,7 @@ export default function FilingApplication() {
         const formData = new FormData();
         formData.append("syllabus_file", file);
         formData.append("lang", lang);
-        formData.append("department_science", science)
+        formData.append("science", science)
         formData.append("semester", semester)
         console.log(formData.get("syllabus_file"))
         createSyllabus(syllabus_create, formData, () => { }, () => { })
@@ -89,10 +94,10 @@ export default function FilingApplication() {
     }, [])
 
     useEffect(() => {
-        if (semesters !== 0) {
-            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}`, getSyllabus, getSyllabusError)
+        if (semester !== 0) {
+            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${status!="all"?status:''}`, getSyllabus, getSyllabusError)
         }
-    }, [page, pageSize])
+    }, [page, pageSize, semester, status])
 
     return (
         <ContentWrapper>
@@ -132,21 +137,13 @@ export default function FilingApplication() {
                         {listLanguage.add['ru']}
                     </Button>
                     <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: `${listLanguage.all['ru']}`
-                            },
-                            {
-                                value: "2",
-                                name: `${listLanguage.partially['ru']}`
-                            },
-                            {
-                                value: "3",
-                                name: `${listLanguage.Half['ru']}`
+                        chageValueFunction={val => { setStatus(val) }}
+                        selectOptions={application_status.map(elem => {
+                            return {
+                                name: elem[langg],
+                                value: elem.value
                             }
-                        ]}
+                        })}
                     />
                     <AllSelect
                         chageValueFunction={val => { setSemester(val) }}
@@ -279,52 +276,19 @@ export default function FilingApplication() {
                                             return (
                                                 <tr key={index}>
                                                     <th>{elem.id}</th>
-                                                    <th>{elem.department_science}</th>
+                                                    <th>{elem.science}</th>
                                                     <th>{elem.lang_display}</th>
                                                     <th>{elem.created_at}</th>
                                                     <th>{elem.updated_at}</th>
-                                                    <th>{elem.groups}</th>
                                                     <th>
                                                         {
-                                                            elem.status_display === "Approved" ?
-                                                                <Button
-                                                                    variant="contained"
-                                                                    disabled
-                                                                    sx={{
-                                                                        borderRadius: "10px",
-                                                                        textTransform: "capitalize",
-                                                                        boxShadow: "none",
-                                                                        padding: "6px 12px",
-                                                                        marginRight: "20px"
-                                                                    }}
-                                                                    startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                        <g clipPath="url(#clip0_78_21972)">
-                                                                            <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-                                                                        </g>
-                                                                        <defs>
-                                                                            <clipPath id="clip0_78_21972">
-                                                                                <rect width="16" height="16" fill="white" />
-                                                                            </clipPath>
-                                                                        </defs>
-                                                                    </svg>}
-                                                                >
-                                                                    {listLanguage.Confirmed['uz']}
-                                                                </Button> :
-                                                                <></>
+                                                            elem.groups.map((group, index) => {
+                                                                return <span key={index} style={{marginRight: "5px"}}>{group}</span>
+                                                            })
                                                         }
-                                                        {/* <Button
-                                                            variant="contained"
-                                                            sx={{
-                                                                borderRadius: "10px",
-                                                                textTransform: "capitalize",
-                                                                boxShadow: "none",
-                                                                padding: "6px 12px",
-                                                                backgroundColor: "blackButton.main"
-                                                            }}
-                                                            startIcon={null}
-                                                        >
-                                                            {listLanguage.Separation['uz']}
-                                                        </Button> */}
+                                                    </th>
+                                                    <th>
+                                                        <CreateStatus element={application_status.find((element) => elem.status_display.toLowerCase() == element.value)}/>
                                                     </th>
                                                 </tr>
                                             )
@@ -335,7 +299,7 @@ export default function FilingApplication() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + syllabus.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
                     <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
@@ -346,7 +310,7 @@ export default function FilingApplication() {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'>
                     <ModalBox>
                         <div style={{ marginBottom: '20px' }}>
                             <ModalHeader>
@@ -441,6 +405,7 @@ export default function FilingApplication() {
                                 value={file}
                                 onChange={setFileHandler}
                                 // getInputText={(value) => value ? 'Thanks!' : ''}
+                                id="dsga"
                                 fullWidth
                             />
                         </ModalSelectWrapper>

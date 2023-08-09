@@ -1,5 +1,11 @@
 export default [
     {
+        value: "all",
+        uz: "Brachasi",
+        ru: "Brachasi ru",
+        eng: "Brachasi eng"
+    },
+    {
         value: "new",
         uz: "Tushgan",
         ru: "Tushgan ru",
