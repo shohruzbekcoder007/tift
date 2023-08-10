@@ -17,6 +17,7 @@ import { MuiFileInput } from 'mui-file-input'
 import  application_status from '../../dictionary/application_status'
 import { useSelector } from 'react-redux'
 import CreateStatus from './CreateStatus'
+import { dateFormatter } from '../../utils/dateFormatter'
 
 export default function FilingApplication() {
 
@@ -278,8 +279,8 @@ export default function FilingApplication() {
                                                     <th>{elem.id}</th>
                                                     <th>{elem.science}</th>
                                                     <th>{elem.lang_display}</th>
-                                                    <th>{elem.created_at}</th>
-                                                    <th>{elem.updated_at}</th>
+                                                    <th>{dateFormatter(elem.created_at)}</th>
+                                                    <th>{dateFormatter(elem.updated_at)}</th>
                                                     <th>
                                                         {
                                                             elem.groups.map((group, index) => {

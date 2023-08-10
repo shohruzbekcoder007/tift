@@ -17,3 +17,6 @@ export const my_sciences = "/student/my-sciences"
 
 // semester 
 export const my_semesters = '/my-semesters/'
+
+
+export const decan_GroupList = '/decan/GroupList/'
