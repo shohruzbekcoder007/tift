@@ -75,6 +75,10 @@ import MainAdmin from './components/MainAdmin'
 import Variables from './components/AdminList/Variables'
 import Users from './components/AdminList/Users'
 import Admin_Attendance from './components/AdminList/Attendance'
+import Reference from './components/AdminList/Reference'
+import StudentDocuments from './components/AdminList/StudentDocuments'
+import Semestr from './components/AdminList/Semestr'
+import InterimControl from './components/AdminList/Semestr/InterimControl'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -211,13 +215,20 @@ function App() {
                   </Route>
 
                   <Route path="admin" element={<MainAdmin />}>
+                    <Route path="variables" element={<Variables />} />
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="videoguide" element={<VideoGuide />} />
-                    <Route path="variables" element={<Variables />} />
                     <Route path="users" element={<Users />} />
                     <Route path="attendance" element={<Admin_Attendance />} />
+                    <Route path="reference" element={<Reference />} />
+                    <Route path="studentdocuments" element={<StudentDocuments />} />
+                    <Route path="semester" element={<StudentSciences />} >
+                      <Route index element={<Semestr/>}/>
+                      <Route path='control' element={<InterimControl/>}/>
+                    </Route>
+
                   </Route>
               </>
             ) : <></>}
