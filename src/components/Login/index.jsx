@@ -61,7 +61,11 @@ export default function Login() {
     dispatch(setUser(response.data))
     const user_role = getRoleUser(response.data)
     setPageLoading(false)
-    navigate(`/${user_role}/dashboard`)
+    if (user_role == "admin") {
+      navigate(`/${user_role}/variables`)
+    }else {
+      navigate(`/${user_role}/dashboard`)
+    }
   }
 
   const errorFunctionGetRole = (error) => {
