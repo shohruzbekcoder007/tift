@@ -79,6 +79,8 @@ import Reference from './components/AdminList/Reference'
 import StudentDocuments from './components/AdminList/StudentDocuments'
 import Semestr from './components/AdminList/Semestr'
 import InterimControl from './components/AdminList/Semestr/InterimControl'
+import Streams from './components/AdminList/Streams'
+import NBfix from './components/AdminList/NBfix'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -228,7 +230,8 @@ function App() {
                       <Route index element={<Semestr/>}/>
                       <Route path='control' element={<InterimControl/>}/>
                     </Route>
-
+                    <Route path="streams" element={<Streams />} />
+                    <Route path="NBfix" element={<NBfix />} />
                   </Route>
               </>
             ) : <></>}
