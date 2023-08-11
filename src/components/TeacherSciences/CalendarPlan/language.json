@@ -1,0 +1,57 @@
+{
+    "Calendar": {
+        "uz": "Kalendar reja",
+        "ru": "Календарь план",
+        "eng": "Calendar plan"
+    },
+    "Shaping": {
+        "uz": "Shakillashtirish",
+        "ru": "Формирование",
+        "eng": "Shaping"
+    },
+    "Number": {
+        "uz": "Raqam",
+        "ru": "Число",
+        "eng": "Number"
+    },
+    "Topic": {
+        "uz": "Mavzu",
+        "ru": "тема",
+        "eng": "Topic"
+    },
+    "DataPick": {
+        "uz": "Kalendar planni belgilash va davomatni qo'yish muddati",
+        "ru": "Крайний срок постановки календарного плана и нтемаастройки посещаемости",
+        "eng": "The deadline for setting the calendar plan and setting the attendance"
+    },
+    "TrainingTime": {
+        "uz": "Mashg'ulot vaqti",
+        "ru": "Время обучения",
+        "eng": "Training time"
+    },
+    "Status": {
+        "uz": "Holat",
+        "ru": "Положение",
+        "eng": "Status"
+    },
+    "Specify": {
+        "uz": "Belgilash",
+        "ru": "Указать",
+        "eng": "Specify"
+    },
+    "CanNotSpecify": {
+        "uz": "Belgilash mumkin emas",
+        "ru": "Невозможно указать",
+        "eng": "Can't specify"
+    },
+    "Attendance": {
+        "uz": "Davomat",
+        "ru": "Посещаемость",
+        "eng": "Attendance"
+    },
+    "RescheduledTime": {
+        "uz": "Ko’chirilgan vaqt",
+        "ru": "перенесенное время",
+        "eng": "Rescheduled time"
+    }
+}

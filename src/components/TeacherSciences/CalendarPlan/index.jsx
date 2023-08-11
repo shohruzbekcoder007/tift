@@ -5,8 +5,13 @@ import { TableTHHeader } from '../../DiplomaTable'
 import { TeacherSciencesButtonBox } from '../styles'
 import { UnableToSpecify } from './styles'
 import { Link, Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import languageList from './language.json'
 
 export default function CalendarPlan() {
+
+  const language = useSelector(state => state.language)
+
   return (
     <Paper
       elevation={0}
@@ -27,7 +32,7 @@ export default function CalendarPlan() {
           mb: "26px"
         }}
       >
-        Kalendar reja
+        {languageList.Calendar[language]}
       </Typography>
       <BoxHeader>
         <Typography
@@ -44,7 +49,7 @@ export default function CalendarPlan() {
             borderRadius: "10px"
           }}
         >
-          Kalendar planni belgilash va davomatni qo'yish muddati: 2 kun
+          {languageList.DataPick[language]}: 2 kun
         </Typography>
         <Button
           variant="contained"
@@ -69,7 +74,7 @@ export default function CalendarPlan() {
             </defs>
           </svg>}
         >
-          Shakllantirish
+          {languageList.Shaping[language]}
         </Button>
       </BoxHeader>
       <BoxBody>
@@ -78,19 +83,19 @@ export default function CalendarPlan() {
             <thead>
               <tr>
                 <TableTHHeader
-                  text="Raqam"
+                  text={languageList.Number[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mavzu"
+                  text={languageList.Topic[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mashg'ulot vaqti"
+                  text={languageList.TrainingTime[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Status"
+                  text={languageList.Status[language]}
                   iconc={null}
                 />
               </tr>
@@ -126,7 +131,7 @@ export default function CalendarPlan() {
                               </defs>
                             </svg>}
                           >
-                            O'tganlikni belgilash
+                            {languageList.Specify[language]}
                           </Button>
                           <Link to="thematicblock">
                             <Button
@@ -150,7 +155,7 @@ export default function CalendarPlan() {
                                 </defs>
                               </svg>}
                             >
-                              Davomat
+                              {languageList.Attendance[language]}
                             </Button>
                           </Link>
                         </TeacherSciencesButtonBox>
@@ -175,25 +180,25 @@ export default function CalendarPlan() {
               borderLeft: "1px solid #eee",
             }}
           >
-            Ko’chirilgan vaqt
+            {languageList.RescheduledTime[language]}
           </Typography>
           <table>
             <thead>
               <tr>
                 <TableTHHeader
-                  text="Raqam"
+                  text={languageList.Number[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mavzu"
+                  text={languageList.Topic[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mashg'ulot vaqti"
+                  text={languageList.TrainingTime[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Status"
+                  text={languageList.Status[language]}
                   iconc={null}
                 />
               </tr>
@@ -220,7 +225,7 @@ export default function CalendarPlan() {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Belgilash mumkin emas</p>
+                            <p>{languageList.CanNotSpecify[language]}</p>
                           </UnableToSpecify>
                           <Link to="thematicblock">
                             <Button
@@ -244,7 +249,7 @@ export default function CalendarPlan() {
                                 </defs>
                               </svg>}
                             >
-                              Davomat
+                              {languageList.Attendance[language]}
                             </Button>
                           </Link>
                         </TeacherSciencesButtonBox>
