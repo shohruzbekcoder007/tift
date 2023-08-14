@@ -80,6 +80,9 @@ import StudentDocuments from './components/AdminList/StudentDocuments'
 import Semestr from './components/AdminList/Semestr'
 import InterimControl from './components/AdminList/Semestr/InterimControl'
 import ApplicationsReport from './components/ApplicationsReport'
+
+// stufent 
+
 function App() {
 
   const user = useSelector((state) => state.user);
