@@ -1,4 +1,6 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
+
 import { ContentWrapper } from '../../global_styles/styles'
 import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody } from './styles'
 import Modal from '@mui/material/Modal'
@@ -6,10 +8,30 @@ import { Button, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import img from '../../imgs/Logo.png'
+import { getStudentInformation } from './requests'
+import { student_detail } from '../../utils/API_urls' 
+
+
+
 export default function Information() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [infoList, setInfoList] = useState([])
+
+
+  useEffect(() => {
+    getStudentInformation(student_detail, (response) => {
+        console.log(response.data.result);
+        setInfoList(response.data.result)
+    }, (error) => {
+        console.log(error)
+    })
+}, [])
+
+
+
   return (
     <ContentWrapper>
       <InfoBody>
@@ -17,8 +39,8 @@ export default function Information() {
           <HeaderWrapperTop>
             <img src={img} alt="UserImage" />
             <HeaderWrapperTopDiv>
-              <HeaderWrapperH4>Matmusayev Jaloliddin</HeaderWrapperH4>
-              Xayrulla o’g’li
+              <HeaderWrapperH4>{infoList.full_name}</HeaderWrapperH4>
+              {/* Xayrulla o’g’li */}
             </HeaderWrapperTopDiv>
             <EditIcon onClick={handleOpen}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,11 +52,11 @@ export default function Information() {
           <HeaderWrapperBottom>
             <WrapperBody>
               <HeaderWrapperH4>Tug’ilgan sanasi:</HeaderWrapperH4>
-              <HeaderWrapperP>10-06-2003</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
-              <HeaderWrapperP>Erkak</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.gender == "male"?"Erkak":"Ayol"}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>

@@ -1,6 +1,6 @@
 // export const host = "https://husanibragimov.jprq.live"
-export const host = "http://husanibragimov.jprq.live"
-// export const host = "https://oqdevpy.jprq.live"
+// export const host = "http://husanibragimov.jprq.live"
+export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -15,7 +15,10 @@ export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
 
 // student
-export const my_sciences = "/student/my-sciences" 
+export const my_sciences = "/student/my-sciences"
+export const student_nb_list = "/student/student-nb-list/"
+export const student_detail = "/student/student-detail/"
+
 
 // semester 
 export const my_semesters = '/my-semesters/'
