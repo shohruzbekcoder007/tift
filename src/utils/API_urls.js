@@ -1,7 +1,7 @@
 // export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host = "https://api.lms-edu.uz/" 
+export const host = "https://api.lms-edu.uz" 
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -21,6 +21,7 @@ export const student_nb_list = "/student/student-nb-list/"
 export const student_detail = "/student/student-detail/"
 export const rating_notebook = "/student/rating-notebook/"
 export const student_region = "/region/?country=7&page_size=100"
+export const student_district = "/district/?page_size=100"
 
 
 // semester 

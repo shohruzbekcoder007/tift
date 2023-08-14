@@ -1,26 +1,33 @@
 
 import React, { useEffect, useState } from 'react'
-
 import { ContentWrapper } from '../../global_styles/styles'
 import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody } from './styles'
 import Modal from '@mui/material/Modal'
 import { Button, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
-import img from '../../imgs/Logo.png'
-import { getStudentInformation } from './requests'
-import { host, student_detail, student_region } from '../../utils/API_urls' 
+import { getStudentInformation, setInformation } from './requests'
+import { host, student_detail, student_district, student_region } from '../../utils/API_urls' 
 import CustomizedInputSimple from '../CustomizedInputSimple'
 
 
 
 export default function Information() {
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [infoList, setInfoList] = useState([])
   const [RegionList, setRegionList] = useState([])
+  const [districtList, setDistrictList] = useState([])
+  const [districtList1, setDistrictList1] = useState([])
+  const [changedRegionId, setChangedRegionId] = useState(null)
+  const [changedRegionId1, setChangedRegionId1] = useState(null)
+  const [changeDistrictList, setChangeDistrictList] = useState(null)
+  const [changeDistrictList1, setChangeDistrictList1] = useState(null)
+  const [textInfo, setTextInfo] = useState('')
+  const [textInfo1, setTextInfo1] = useState('')
 
 
   useEffect(() => {
@@ -31,14 +38,71 @@ export default function Information() {
     })
     
     getStudentInformation(student_region, (response) => {
-      setRegionList(response.data.result)
+      setChangedRegionId(response.data.results[0]?.id)
+      setChangedRegionId1(response.data.results[0]?.id)
+      setRegionList(response.data.results.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
     }, (error) => {
         console.log(error)
     })
 }, [])
 
 
+const hangleClick = (_) => {
 
+  setInformation(student_detail,  {
+    region: changedRegionId,
+    district: changeDistrictList,
+    address: textInfo,
+    region2: changedRegionId1,
+    district2: changeDistrictList1,
+    address2: textInfo1,
+  }, (response) => {
+    console.log(response.data.result);
+    handleClose()
+  }, (error) => {
+    console.log(error)
+  } )
+}
+
+
+
+useEffect(() => {
+  if(changedRegionId){
+    getStudentInformation(`${student_district}&region=${changedRegionId}`, (response) => {
+      setChangeDistrictList(response.data.results[0]?.id)
+      setDistrictList(response.data.results.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+        console.log(error)
+    })
+  }
+}, [changedRegionId])
+
+
+useEffect(() => {
+  if(changedRegionId1){
+    getStudentInformation(`${student_district}&region=${changedRegionId1}`, (response) => {
+      setChangeDistrictList1(response.data.results[0]?.id)
+      setDistrictList1(response.data.results.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+        console.log(error)
+    })
+  }
+}, [changedRegionId1])
 
 
   return (
@@ -163,11 +227,8 @@ export default function Information() {
                 Viloyat*
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang1",
-                  value: "Tanlang1",
-                }]}
+                chageValueFunction={val => setChangedRegionId(val)}
+                selectOptions={RegionList}
               />
             </ModalSelectWrapperInfo>
 
@@ -187,11 +248,8 @@ export default function Information() {
 
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
+                chageValueFunction={val => setChangeDistrictList(val)}
+                selectOptions={districtList}
               />
             </ModalSelectWrapperInfo>
             <ModalSelectWrapperInfo>
@@ -209,7 +267,7 @@ export default function Information() {
                 Manzil (Lotin xarflarda)*
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+            <CustomizedInputSimple callback_func={(val) => { setTextInfo(val) }} placeholder="  " />
             </ModalSelectWrapperInfo>
 
 
@@ -230,11 +288,8 @@ export default function Information() {
                 Viloyat (vaqtingcha)*
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
+                chageValueFunction={val => setChangedRegionId1(val)}
+                selectOptions={RegionList}
               />
             </ModalSelectWrapperInfo>
 
@@ -254,11 +309,8 @@ export default function Information() {
 
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
+                chageValueFunction={val => setChangeDistrictList1(val)}
+                selectOptions={districtList1}
               />
             </ModalSelectWrapperInfo>
             <ModalSelectWrapperInfo>
@@ -276,7 +328,7 @@ export default function Information() {
                 Manzil (vaqtincha) (lotin xarflarda)*
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+            <CustomizedInputSimple callback_func={(val) => { setTextInfo1(val) }} placeholder="  " />
               
             </ModalSelectWrapperInfo>
           </div>
@@ -294,6 +346,7 @@ export default function Information() {
               <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
+                onClick={hangleClick}
               >
                 Saqlash
 

@@ -9,3 +9,20 @@ export const getStudentInformation = (url, successfulFunction, errorFunction) =>
         errorFunction(error)
     })
 }
+
+export const setInformation = (url, data, successfulFunction, errorFunction) => {
+    axios.put(
+        url,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              },
+        }
+    ).then((response) => {
+        successfulFunction(response)
+    })
+    .catch((error) => {
+        errorFunction(error)
+    });
+}
