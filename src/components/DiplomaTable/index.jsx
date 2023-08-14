@@ -119,9 +119,9 @@ export default function DiplomaTable() {
     )
 }
 
-export const TableTHHeader = ({ text, iconc }) => {
+export const TableTHHeader = ({ text, iconc, colspan, rowspan }) => {
     return (
-        <th>
+        <th colSpan={colspan} rowSpan={rowspan}>
             <TrHeaderBox>
                 <span className="text">{text}</span>
                 <span className="iconc">{iconc}</span>

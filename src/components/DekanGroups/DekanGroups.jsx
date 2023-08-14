@@ -10,11 +10,12 @@ import { InputsWrapper } from '../CourseManagement/styles'
 import { DekanGroupsButton } from './styles'
 import { Link } from 'react-router-dom'
 import { getGroups } from './requests'
+import { decan_GroupList } from '../../utils/API_urls'
 
 export default function DekanGroups() {
 
     useEffect(() => {
-        getGroups("", (response) => {
+        getGroups(decan_GroupList, (response) => {
             console.log(response)
         }, (error) => {
             console.log(error)
