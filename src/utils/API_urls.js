@@ -18,6 +18,8 @@ export const teacher_sciences = "/teacher/sciences/"
 export const my_sciences = "/student/my-sciences"
 export const student_nb_list = "/student/student-nb-list/"
 export const student_detail = "/student/student-detail/"
+export const rating_notebook = "/student/rating-notebook/"
+export const student_region = "/region/?country=7&page_size=100"
 
 
 // semester 

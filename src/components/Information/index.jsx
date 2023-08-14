@@ -9,7 +9,8 @@ import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import img from '../../imgs/Logo.png'
 import { getStudentInformation } from './requests'
-import { student_detail } from '../../utils/API_urls' 
+import { host, student_detail, student_region } from '../../utils/API_urls' 
+import CustomizedInputSimple from '../CustomizedInputSimple'
 
 
 
@@ -19,16 +20,24 @@ export default function Information() {
   const handleClose = () => setOpen(false);
 
   const [infoList, setInfoList] = useState([])
+  const [RegionList, setRegionList] = useState([])
 
 
   useEffect(() => {
     getStudentInformation(student_detail, (response) => {
-        console.log(response.data.result);
         setInfoList(response.data.result)
     }, (error) => {
         console.log(error)
     })
+    
+    getStudentInformation(student_region, (response) => {
+      setRegionList(response.data.result)
+    }, (error) => {
+        console.log(error)
+    })
 }, [])
+
+
 
 
 
@@ -37,7 +46,7 @@ export default function Information() {
       <InfoBody>
         <HeaderWrapper>
           <HeaderWrapperTop>
-            <img src={img} alt="UserImage" />
+            <img src={`${host}${infoList.avatar}`} alt="UserImage" />
             <HeaderWrapperTopDiv>
               <HeaderWrapperH4>{infoList.full_name}</HeaderWrapperH4>
               {/* Xayrulla o’g’li */}
@@ -60,50 +69,50 @@ export default function Information() {
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
-              <HeaderWrapperP>22403-21</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.rating_notebook}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Manzil:</HeaderWrapperH4>
-              <HeaderWrapperP>Moskva, Toshkent</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.address}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
-              <HeaderWrapperP>Moskva, Toshkent</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
           <WrapperBody>
             <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
-            <HeaderWrapperP>sun'iy intellekt</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
-            <HeaderWrapperP>UZ</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>Bakalavr</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.degree}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
-            <HeaderWrapperP>Kunduzgi</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
-            <HeaderWrapperP>2</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
-            <HeaderWrapperP>224-21 SIo'</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
-            <HeaderWrapperP>Jonqobilov Mirjalol</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>Yo’q</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.is_scholarship == true?"Bor":"Yoq"}</HeaderWrapperP>
           </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
@@ -156,8 +165,8 @@ export default function Information() {
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
+                  name: "Tanlang1",
+                  value: "Tanlang1",
                 }]}
               />
             </ModalSelectWrapperInfo>
@@ -200,14 +209,10 @@ export default function Information() {
                 Manzil (Lotin xarflarda)*
 
               </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
-              />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
             </ModalSelectWrapperInfo>
+
+
           </div>
           <div className='modal_box_body'>
             <ModalSelectWrapperInfo>
@@ -271,13 +276,8 @@ export default function Information() {
                 Manzil (vaqtincha) (lotin xarflarda)*
 
               </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
-              />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+              
             </ModalSelectWrapperInfo>
           </div>
 
