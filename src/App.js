@@ -93,6 +93,7 @@ import Agreement from './components/AdminList/Agreement'
 import Payments from './components/AdminList/Payments'
 import Readagain from './components/AdminList/Readagain'
 import Contractprices from './components/AdminList/Contractprices'
+import ApplicationsReport from './components/ApplicationsReport'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -220,7 +221,10 @@ function App() {
                     <Route path="diploma/:id" element={<DiplomaTopics />} />
                     <Route path="request" element={<Questionnaire />} />
                     <Route path="coursemanagement" element={<CourseManagement />} />
-                    <Route path="applications" element={<Applications />} />
+                    <Route path="applications">
+                      <Route index element={<Applications />} />
+                      <Route path='report' element={<ApplicationsReport/>} />
+                    </Route>
                     <Route path="patoks" element={<Patoks />} />
                     <Route path="final" element={<StudentSciences />} >
                       <Route index element={<Final_Dep />} />

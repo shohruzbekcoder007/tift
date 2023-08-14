@@ -1,4 +1,6 @@
-export const host = "https://husanibragimov.jprq.live"
+// export const host = "https://husanibragimov.jprq.live"
+export const host = "http://husanibragimov.jprq.live"
+// export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -18,5 +20,9 @@ export const my_sciences = "/student/my-sciences"
 // semester 
 export const my_semesters = '/my-semesters/'
 
-
+// dekan 
 export const decan_GroupList = '/decan/GroupList/'
+
+
+// kafedra 
+export const syllabus_request_id = '/department/syllabus/status'
