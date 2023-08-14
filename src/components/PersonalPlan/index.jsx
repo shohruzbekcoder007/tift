@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { PersonalPlanPaper, PersonalPlanWrapper } from './styles'
 import { Paper, Typography } from '@mui/material'
 import { TableTHHeader } from '../DiplomaTable'
+import { rating_notebook } from '../../utils/API_urls'
+import { getStudentRatingNotebook } from './requests'
 
 export default function PersonalPlan() {
+    useEffect(() => {
+        getStudentRatingNotebook(rating_notebook, (response) => {
+            console.log(response);
+            // setInfoList(response.data.result)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [])
     return (
         <ContentWrapper>
             <PersonalPlanWrapper>

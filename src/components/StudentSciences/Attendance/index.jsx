@@ -1,15 +1,30 @@
 import { Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { Pagination } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
-import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import AllSelect from '../../AllSelect'
 import { StudentSciencesMainHeader } from '../StudentSciencesMain/styles'
+import { getStudentNB } from './requests'
+import { student_nb_list } from '../../../utils/API_urls'
+
 export default function Attendance() {
+
+    const { state } = useLocation()
+    const [nbList, setNbList] = useState([])
+    
+
+    useEffect(() => {
+        getStudentNB(`${student_nb_list}?science=${state.data}`, (response) => {
+            setNbList(response.data.results)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [])
+
     return (
         <>
             <Typography
@@ -34,7 +49,7 @@ export default function Attendance() {
                 }}
             >
 
-                <BoxHeader>
+                {/* <BoxHeader>
                     <AllSelect chageValueFunction={val => { console.log(val) }}
                         selectOptions={[
                             {
@@ -51,11 +66,11 @@ export default function Attendance() {
                             }
                         ]}
                     />
-                </BoxHeader>
+                </BoxHeader> */}
                 <StudentSciencesMainHeader>
-                    <PageSelector chageValueFunction={(val) => {
+                    {/* <PageSelector chageValueFunction={(val) => {
                         console.log(val)
-                    }} />
+                    }} /> */}
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
                 </StudentSciencesMainHeader>
                 <BoxBody>
@@ -140,14 +155,14 @@ export default function Attendance() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 4].map((elem, index) => {
+                                    nbList.map((elem, index) => {
                                         return (
-                                            <tr key={index}>
-                                                <th>24-05-2023</th>
-                                                <th>Sun'iy intellektga kirish</th>
-                                                <th>Amaliyot</th>
-                                                <th>13</th>
-                                                <th>Minimax algoritmini o’rganish</th>
+                                            <tr key={elem.id}>
+                                                <th>{elem.lesson_date}</th>
+                                                <th>{elem.science}</th>
+                                                <th>{elem.lesson_type}</th>
+                                                <th>{elem.lesson_number}</th>
+                                                <th>{elem.lesson_name}</th>
                                             </tr>
                                         )
                                     })
@@ -156,10 +171,10 @@ export default function Attendance() {
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
-                <BoxFooter>
+                {/* <BoxFooter>
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
                     <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
-                </BoxFooter>
+                </BoxFooter> */}
             </Paper>
         </>
     )

@@ -35,8 +35,7 @@ export default function StudentSciencesMain() {
   const getSemestersEror = (error) => {console.log(error)}
 
   const getSciensesArrayF = (response) => {
-    console.log(response.data)
-    setSciences(response.data)
+    setSciences(response.data.science)
   }
 
   const getSciensesArrayE = (error) => {
@@ -160,24 +159,27 @@ export default function StudentSciencesMain() {
             </thead>
             <tbody>
               {
-                sciences[0]?.science?.length === 0? <tr>
+                sciences.length === 0 ? <tr>
                   <th colSpan={5} align='center'>Ma’lumot yo’q</th>
                 </tr>:<>
                   {
-                    sciences[0]?.science.map((elem, index) => {
+                    sciences.map((elem, index) => {
                       return (
                         <tr key={index}>
                           <th>{elem.name}</th>
                           <th>
                             {
                               elem.groups?.length === 0?<></>:
-                              elem.groups.map((elem,index) => {
+                              elem.groups.map((elem, index) => {
                                 return <p key={"t"+index}><span>{elem.name}</span>-<span>{elem.teacher}</span><br/></p>
                               })
                             }
                           </th>
                           <th align='center'>
-                            <Link to="attendance">
+                            <Link 
+                              to="attendance"
+                              state={{data: elem.id}}
+                            >
                               <Button
                                 variant="contained"
                                 color="secondary"
@@ -252,10 +254,10 @@ export default function StudentSciencesMain() {
           </table>
         </ClassScheduleTableWrapper>
       </BoxBody>
-      <BoxFooter>
+      {/* <BoxFooter>
         <BoxFooterText>{`Jami ${sciences[0]?.science?.length} ta, 1 dan ${sciences[0]?.science?.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
         <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
-      </BoxFooter>
+      </BoxFooter> */}
     </Paper>
   )
 }
