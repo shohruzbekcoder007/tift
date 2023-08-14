@@ -79,6 +79,17 @@ import Reference from './components/AdminList/Reference'
 import StudentDocuments from './components/AdminList/StudentDocuments'
 import Semestr from './components/AdminList/Semestr'
 import InterimControl from './components/AdminList/Semestr/InterimControl'
+import Streams from './components/AdminList/Streams'
+import NBfix from './components/AdminList/NBfix'
+import TransferStudents from './components/AdminList/TransferStudents'
+import Scholarship from './components/AdminList/Scholarship'
+import AddCredit from './components/AdminList/AddCredit'
+import Building from './components/AdminList/Building'
+import Room from './components/AdminList/Building/Room'
+import University from './components/AdminList/University'
+import Organizations from './components/AdminList/Organizations'
+import Dayoff from './components/AdminList/Dayoff'
+import Agreement from './components/AdminList/Agreement'
 import ApplicationsReport from './components/ApplicationsReport'
 
 // stufent 
@@ -235,7 +246,23 @@ function App() {
                       <Route index element={<Semestr/>}/>
                       <Route path='control' element={<InterimControl/>}/>
                     </Route>
+                    <Route path="streams" element={<Streams />} />
+                    <Route path="NBfix" element={<NBfix />} />
+                    <Route path="transferstudents" element={<TransferStudents />} />
+                    <Route path="scholarship" element={<Scholarship />} />
+                    <Route path="addcredit" element={<AddCredit />} />
+                    <Route path="building" element={<StudentSciences />} >
+                      <Route index element={<Building />} />
+                      <Route path='room' element={<Room />} />
+                    </Route>
+                    <Route path="university" element={<University />} />
+                    <Route path="organizations" element={<Organizations />} />
+                    <Route path="dayoff" element={<Dayoff />} />
+                    <Route path="agreement" element={<StudentSciences />} >
+                      <Route index element={<Agreement />} />
+                    </Route>
 
+                    
                   </Route>
               </>
             ) : <></>}
