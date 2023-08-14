@@ -90,6 +90,9 @@ import University from './components/AdminList/University'
 import Organizations from './components/AdminList/Organizations'
 import Dayoff from './components/AdminList/Dayoff'
 import Agreement from './components/AdminList/Agreement'
+import Payments from './components/AdminList/Payments'
+import Readagain from './components/AdminList/Readagain'
+import Contractprices from './components/AdminList/Contractprices'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -253,9 +256,10 @@ function App() {
                     <Route path="dayoff" element={<Dayoff />} />
                     <Route path="agreement" element={<StudentSciences />} >
                       <Route index element={<Agreement />} />
+                      <Route path='payments' element={<Payments />} />
                     </Route>
-
-                    
+                    <Route path="readagain" element={<Readagain />} />
+                    <Route path="contractprices" element={<Contractprices />} />
                   </Route>
               </>
             ) : <></>}

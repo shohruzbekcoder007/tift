@@ -1,4 +1,4 @@
-export const host = "https://oqdevpy.jprq.live"
+export const host = "https://husanibragimov.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 

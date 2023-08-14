@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton, BuildingModalLang, BuildingModalLangText } from './styles'
+import { AttendSearchButton } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
-import { InputsWrapper } from '../../CourseManagement/styles'
-import { CardWrapper } from '../../StatistikaList/FinalQuestion/styles'
-import { Link } from 'react-router-dom'
 
-export default function Agreement() {
+export default function Contractprices() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,7 +20,7 @@ export default function Agreement() {
   const handleClose2 = () => setOpen2(false);
 
   return (
-    <>
+    <ContentWrapper>
       <Paper
         elevation={0}
         sx={{
@@ -37,7 +34,7 @@ export default function Agreement() {
             console.log(val)
           }} />
           <AttendSearchButton>
-            {/* <Button
+          <Button
               variant="contained"
               onClick={handleOpen}
               sx={{
@@ -62,37 +59,15 @@ export default function Agreement() {
               }
             >
               Qo'shish
-            </Button> */}
+            </Button>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
-            <CardWrapper>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_78_29099)">
-                  <path d="M12.44 13.9333C12.1667 13.6867 11.74 13.7133 11.5 13.9933C11.12 14.4267 10.5733 14.6733 10 14.6733H3.33333C2.23333 14.6733 1.33333 13.7733 1.33333 12.6733V3.33333C1.33333 2.23333 2.23333 1.33333 3.33333 1.33333H6.34C6.44667 1.33333 6.56 1.33333 6.66667 1.34667V4.66667C6.66667 5.76667 7.56667 6.66667 8.66667 6.66667H12.54C12.7467 6.66667 12.94 6.57333 13.0667 6.40667C13.1933 6.24 13.2333 6.03333 13.1867 5.83333C12.98 5.02 12.56 4.28 11.9667 3.68667L9.64667 1.36667C8.76667 0.486667 7.59333 0 6.34667 0H3.33333C1.49333 0 0 1.49333 0 3.33333V12.6667C0 14.5067 1.49333 16 3.33333 16H10C10.9533 16 11.8667 15.5867 12.5 14.8733C12.7467 14.6 12.72 14.1733 12.44 13.9333ZM8 1.77333C8.25333 1.92 8.48667 2.1 8.7 2.31333L11.02 4.63333C11.2267 4.84 11.4067 5.08 11.5533 5.33333H8.66C8.29333 5.33333 7.99333 5.03333 7.99333 4.66667V1.77333H8ZM15.42 12.06L14.3467 13.1333C14.2133 13.2667 14.0467 13.3267 13.8733 13.3267C13.7 13.3267 13.5333 13.26 13.4 13.1333C13.14 12.8733 13.14 12.4533 13.4 12.1933L14.26 11.3333H9.32667C8.96 11.3333 8.66 11.0333 8.66 10.6667C8.66 10.3 8.96 10 9.32667 10H14.26L13.4 9.14C13.14 8.88 13.14 8.46 13.4 8.2C13.66 7.94 14.08 7.94 14.34 8.2L15.4133 9.27333C16.18 10.04 16.18 11.2933 15.4133 12.0667L15.42 12.06Z" fill="black" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_78_29099">
-                    <rect width="16" height="16" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-              Eksport qilish (Excel)
-            </CardWrapper>
           </AttendSearchButton>
         </BoxHeader>
 
-        <BoxHeader>
-          <AllSelectFullWidth
-            chageValueFunction={val => console.log(val)}
-            selectOptions={[{
-              name: "Guruh tanlang",
-              value: 12,
-            }]}
-          />
-        </BoxHeader>
-        <BoxHeader>
+        {/* <BoxHeader>
           <InputsWrapper>
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="F.I.SH" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kafedra" />
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
               selectOptions={[{
@@ -100,16 +75,9 @@ export default function Agreement() {
                 value: 12,
               }]}
             />
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Imkoniyat" />
           </InputsWrapper>
-        </BoxHeader>
-
+        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -129,7 +97,7 @@ export default function Agreement() {
                     </svg>}
                   />
                   <TableTHHeader
-                    text="F.I.SH"
+                    text="Ta’lim turi"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -144,24 +112,8 @@ export default function Agreement() {
                     }
                   />
 
-                  <TableTHHeader
-                    text="Kurs"
-                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clipPath="url(#clip0_78_23319)">
-                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
-                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_78_23319">
-                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    }
-                  />
-
-                  <TableTHHeader
-                    text="Yo'nalish"
+<TableTHHeader
+                    text="Yo’nalish"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -176,7 +128,7 @@ export default function Agreement() {
                     }
                   />
                   <TableTHHeader
-                    text="Kontrakt summasi"
+                    text="Narxi (ish haqi hisobida)"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -191,7 +143,7 @@ export default function Agreement() {
                     }
                   />
                   <TableTHHeader
-                    text="To'langan"
+                    text={<p>O’tkazilgan talabalar uchun narx <br /> (ish haqi bilan</p>}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -205,48 +157,60 @@ export default function Agreement() {
                     </svg>
                     }
                   />
-
+                  <TableTHHeader
+                    text="Umumiy kredit sum."
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                  [1,2,3,4,5,6].map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>1234</th>
-                        <th>Umarov Ulug'bek Abdurahmon o'g'li</th>
-                        <th>2</th>
-                        <th>Программный инжиниринг</th>
-                        <th>6 627 840</th>
-                        <th>0 (0%)</th>
+                        <th>To'liq stavka</th>
+                        <th>Ахборот хавфсизлиги</th>
+                        <th>51</th>
+                        <th>0</th>
+                        <th>60</th>
                         <th>
-                          <Link to="payments">
-                            <Button
-                              variant="contained"
-                              sx={{
-                                borderRadius: "10px",
-                                textTransform: "capitalize",
-                                boxShadow: "none",
-                                padding: "6px 12px",
-                                marginRight: "20px"
-                              }}
-                              startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_1221_30650)">
-                                  <path d="M13.8019 3.69068L11.4793 1.36668C11.0468 0.932107 10.5325 0.587569 9.96609 0.352988C9.39966 0.118407 8.79235 -0.00156258 8.17927 1.53658e-05H5.16927C4.28554 0.00107394 3.43831 0.352603 2.81342 0.977495C2.18853 1.60239 1.837 2.44962 1.83594 3.33335V12.6667C1.837 13.5504 2.18853 14.3976 2.81342 15.0225C3.43831 15.6474 4.28554 15.999 5.16927 16H11.8359C12.7197 15.999 13.5669 15.6474 14.1918 15.0225C14.8167 14.3976 15.1682 13.5504 15.1693 12.6667V6.99002C15.1709 6.37696 15.0509 5.76968 14.8162 5.20333C14.5815 4.63699 14.2368 4.12284 13.8019 3.69068ZM12.8593 4.63335C13.0628 4.84278 13.2379 5.07814 13.3799 5.33335H10.5026C10.3258 5.33335 10.1562 5.26311 10.0312 5.13809C9.90618 5.01306 9.83594 4.84349 9.83594 4.66668V1.78935C10.0912 1.9313 10.3268 2.10612 10.5366 2.30935L12.8593 4.63335ZM13.8359 12.6667C13.8359 13.1971 13.6252 13.7058 13.2502 14.0809C12.8751 14.456 12.3664 14.6667 11.8359 14.6667H5.16927C4.63884 14.6667 4.13013 14.456 3.75506 14.0809C3.37998 13.7058 3.16927 13.1971 3.16927 12.6667V3.33335C3.16927 2.80292 3.37998 2.29421 3.75506 1.91914C4.13013 1.54406 4.63884 1.33335 5.16927 1.33335H8.17927C8.2886 1.33335 8.3946 1.35468 8.5026 1.36468V4.66668C8.5026 5.19711 8.71332 5.70582 9.08839 6.0809C9.46346 6.45597 9.97217 6.66668 10.5026 6.66668H13.8046C13.8146 6.77468 13.8359 6.88002 13.8359 6.99002V12.6667Z" fill="white" />
-                                </g>
-                                <defs>
-                                  <clipPath id="clip0_1221_30650">
-                                    <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                                  </clipPath>
-                                </defs>
-                              </svg>
-
-                              }
-                            >
-                              To'lovlar
-                            </Button>
-                          </Link>
+                          <Button
+                            variant="contained"
+                            sx={{
+                              borderRadius: "10px",
+                              textTransform: "capitalize",
+                              boxShadow: "none",
+                              padding: "6px 12px",
+                              marginRight: "20px"
+                            }}
+                            onClick={handleOpen2}
+                            startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g clip-path="url(#clip0_1221_28999)">
+                            <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white"/>
+                            <path d="M15.8333 5.986C15.6565 5.986 15.487 6.05624 15.3619 6.18126C15.2369 6.30629 15.1667 6.47586 15.1667 6.65267V10H12.5C11.9696 10 11.4609 10.2107 11.0858 10.5858C10.7107 10.9609 10.5 11.4696 10.5 12V14.6667H3.83333C3.3029 14.6667 2.79419 14.456 2.41912 14.0809C2.04405 13.7058 1.83333 13.1971 1.83333 12.6667V3.33333C1.83333 2.8029 2.04405 2.29419 2.41912 1.91912C2.79419 1.54405 3.3029 1.33333 3.83333 1.33333H9.86133C10.0381 1.33333 10.2077 1.2631 10.3327 1.13807C10.4578 1.01305 10.528 0.843478 10.528 0.666667C10.528 0.489856 10.4578 0.320286 10.3327 0.195262C10.2077 0.0702379 10.0381 0 9.86133 0L3.83333 0C2.9496 0.00105857 2.10237 0.352588 1.47748 0.97748C0.852588 1.60237 0.501059 2.4496 0.5 3.33333L0.5 12.6667C0.501059 13.5504 0.852588 14.3976 1.47748 15.0225C2.10237 15.6474 2.9496 15.9989 3.83333 16H11.3953C11.8333 16.0013 12.2671 15.9156 12.6718 15.7481C13.0764 15.5806 13.4438 15.3345 13.7527 15.024L15.5233 13.252C15.8338 12.9432 16.08 12.576 16.2477 12.1715C16.4153 11.767 16.5011 11.3332 16.5 10.8953V6.65267C16.5 6.47586 16.4298 6.30629 16.3047 6.18126C16.1797 6.05624 16.0101 5.986 15.8333 5.986ZM12.81 14.0813C12.542 14.3487 12.2031 14.5337 11.8333 14.6147V12C11.8333 11.8232 11.9036 11.6536 12.0286 11.5286C12.1536 11.4036 12.3232 11.3333 12.5 11.3333H15.1167C15.0342 11.7023 14.8493 12.0406 14.5833 12.3093L12.81 14.0813Z" fill="white"/>
+                            </g>
+                            <defs>
+                            <clipPath id="clip0_1221_28999">
+                            <rect width="16" height="16" fill="white" transform="translate(0.5)"/>
+                            </clipPath>
+                            </defs>
+                            </svg>
+                            }
+                          >
+                          </Button>
                         </th>
                       </tr>
                     )
@@ -256,13 +220,294 @@ export default function Agreement() {
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
-
         <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
         </BoxFooter>
+        
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <ModalBox>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000"
+                }}
+              >
+                Qo’shish                            </Typography>
+              <span
+                onClick={handleClose}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                </svg>
+              </span>
+            </ModalHeader>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                Yo’nalish                         </Typography>
+                <AllSelectFullWidth
+                chageValueFunction={val => console.log(val)}
+                selectOptions={[{
+                  name: "Mobil tizimlari",
+                  value: 12,
+                }]}
+              />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Ta’lim turi                            </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => console.log(val)}
+                selectOptions={[{
+                  name: "To’liq stavka",
+                  value: 12,
+                }]}
+              />
+            </ModalSelectWrapper>
 
+
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Narxi (ish haqi hisobida)                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               O’tkazilgan talabalar uchun narx (min.ish haqi bilan)                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Umumiy kredit summasi                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+            </ModalSelectWrapper>
+
+
+            <ModalButtons>
+              <Button
+                sx={{ width: "50%", textTransform: "none" }}
+                variant="outlined"
+                onClick={handleClose}
+              >
+                Bekor qilish
+              </Button>
+              <Button
+                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                variant="contained"
+              >
+                Saqlash
+              </Button>
+            </ModalButtons>
+          </ModalBox>
+        </Modal>
+
+
+        <Modal
+          keepMounted
+          open={open2}
+          onClose={handleClose2}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <ModalBox>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000"
+                }}
+              >
+                Tahrirlash                            </Typography>
+              <span
+                onClick={handleClose2}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                </svg>
+              </span>
+            </ModalHeader>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                Yo’nalish                         </Typography>
+                <AllSelectFullWidth
+                chageValueFunction={val => console.log(val)}
+                selectOptions={[{
+                  name: "",
+                  value: 12,
+                }]}
+              />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Ta’lim turi                            </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => console.log(val)}
+                selectOptions={[{
+                  name: "To’liq stavka",
+                  value: 12,
+                }]}
+              />
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Narxi (ish haqi hisobida)                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="51" />
+
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               O’tkazilgan talabalar uchun narx (min.ish haqi bilan)                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="0" />
+
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Umumiy kredit summasi                          </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="0" />
+
+            </ModalSelectWrapper>
+            <ModalButtons>
+              <Button
+                sx={{ width: "50%", textTransform: "none" }}
+                variant="outlined"
+                onClick={handleClose2}
+              >
+                Bekor qilish
+              </Button>
+              <Button
+                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                variant="contained"
+              >
+                Saqlash
+              </Button>
+            </ModalButtons>
+          </ModalBox>
+        </Modal>
       </Paper>
-    </>
+    </ContentWrapper>
   )
 }
