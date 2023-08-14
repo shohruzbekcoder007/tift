@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 import search from '../../imgs/input_search.png'
@@ -49,7 +49,17 @@ const CssTextField = withStyles({
 })(TextField);
 
 export default function CustomizedInput({ label, callback_func }) {
+
     const language = useSelector(state => state.language)
+    const [searchTerm, setSearchTerm] = useState('')
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+          callback_func(searchTerm)
+        }, 1000)
+    
+        return () => clearTimeout(delayDebounceFn)
+      }, [searchTerm])
 
     return (
         <div style={{ position: "relative" }}>
@@ -60,7 +70,7 @@ export default function CustomizedInput({ label, callback_func }) {
                 variant="outlined"
                 id="custom-css-outlined-input"
                 // helperText="Incorrect entry."
-                onChange={event => { callback_func(event.target.value) }}
+                onChange={event => { setSearchTerm(event.target.value) }}
                 placeholder={listLanguage.Search[language]}
             />
         </div>

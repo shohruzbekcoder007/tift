@@ -26,3 +26,7 @@ export const decan_GroupList = '/decan/GroupList/'
 
 // kafedra 
 export const syllabus_request_id = '/department/syllabus/status'
+
+
+// admin 
+export const allusers = '/allusers/'
