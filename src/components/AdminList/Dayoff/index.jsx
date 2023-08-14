@@ -203,6 +203,7 @@ export default function Dayoff() {
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
         </BoxFooter>
+        
         <Modal
           keepMounted
           open={open}
