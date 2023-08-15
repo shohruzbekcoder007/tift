@@ -1,4 +1,5 @@
 // export const host = "https://husanibragimov.jprq.live"
+// export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 export const host = "https://api.lms-edu.uz"
