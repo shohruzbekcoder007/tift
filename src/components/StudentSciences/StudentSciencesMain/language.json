@@ -43,5 +43,10 @@
     "uz": "gachasi ko'rsatilmoqda",
     "ru": "показано",
     "eng": "are shown"
+  },
+  "NoInfo": {
+    "uz": "Ma'limot yo'q",
+    "ru": "Нет информации",
+    "eng": "No information"
   }
 }

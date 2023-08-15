@@ -7,16 +7,12 @@ import Modal from '@mui/material/Modal'
 import { Button, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
-import img from '../../imgs/Logo.png'
 import { getStudentInformation } from './requests'
-import { host, student_detail, student_region } from '../../utils/API_urls' 
+import { host, student_detail, student_region } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
+import languageList from './language.json'
+import { useSelector } from 'react-redux'
 
-
-
-=========
->>>>>>>>> Temporary merge branch 2
-import img from '../../imgs/Logo.png'
 export default function Information() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -25,20 +21,22 @@ export default function Information() {
   const [infoList, setInfoList] = useState([])
   const [RegionList, setRegionList] = useState([])
 
+  const language = useSelector(state => state.language)
+
 
   useEffect(() => {
     getStudentInformation(student_detail, (response) => {
-        setInfoList(response.data.result)
+      setInfoList(response.data.result)
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-    
+
     getStudentInformation(student_region, (response) => {
       setRegionList(response.data.result)
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-}, [])
+  }, [])
 
 
 
@@ -63,59 +61,59 @@ export default function Information() {
           <Hr />
           <HeaderWrapperBottom>
             <WrapperBody>
-              <HeaderWrapperH4>Tug’ilgan sanasi:</HeaderWrapperH4>
+              <HeaderWrapperH4>{languageList.BirthDate[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
-              <HeaderWrapperP>{infoList.gender == "male"?"Erkak":"Ayol"}</HeaderWrapperP>
+              <HeaderWrapperH4>{languageList.Gender[language]}:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.gender == "male" ? "Erkak" : "Ayol"}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
+              <HeaderWrapperH4>{languageList.RatingBook[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.rating_notebook}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Manzil:</HeaderWrapperH4>
+              <HeaderWrapperH4>{languageList.Address[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
+              <HeaderWrapperH4>{languageList.AddressTemporal[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
           <WrapperBody>
-            <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.Field[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.StudyLang[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.Degree[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.degree}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.EducationForm[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.Course[language]}: </HeaderWrapperH4>
             <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.Group[language]}: </HeaderWrapperH4>
             <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
+            <HeaderWrapperH4>{languageList.Coach[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.is_scholarship == true?"Bor":"Yoq"}</HeaderWrapperP>
+            <HeaderWrapperH4>{languageList.Scholar[language]}:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.is_scholarship == true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
@@ -139,7 +137,7 @@ export default function Information() {
                   color: "#000",
                 }}
               >
-                Tahrirlash
+                {languageList.Edit[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -163,7 +161,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Viloyat*
+                {languageList.Region[language]}
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
@@ -186,7 +184,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Shahar*
+                {languageList.City[language]}
 
               </Typography>
               <AllSelectFullWidth
@@ -209,10 +207,10 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Manzil (Lotin xarflarda)*
+                {languageList.AddressInLatin[language]}
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
             </ModalSelectWrapperInfo>
 
 
@@ -230,7 +228,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Viloyat (vaqtingcha)*
+                {languageList.TemporalRegion[language]}
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
@@ -253,7 +251,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Shahar (vaqtingcha)*
+                {languageList.TemporalCity[language]}
 
               </Typography>
               <AllSelectFullWidth
@@ -276,11 +274,11 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Manzil (vaqtincha) (lotin xarflarda)*
+                {languageList.TemporalAddressInLatin[language]}
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-              
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+
             </ModalSelectWrapperInfo>
           </div>
 
@@ -291,23 +289,13 @@ export default function Information() {
                 variant="outlined"
                 onClick={handleClose}
               >
-
-<<<<<<<<< Temporary merge branch 1
                 {languageList.Cancel[language]}
-=========
-                Bekor qilish
->>>>>>>>> Temporary merge branch 2
               </Button>
               <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
               >
-<<<<<<<<< Temporary merge branch 1
                 {languageList.Save[language]}
-=========
-                Saqlash
->>>>>>>>> Temporary merge branch 2
-
               </Button>
             </ModalButtonsInfo>
           </div>
