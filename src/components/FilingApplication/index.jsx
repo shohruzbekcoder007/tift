@@ -41,7 +41,6 @@ export default function FilingApplication() {
     const [file, setFile] = useState(null);
     const [lang, setLang] = useState("uz");
     const langg = useSelector(state => state.language);
-
     const setFileHandler = (newValue, info) => {
         setFile(newValue)
     }

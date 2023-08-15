@@ -1,6 +1,6 @@
-import axios, { headerConfig } from '../../../utils/baseUrl'
+import axios, { headerConfig } from '../../utils/baseUrl'
 
-export const getUsersList = (url, successfulFunction, errorFunction) => {
+export const getTeacherSyllabusRequest = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
         headers: headerConfig(),
     }).then(response => {

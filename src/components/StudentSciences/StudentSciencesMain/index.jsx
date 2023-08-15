@@ -36,8 +36,7 @@ export default function StudentSciencesMain() {
   const getSemestersEror = (error) => { console.log(error) }
 
   const getSciensesArrayF = (response) => {
-    console.log(response.data)
-    setSciences(response.data)
+    setSciences(response.data.science)
   }
 
   const getSciensesArrayE = (error) => {
@@ -53,7 +52,7 @@ export default function StudentSciencesMain() {
   }, [])
 
   useEffect(() => {
-    if(semester !== 0){
+    if (semester !== 0) {
       getSciensesArray(semester)
     }
   }, [semester])
@@ -161,11 +160,11 @@ export default function StudentSciencesMain() {
             </thead>
             <tbody>
               {
-                sciences[0]?.science?.length === 0 ? <tr>
+                sciences.length === 0 ? <tr>
                   <th colSpan={5} align='center'>Ma’lumot yo’q</th>
                 </tr> : <>
                   {
-                    sciences[0]?.science.map((elem, index) => {
+                    sciences.map((elem, index) => {
                       return (
                         <tr key={index}>
                           <th>{elem.name}</th>
@@ -178,7 +177,10 @@ export default function StudentSciencesMain() {
                             }
                           </th>
                           <th align='center'>
-                            <Link to="attendance">
+                            <Link
+                              to="attendance"
+                              state={{ data: elem.id }}
+                            >
                               <Button
                                 variant="contained"
                                 color="secondary"
@@ -253,10 +255,10 @@ export default function StudentSciencesMain() {
           </table>
         </ClassScheduleTableWrapper>
       </BoxBody>
-      <BoxFooter>
-        <BoxFooterText>{`${languageList.Total[language]} ${sciences[0]?.science?.length} ${languageList.Ta[language]}, ${languageList.From[language]} ${sciences[0]?.science?.length} ${languageList.AreShown[language]}`}</BoxFooterText>
+      {/* <BoxFooter>
+        <BoxFooterText>{`Jami ${sciences[0]?.science?.length} ta, 1 dan ${sciences[0]?.science?.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
         <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
-      </BoxFooter>
+      </BoxFooter> */}
     </Paper>
   )
 }
