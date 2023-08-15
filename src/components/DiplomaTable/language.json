@@ -3,45 +3,45 @@
     "uz": "Yil",
     "ru": "год",
     "eng": "Year"
-},
-"Degree": {
-  "uz": "Daraja",
-  "ru": "Степень",
-  "eng": "Degree"
-},
-"NumberStudents": {
-  "uz": "Talabalar soni  ",
-  "ru": "Количество студентов",
-  "eng": "Number of students"
-},
-"Curriculum": {
-  "uz": "O’quv reja",
-  "ru": "Учебный план",
-  "eng": "Curriculum"
-},
-"DiplomTopics": {
-  "uz": "Diplom Mavzulari",
-  "ru": "Темы дипломов",
-  "eng": "Diplom Topics"
-},
-"Add": {
-  "uz": "Qo'shish",
-  "ru": "добавлять",
-  "eng": "Add"
-},
-"Week": {
-  "uz": "Hafta",
-  "ru": "Неделя",
-  "eng": "Week"
-},
-"Cancel": {
-  "uz": "Bekor qilish",
-  "ru": "Отмена",
-  "eng": "Cancel"
-},
-"Save": {
-  "uz": "Saqlash",
-  "ru": "Сохранять",
-  "eng": "Save"
-}
+  },
+  "Degree": {
+    "uz": "Daraja",
+    "ru": "Степень",
+    "eng": "Degree"
+  },
+  "NumberStudents": {
+    "uz": "Talabalar soni  ",
+    "ru": "Количество студентов",
+    "eng": "Number of students"
+  },
+  "Curriculum": {
+    "uz": "O’quv reja",
+    "ru": "Учебный план",
+    "eng": "Curriculum"
+  },
+  "DiplomTopics": {
+    "uz": "Diplom Mavzulari",
+    "ru": "Темы дипломов",
+    "eng": "Diplom Topics"
+  },
+  "Add": {
+    "uz": "Qo'shish",
+    "ru": "Добавлять",
+    "eng": "Add"
+  },
+  "Week": {
+    "uz": "Hafta",
+    "ru": "Неделя",
+    "eng": "Week"
+  },
+  "Cancel": {
+    "uz": "Bekor qilish",
+    "ru": "Отмена",
+    "eng": "Cancel"
+  },
+  "Save": {
+    "uz": "Saqlash",
+    "ru": "Сохранять",
+    "eng": "Save"
+  }
 }
