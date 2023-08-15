@@ -10,3 +10,12 @@ export const getSemester = (url, successfulFunction, errorFunction) => {
     })
 }
 
+export const getTeacherSyllabus = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}

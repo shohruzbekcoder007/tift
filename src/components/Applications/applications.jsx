@@ -10,13 +10,21 @@ import { BoxHeaderApp } from './styles'
 import application_status from '../../dictionary/ application_status'
 import { my_semesters } from '../../utils/API_urls'
 import { getSemester } from './requests'
+import { getTeacherSyllabus } from './requests'
+import CreateStatus from '../FilingApplication/CreateStatus'
+import { dateFormatter } from '../../utils/dateFormatter'
 
 export default function Applications() {
 
-    const [status, setStatus] = useState(application_status[0].value)
+    const [statusApplication, setStatusApplication] = useState(application_status[0].value)
     const [semesters, setSemesters] = useState([])
-    const [semester, setSemester] = useState([])
+    const [semester, setSemester] = useState(0)
     const [pageSize, setPageSize] = useState(10)
+    const [allCount, setAllCount] = useState(0)
+    const [syllabus, setSyllabus] = useState([])
+    const [pageCount, setPageCount] = useState(1)
+    const [page, setPage] = useState(1)
+    const [applicationStatus, setApplicationStatus] = useState([])
 
     const getSemesters = (response) => {
         const semester_firstly = response.data.map(element => {
@@ -31,14 +39,30 @@ export default function Applications() {
 
     const getSemestersEror = (error) => { console.log(error) }
 
+    const getSyllabus = (response) => {
+        setPageCount(response.data.page_count)
+        setAllCount(response.data.count)
+        setSyllabus(response.data.results)
+    }
+
+    const getSyllabusError = (error) => { console.log(error) }
+
 
     useEffect(() => {
-        console.log(application_status)
-        // setAllStatus()
-    }, [])
+        if (semester !== 0 && statusApplication !== 0) {
+            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${statusApplication != "all" ? statusApplication : ''}`, getSyllabus, getSyllabusError)
+        }
+    }, [page, pageSize, semester, statusApplication])
 
     useEffect(() => {
         getSemester(my_semesters, getSemesters, getSemestersEror)
+        const new_status = application_status.map(elem => {
+            return {
+                name: elem.uz,
+                value: elem.value
+            }
+        })
+        setApplicationStatus(new_status)
     }, [])
 
 
@@ -52,20 +76,14 @@ export default function Applications() {
                     borderRadius: "10px"
                 }}
             >
-
                 <div style={{ display: 'flex', justifyContent: 'start' }}>
                     <BoxHeaderApp>
                         <AllSelect
-                            chageValueFunction={val => { console.log(val) }}
-                            selectOptions={application_status.map(elem => {
-                                return {
-                                    name: elem.uz,
-                                    value: elem.value
-                                }
-                            })}
+                            chageValueFunction={val => { setStatusApplication(val); }}
+                            selectOptions={applicationStatus}
                         />
                         <AllSelect
-                            chageValueFunction={val => { setSemester(val) }}
+                            chageValueFunction={val => { setSemester(val); }}
                             selectOptions={semesters}
                         />
                     </BoxHeaderApp>
@@ -76,13 +94,6 @@ export default function Applications() {
                     }} />
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
                 </BoxHeader>
-                {/* <BoxHeader>
-                    <InputsWrapper>
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                    </InputsWrapper>
-                </BoxHeader> */}
                 <BoxBody>
                     <ClassScheduleTableWrapper>
                         <table>
@@ -180,7 +191,7 @@ export default function Applications() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
+                                {/* {
                                     [1, 2, 3].map((elem, index) => {
                                         return (
                                             <tr key={index}>
@@ -218,14 +229,41 @@ export default function Applications() {
                                             </tr>
                                         )
                                     })
+                                } */}
+                                {
+                                    syllabus?.length === 0 ?
+                                        <tr>
+                                            <th colSpan={7} align='center'>Ma’lumot yo’q</th>
+                                        </tr> :
+                                        syllabus.map((elem, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <th>{elem.id}</th>
+                                                    <th>{elem.science}</th>
+                                                    <th>{elem.lang_display}</th>
+                                                    <th>{dateFormatter(elem.created_at)}</th>
+                                                    <th>{dateFormatter(elem.updated_at)}</th>
+                                                    <th>
+                                                        {
+                                                            elem.groups.map((group, index) => {
+                                                                return <span key={index} style={{ marginRight: "5px" }}>{group}</span>
+                                                            })
+                                                        }
+                                                    </th>
+                                                    <th>
+                                                        <CreateStatus element={application_status.find((element) => elem.status_display.toLowerCase() == element.value)} />
+                                                    </th>
+                                                </tr>
+                                            )
+                                        })
                                 }
                             </tbody>
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + syllabus.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
         </ContentWrapper>

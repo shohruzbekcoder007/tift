@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export default function AllSelect({chageValueFunction, selectOptions}) {
+export default memo(function AllSelect({chageValueFunction, selectOptions}) {
 
     const [age, setAge] = React.useState(selectOptions[0]?.value || 0);
 
@@ -67,4 +67,4 @@ export default function AllSelect({chageValueFunction, selectOptions}) {
             </FormControl>
         </div>
     );
-}
+})

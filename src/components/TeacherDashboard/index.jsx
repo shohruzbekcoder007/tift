@@ -6,12 +6,14 @@ import listLanguage from './language.json'
 import { Pagination, Skeleton } from '@mui/material'
 import { getNews } from './requests'
 import { get_news } from '../../utils/API_urls'
+import { useSelector } from 'react-redux'
 
 export default function TeacherDashboard() {
 
   const [news, setNews] = useState([])
   const [pageCount, setPageCount] = useState(0)
   const [count, setCount] = useState(1)
+  const language = useSelector(state => state.language)
 
   useEffect(() => {
     getNews(`${get_news}?page_size=12&page=${count}`, (response) => {
@@ -52,14 +54,13 @@ export default function TeacherDashboard() {
                 </TeacherDashboardSubTItle>
                 <Link to={`${elem.id}`} state={{ element: elem }}>
                   <TeacherDashboardButton>
-                    {listLanguage.Detail["ru"]}
+                    {listLanguage.Detail[language]}
                   </TeacherDashboardButton>
                 </Link>
               </TeacherDashboardWrapper>
             )
           })
         }
-
       </TeacherDashboardInformations>
       <TeacherDashboardPagination>
         <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setCount(value) }} />

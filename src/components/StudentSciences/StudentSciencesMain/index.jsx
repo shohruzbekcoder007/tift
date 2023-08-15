@@ -11,6 +11,7 @@ import { StudentSciencesMainHeader } from './styles'
 import { useSelector } from 'react-redux'
 import { getSciences, getSemester } from './requests'
 import { my_sciences, my_semesters } from '../../../utils/API_urls'
+import ListLanguage from './language.json'
 import languageList from './language.json'
 
 export default function StudentSciencesMain() {
@@ -52,7 +53,7 @@ export default function StudentSciencesMain() {
   }, [])
 
   useEffect(() => {
-    if (semester != 0) {
+    if(semester !== 0){
       getSciensesArray(semester)
     }
   }, [semester])
