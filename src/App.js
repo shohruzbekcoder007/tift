@@ -97,6 +97,13 @@ import Sections from './components/AdminList/Sections'
 import Faculties from './components/AdminList/Faculties'
 import Kafedra from './components/AdminList/Faculties/Kafedra'
 import Employees from './components/AdminList/Employees'
+import ApplicationsReport from './components/ApplicationsReport'
+import Career from './components/AdminList/Employees/Career'
+import Show from './components/AdminList/Employees/Show'
+import EditEmployees from './components/AdminList/Employees/EditEmployees'
+
+// stufent 
+
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -271,8 +278,9 @@ function App() {
                   </Route>
                   <Route path="employees" element={<StudentSciences />} >
                     <Route index element={<Employees />} />
-                    <Route path='dekan' element={<Kafedra />} />
-                    <Route path='show' element={<Kafedra />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployees />} />  
                   </Route>
                 </Route>
               </>
