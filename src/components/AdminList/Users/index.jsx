@@ -9,6 +9,8 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import Modal from '@mui/material/Modal'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
+import { getUsersList } from './requests'
+import { allusers as getAllUser } from '../../../utils/API_urls'
 
 
 export default function Users() {
@@ -20,12 +22,22 @@ export default function Users() {
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
-    const [searchText, setSearchText] = useState(0)
+    const [searchText, setSearchText] = useState('')
+    const [pageCount, setPageCount] = useState(1)
+    const [allUsers, setAlUsers] = useState([])
     
-    // allusers
     useEffect(() => {
-        console.log("")
-    }, [])
+        getUsersList(`${getAllUser}?page_size=${pageSize}&page=${page}`, (response) => {
+            console.log(`${getAllUser}?page_size=${pageSize}&page=${page}`)
+            console.log(response.data)
+            setAllCount(response.data.count)
+            setPage(response.data.page)
+            setPageCount(response.data.page_count)
+            setAlUsers(response.data.results)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [pageSize, page])
 
     return (
         <ContentWrapper>
@@ -119,13 +131,13 @@ export default function Users() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 1, 2, 3].map((elem, index) => {
+                                    allUsers.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1494</th>
-                                                <th>j.yorqulov</th>
-                                                <th>Yorqulov Jonibek Yunus o‘g‘li</th>
-                                                <th>Суперадмин</th>
+                                                <th>{elem.id}</th>
+                                                <th>{elem.username}</th>
+                                                <th>{elem.full_name}</th>   
+                                                <th>{elem.role.map(element => <span style={{marginRight: "5px"}}>{element}</span>)}</th>
                                                 <th>
                                                     <Button
                                                         variant="contained"
@@ -163,9 +175,10 @@ export default function Users() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + allUsers.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
+                    
             </Paper>
             <Modal
                 keepMounted
