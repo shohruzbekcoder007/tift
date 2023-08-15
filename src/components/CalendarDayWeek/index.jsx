@@ -10,9 +10,9 @@ const events = [
   { 
     id: 1, 
     title: 'event 1', 
-    start: '2023-07-07T10:45:00', 
-    end: '2023-07-07T12:00:00',
-    backgroundColor: "red",
+    start: '2023-08-09T10:45:00', 
+    end: '2023-08-09T12:00:00',
+    backgroundColor: "green",
     allDay: false
   },
   { 

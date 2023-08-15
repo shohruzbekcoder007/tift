@@ -5,54 +5,48 @@ import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import AllSelect from '../../AllSelect'
-import { BoxHeaderApp } from './styles'
-import  application_status from '../../../dictionary/ application_status'
-import { my_semesters } from '../../../utils/API_urls'
-import { getSemester } from './requests'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import Modal from '@mui/material/Modal'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
-import AllSelectFullWidth from '../../AllSelectFullWidth'
+import { getUsersList } from './requests'
+import { allusers as getAllUser } from '../../../utils/API_urls'
 
 
 export default function Users() {
 
-const [status, setStatus] = useState(application_status[0].value)
-const [semesters, setSemesters] = useState([])
-const [semester, setSemester] = useState([])
-const [pageSize, setPageSize] = useState(10)
-const [open, setOpen] = useState(false);
-const handleOpen = () => setOpen(true);
-const handleClose = () => setOpen(false);
+    const [open, setOpen] = useState(false);
+    const handleOpen = (id) => {
+        setOpen(true)
+        setChangeUser(id)
+        setPassword('')
+        setCpassword('')
+    };
+    const handleClose = () => setOpen(false);
 
-const getSemesters = (response) => {
-    const semester_firstly = response.data.map(element => {
-        return {
-            value: element.id,
-            name: element.name
-        }
-    })
-    setSemester(semester_firstly[0].value)
-    setSemesters(semester_firstly)
-}
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+    const [allCount, setAllCount] = useState(0)
+    const [searchText, setSearchText] = useState('')
+    const [pageCount, setPageCount] = useState(1)
+    const [allUsers, setAlUsers] = useState([])
+    const [password, setPassword] = useState('')
+    const [cpassword, setCpassword] = useState('')
+    const [changeUser, setChangeUser] = useState(null)
+    
+    useEffect(() => {
+        getUsersList(`${getAllUser}?page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
+            setAllCount(response.data.count)
+            setPage(response.data.page)
+            setPageCount(response.data.page_count)
+            setAlUsers(response.data.results)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [pageSize, page, searchText])
 
-const getSemestersEror = (error) => { console.log(error) }
-
-
-useEffect(() => {
-    console.log(application_status)
-    // setAllStatus()
-},[])
-
-useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
-}, [])
-
-
-  return (
-    <ContentWrapper>
+    return (
+        <ContentWrapper>
             <Paper
                 elevation={0}
                 sx={{
@@ -61,12 +55,12 @@ useEffect(() => {
                     borderRadius: "10px"
                 }}
             >
-              
+
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
                         setPageSize(val)
                     }} />
-                    <CustomizedInput callback_func={(val) => { console.log(val) }} />
+                    <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
                 </BoxHeader>
                 <BoxHeader>
                     <InputsWrapper>
@@ -143,13 +137,13 @@ useEffect(() => {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2,3,1,2,3].map((elem, index) => {
+                                    allUsers.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1494</th>
-                                                <th>j.yorqulov</th>
-                                                <th>Yorqulov Jonibek Yunus o‘g‘li</th>
-                                                <th>Суперадмин</th>
+                                                <th>{elem.id}</th>
+                                                <th>{elem.username}</th>
+                                                <th>{elem.full_name}</th>   
+                                                <th>{elem.role.map((element, index) => <span key={index} style={{marginRight: "5px"}}>{element}</span>)}</th>
                                                 <th>
                                                     <Button
                                                         variant="contained"
@@ -159,21 +153,21 @@ useEffect(() => {
                                                             boxShadow: "none",
                                                             padding: "6px",
                                                             marginRight: "20px",
-                                                          
+
                                                         }}
-                                                        onClick={handleOpen}
+                                                        onClick={() => {handleOpen(elem.id)}}
                                                         startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_1148_17994)">
-                                                        <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white"/>
-                                                        <path d="M15.3333 5.986C15.1565 5.986 14.987 6.05624 14.8619 6.18126C14.7369 6.30629 14.6667 6.47586 14.6667 6.65267V10H12C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12V14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H9.36133C9.53815 1.33333 9.70771 1.2631 9.83274 1.13807C9.95776 1.01305 10.028 0.843478 10.028 0.666667C10.028 0.489856 9.95776 0.320286 9.83274 0.195262C9.70771 0.0702379 9.53815 0 9.36133 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H10.8953C11.3333 16.0013 11.7671 15.9156 12.1718 15.7481C12.5764 15.5806 12.9438 15.3345 13.2527 15.024L15.0233 13.252C15.3338 12.9432 15.58 12.576 15.7477 12.1715C15.9153 11.767 16.0011 11.3332 16 10.8953V6.65267C16 6.47586 15.9298 6.30629 15.8047 6.18126C15.6797 6.05624 15.5101 5.986 15.3333 5.986ZM12.31 14.0813C12.042 14.3487 11.7031 14.5337 11.3333 14.6147V12C11.3333 11.8232 11.4036 11.6536 11.5286 11.5286C11.6536 11.4036 11.8232 11.3333 12 11.3333H14.6167C14.5342 11.7023 14.3493 12.0406 14.0833 12.3093L12.31 14.0813Z" fill="white"/>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_1148_17994">
-                                                        <rect width="16" height="16" fill="white"/>
-                                                        </clipPath>
-                                                        </defs>
+                                                            <g clipPath="url(#clip0_1148_17994)">
+                                                                <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
+                                                                <path d="M15.3333 5.986C15.1565 5.986 14.987 6.05624 14.8619 6.18126C14.7369 6.30629 14.6667 6.47586 14.6667 6.65267V10H12C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12V14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H9.36133C9.53815 1.33333 9.70771 1.2631 9.83274 1.13807C9.95776 1.01305 10.028 0.843478 10.028 0.666667C10.028 0.489856 9.95776 0.320286 9.83274 0.195262C9.70771 0.0702379 9.53815 0 9.36133 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H10.8953C11.3333 16.0013 11.7671 15.9156 12.1718 15.7481C12.5764 15.5806 12.9438 15.3345 13.2527 15.024L15.0233 13.252C15.3338 12.9432 15.58 12.576 15.7477 12.1715C15.9153 11.767 16.0011 11.3332 16 10.8953V6.65267C16 6.47586 15.9298 6.30629 15.8047 6.18126C15.6797 6.05624 15.5101 5.986 15.3333 5.986ZM12.31 14.0813C12.042 14.3487 11.7031 14.5337 11.3333 14.6147V12C11.3333 11.8232 11.4036 11.6536 11.5286 11.5286C11.6536 11.4036 11.8232 11.3333 12 11.3333H14.6167C14.5342 11.7023 14.3493 12.0406 14.0833 12.3093L12.31 14.0813Z" fill="white" />
+                                                            </g>
+                                                            <defs>
+                                                                <clipPath id="clip0_1148_17994">
+                                                                    <rect width="16" height="16" fill="white" />
+                                                                </clipPath>
+                                                            </defs>
                                                         </svg>
-                                                        
+
                                                         }
                                                     >
                                                     </Button>
@@ -187,9 +181,10 @@ useEffect(() => {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + allUsers.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
+                    
             </Paper>
             <Modal
                 keepMounted
@@ -198,7 +193,7 @@ useEffect(() => {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <form>
+                {/* <form> */}
                     <ModalBox>
                         <div style={{ marginBottom: '20px' }}>
                             <ModalHeader>
@@ -212,7 +207,7 @@ useEffect(() => {
                                         color: "#000",
                                     }}
                                 >
-                                  Tahrirlash
+                                    Tahrirlash
                                 </Typography>
                                 <span
                                     onClick={handleClose}
@@ -235,9 +230,9 @@ useEffect(() => {
                                     mb: "10px"
                                 }}
                             >
-                              Parol
+                                Parol
                             </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
+                            <CustomizedInputSimple callback_func={(val) => { setPassword(val) }} placeholder="Kiriting" />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
                             <Typography
@@ -251,9 +246,9 @@ useEffect(() => {
                                     mb: "10px"
                                 }}
                             >
-                              Parolni tasdiqlang
+                                Parolni tasdiqlang
                             </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
+                            <CustomizedInputSimple callback_func={(val) => { setCpassword(val) }} placeholder="Kiriting" />
                         </ModalSelectWrapper>
                         <ModalButtons>
                             <Button
@@ -261,20 +256,20 @@ useEffect(() => {
                                 variant="outlined"
                                 onClick={handleClose}
                             >
-                              Bekor qilish
+                                Bekor qilish
                             </Button>
                             <Button
                                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                                 variant="contained"
                                 type="submit"
                             >
-                              Saqlash
+                                Saqlash
                             </Button>
                         </ModalButtons>
                     </ModalBox>
-                </form>
+                {/* </form> */}
 
             </Modal>
         </ContentWrapper>
-  )
+    )
 }

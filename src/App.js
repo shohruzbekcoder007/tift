@@ -75,6 +75,28 @@ import MainAdmin from './components/MainAdmin'
 import Variables from './components/AdminList/Variables'
 import Users from './components/AdminList/Users'
 import Admin_Attendance from './components/AdminList/Attendance'
+import Reference from './components/AdminList/Reference'
+import StudentDocuments from './components/AdminList/StudentDocuments'
+import Semestr from './components/AdminList/Semestr'
+import InterimControl from './components/AdminList/Semestr/InterimControl'
+import Streams from './components/AdminList/Streams'
+import NBfix from './components/AdminList/NBfix'
+import TransferStudents from './components/AdminList/TransferStudents'
+import Scholarship from './components/AdminList/Scholarship'
+import AddCredit from './components/AdminList/AddCredit'
+import Building from './components/AdminList/Building'
+import Room from './components/AdminList/Building/Room'
+import University from './components/AdminList/University'
+import Organizations from './components/AdminList/Organizations'
+import Dayoff from './components/AdminList/Dayoff'
+import Agreement from './components/AdminList/Agreement'
+import Payments from './components/AdminList/Payments'
+import Readagain from './components/AdminList/Readagain'
+import Contractprices from './components/AdminList/Contractprices'
+import ApplicationsReport from './components/ApplicationsReport'
+
+// stufent 
+
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -202,7 +224,10 @@ function App() {
                     <Route path="diploma/:id" element={<DiplomaTopics />} />
                     <Route path="request" element={<Questionnaire />} />
                     <Route path="coursemanagement" element={<CourseManagement />} />
-                    <Route path="applications" element={<Applications />} />
+                    <Route path="applications">
+                      <Route index element={<Applications />} />
+                      <Route path='report' element={<ApplicationsReport/>} />
+                    </Route>
                     <Route path="patoks" element={<Patoks />} />
                     <Route path="final" element={<StudentSciences />} >
                       <Route index element={<Final_Dep />} />
@@ -211,13 +236,37 @@ function App() {
                   </Route>
 
                   <Route path="admin" element={<MainAdmin />}>
+                    <Route path="variables" element={<Variables />} />
                     <Route path="dashboard" element={<TeacherDashboard />} />
                     <Route path="dashboard/:id" element={<DashboardDetail />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="videoguide" element={<VideoGuide />} />
-                    <Route path="variables" element={<Variables />} />
                     <Route path="users" element={<Users />} />
                     <Route path="attendance" element={<Admin_Attendance />} />
+                    <Route path="reference" element={<Reference />} />
+                    <Route path="studentdocuments" element={<StudentDocuments />} />
+                    <Route path="semester" element={<StudentSciences />} >
+                      <Route index element={<Semestr/>}/>
+                      <Route path='control' element={<InterimControl/>}/>
+                    </Route>
+                    <Route path="streams" element={<Streams />} />
+                    <Route path="NBfix" element={<NBfix />} />
+                    <Route path="transferstudents" element={<TransferStudents />} />
+                    <Route path="scholarship" element={<Scholarship />} />
+                    <Route path="addcredit" element={<AddCredit />} />
+                    <Route path="building" element={<StudentSciences />} >
+                      <Route index element={<Building />} />
+                      <Route path='room' element={<Room />} />
+                    </Route>
+                    <Route path="university" element={<University />} />
+                    <Route path="organizations" element={<Organizations />} />
+                    <Route path="dayoff" element={<Dayoff />} />
+                    <Route path="agreement" element={<StudentSciences />} >
+                      <Route index element={<Agreement />} />
+                      <Route path='payments' element={<Payments />} />
+                    </Route>
+                    <Route path="readagain" element={<Readagain />} />
+                    <Route path="contractprices" element={<Contractprices />} />
                   </Route>
 
                   <Route path="admin" element={<MainAdmin />}>

@@ -1,17 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
-import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from '../CourseManagement/styles'
-import listLanguage from '../CourseManagement/language.json'
 import { DekanGroupsButton } from './styles'
 import { Link } from 'react-router-dom'
+import { getGroups } from './requests'
+import { decan_GroupList } from '../../utils/API_urls'
+
 export default function DekanGroups() {
+
+    useEffect(() => {
+        getGroups(decan_GroupList, (response) => {
+            console.log(response)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [])
+
     return (
         <>
             <Paper

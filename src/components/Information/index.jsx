@@ -1,96 +1,121 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
+
 import { ContentWrapper } from '../../global_styles/styles'
 import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody } from './styles'
 import Modal from '@mui/material/Modal'
 import { Button, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
+import img from '../../imgs/Logo.png'
+import { getStudentInformation } from './requests'
+import { host, student_detail, student_region } from '../../utils/API_urls' 
 import CustomizedInputSimple from '../CustomizedInputSimple'
-import { useSelector } from 'react-redux'
-import languageList from './language.json'
 
+
+
+=========
+>>>>>>>>> Temporary merge branch 2
 import img from '../../imgs/Logo.png'
 export default function Information() {
-
-  const language = useSelector(state => state.language)
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [infoList, setInfoList] = useState([])
+  const [RegionList, setRegionList] = useState([])
+
+
+  useEffect(() => {
+    getStudentInformation(student_detail, (response) => {
+        setInfoList(response.data.result)
+    }, (error) => {
+        console.log(error)
+    })
+    
+    getStudentInformation(student_region, (response) => {
+      setRegionList(response.data.result)
+    }, (error) => {
+        console.log(error)
+    })
+}, [])
+
+
+
+
 
   return (
     <ContentWrapper>
       <InfoBody>
         <HeaderWrapper>
           <HeaderWrapperTop>
-            <img className='user_img' src={img} alt="" />
-            <div className="block">
-              <h4>Matmusayev Jaloliddin</h4>
-              Xayrulla o’g’li
-            </div>
-            <EditIcon
- onClick={handleOpen} className="edit_icon">
+            <img src={`${host}${infoList.avatar}`} alt="UserImage" />
+            <HeaderWrapperTopDiv>
+              <HeaderWrapperH4>{infoList.full_name}</HeaderWrapperH4>
+              {/* Xayrulla o’g’li */}
+            </HeaderWrapperTopDiv>
+            <EditIcon onClick={handleOpen}>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.2914 0.709307C14.8365 0.255108 14.2199 0 13.5771 0C12.9343 0 12.3177 0.255108 11.8628 0.709307L0.980268 11.5918C0.668627 11.9017 0.421529 12.2703 0.25327 12.6763C0.0850108 13.0823 -0.00106923 13.5177 1.00242e-05 13.9572V15.3309C1.00242e-05 15.5083 0.0705062 15.6785 0.19599 15.804C0.321474 15.9295 0.491667 16 0.669128 16H2.04283C2.48228 16.0012 2.91761 15.9153 3.32362 15.7471C3.72963 15.579 4.09826 15.332 4.40816 15.0204L15.2914 4.1372C15.7454 3.68233 16.0003 3.06592 16.0003 2.42325C16.0003 1.78059 15.7454 1.16418 15.2914 0.709307ZM3.46203 14.0743C3.08465 14.4491 2.57475 14.6602 2.04283 14.6618H1.33825V13.9572C1.33757 13.6935 1.3892 13.4323 1.49016 13.1887C1.59112 12.945 1.73939 12.7239 1.9264 12.538L10.1853 4.27905L11.7243 5.81802L3.46203 14.0743ZM14.3446 3.19106L12.6677 4.86854L11.1288 3.33292L12.8063 1.65544C12.9073 1.55461 13.0272 1.47467 13.1592 1.42018C13.2911 1.3657 13.4325 1.33774 13.5753 1.33789C13.718 1.33805 13.8593 1.36632 13.9912 1.42109C14.123 1.47586 14.2427 1.55606 14.3436 1.65711C14.4444 1.75816 14.5243 1.87808 14.5788 2.01003C14.6333 2.14197 14.6613 2.28336 14.6611 2.42611C14.6609 2.56886 14.6327 2.71018 14.5779 2.84201C14.5231 2.97383 14.4429 3.09358 14.3419 3.19441L14.3446 3.19106Z" fill="white" />
               </svg>
             </EditIcon>
           </HeaderWrapperTop>
-          <div className='hr' />
+          <Hr />
           <HeaderWrapperBottom>
-            <div className="wrapper_body">
-              <h4>Tug’ilgan sanasi:</h4>
-              <p>10-06-2003</p>
-            </div>
-            <div className="wrapper_body">
-              <h4>Jinsi:</h4>
-              <p>Erkak</p>
-            </div>
-            <div className="wrapper_body">
-              <h4>Reyting daftarcha:</h4>
-              <p>22403-21</p>
-            </div>
-            <div className="wrapper_body">
-              <h4>Manzil:</h4>
-              <p>Moskva, Toshkent</p>
-            </div>
-            <div className="wrapper_body">
-              <h4>Manzil (vaqtincha):</h4>
-              <p>Moskva, Toshkent</p>
-            </div>
+            <WrapperBody>
+              <HeaderWrapperH4>Tug’ilgan sanasi:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
+            </WrapperBody>
+            <WrapperBody>
+              <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.gender == "male"?"Erkak":"Ayol"}</HeaderWrapperP>
+            </WrapperBody>
+            <WrapperBody>
+              <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.rating_notebook}</HeaderWrapperP>
+            </WrapperBody>
+            <WrapperBody>
+              <HeaderWrapperH4>Manzil:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.address}</HeaderWrapperP>
+            </WrapperBody>
+            <WrapperBody>
+              <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
+            </WrapperBody>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
           <WrapperBody>
             <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
-            <HeaderWrapperP>sun'iy intellekt</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
-            <HeaderWrapperP>UZ</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>Bakalavr</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.degree}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
-            <HeaderWrapperP>Kunduzgi</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
-            <HeaderWrapperP>2</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
-            <HeaderWrapperP>224-21 SIo'</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
-            <HeaderWrapperP>Jonqobilov Mirjalol</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>Yo’q</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.is_scholarship == true?"Bor":"Yoq"}</HeaderWrapperP>
           </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
@@ -143,8 +168,8 @@ export default function Information() {
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
+                  name: "Tanlang1",
+                  value: "Tanlang1",
                 }]}
               />
             </ModalSelectWrapperInfo>
@@ -187,14 +212,10 @@ export default function Information() {
                 Manzil (Lotin xarflarda)*
 
               </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
-              />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
             </ModalSelectWrapperInfo>
+
+
           </div>
           <div className='modal_box_body'>
             <ModalSelectWrapperInfo>
@@ -258,31 +279,34 @@ export default function Information() {
                 Manzil (vaqtincha) (lotin xarflarda)*
 
               </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Tanlang",
-                  value: "Tanlang",
-                }]}
-              />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+              
             </ModalSelectWrapperInfo>
           </div>
 
-                    <div style={{display: 'flex', justifyContent: 'end'}}>
-                    <ModalButtonsInfo>
-                        <Button
-                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-                            variant="outlined"
-                            onClick={handleClose}
-                        >
-                            
-                            Bekor qilish
-                        </Button>
-                        <Button
-                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                            variant="contained"
-                        >
-                         Saqlash
+          <div style={{ display: 'flex', justifyContent: 'end' }}>
+            <ModalButtonsInfo>
+              <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                variant="outlined"
+                onClick={handleClose}
+              >
+
+<<<<<<<<< Temporary merge branch 1
+                {languageList.Cancel[language]}
+=========
+                Bekor qilish
+>>>>>>>>> Temporary merge branch 2
+              </Button>
+              <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+              >
+<<<<<<<<< Temporary merge branch 1
+                {languageList.Save[language]}
+=========
+                Saqlash
+>>>>>>>>> Temporary merge branch 2
 
               </Button>
             </ModalButtonsInfo>
