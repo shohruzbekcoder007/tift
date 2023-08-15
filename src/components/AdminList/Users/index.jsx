@@ -9,23 +9,41 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import Modal from '@mui/material/Modal'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
+import { getUsersList } from './requests'
+import { allusers as getAllUser } from '../../../utils/API_urls'
 
 
 export default function Users() {
 
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
+    const handleOpen = (id) => {
+        setOpen(true)
+        setChangeUser(id)
+        setPassword('')
+        setCpassword('')
+    };
     const handleClose = () => setOpen(false);
 
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
-    const [searchText, setSearchText] = useState(0)
+    const [searchText, setSearchText] = useState('')
+    const [pageCount, setPageCount] = useState(1)
+    const [allUsers, setAlUsers] = useState([])
+    const [password, setPassword] = useState('')
+    const [cpassword, setCpassword] = useState('')
+    const [changeUser, setChangeUser] = useState(null)
     
-    // allusers
     useEffect(() => {
-        console.log("")
-    }, [])
+        getUsersList(`${getAllUser}?page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
+            setAllCount(response.data.count)
+            setPage(response.data.page)
+            setPageCount(response.data.page_count)
+            setAlUsers(response.data.results)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [pageSize, page, searchText])
 
     return (
         <ContentWrapper>
@@ -119,13 +137,13 @@ export default function Users() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 1, 2, 3].map((elem, index) => {
+                                    allUsers.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1494</th>
-                                                <th>j.yorqulov</th>
-                                                <th>Yorqulov Jonibek Yunus o‘g‘li</th>
-                                                <th>Суперадмин</th>
+                                                <th>{elem.id}</th>
+                                                <th>{elem.username}</th>
+                                                <th>{elem.full_name}</th>   
+                                                <th>{elem.role.map((element, index) => <span key={index} style={{marginRight: "5px"}}>{element}</span>)}</th>
                                                 <th>
                                                     <Button
                                                         variant="contained"
@@ -137,7 +155,7 @@ export default function Users() {
                                                             marginRight: "20px",
 
                                                         }}
-                                                        onClick={handleOpen}
+                                                        onClick={() => {handleOpen(elem.id)}}
                                                         startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g clipPath="url(#clip0_1148_17994)">
                                                                 <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
@@ -163,9 +181,10 @@ export default function Users() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + allUsers.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
+                    
             </Paper>
             <Modal
                 keepMounted
@@ -174,7 +193,7 @@ export default function Users() {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <form>
+                {/* <form> */}
                     <ModalBox>
                         <div style={{ marginBottom: '20px' }}>
                             <ModalHeader>
@@ -213,7 +232,7 @@ export default function Users() {
                             >
                                 Parol
                             </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
+                            <CustomizedInputSimple callback_func={(val) => { setPassword(val) }} placeholder="Kiriting" />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
                             <Typography
@@ -229,7 +248,7 @@ export default function Users() {
                             >
                                 Parolni tasdiqlang
                             </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
+                            <CustomizedInputSimple callback_func={(val) => { setCpassword(val) }} placeholder="Kiriting" />
                         </ModalSelectWrapper>
                         <ModalButtons>
                             <Button
@@ -248,7 +267,7 @@ export default function Users() {
                             </Button>
                         </ModalButtons>
                     </ModalBox>
-                </form>
+                {/* </form> */}
 
             </Modal>
         </ContentWrapper>
