@@ -101,6 +101,7 @@ import ApplicationsReport from './components/ApplicationsReport'
 import Career from './components/AdminList/Employees/Career'
 import Show from './components/AdminList/Employees/Show'
 import EditEmployees from './components/AdminList/Employees/EditEmployees'
+import CalendarPlanStudent from './components/CalendarPlanStudent'
 
 // stufent 
 
@@ -165,7 +166,8 @@ function App() {
                     <Route index element={<StudentSciencesMain />} />
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="tasks" element={<Tasks />} />
-                    <Route path="calendarplan" element={<CalendarStudent />} />
+                    <Route path="calendarplan" element={<CalendarPlanStudent />} />
+                    {/* <Route path="calendarplan" element={<CalendarStudent />} />CalendarPlan */}
                   </Route>
                   <Route path="final" element={<Final />} />
                   <Route path="ScienceSelection" element={<ScienceSelection />} />

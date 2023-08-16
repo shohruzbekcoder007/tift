@@ -38,3 +38,4 @@ export const syllabus_request_id = '/department/syllabus/status'
 
 // admin 
 export const allusers = '/allusers/'
+export const change_password = '/change_password/'

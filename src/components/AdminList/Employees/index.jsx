@@ -164,7 +164,7 @@ export default function Employees() {
                       <tr key={index}>
                         <th>1234</th>
                         <th><svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect x="1" y="1" width="36" height="36" rx="10" fill="white" stroke="#C5C5C5" stroke-width="1.5" />
+                          <rect x="1" y="1" width="36" height="36" rx="10" fill="white" stroke="#C5C5C5" strokeWidth="1.5" />
                           <circle cx="19" cy="13" r="7" fill="#C5C5C5" />
                           <ellipse cx="19" cy="28" rx="12" ry="7" fill="#C5C5C5" />
                         </svg>
