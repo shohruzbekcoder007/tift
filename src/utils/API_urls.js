@@ -1,8 +1,8 @@
 // export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://oqdevpy.jprq.live"
-// export const host = "http://husanibragimov.jprq.live"
+export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -16,6 +16,12 @@ export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
 
+
+export const teacher_groups = "/teacher/groups/"
+export const teacher_units = "/teacher/units/"
+export const teacher_group = "/teacher/group/"
+export const teacher_get_nb = "/teacher/get_nb/"
+
 // student
 export const my_sciences = "/student/my-sciences"
 export const student_nb_list = "/student/student-nb-list/"
@@ -23,6 +29,8 @@ export const student_detail = "/student/student-detail/"
 export const rating_notebook = "/student/rating-notebook/"
 export const student_region = "/region/?country=7&page_size=100"
 export const student_district = "/district/?page_size=100"
+export const my_patok = "/student/my-patok/"
+
 
 
 // semester 

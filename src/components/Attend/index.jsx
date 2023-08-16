@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -10,12 +10,99 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../g
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import listLanguage from './language.json'
+import { getTeacherGroups } from './requests'
+import { teacher_get_nb, teacher_group, teacher_groups, teacher_units } from '../../utils/API_urls'
+import MultiSelect from '../Multisellect'
+
 
 export default function Attend() {
+
+    
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [groupList, setgroupList] = useState([])
+    const [lessonIdList, setLessonIdList] = useState(null)
+    const [lessonIdStudentList, setlessonIdStudentList] = useState(null)
+    const [lessonList, setLessonList] = useState([])
+    const [studentsList, setstudentsList] = useState([])
+    const [teacherGetNbList, setteacherGetNbList] = useState([])
+
+    const [pageSize, setPageSize] = useState(10)
+    const [allCount, setAllCount] = useState(0)
+    const [pageCount, setPageCount] = useState(1)
+    const [page, setPage] = useState(1)
+
+
+
+    
+      const [selectedValues, setSelectedValues] = useState([]);
+    
+      const handleMultiSelectChange = (values) => {
+        setSelectedValues(values);
+      };
+
+    useEffect(() => {
+        getTeacherGroups(teacher_groups, (response) => {
+            setLessonIdList(response.data[0]?.id)
+            setgroupList(response.data.map(elem => {
+                return {
+                  name: elem.name,
+                  value: elem.id
+                }
+              }))
+        }, (error) => {
+            console.log(error)
+        })
+    }, [])
+
+
+    useEffect(() => {
+        getTeacherGroups( `${teacher_get_nb}?page_size=${pageSize}&page=${page}`, (response) => {
+            setAllCount(response.data.count)
+            setPageCount(response.data.page_count)
+            setteacherGetNbList(response.data.results);
+        }, (error) => {
+            console.log(error)
+        })
+        
+    }, [pageSize, page])
+
+    useEffect(() => {
+        if(lessonIdList){
+            getTeacherGroups(`${teacher_units}?groups=${lessonIdList}`, (response) => {
+                setlessonIdStudentList(response.data[0]?.id)
+                setLessonList(response.data.map(elem => {
+                    return {
+                      name: elem.name,
+                      value: elem.id
+                    }
+                  }))
+            }, (error) => {
+                console.log(error)
+            })
+        }
+    }, [lessonIdList])
+
+    useEffect(() => {
+        if(lessonIdStudentList){
+            getTeacherGroups(`${teacher_group}${lessonIdStudentList}/`, (response) => {
+                setstudentsList(response.data.nb_to_lesson.map(elem => {
+                    return {
+                      label: elem.full_name,
+                      value: elem.student_id
+                    }
+                  }))
+            }, (error) => {
+                console.log(error)
+            })
+        }
+        
+    }, [lessonIdStudentList])
+
+
+    
 
 
     return (
@@ -30,7 +117,7 @@ export default function Attend() {
             >
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
-                        console.log(val)
+                        setPageSize(val)
                     }} />
                     <AttendSearchButton>
                         <CustomizedInput callback_func={(val) => { console.log(val) }} />
@@ -174,17 +261,21 @@ export default function Attend() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 4, 5].map((elem, index) => {
+                                    teacherGetNbList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1494</th>
-                                                <th>SWD002</th>
-                                                <th style={{ width: "100px" }}>31-03-2023</th>
-                                                <th>1</th>
-                                                <th>10. Dasturiy ta'minotning metrik xususiyatlarini hisoblash tartibi. Jib metrikasi. Chepin metrikasi.</th>
-                                                <th>Otayorov Shoxzod</th>
+                                                <th>{ elem.id }</th>
+                                                <th>{ elem.patok }</th>
+                                                <th style={{ width: "100px" }}>{ elem.created_at }</th>
+                                                <th>{ elem.para }</th>
+                                                <th>{ elem.lesson }</th>
+                                                <th>{ elem.student.map((element, index) => {
+                                                   return (<p key = {index}>{element.full_name}</p>) 
+                                                }) }</th>
                                                 <th style={{ width: "400px" }}>
-                                                    <Button
+                                                    {
+                                                        elem.status?
+                                                        <Button
                                                         variant="contained"
                                                         sx={{
                                                             borderRadius: "10px",
@@ -204,8 +295,26 @@ export default function Attend() {
                                                             </defs>
                                                         </svg>}
                                                     >
-                                                        {listLanguage.Confirmed['ru']}
+                                                        {listLanguage.Confirmed['uz']}
+                                                    </Button>:
+                                                    <Button
+                                                        variant="contained"
+                                                        sx={{
+                                                            borderRadius: "10px",
+                                                            textTransform: "capitalize",
+                                                            boxShadow: "none",
+                                                            padding: "6px 12px",
+                                                            marginRight: "20px",
+                                                            backgroundColor: "red"
+                                                        }}
+                                                        startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
+                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                        </svg>}
+                                                        >
+                                                        Rad etildi
                                                     </Button>
+                                                    }
                                                     <Button
                                                         variant="contained"
                                                         sx={{
@@ -240,8 +349,8 @@ export default function Attend() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + teacherGetNbList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
                 <Modal
                     keepMounted
@@ -304,11 +413,8 @@ export default function Attend() {
                                 {listLanguage.Patok['ru']}
                             </Typography>
                             <AllSelectFullWidth
-                                chageValueFunction={val => console.log(val)}
-                                selectOptions={[{
-                                    name: "name",
-                                    value: 12,
-                                }]}
+                                chageValueFunction={val => setLessonIdList(val)}
+                                selectOptions={groupList}
                             />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
@@ -326,11 +432,8 @@ export default function Attend() {
                          {listLanguage.Calendar['ru']}
                             </Typography>
                             <AllSelectFullWidth
-                                chageValueFunction={val => console.log(val)}
-                                selectOptions={[{
-                                    name: "name",
-                                    value: 12,
-                                }]}
+                                chageValueFunction={val => setlessonIdStudentList(val)}
+                                selectOptions={lessonList}
                             />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
@@ -349,10 +452,32 @@ export default function Attend() {
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => console.log(val)}
-                                selectOptions={[{
-                                    name: "name",
-                                    value: 12,
-                                }]}
+                                selectOptions={[
+                                {
+                                    name: "1",
+                                    value: 1,
+                                },
+                                {
+                                    name: "2",
+                                    value: 2,
+                                },
+                                {
+                                    name: "3",
+                                    value: 3,
+                                },
+                                {
+                                    name: "4",
+                                    value: 4,
+                                },
+                                {
+                                    name: "5",
+                                    value: 5,
+                                },
+                                {
+                                    name: "6",
+                                    value: 6,
+                                }
+                                ]}
                             />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>
@@ -370,12 +495,14 @@ export default function Attend() {
                          {listLanguage.Students['ru']}
                                 
                             </Typography>
-                            <AllSelectFullWidth
+                            {/* <AllSelectFullWidth
                                 chageValueFunction={val => console.log(val)}
-                                selectOptions={[{
-                                    name: "Japparov To'rabek",
-                                    value: 12,
-                                }]}
+                                selectOptions={studentsList}
+                            /> */}
+                            <MultiSelect
+                                options={studentsList}
+                                selectedValues={selectedValues}
+                                onChange={handleMultiSelectChange}
                             />
                         </ModalSelectWrapper>
                         <ModalButtons>
