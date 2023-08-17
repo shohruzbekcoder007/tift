@@ -24,7 +24,7 @@ export const WrapperSelect = styled.div`
 `
 
 export const WrapperInputsCard = styled.div`
-  width: 31%;
+  width: 50%;
 `
 
 export const WrapperInputsCardTwo = styled.div`

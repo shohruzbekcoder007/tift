@@ -9,9 +9,10 @@ import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from './styles'
 import listLanguage from './language.json'
+import { Link } from 'react-router-dom'
 export default function CourseManagement() {
     return (
-        <ContentWrapper>
+        <>
             <Paper
                 elevation={0}
                 sx={{
@@ -112,6 +113,7 @@ export default function CourseManagement() {
                                                 <th>DT loyihalarini boshqarish (UZL)</th>
                                                 <th>Axborot texnologiyalarining dasturiy ta’minoti</th>
                                                 <th>
+                                                    <Link to={'calendarplan'}>
                                                     <Button
                                                         variant="contained"
                                                         sx={{
@@ -138,6 +140,7 @@ export default function CourseManagement() {
                                                     >
                                                         {listLanguage.CalendarPlan['ru']}
                                                     </Button>
+                                                    </Link>
                                                 </th>
                                             </tr>
                                         )
@@ -152,6 +155,6 @@ export default function CourseManagement() {
                     <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
                 </BoxFooter>
             </Paper>
-        </ContentWrapper>
+        </>
     )
 }
