@@ -120,6 +120,8 @@ import AdminUsersAdd from './components/AdminList/AdminUsers/AdminUsersAdd'
 import AdminUsersEdit from './components/AdminList/AdminUsers/AdminUsersEdit'
 import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
+import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
+
 
 function App() {
 
@@ -161,7 +163,10 @@ function App() {
                   <Route path="diploma" element={<Thesis />} />
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<CourseManagement />} />
+                  <Route path="coursemanagement" element={<StudentSciences />} >
+                    <Route index element={<CourseManagement />}/>
+                    <Route path='calendarplan' element={<CalendarPlanTeacher />}/>
+                  </Route>
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="profile" element={<Profile />} />
