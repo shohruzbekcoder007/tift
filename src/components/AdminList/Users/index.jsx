@@ -12,11 +12,9 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../.
 
 
 export default function Users() {
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
@@ -37,7 +35,6 @@ export default function Users() {
                     borderRadius: "10px"
                 }}
             >
-
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
                         setPageSize(val)

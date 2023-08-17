@@ -289,14 +289,14 @@ export default function Payments() {
                   </tbody>
                 </table>
               </ClassScheduleTableWrapper>
-            </BoxBody>
 
+            </BoxBody>
             <BoxFooter>
               <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
               <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
             </BoxFooter>
 
-            {/* <Modal
+{/* <Modal
                   keepMounted
                   open={open}
                   onClose={handleClose}
@@ -398,6 +398,7 @@ export default function Payments() {
                 </ModalButtons>
               </ModalBox>
           </Modal> */}
+            
           </Paper>
         </div>
       </BoxTableCard>
