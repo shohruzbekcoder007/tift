@@ -195,7 +195,7 @@ export default function StudentSciencesMain() {
                             </Link>
                           </th>
                           <th>
-                            <Link to={'tasks'}>
+                            <Link to='tasks' state={{data: elem.groups[0].id}}>
                             <Button
                               variant="contained"
                               color="secondary"

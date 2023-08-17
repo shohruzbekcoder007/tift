@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -7,8 +7,57 @@ import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
 import { TeacherSciencesButtonBox } from '../styles'
 import { Link } from "react-router-dom";
+import AllSelect from '../../AllSelect'
+import { my_semesters, teacher_mylessons } from '../../../utils/API_urls'
+import { getSemester } from '../../FilingApplication/requests'
+import { getTeacherMyLesson } from './requests'
 
 export default function TeacherSciencesMain() {
+    const [semesters, setSemesters] = useState([])
+    const [semester, setSemester] = useState(0)
+
+    const [pageSize, setPageSize] = useState(10)
+    const [page, setPage] = useState(1)
+    const [allCount, setAllCount] = useState(0)
+    const [pageCount, setPageCount] = useState(1)
+    const [teacheMyLessonList, setteacheMyLessonList] = useState([])
+
+
+
+
+
+
+    const getSemesters = (response) => {
+        const semester_firstly = response.data.map(element => {
+            return {
+                value: element.id,
+                name: element.name
+            }
+        })
+        setSemester(semester_firstly[0].value)
+        setSemesters(semester_firstly)
+    }
+
+
+    const getSemestersEror = (error) => { console.log(error) }
+
+    useEffect(() => {
+        getSemester(my_semesters, getSemesters, getSemestersEror)
+    }, [])
+
+
+    useEffect(() => {
+        if (semester !== 0) {
+            getTeacherMyLesson(`${teacher_mylessons}?semester=${semester}&page_size=${pageSize}&page=${page}`, (response) => {
+                setAllCount(response.data.count)
+                setPageCount(response.data.page_count)
+                setteacheMyLessonList(response.data.results)
+            }, (error) => {
+                console.log(error)
+            } )
+        }
+    }, [page, pageSize, semester])
+
     return (
             <Paper
                 elevation={0}
@@ -19,8 +68,14 @@ export default function TeacherSciencesMain() {
                 }}
             >
                 <BoxHeader>
+                <AllSelect 
+                        chageValueFunction={val => { setSemester(val) }}
+                        selectOptions={semesters}
+                    />
+                </BoxHeader>
+                <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
-                        console.log(val)
+                        setPageSize(val)
                     }} />
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
                 </BoxHeader>
@@ -91,12 +146,12 @@ export default function TeacherSciencesMain() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 4, 5].map((elem, index) => {
+                                    teacheMyLessonList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>DT loyihalarini boshqarish - SPM201-1</th>
-                                                <th>Amaliyot</th>
-                                                <th>1</th>
+                                                <th>{elem.science}-{elem.name}</th>
+                                                <th>{ elem.science_type }</th>
+                                                <th>{elem.students}</th>
                                                 <th style={{ width: "500px" }}>
                                                     <TeacherSciencesButtonBox>
                                                         <Link to="calendarplan">
@@ -187,8 +242,8 @@ export default function TeacherSciencesMain() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + teacheMyLessonList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
     )
