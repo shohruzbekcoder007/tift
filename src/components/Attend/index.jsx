@@ -17,8 +17,6 @@ import MultiSelect from '../Multisellect'
 
 export default function Attend() {
 
-    
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -551,7 +549,7 @@ export default function Attend() {
                         <ModalButtons>
                             <Button
                                 sx={{ width: "50%", textTransform: "none" }}
-                                variant="outlined"
+                                variant="outlined"  
                                 onClick={handleClose}
                             >
                                                         {listLanguage.Cancel['ru']}
