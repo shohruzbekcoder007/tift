@@ -21,6 +21,7 @@ export const teacher_groups = "/teacher/groups/"
 export const teacher_units = "/teacher/units/"
 export const teacher_group = "/teacher/group/"
 export const teacher_get_nb = "/teacher/get_nb/"
+export const teacher_set_nb = "/teacher/nb-report/set_nb/"
 
 // student
 export const my_sciences = "/student/my-sciences"

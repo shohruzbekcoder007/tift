@@ -10,8 +10,8 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../g
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import listLanguage from './language.json'
-import { getTeacherGroups } from './requests'
-import { teacher_get_nb, teacher_group, teacher_groups, teacher_units } from '../../utils/API_urls'
+import { getTeacherGroups, setNbPetition } from './requests'
+import { teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../utils/API_urls'
 import MultiSelect from '../Multisellect'
 
 
@@ -25,9 +25,11 @@ export default function Attend() {
     const [groupList, setgroupList] = useState([])
     const [lessonIdList, setLessonIdList] = useState(null)
     const [lessonIdStudentList, setlessonIdStudentList] = useState(null)
+    const [studentParaList, setstudentParaList] = useState(1)
     const [lessonList, setLessonList] = useState([])
     const [studentsList, setstudentsList] = useState([])
     const [teacherGetNbList, setteacherGetNbList] = useState([])
+    // const [studentList, setstudentList] = useState([])
 
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
@@ -35,13 +37,11 @@ export default function Attend() {
     const [page, setPage] = useState(1)
 
 
-
+    const [selectedValues, setSelectedValues] = useState([]);
     
-      const [selectedValues, setSelectedValues] = useState([]);
-    
-      const handleMultiSelectChange = (values) => {
-        setSelectedValues(values);
-      };
+    const handleMultiSelectChange = (values) => {
+        setSelectedValues(values)
+    };
 
     useEffect(() => {
         getTeacherGroups(teacher_groups, (response) => {
@@ -102,6 +102,21 @@ export default function Attend() {
     }, [lessonIdStudentList])
 
 
+
+    const hangleClick = (_) => {
+
+        setNbPetition(teacher_set_nb,  {
+            patok: lessonIdList,
+            calendar_plan: lessonIdStudentList,
+            para: studentParaList,
+            students: selectedValues
+        }, (response) => {
+          console.log(response.data.result);
+          handleClose()
+        }, (error) => {
+          console.log(error)
+        } )
+      }
     
 
 
@@ -274,7 +289,7 @@ export default function Attend() {
                                                 }) }</th>
                                                 <th style={{ width: "400px" }}>
                                                     {
-                                                        elem.status?
+                                                        elem.status === 'confirmed' && 
                                                         <Button
                                                         variant="contained"
                                                         sx={{
@@ -295,8 +310,12 @@ export default function Attend() {
                                                             </defs>
                                                         </svg>}
                                                     >
-                                                        {listLanguage.Confirmed['uz']}
-                                                    </Button>:
+                                                        {listLanguage.Confirmed['uz']}        
+                                                    </Button>
+                                                    }
+                                                    {
+                                                    elem.status === 'rejected' && 
+
                                                     <Button
                                                         variant="contained"
                                                         sx={{
@@ -312,9 +331,12 @@ export default function Attend() {
                                                         <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                                         </svg>}
                                                         >
-                                                        Rad etildi
+                                                        Rad etildi               
                                                     </Button>
                                                     }
+                                                    {
+                                                    elem.status === 'progress' && 
+
                                                     <Button
                                                         variant="contained"
                                                         sx={{
@@ -322,23 +344,44 @@ export default function Attend() {
                                                             textTransform: "capitalize",
                                                             boxShadow: "none",
                                                             padding: "6px 12px",
-                                                            backgroundColor: "blackButton.main"
+                                                            marginRight: "20px",
+                                                            backgroundColor: "yellow",
+                                                            color: 'black'
                                                         }}
-                                                        startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <g clipPath="url(#clip0_78_21787)">
-                                                                <path d="M7.08614 12.0813C7.27187 12.2672 7.4924 12.4146 7.73514 12.5152C7.97787 12.6158 8.23805 12.6676 8.5008 12.6676C8.76355 12.6676 9.02373 12.6158 9.26647 12.5152C9.5092 12.4146 9.72973 12.2672 9.91547 12.0813L12.0561 9.94067C12.1709 9.81373 12.2325 9.64752 12.2281 9.47644C12.2237 9.30536 12.1537 9.14253 12.0325 9.02165C11.9114 8.90077 11.7484 8.8311 11.5773 8.82707C11.4062 8.82304 11.2402 8.88496 11.1135 9L9.1628 10.9513L9.16747 0.666667C9.16747 0.489856 9.09723 0.320286 8.97221 0.195262C8.84718 0.0702379 8.67761 0 8.5008 0C8.32399 0 8.15442 0.0702379 8.0294 0.195262C7.90437 0.320286 7.83414 0.489856 7.83414 0.666667L7.82814 10.9387L5.88814 9C5.76304 8.875 5.59341 8.8048 5.41657 8.80487C5.23972 8.80493 5.07014 8.87524 4.94514 9.00033C4.82013 9.12543 4.74994 9.29506 4.75 9.4719C4.75006 9.64875 4.82037 9.81833 4.94547 9.94333L7.08614 12.0813Z" fill="white" />
-                                                                <path d="M15.8333 10.6665C15.6565 10.6665 15.487 10.7367 15.3619 10.8618C15.2369 10.9868 15.1667 11.1564 15.1667 11.3332V13.9998C15.1667 14.1766 15.0964 14.3462 14.9714 14.4712C14.8464 14.5963 14.6768 14.6665 14.5 14.6665H2.5C2.32319 14.6665 2.15362 14.5963 2.0286 14.4712C1.90357 14.3462 1.83333 14.1766 1.83333 13.9998V11.3332C1.83333 11.1564 1.7631 10.9868 1.63807 10.8618C1.51305 10.7367 1.34348 10.6665 1.16667 10.6665C0.989856 10.6665 0.820286 10.7367 0.695262 10.8618C0.570238 10.9868 0.5 11.1564 0.5 11.3332L0.5 13.9998C0.5 14.5303 0.710714 15.039 1.08579 15.4141C1.46086 15.7891 1.96957 15.9998 2.5 15.9998H14.5C15.0304 15.9998 15.5391 15.7891 15.9142 15.4141C16.2893 15.039 16.5 14.5303 16.5 13.9998V11.3332C16.5 11.1564 16.4298 10.9868 16.3047 10.8618C16.1797 10.7367 16.0101 10.6665 15.8333 10.6665Z" fill="white" />
-                                                            </g>
-                                                            <defs>
-                                                                <clipPath id="clip0_78_21787">
-                                                                    <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                                                                </clipPath>
-                                                            </defs>
-                                                        </svg>
-                                                        }
-                                                    >
-                                                        {listLanguage.Separation['ru']}
+                                                        startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
+                                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                                        </svg>}
+                                                        >
+                                                        Ko'rib chiqilmoqda
                                                     </Button>
+                                                    }
+                                                    <a href={elem.file} target='_blank'>
+                                                        <Button
+                                                            variant="contained"
+                                                            sx={{
+                                                                borderRadius: "10px",
+                                                                textTransform: "capitalize",
+                                                                boxShadow: "none",
+                                                                padding: "6px 12px",
+                                                                backgroundColor: "blackButton.main"
+                                                            }}
+                                                            startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <g clipPath="url(#clip0_78_21787)">
+                                                                    <path d="M7.08614 12.0813C7.27187 12.2672 7.4924 12.4146 7.73514 12.5152C7.97787 12.6158 8.23805 12.6676 8.5008 12.6676C8.76355 12.6676 9.02373 12.6158 9.26647 12.5152C9.5092 12.4146 9.72973 12.2672 9.91547 12.0813L12.0561 9.94067C12.1709 9.81373 12.2325 9.64752 12.2281 9.47644C12.2237 9.30536 12.1537 9.14253 12.0325 9.02165C11.9114 8.90077 11.7484 8.8311 11.5773 8.82707C11.4062 8.82304 11.2402 8.88496 11.1135 9L9.1628 10.9513L9.16747 0.666667C9.16747 0.489856 9.09723 0.320286 8.97221 0.195262C8.84718 0.0702379 8.67761 0 8.5008 0C8.32399 0 8.15442 0.0702379 8.0294 0.195262C7.90437 0.320286 7.83414 0.489856 7.83414 0.666667L7.82814 10.9387L5.88814 9C5.76304 8.875 5.59341 8.8048 5.41657 8.80487C5.23972 8.80493 5.07014 8.87524 4.94514 9.00033C4.82013 9.12543 4.74994 9.29506 4.75 9.4719C4.75006 9.64875 4.82037 9.81833 4.94547 9.94333L7.08614 12.0813Z" fill="white" />
+                                                                    <path d="M15.8333 10.6665C15.6565 10.6665 15.487 10.7367 15.3619 10.8618C15.2369 10.9868 15.1667 11.1564 15.1667 11.3332V13.9998C15.1667 14.1766 15.0964 14.3462 14.9714 14.4712C14.8464 14.5963 14.6768 14.6665 14.5 14.6665H2.5C2.32319 14.6665 2.15362 14.5963 2.0286 14.4712C1.90357 14.3462 1.83333 14.1766 1.83333 13.9998V11.3332C1.83333 11.1564 1.7631 10.9868 1.63807 10.8618C1.51305 10.7367 1.34348 10.6665 1.16667 10.6665C0.989856 10.6665 0.820286 10.7367 0.695262 10.8618C0.570238 10.9868 0.5 11.1564 0.5 11.3332L0.5 13.9998C0.5 14.5303 0.710714 15.039 1.08579 15.4141C1.46086 15.7891 1.96957 15.9998 2.5 15.9998H14.5C15.0304 15.9998 15.5391 15.7891 15.9142 15.4141C16.2893 15.039 16.5 14.5303 16.5 13.9998V11.3332C16.5 11.1564 16.4298 10.9868 16.3047 10.8618C16.1797 10.7367 16.0101 10.6665 15.8333 10.6665Z" fill="white" />
+                                                                </g>
+                                                                <defs>
+                                                                    <clipPath id="clip0_78_21787">
+                                                                        <rect width="16" height="16" fill="white" transform="translate(0.5)" />
+                                                                    </clipPath>
+                                                                </defs>
+                                                            </svg>
+                                                            }
+                                                        >
+                                                            {listLanguage.Separation['ru']}
+                                                        </Button>
+                                                    </a>
                                                 </th>
                                             </tr>
                                         )
@@ -451,7 +494,7 @@ export default function Attend() {
                          {listLanguage.Para['ru']}
                             </Typography>
                             <AllSelectFullWidth
-                                chageValueFunction={val => console.log(val)}
+                                chageValueFunction={val => setstudentParaList(val)}
                                 selectOptions={[
                                 {
                                     name: "1",
@@ -517,6 +560,7 @@ export default function Attend() {
                             <Button
                                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                                 variant="contained"
+                                onClick={hangleClick}
                             >
                                                         {listLanguage.Save['ru']}
 
