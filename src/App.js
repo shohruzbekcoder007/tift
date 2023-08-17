@@ -121,6 +121,7 @@ import AdminUsersEdit from './components/AdminList/AdminUsers/AdminUsersEdit'
 import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
+import CalendarPlanStudent from "./components/CalendarPlanStudent"
 
 
 function App() {
