@@ -1,6 +1,6 @@
 import axios, { headerConfig } from '../../utils/baseUrl'
 
-export const getStudentInformation = (url, successfulFunction, errorFunction) => {
+export const getTeacherGroups = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
         headers: headerConfig(),
     }).then(response => {
@@ -10,8 +10,10 @@ export const getStudentInformation = (url, successfulFunction, errorFunction) =>
     })
 }
 
-export const setInformation = (url, data, successfulFunction, errorFunction) => {
-    axios.put(
+
+export const setNbPetition = (url, data, successfulFunction, errorFunction) => {
+    console.log(data);
+    axios.post(
         url,
         data,
         {

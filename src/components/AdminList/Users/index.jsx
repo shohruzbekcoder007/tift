@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -9,21 +9,87 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import Modal from '@mui/material/Modal'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
+import { getUsersList, setPasswordUser } from './requests'
+import { change_password, allusers as getAllUser } from '../../../utils/API_urls'
+import MuiAlert from '@mui/material/Alert';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+}
+
+const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+}
 
 export default function Users() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+    const [open, setOpen] = useState(false)
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
-    const [searchText, setSearchText] = useState(0)
-    
-    // allusers
+    const [searchText, setSearchText] = useState('')
+    const [pageCount, setPageCount] = useState(1)
+    const [allUsers, setAlUsers] = useState([])
+    const [password, setPassword] = useState('')
+    const [cpassword, setCpassword] = useState('')
+    const [changeUser, setChangeUser] = useState(null)
+    const [openAlert, setOpenAlert] = useState(false)
+    const [changed, serChanged] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+
+    const handleCloseAlert = () => setOpenAlert(false);
+
+    const handleOpen = (id) => {
+        setOpen(true)
+        setChangeUser(id)
+        setPassword('')
+        setCpassword('')
+    };
+    const handleClose = () => setOpen(false);
+
+    const handleChangePassword = () => {
+        setPasswordUser(`${change_password}${changeUser}/`, {
+            new_password1: password,
+            new_password2: cpassword
+        }, (response) => {
+            serChanged(true)
+            setOpenAlert(true)
+            setAlertMessage("Parol yangilandi")
+            handleClose()
+        }, (error) => {
+            serChanged(false)
+            setOpenAlert(true)
+            let msg = ``
+            if(error.response.data.detail){
+                msg = msg + " " + error.response.data.detail
+            }
+            if(error.response.data.new_password1){
+                msg = msg + " " + error.response.data.new_password1[0]
+            }
+            if(error.response.data.new_password2){
+                msg = msg + " " + error.response.data.new_password2[0]
+            }
+            setAlertMessage(msg)
+            handleClose()
+        })
+    }
+
     useEffect(() => {
-        console.log("")
-    }, [])
+        getUsersList(`${getAllUser}?page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
+            setAllCount(response.data.count)
+            setPage(response.data.page)
+            setPageCount(response.data.page_count)
+            setAlUsers(response.data.results)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [pageSize, page, searchText])
 
     return (
         <ContentWrapper>
@@ -35,6 +101,7 @@ export default function Users() {
                     borderRadius: "10px"
                 }}
             >
+
                 <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
                         setPageSize(val)
@@ -116,13 +183,13 @@ export default function Users() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2, 3, 1, 2, 3].map((elem, index) => {
+                                    allUsers.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1494</th>
-                                                <th>j.yorqulov</th>
-                                                <th>Yorqulov Jonibek Yunus o‘g‘li</th>
-                                                <th>Суперадмин</th>
+                                                <th>{elem.id}</th>
+                                                <th>{elem.username}</th>
+                                                <th>{elem.full_name}</th>
+                                                <th>{elem.role.map((element, index) => <span key={index} style={{ marginRight: "5px" }}>{element}</span>)}</th>
                                                 <th>
                                                     <Button
                                                         variant="contained"
@@ -134,7 +201,7 @@ export default function Users() {
                                                             marginRight: "20px",
 
                                                         }}
-                                                        onClick={handleOpen}
+                                                        onClick={() => { handleOpen(elem.id) }}
                                                         startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g clipPath="url(#clip0_1148_17994)">
                                                                 <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
@@ -160,9 +227,10 @@ export default function Users() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + allUsers.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
+
             </Paper>
             <Modal
                 keepMounted
@@ -171,83 +239,89 @@ export default function Users() {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
-                <form>
-                    <ModalBox>
-                        <div style={{ marginBottom: '20px' }}>
-                            <ModalHeader>
-                                <Typography
-                                    id="keep-mounted-modal-title"
-                                    variant="h6"
-                                    component="h4"
-                                    sx={{
-                                        fontSize: "20px",
-                                        fontWeight: 600,
-                                        color: "#000",
-                                    }}
-                                >
-                                    Tahrirlash
-                                </Typography>
-                                <span
-                                    onClick={handleClose}
-                                >
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                                    </svg>
-                                </span>
-                            </ModalHeader>
-                        </div>
-                        <ModalSelectWrapper>
+                {/* <form> */}
+                <ModalBox>
+                    <div style={{ marginBottom: '20px' }}>
+                        <ModalHeader>
                             <Typography
                                 id="keep-mounted-modal-title"
                                 variant="h6"
                                 component="h4"
                                 sx={{
-                                    fontSize: "16px",
+                                    fontSize: "20px",
                                     fontWeight: 600,
                                     color: "#000",
-                                    mb: "10px"
                                 }}
                             >
-                                Parol
+                                Tahrirlash
                             </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
-                        </ModalSelectWrapper>
-                        <ModalSelectWrapper>
-                            <Typography
-                                id="keep-mounted-modal-title"
-                                variant="h6"
-                                component="h4"
-                                sx={{
-                                    fontSize: "16px",
-                                    fontWeight: 600,
-                                    color: "#000",
-                                    mb: "10px"
-                                }}
-                            >
-                                Parolni tasdiqlang
-                            </Typography>
-                            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kiriting" />
-                        </ModalSelectWrapper>
-                        <ModalButtons>
-                            <Button
-                                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-                                variant="outlined"
+                            <span
                                 onClick={handleClose}
                             >
-                                Bekor qilish
-                            </Button>
-                            <Button
-                                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                                variant="contained"
-                                type="submit"
-                            >
-                                Saqlash
-                            </Button>
-                        </ModalButtons>
-                    </ModalBox>
-                </form>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                                </svg>
+                            </span>
+                        </ModalHeader>
+                    </div>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
+                        >
+                            Parol
+                        </Typography>
+                        <CustomizedInputSimple callback_func={(val) => { setPassword(val) }} placeholder="Kiriting" />
+                    </ModalSelectWrapper>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
+                        >
+                            Parolni tasdiqlang
+                        </Typography>
+                        <CustomizedInputSimple callback_func={(val) => { setCpassword(val) }} placeholder="Kiriting" />
+                    </ModalSelectWrapper>
+                    <ModalButtons>
+                        <Button
+                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                            variant="outlined"
+                            onClick={handleClose}
+                        >
+                            Bekor qilish
+                        </Button>
+                        <Button
+                            sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                            variant="contained"
+                            type="submit"
+                            onClick={handleChangePassword}
+                        >
+                            Saqlash
+                        </Button>
+                    </ModalButtons>
+                </ModalBox>
+                {/* </form> */}
 
             </Modal>
+            <Snackbar open={openAlert} anchorOrigin={changed?anchorOrigin1:anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+                <Alert onClose={handleCloseAlert} severity={changed?"success":"error"} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </ContentWrapper>
     )
 }

@@ -123,6 +123,7 @@ import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
 import Vedomost from './components/Vedomost'
+import CalendarPlanStudent from "./components/CalendarPlanStudent"
 
 
 function App() {
@@ -191,7 +192,8 @@ function App() {
                     <Route index element={<StudentSciencesMain />} />
                     <Route path="attendance" element={<Attendance />} />
                     <Route path="tasks" element={<Tasks />} />
-                    <Route path="calendarplan" element={<CalendarStudent />} />
+                    <Route path="calendarplan" element={<CalendarPlanStudent />} />
+                    {/* <Route path="calendarplan" element={<CalendarStudent />} />CalendarPlan */}
                   </Route>
                   <Route path="final" element={<Final />} />
                   <Route path="ScienceSelection" element={<ScienceSelection />} />
@@ -308,6 +310,39 @@ function App() {
                     <Route path='show' element={<Show />} />
                     <Route path='edit' element={<EditEmployees />} />
                   </Route>
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<Students />} />
+                    <Route path='information' element={<InformationStudent />} />
+                  </Route>
+                  <Route path="directions" element={<StudentSciences />} >
+                    <Route index element={<Directions />} />
+                    <Route path='sciences' element={<ScienesStudent />} />
+                  </Route>
+                  <Route path='group' element={<Group />} />
+                  <Route path='news' element={<News />} />
+                  <Route path='contractprices' element={<Contractprices />} />
+
+                  <Route path="sciences" element={<StudentSciences />} >
+                    <Route index element={<SciencesAdmin />} />
+                    <Route path='add' element={<Add />} />
+                    <Route path='edit' element={<Edit />} />
+                    <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                  </Route>
+
+                  <Route path="plan" element={<StudentSciences />} >
+                    <Route index element={<Plan />} />
+                    <Route path="curriculum" element={<Outlet />} >
+                      <Route index element={<Curriculum />} />
+                      <Route path='sciences' element={<PlanSciences />} />
+                    </Route>
+                  </Route>
+                  <Route path="adminusers" element={<StudentSciences />} >
+                    <Route index element={<AdminUsers />} />
+                    <Route path='add' element={<AdminUsersAdd />} />
+                    <Route path='edit' element={<AdminUsersEdit />} />
+                  </Route>
+                  <Route path='roles' element={<Roles />} />
+                  <Route path='server' element={<Server />} />
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
                     <Route path='information' element={<InformationStudent />} />

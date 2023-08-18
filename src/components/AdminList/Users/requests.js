@@ -9,3 +9,20 @@ export const getUsersList = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const setPasswordUser = (url, data, successfulFunction, errorFunction) => {
+    axios.put(
+        url,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              },
+        }
+    ).then((response) => {
+        successfulFunction(response)
+    })
+    .catch((error) => {
+        errorFunction(error)
+    });
+}
