@@ -71,6 +71,7 @@ import { user_me } from './utils/API_urls'
 import { setUser } from './redux/action/userActions'
 import PageNotFound from './components/PageNotFound'
 import Tasks from './components/StudentSciences/Tasks/Tasks'
+import TasksTeacher from './components/Tasks/index'
 import MainAdmin from './components/MainAdmin'
 import Variables from './components/AdminList/Variables'
 import Users from './components/AdminList/Users'
@@ -121,6 +122,7 @@ import AdminUsersEdit from './components/AdminList/AdminUsers/AdminUsersEdit'
 import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
+import Vedomost from './components/Vedomost'
 
 
 function App() {
@@ -158,6 +160,8 @@ function App() {
                       <Route index element={<CalendarPlan />} />
                       <Route path="thematicblock" element={<ThematicBlock />} />
                     </Route>
+                    <Route path="vedomost" element={<Vedomost />} />
+                    <Route path="tasks" element={<TasksTeacher />} />
                   </Route>
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="diploma" element={<Thesis />} />

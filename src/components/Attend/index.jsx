@@ -191,7 +191,8 @@ export default function Attend() {
                                                             textTransform: "capitalize",
                                                             boxShadow: "none",
                                                             padding: "6px 12px",
-                                                            marginRight: "20px"
+                                                            marginRight: "20px",
+                                                             
                                                         }}
                                                         startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g clipPath="url(#clip0_78_21972)">
@@ -213,7 +214,10 @@ export default function Attend() {
                                                             textTransform: "capitalize",
                                                             boxShadow: "none",
                                                             padding: "6px 12px",
-                                                            backgroundColor: "blackButton.main"
+                                                            backgroundColor: "blackButton.main",
+                                                            '@media screen and (max-width: 400px)': { 
+                                                                margin: "10px 0"
+                                                              },
                                                         }}
                                                         startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <g clipPath="url(#clip0_78_21787)">

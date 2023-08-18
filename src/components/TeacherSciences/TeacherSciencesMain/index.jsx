@@ -128,6 +128,7 @@ export default function TeacherSciencesMain() {
                                                                 Kalendar reja
                                                             </Button>
                                                         </Link>
+                                                        <Link to={'vedomost'}>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
@@ -151,6 +152,8 @@ export default function TeacherSciencesMain() {
                                                         >
                                                             Vedomost
                                                         </Button>
+                                                        </Link>
+                                                        <Link to={"tasks"}>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
@@ -175,6 +178,7 @@ export default function TeacherSciencesMain() {
                                                         >
                                                             Vazifalar
                                                         </Button>
+                                                        </Link>
                                                     </TeacherSciencesButtonBox>
                                                 </th>
                                             </tr>
