@@ -1,8 +1,8 @@
-export const host = "https://husanibragimov.jprq.live"
+// export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-// export const host = "https://api.lms-edu.uz"
+export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -23,6 +23,9 @@ export const teacher_group = "/teacher/group/"
 export const teacher_get_nb = "/teacher/get_nb/"
 export const teacher_set_nb = "/teacher/nb-report/set_nb/"
 export const teacher_mylessons = "/teacher/mylessons"
+export const teacher_calendar_plan = "/teacher/calendar-plan/"
+export const teacher_groups_list = "/teacher/groups-list/"
+
 
 
 // student

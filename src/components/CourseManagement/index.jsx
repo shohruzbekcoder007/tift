@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -10,7 +10,43 @@ import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from './styles'
 import listLanguage from './language.json'
 import { Link } from 'react-router-dom'
+import { getSemester } from '../FilingApplication/requests'
+import { my_semesters, teacher_groups_list } from '../../utils/API_urls'
+import { getTeacherGroupsList } from './requests'
 export default function CourseManagement() {
+    const [semesters, setSemesters] = useState([])
+    const [semester, setSemester] = useState(0)
+    const [teacherGroupList, setteacherGroupList] = useState([])
+
+    const getSemesters = (response) => {
+        const semester_firstly = response.data.map(element => {
+            return {
+                value: element.id,
+                name: element.name
+            }
+        })
+        setSemester(semester_firstly[0].value)
+        setSemesters(semester_firstly)
+    }
+
+
+    const getSemestersEror = (error) => { console.log(error) }
+
+    useEffect(() => {
+        getSemester(my_semesters, getSemesters, getSemestersEror)
+    }, [])
+
+
+
+    useEffect(() => {
+        getTeacherGroupsList(`${teacher_groups_list}?semester=${semester}`, (response) => {
+            setteacherGroupList(response.data)
+        }, (error) => {
+            console.log(error)
+        })
+        
+    }, [semester])
+
     return (
         <>
             <Paper
@@ -22,30 +58,17 @@ export default function CourseManagement() {
                 }}
             >
                 <BoxHeader>
-                    <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: "2022-2023 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "2",
-                                name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "3",
-                                name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
-                            }
-                        ]}
+                <AllSelect 
+                        chageValueFunction={val => { setSemester(val) }}
+                        selectOptions={semesters}
                     />
                 </BoxHeader>
-                <BoxHeader>
+                {/* <BoxHeader>
                     <PageSelector chageValueFunction={(val) => {
                         console.log(val)
                     }} />
                     <CustomizedInput callback_func={(val) => { console.log(val) }} />
-                </BoxHeader>
+                </BoxHeader> */}
                 <BoxHeader>
                     <InputsWrapper>
                         <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
@@ -106,12 +129,12 @@ export default function CourseManagement() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2].map((elem, index) => {
+                                    teacherGroupList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>APM1416</th>
-                                                <th>DT loyihalarini boshqarish (UZL)</th>
-                                                <th>Axborot texnologiyalarining dasturiy ta’minoti</th>
+                                                <th>{elem.name}</th>
+                                                <th>{elem.science}</th>
+                                                <th>{elem.department}</th>
                                                 <th>
                                                     <Link to={'calendarplan'}>
                                                     <Button
@@ -150,10 +173,10 @@ export default function CourseManagement() {
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
-                <BoxFooter>
+                {/* <BoxFooter>
                     <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
                     <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
-                </BoxFooter>
+                </BoxFooter> */}
             </Paper>
         </>
     )
