@@ -154,7 +154,7 @@ export default function TeacherSciencesMain() {
                                                 <th>{elem.students}</th>
                                                 <th style={{ width: "500px" }}>
                                                     <TeacherSciencesButtonBox>
-                                                        <Link to="calendarplan">
+                                                        <Link to="calendarplan" state={{data: elem.id}}>
                                                             <Button
                                                                 variant="contained"
                                                                 size="small"
