@@ -124,6 +124,8 @@ import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
 import Vedomost from './components/Vedomost'
 import CalendarPlanStudent from "./components/CalendarPlanStudent"
+import TutorGroups from './components/AdminList/TutorGroups'
+import TutorStudents from './components/TutorStudents'
 
 
 function App() {
@@ -244,6 +246,10 @@ function App() {
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="groups" element={<StudentSciences />} >
+                    <Route index element={<TutorGroups />}/>
+                    <Route path='students' element={<TutorStudents />}/>
+                  </Route>
                 </Route>
 
                 <Route path="department" element={<MainDepartment />}>
@@ -313,6 +319,8 @@ function App() {
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
                     <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<EditEmployees />} />
+                    <Route path='edit' element={<EditEmployees />} />
                   </Route>
                   <Route path="directions" element={<StudentSciences />} >
                     <Route index element={<Directions />} />

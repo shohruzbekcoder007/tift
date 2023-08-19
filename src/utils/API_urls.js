@@ -53,6 +53,8 @@ export const syllabus_request_id = '/department/syllabus/status'
 // admin 
 export const allusers = '/allusers/'
 export const change_password = '/change_password/'
+export const directions = '/direction/'
+export const facultyshortlist = '/facultyshortlist/'
 export const role = '/role/'
 export const fakulty = '/fakulty/'
 
