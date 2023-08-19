@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 
@@ -43,7 +43,10 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default function CustomizedInputSimple({ label, callback_func, placeholder, value }) {
+export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue }) {
+
+    const [value, setValue] = useState(defaultValue)
+
     return (
         <div style={{ position: "relative" }}>
             <CssTextField
@@ -53,7 +56,7 @@ export default function CustomizedInputSimple({ label, callback_func, placeholde
                 id="custom-css-outlined-input"
                 value={value}
                 // helperText="Incorrect entry."
-                onChange={event => { callback_func(event.target.value) }}
+                onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}
                 placeholder={placeholder}
             />
         </div>
