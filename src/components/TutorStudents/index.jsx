@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Box, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
@@ -161,15 +161,15 @@ export default function TutorStudents() {
                         </th>
                         <th >Xamrayev Azizjon Bahodir o‘g‘li</th>
                         <th>
-                          <div style={{ width: "80%", textAlign: 'center', display: "flex", justifyContent: "space-between", margin: "10px auto", }}>
+                          <Box sx={{ width: "80%", textAlign: 'center', display: "flex", justifyContent: "space-between", margin: "10px auto", }}>
                             <IconButton style={{ margin: "0", width: '48%' }}>
                               Расписание
                             </IconButton>
                             <IconButton style={{ margin: "0", width: '48%' }}>
                               Посмотреть
                             </IconButton>
-                          </div>
-                          <div style={{ width: "80%", textAlign: 'center', margin: "0 auto" }}>
+                          </Box>
+                          <Box sx={{ width: "80%", textAlign: 'center', margin: "0 auto" }}>
                             <IconButton style={{ margin: "0", width: '100%', textAlign: "center" }}>
                               <svg width="16" height="16" viewBox="0 0 16 16" style={{margin: "0 10px"}} fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_78_25185)">
@@ -184,7 +184,7 @@ export default function TutorStudents() {
 
                               Индивидуальный учебный план
                             </IconButton>
-                          </div>
+                          </Box>
                         </th>
                       </tr>
                     )
