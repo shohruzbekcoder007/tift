@@ -12,7 +12,7 @@ export const getTeacherGroups = (url, successfulFunction, errorFunction) => {
 
 
 export const setNbPetition = (url, data, successfulFunction, errorFunction) => {
-    console.log(data);
+
     axios.post(
         url,
         data,

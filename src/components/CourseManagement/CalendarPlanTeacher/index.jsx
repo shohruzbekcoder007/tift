@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Box, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -9,20 +9,68 @@ import AllSelect from '../../AllSelect'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../styles'
 import listLanguage from '../language.json'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { MuiFileInput } from 'mui-file-input'
 import Modal from '@mui/material/Modal'
+import { createLessonSource, createLessonSourcePut, getTeacherLessons, setTeacherDeleteLesson } from './requests'
+import { host, teacher_group_lessons, teacher_lessons_source, teacher_lessons_source_create } from '../../../utils/API_urls'
 
 export default function CalendarPlanTeacher() {
+  const { state } = useLocation()
+  const [changeLessonId, setChangeLessonId] = useState(null);
+
+
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = (id) => {
+    setOpen(true)
+    setChangeLessonId(id)
+  };
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
+  const [lessonType, setlessonType] = useState(null);
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [page, setPage] = useState(1)
+
+  const [pageCount, setPageCount] = useState(1)
+
+  const [groupLessonList, setgroupLessonList] = useState([]);
+
+
 
   const setFileHandler = (newValue, info) => {
-      setFile(newValue)
+    setFile(newValue)
   }
+
+
+  useEffect(() => {
+    getTeacherLessons(`${teacher_group_lessons}?groups=${state.data}&page_size=${pageSize}&page=${page}`, (response) => {
+
+      setgroupLessonList(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [pageSize, page])
+
+
+  const handleSubmit = async (event) => {
+
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("types", lessonType);
+    formData.append("file", file);
+    formData.append("lesson", changeLessonId);
+    createLessonSource(teacher_lessons_source_create, formData, (response) => { 
+      handleClose()
+    }, (error) => {
+      console.log(error)
+    })
+}; 
+
+
 
   return (
     <>
@@ -35,20 +83,20 @@ export default function CalendarPlanTeacher() {
         }}
       >
         <BoxHeader>
-        <Typography
-          id="keep-mounted-modal-title"
-          variant="h6"
-          component="h4"
-          sx={{
-            fontSize: "20px",
-            fontWeight: 600,
-            color: "#000"
-          }}
-        >
-          DT loyihalarini boshqarish - Taqvim rejasi (UZL)
-        </Typography>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "20px",
+              fontWeight: 600,
+              color: "#000"
+            }}
+          >
+            {state.science}
+          </Typography>
         </BoxHeader>
-        <BoxHeader>
+        {/* <BoxHeader>
           <AllSelect
             chageValueFunction={val => { console.log(val) }}
             selectOptions={[
@@ -58,10 +106,10 @@ export default function CalendarPlanTeacher() {
               },
             ]}
           />
-        </BoxHeader>
+        </BoxHeader> */}
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+            setPageSize(val)
           }} />
           <CustomizedInput callback_func={(val) => { console.log(val) }} />
         </BoxHeader>
@@ -110,29 +158,38 @@ export default function CalendarPlanTeacher() {
               </thead>
               <tbody>
                 {
-                  [1, 2].map((elem, index) => {
+                  groupLessonList.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1</th>
-                        <th>Dasturiy taʼminot loyihalarini boshqarishga kirish</th>
+                        <th>{elem.number}</th>
                         <th>
-                            <Button
-                              variant="contained"
-                              sx={{
-                                borderRadius: "10px",
-                                textTransform: "capitalize",
-                                boxShadow: "none",
-                                padding: "6px 12px",
-                                marginRight: "20px"
-                              }}
-                              onClick={handleOpen}
-                              startIcon={<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M10.332 9.33335C10.332 9.51016 10.2618 9.67973 10.1368 9.80475C10.0117 9.92978 9.84218 10 9.66537 10H4.33203C4.15522 10 3.98565 9.92978 3.86063 9.80475C3.7356 9.67973 3.66536 9.51016 3.66536 9.33335C3.66536 9.15654 3.7356 8.98697 3.86063 8.86194C3.98565 8.73692 4.15522 8.66668 4.33203 8.66668H9.66537C9.84218 8.66668 10.0117 8.73692 10.1368 8.86194C10.2618 8.98697 10.332 9.15654 10.332 9.33335ZM7.66536 11.3333H4.33203C4.15522 11.3333 3.98565 11.4036 3.86063 11.5286C3.7356 11.6536 3.66536 11.8232 3.66536 12C3.66536 12.1768 3.7356 12.3464 3.86063 12.4714C3.98565 12.5964 4.15522 12.6667 4.33203 12.6667H7.66536C7.84218 12.6667 8.01174 12.5964 8.13677 12.4714C8.26179 12.3464 8.33203 12.1768 8.33203 12C8.33203 11.8232 8.26179 11.6536 8.13677 11.5286C8.01174 11.4036 7.84218 11.3333 7.66536 11.3333ZM13.6654 6.99002V12.6667C13.6643 13.5504 13.3128 14.3976 12.6879 15.0225C12.063 15.6474 11.2158 15.999 10.332 16H3.66536C2.78163 15.999 1.9344 15.6474 1.30951 15.0225C0.684619 14.3976 0.33309 13.5504 0.332031 12.6667V3.33335C0.33309 2.44962 0.684619 1.60239 1.30951 0.977495C1.9344 0.352603 2.78163 0.00107394 3.66536 1.53658e-05H6.67536C7.28844 -0.00156258 7.89575 0.118407 8.46218 0.352988C9.02861 0.587569 9.54292 0.932107 9.97536 1.36668L12.298 3.69068C12.7329 4.12284 13.0776 4.63699 13.3123 5.20333C13.547 5.76968 13.667 6.37696 13.6654 6.99002ZM9.0327 2.30935C8.82289 2.10612 8.58732 1.9313 8.33203 1.78935V4.66668C8.33203 4.84349 8.40227 5.01306 8.52729 5.13809C8.65232 5.26311 8.82189 5.33335 8.9987 5.33335H11.876C11.734 5.07814 11.5589 4.84278 11.3554 4.63335L9.0327 2.30935ZM12.332 6.99002C12.332 6.88002 12.3107 6.77468 12.3007 6.66668H8.9987C8.46827 6.66668 7.95956 6.45597 7.58448 6.0809C7.20941 5.70582 6.9987 5.19711 6.9987 4.66668V1.36468C6.8907 1.35468 6.7847 1.33335 6.67536 1.33335H3.66536C3.13493 1.33335 2.62622 1.54406 2.25115 1.91914C1.87608 2.29421 1.66536 2.80292 1.66536 3.33335V12.6667C1.66536 13.1971 1.87608 13.7058 2.25115 14.0809C2.62622 14.456 3.13493 14.6667 3.66536 14.6667H10.332C10.8625 14.6667 11.3712 14.456 11.7462 14.0809C12.1213 13.7058 12.332 13.1971 12.332 12.6667V6.99002Z" fill="white"/>
-                              </svg>
-                              }
-                            >
-                             Добавить учебный материал
-                            </Button>
+                          {elem.name} <br />
+                          {
+                            elem.sources?.map((element, index) => {
+                              return <ButtonLessonSource key={index} elem={element} />
+                            })
+                          }
+
+
+                        </th>
+                        <th>
+                          <Button 
+                            variant="contained"
+                            sx={{
+                              borderRadius: "10px",
+                              textTransform: "capitalize",
+                              boxShadow: "none",
+                              padding: "6px 12px",
+                              marginRight: "20px"
+                            }}
+                            onClick={() => { handleOpen(elem.id) }}
+                            startIcon={<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M10.332 9.33335C10.332 9.51016 10.2618 9.67973 10.1368 9.80475C10.0117 9.92978 9.84218 10 9.66537 10H4.33203C4.15522 10 3.98565 9.92978 3.86063 9.80475C3.7356 9.67973 3.66536 9.51016 3.66536 9.33335C3.66536 9.15654 3.7356 8.98697 3.86063 8.86194C3.98565 8.73692 4.15522 8.66668 4.33203 8.66668H9.66537C9.84218 8.66668 10.0117 8.73692 10.1368 8.86194C10.2618 8.98697 10.332 9.15654 10.332 9.33335ZM7.66536 11.3333H4.33203C4.15522 11.3333 3.98565 11.4036 3.86063 11.5286C3.7356 11.6536 3.66536 11.8232 3.66536 12C3.66536 12.1768 3.7356 12.3464 3.86063 12.4714C3.98565 12.5964 4.15522 12.6667 4.33203 12.6667H7.66536C7.84218 12.6667 8.01174 12.5964 8.13677 12.4714C8.26179 12.3464 8.33203 12.1768 8.33203 12C8.33203 11.8232 8.26179 11.6536 8.13677 11.5286C8.01174 11.4036 7.84218 11.3333 7.66536 11.3333ZM13.6654 6.99002V12.6667C13.6643 13.5504 13.3128 14.3976 12.6879 15.0225C12.063 15.6474 11.2158 15.999 10.332 16H3.66536C2.78163 15.999 1.9344 15.6474 1.30951 15.0225C0.684619 14.3976 0.33309 13.5504 0.332031 12.6667V3.33335C0.33309 2.44962 0.684619 1.60239 1.30951 0.977495C1.9344 0.352603 2.78163 0.00107394 3.66536 1.53658e-05H6.67536C7.28844 -0.00156258 7.89575 0.118407 8.46218 0.352988C9.02861 0.587569 9.54292 0.932107 9.97536 1.36668L12.298 3.69068C12.7329 4.12284 13.0776 4.63699 13.3123 5.20333C13.547 5.76968 13.667 6.37696 13.6654 6.99002ZM9.0327 2.30935C8.82289 2.10612 8.58732 1.9313 8.33203 1.78935V4.66668C8.33203 4.84349 8.40227 5.01306 8.52729 5.13809C8.65232 5.26311 8.82189 5.33335 8.9987 5.33335H11.876C11.734 5.07814 11.5589 4.84278 11.3554 4.63335L9.0327 2.30935ZM12.332 6.99002C12.332 6.88002 12.3107 6.77468 12.3007 6.66668H8.9987C8.46827 6.66668 7.95956 6.45597 7.58448 6.0809C7.20941 5.70582 6.9987 5.19711 6.9987 4.66668V1.36468C6.8907 1.35468 6.7847 1.33335 6.67536 1.33335H3.66536C3.13493 1.33335 2.62622 1.54406 2.25115 1.91914C1.87608 2.29421 1.66536 2.80292 1.66536 3.33335V12.6667C1.66536 13.1971 1.87608 13.7058 2.25115 14.0809C2.62622 14.456 3.13493 14.6667 3.66536 14.6667H10.332C10.8625 14.6667 11.3712 14.456 11.7462 14.0809C12.1213 13.7058 12.332 13.1971 12.332 12.6667V6.99002Z" fill="white" />
+                            </svg>
+                            }
+                          >
+                            Добавить учебный материал
+                          </Button>
                         </th>
                       </tr>
                     )
@@ -143,118 +200,371 @@ export default function CalendarPlanTeacher() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + groupLessonList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
-
         <Modal
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
-        >
-          <ModalBox>
-            <ModalHeader>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  color: "#000"
-                }}
-              >
-                Qo’shish                            </Typography>
-              <span
-                onClick={handleClose}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                </svg>
-              </span>
-            </ModalHeader>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-               Turi                         </Typography>
-               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "name",
-                  value: 12,
-                }]}
-              />
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'>
 
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                File
-              </Typography>
-              <MuiFileInput
-                placeholder="Fayl kiriting"
-                value={file}
-                onChange={setFileHandler}
-                // getInputText={(value) => value ? 'Thanks!' : ''}
-                fullWidth
-              />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Nomi                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+              <ModalBox>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000"
+                    }}
+                  >
+                    Qo’shish                           
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Turi                         
+                  </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => setlessonType(val)}
+                    selectOptions={[
+                        { 
+                          name :'literature',
+                          value: 'literature'
+                        },
+                        {
+                          name: 'video',
+                          value: 'video'
+                        },
+                        {
+                          name: 'presentation',
+                          value: 'presentation'
+                        },
+                        {
+                          name: 'file',
+                          value: 'file'
+                        },
+                        // {
+                        //   name: 'url', 
+                        //   value: 'url'
+                        // },
+                      ]
+                    }
+                  />
 
-            </ModalSelectWrapper>
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    File
+                  </Typography>
+                  <MuiFileInput
+                    placeholder="Fayl kiriting"
+                    value={file}
+                    onChange={setFileHandler}
+                    // getInputText={(value) => value ? 'Thanks!' : ''}
+                    fullWidth
+                  />
+                </ModalSelectWrapper>
 
-         
-            <ModalButtons>
-              <Button
-                sx={{ width: "50%", textTransform: "none" }}
-                variant="outlined"
-                onClick={handleClose}
-              >
-                Bekor qilish
-              </Button>
-              <Button
-                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                variant="contained"
-              >
-                Saqlash
-              </Button>
-            </ModalButtons>
-          </ModalBox>
+
+                <ModalButtons>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none" }}
+                    variant="outlined"
+                    onClick={handleClose}
+                  >
+                    Bekor qilish
+                  </Button>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                    variant="contained"
+                    type="submit"
+
+                  >
+                    Saqlash
+                  </Button>
+                </ModalButtons>
+              </ModalBox>
+            </form>
+
         </Modal>
       </Paper>
+    </>
+  )
+}
+
+
+
+
+
+
+const ButtonLessonSource = ({ elem }) => {
+    const [open, setOpen] = useState(false);
+    const [changeLessonId, setChangeLessonId] = useState(null);
+    const [lessonType, setlessonType] = useState(null);
+
+
+    const handleOpen = (id) => {
+      setOpen(true)
+      setChangeLessonId(id)
+    };
+    const handleClose = () => setOpen(false);
+    const [file, setFile] = useState(null);
+    const setFileHandler = (newValue, info) => {
+      setFile(newValue)
+    }
+
+  const [deletedElem, setDeleted] = useState(false)
+
+  const DeleteLessonSource = (pk) => {
+    setTeacherDeleteLesson(`${teacher_lessons_source}${pk}`, (response) => {
+      setDeleted(response.status == 204)
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+
+  const handleSubmit = async (event) => {
+
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("types", lessonType);
+    formData.append("file", file);
+    createLessonSourcePut(`${teacher_lessons_source}${changeLessonId}/`, formData, (response) => { 
+      handleClose()
+    }, (error) => {
+      console.log(error)
+    })
+  };
+
+  return (
+    <>
+      {deletedElem ? <></> :
+        <>
+          <Box
+            sx={{
+              display: "inline-block",
+              margin: "5px"
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: '0',
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "6px 12px",
+                backgroundColor: 'rgb(27, 37, 56)'
+              }}
+              onClick={() => { handleOpen(elem.id) }}
+              startIcon={<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.332 9.33335C10.332 9.51016 10.2618 9.67973 10.1368 9.80475C10.0117 9.92978 9.84218 10 9.66537 10H4.33203C4.15522 10 3.98565 9.92978 3.86063 9.80475C3.7356 9.67973 3.66536 9.51016 3.66536 9.33335C3.66536 9.15654 3.7356 8.98697 3.86063 8.86194C3.98565 8.73692 4.15522 8.66668 4.33203 8.66668H9.66537C9.84218 8.66668 10.0117 8.73692 10.1368 8.86194C10.2618 8.98697 10.332 9.15654 10.332 9.33335ZM7.66536 11.3333H4.33203C4.15522 11.3333 3.98565 11.4036 3.86063 11.5286C3.7356 11.6536 3.66536 11.8232 3.66536 12C3.66536 12.1768 3.7356 12.3464 3.86063 12.4714C3.98565 12.5964 4.15522 12.6667 4.33203 12.6667H7.66536C7.84218 12.6667 8.01174 12.5964 8.13677 12.4714C8.26179 12.3464 8.33203 12.1768 8.33203 12C8.33203 11.8232 8.26179 11.6536 8.13677 11.5286C8.01174 11.4036 7.84218 11.3333 7.66536 11.3333ZM13.6654 6.99002V12.6667C13.6643 13.5504 13.3128 14.3976 12.6879 15.0225C12.063 15.6474 11.2158 15.999 10.332 16H3.66536C2.78163 15.999 1.9344 15.6474 1.30951 15.0225C0.684619 14.3976 0.33309 13.5504 0.332031 12.6667V3.33335C0.33309 2.44962 0.684619 1.60239 1.30951 0.977495C1.9344 0.352603 2.78163 0.00107394 3.66536 1.53658e-05H6.67536C7.28844 -0.00156258 7.89575 0.118407 8.46218 0.352988C9.02861 0.587569 9.54292 0.932107 9.97536 1.36668L12.298 3.69068C12.7329 4.12284 13.0776 4.63699 13.3123 5.20333C13.547 5.76968 13.667 6.37696 13.6654 6.99002ZM9.0327 2.30935C8.82289 2.10612 8.58732 1.9313 8.33203 1.78935V4.66668C8.33203 4.84349 8.40227 5.01306 8.52729 5.13809C8.65232 5.26311 8.82189 5.33335 8.9987 5.33335H11.876C11.734 5.07814 11.5589 4.84278 11.3554 4.63335L9.0327 2.30935ZM12.332 6.99002C12.332 6.88002 12.3107 6.77468 12.3007 6.66668H8.9987C8.46827 6.66668 7.95956 6.45597 7.58448 6.0809C7.20941 5.70582 6.9987 5.19711 6.9987 4.66668V1.36468C6.8907 1.35468 6.7847 1.33335 6.67536 1.33335H3.66536C3.13493 1.33335 2.62622 1.54406 2.25115 1.91914C1.87608 2.29421 1.66536 2.80292 1.66536 3.33335V12.6667C1.66536 13.1971 1.87608 13.7058 2.25115 14.0809C2.62622 14.456 3.13493 14.6667 3.66536 14.6667H10.332C10.8625 14.6667 11.3712 14.456 11.7462 14.0809C12.1213 13.7058 12.332 13.1971 12.332 12.6667V6.99002Z" fill="white" />
+              </svg>
+              }
+            >
+              {elem.types?.slice(0, 14) || 'file'}
+            </Button>
+
+            <a href={host + elem?.file} target='_blank'>
+              <Button
+                variant="contained"
+                sx={{
+                  borderRadius: '0',
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "10px 12px",
+                }}
+                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                </svg>
+                }
+              >
+              </Button>
+            </a>
+
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: '0',
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "9px 12px",
+                backgroundColor: 'red',
+              }}
+              onClick={(_) => DeleteLessonSource(elem.id)}
+
+              startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1148_18282)">
+                  <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
+                  <path d="M6.66667 12.0001C6.84348 12.0001 7.01305 11.9298 7.13807 11.8048C7.2631 11.6798 7.33333 11.5102 7.33333 11.3334V7.33341C7.33333 7.1566 7.2631 6.98703 7.13807 6.86201C7.01305 6.73699 6.84348 6.66675 6.66667 6.66675C6.48986 6.66675 6.32029 6.73699 6.19526 6.86201C6.07024 6.98703 6 7.1566 6 7.33341V11.3334C6 11.5102 6.07024 11.6798 6.19526 11.8048C6.32029 11.9298 6.48986 12.0001 6.66667 12.0001Z" fill="white" />
+                  <path d="M9.33073 12.0001C9.50754 12.0001 9.67711 11.9298 9.80213 11.8048C9.92716 11.6798 9.9974 11.5102 9.9974 11.3334V7.33341C9.9974 7.1566 9.92716 6.98703 9.80213 6.86201C9.67711 6.73699 9.50754 6.66675 9.33073 6.66675C9.15392 6.66675 8.98435 6.73699 8.85932 6.86201C8.7343 6.98703 8.66406 7.1566 8.66406 7.33341V11.3334C8.66406 11.5102 8.7343 11.6798 8.85932 11.8048C8.98435 11.9298 9.15392 12.0001 9.33073 12.0001Z" fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1148_18282">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              }
+            >
+
+            </Button>
+          </Box>
+        </>
+      }
+      <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'>
+
+              <ModalBox>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000"
+                    }}
+                  >
+                    O'zgartirish                           
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Turi                         
+                  </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => setlessonType(val)}
+                    selectOptions={[
+                      { 
+                        name :'literature',
+                        value: 'literature'
+                      },
+                      {
+                        name: 'video',
+                        value: 'video'
+                      },
+                      {
+                        name: 'presentation',
+                        value: 'presentation'
+                      },
+                      {
+                        name: 'file',
+                        value: 'file'
+                      },
+                      // {
+                      //   name: 'url', 
+                      //   value: 'url'
+                      // },
+                      ]
+                    }
+                  />
+
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    File
+                  </Typography>
+                  <MuiFileInput
+                    placeholder="Fayl kiriting"
+                    value={file}
+                    onChange={setFileHandler}
+                    // getInputText={(value) => value ? 'Thanks!' : ''}
+                    fullWidth
+                  />
+                </ModalSelectWrapper>
+
+
+                <ModalButtons>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none" }}
+                    variant="outlined"
+                    onClick={handleClose}
+                  >
+                    Bekor qilish
+                  </Button>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                    variant="contained"
+                    type="submit"
+
+                  >
+                    Saqlash
+                  </Button>
+                </ModalButtons>
+              </ModalBox>
+            </form>
+
+        </Modal>
     </>
   )
 }
