@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper,ClassScheduleTableWrapper } from '../../global_styles/styles'
 import { Button, Pagination, Paper, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
@@ -10,12 +10,18 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import listLanguage from '../DiplomaTable/language.json'
+import { MuiFileInput } from 'mui-file-input'
+import DataPicker from '../DataPicker'
 export default function Tasks() {
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [file, setFile] = useState(null);
 
+  const setFileHandler = (newValue, info) => {
+      setFile(newValue)
+  }
   const chageRowHadler = (val) => {
     console.log(val)
   }
@@ -256,15 +262,9 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-              {listLanguage.Curriculum['ru']}
+             Vazifa nomi
             </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "2021",
-                value: 2021,
-              }]}
-            />
+            <CustomizedInputSimple callback_func={val => console.log(val)} />
           </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography
@@ -278,17 +278,33 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-              {listLanguage.Degree['ru']}
-
+              Vazifani topshirish uchun ohirgi muddati
             </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Bakalavr",
-                value: 12,
-              }]}
-            />
+            <DataPicker setFunction={(val) => {console.log(val)}}/>
+            
           </ModalSelectWrapper>
+          <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Qo'llanma
+              </Typography>
+              <MuiFileInput
+                placeholder="Fayl kiriting"
+                value={file}
+                onChange={setFileHandler}
+                // getInputText={(value) => value ? 'Thanks!' : ''}
+                fullWidth
+              />
+            </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
@@ -301,8 +317,7 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-              {listLanguage.NumberStudents['ru']}
-
+              Maks ball
             </Typography>
             <CustomizedInputSimple callback_func={val => console.log(val)} />
           </ModalSelectWrapper>
