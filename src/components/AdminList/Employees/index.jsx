@@ -38,9 +38,9 @@ export default function Employees() {
             console.log(val)
           }} />
           <AttendSearchButton>
+            <Link to={'edit'}>
             <Button
               variant="contained"
-              onClick={handleOpen}
               sx={{
                 textTransform: "capitalize",
                 boxShadow: "none",
@@ -64,6 +64,7 @@ export default function Employees() {
             >
               Qo'shish
             </Button>
+            </Link>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>

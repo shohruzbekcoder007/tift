@@ -23,7 +23,7 @@ export default function EditEmployees() {
           margin: "0 0 20px 10px"
         }}
       >
-        Redaktirovat
+        Qo'shish
       </Typography>
       <WrapperBox>
         <BoxHeader>
