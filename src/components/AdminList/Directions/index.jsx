@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -14,6 +14,9 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
+import { getDirections, getFakulty } from './request'
+import { directions, facultyshortlist } from '../../../utils/API_urls'
+import MultiSelect from '../../Multisellect'
 
 export default function Directions() {
   const [open, setOpen] = useState(false);
@@ -22,6 +25,70 @@ export default function Directions() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+  const [count, setCount] = useState(1)
+  const [Directions, setDirections] = useState([])
+  const [Faculty, setFaculty] = useState([])
+  const [DirectionsList, setDirectionsList] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [page, setPage] = useState(1)
+
+  const [DirectionName, setDirectionName] = useState('')
+  const [DirectionCode, setDirectionCode] = useState('')
+
+
+  const [selectedValues, setSelectedValues] = useState([]);
+    
+  const handleMultiSelectChange = (values) => {
+      setSelectedValues(values)
+  };
+
+  useEffect(() => {
+    getDirections(`${directions}?page_size=12&page=${count}`, (response) => {
+      setDirections(response.results)
+      setDirectionsList(response.results);
+      setPageCount(response.page_count)
+      setPageCount(response.page_count)
+      setAllCount(response.count)
+    }, (error) => {
+      console.log(error)
+    })
+
+    getFakulty(`${facultyshortlist}`, (response) => {
+      setFaculty(response.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
+  }, [count])
+
+  
+  const OpenModal = (obj) => {
+    console.log(obj);
+    setDirectionName(obj.name)
+    setDirectionCode(obj.code)
+    handleOpen2()
+  }
+
+  const hangleClick = (_) => {
+
+    // setNbPetition(teacher_set_nb,  {
+    //     patok: lessonIdList,
+    //     calendar_plan: lessonIdStudentList,
+    //     para: studentParaList,
+    //     students: selectedValues
+    // }, (response) => {
+    //   console.log(response.data.result);
+    //   handleClose()
+    // }, (error) => {
+    //   console.log(error)
+    // } )
+  }
 
   return (
     <>
@@ -173,20 +240,20 @@ export default function Directions() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                  Directions.length > 0 && Directions.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1234</th>
-                        <th>Электронная коммерция</th>
-                        <th>00</th>
-                        <th>Bakalavr</th>
-                        <th>Экономика и менеджмент в сфере ИКТ</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.name}</th>
+                        <th>{elem.code}</th>
+                        <th>{elem.degree}</th>
+                        <th>{elem.faculty}</th>
                         <th>
-                          <Link to={'sciences'}>
+                          {/* <Link to={'sciences'}>
                             <IconButton style={{ margin: '0 15px', padding: "10px 25px" }}>
                               Fanlar
                             </IconButton>
-                          </Link>
+                          </Link> */}
                           <Button
                             variant="contained"
                             sx={{
@@ -196,7 +263,7 @@ export default function Directions() {
                               padding: "6px 12px",
                               marginRight: "20px"
                             }}
-                            onClick={handleOpen2}
+                            onClick={() => OpenModal(elem)}
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1221_28999)">
                                 <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white" />
@@ -224,7 +291,7 @@ export default function Directions() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={handleOpen2}
+                            
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1221_31960)">
                                 <path d="M14.5026 2.66667H12.4359C12.2812 1.91428 11.8718 1.23823 11.2768 0.752479C10.6817 0.266727 9.93741 0.000969683 9.16927 0L7.83594 0C7.0678 0.000969683 6.32348 0.266727 5.72844 0.752479C5.13339 1.23823 4.724 1.91428 4.56927 2.66667H2.5026C2.32579 2.66667 2.15622 2.7369 2.0312 2.86193C1.90618 2.98695 1.83594 3.15652 1.83594 3.33333C1.83594 3.51014 1.90618 3.67971 2.0312 3.80474C2.15622 3.92976 2.32579 4 2.5026 4H3.16927V12.6667C3.17033 13.5504 3.52186 14.3976 4.14675 15.0225C4.77164 15.6474 5.61887 15.9989 6.5026 16H10.5026C11.3863 15.9989 12.2336 15.6474 12.8585 15.0225C13.4833 14.3976 13.8349 13.5504 13.8359 12.6667V4H14.5026C14.6794 4 14.849 3.92976 14.974 3.80474C15.099 3.67971 15.1693 3.51014 15.1693 3.33333C15.1693 3.15652 15.099 2.98695 14.974 2.86193C14.849 2.7369 14.6794 2.66667 14.5026 2.66667ZM7.83594 1.33333H9.16927C9.58279 1.33384 9.98602 1.46225 10.3237 1.70096C10.6613 1.93967 10.9169 2.27699 11.0553 2.66667H5.94994C6.08833 2.27699 6.34387 1.93967 6.68153 1.70096C7.01919 1.46225 7.42242 1.33384 7.83594 1.33333ZM12.5026 12.6667C12.5026 13.1971 12.2919 13.7058 11.9168 14.0809C11.5417 14.456 11.033 14.6667 10.5026 14.6667H6.5026C5.97217 14.6667 5.46346 14.456 5.08839 14.0809C4.71332 13.7058 4.5026 13.1971 4.5026 12.6667V4H12.5026V12.6667Z" fill="white" />
@@ -249,8 +316,8 @@ export default function Directions() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + DirectionsList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
         </BoxFooter>
 
         <Modal
@@ -281,13 +348,13 @@ export default function Directions() {
                 </svg>
               </span>
             </ModalHeader>
-            <BuildingModalLang>
+            {/* <BuildingModalLang>
               <BuildingModalLangText>RU</BuildingModalLangText>
               <BuildingModalLangText>UZC</BuildingModalLangText>
               <BuildingModalLangText>UZL</BuildingModalLangText>
               <BuildingModalLangText>EN</BuildingModalLangText>
               <BuildingModalLangText>KAR</BuildingModalLangText>
-            </BuildingModalLang>
+            </BuildingModalLang> */}
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -302,7 +369,7 @@ export default function Directions() {
               >
                 Nomi
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Mobil tizimlari" />
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Yo'nalish nomi" />
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
@@ -317,7 +384,7 @@ export default function Directions() {
                 }}
               >
                 Kod                   </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="+998 91 234 56 78" />
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Yo'nalish kodi" />
 
             </ModalSelectWrapper>
 
@@ -333,13 +400,18 @@ export default function Directions() {
                   mb: "10px"
                 }}
               >
-                Daraja                        </Typography>
-                <AllSelectFullWidth
+                Daraja                            </Typography>
+              <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
-                  name: "Bakalavr",
-                  value: 12,
-                }]}
+                  name: "Bakalvr",
+                  value: 'bachelor',
+                },
+                {
+                  name: "Magisrtatura",
+                  value: 'master',
+                },
+              ]}
               />
             </ModalSelectWrapper>
 
@@ -352,16 +424,14 @@ export default function Directions() {
                   fontSize: "16px",
                   fontWeight: 600,
                   color: "#000",
-                  mb: "10px"
+                  m: "20px 0 10px 0"
                 }}
               >
-                Fakultet                            </Typography>
+                Fakultet                         </Typography>
+
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Radio va mobil a’loqa",
-                  value: 12,
-                }]}
+                selectOptions={Faculty}
               />
             </ModalSelectWrapper>
             <ModalButtons>
@@ -411,13 +481,13 @@ export default function Directions() {
                 </svg>
               </span>
             </ModalHeader>
-            <BuildingModalLang>
+            {/* <BuildingModalLang>
               <BuildingModalLangText>RU</BuildingModalLangText>
               <BuildingModalLangText>UZC</BuildingModalLangText>
               <BuildingModalLangText>UZL</BuildingModalLangText>
               <BuildingModalLangText>EN</BuildingModalLangText>
               <BuildingModalLangText>KAR</BuildingModalLangText>
-            </BuildingModalLang>
+            </BuildingModalLang> */}
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -430,8 +500,12 @@ export default function Directions() {
                   m: "20px 0 10px 0"
                 }}
               >
-                Yo’nalish:                         </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Mobil tizimlari" />
+                Fakultet                         </Typography>
+
+              <AllSelectFullWidth
+                chageValueFunction={val => console.log(val)}
+                selectOptions={Faculty}
+              />
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
@@ -445,25 +519,8 @@ export default function Directions() {
                   mb: "10px"
                 }}
               >
-                Telefon raqam:                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="+998 91 234 56 78" />
-
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Email                        </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="someobe@somewhere.com" />
+               Nomi                     </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="yo'nalish nomi" value={DirectionName} />
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -478,13 +535,34 @@ export default function Directions() {
                   mb: "10px"
                 }}
               >
-                Universitet                            </Typography>
+                Kod                        </Typography>
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Yo'nalish kodi" value={DirectionCode} />
+            </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Daraja                            </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
-                  name: "ТToshkent Axborot Texnologiyalari",
-                  value: 12,
-                }]}
+                  name: "Bakalvr",
+                  value: 'bachelor',
+                },
+                {
+                  name: "Magisrtatura",
+                  value: 'master',
+                },
+              ]}
               />
             </ModalSelectWrapper>
             <ModalButtons>
@@ -496,6 +574,7 @@ export default function Directions() {
                 Bekor qilish
               </Button>
               <Button
+              onClick={hangleClick}
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
               >
