@@ -25,7 +25,7 @@ export default function StudentSciencesMain() {
     const semester_firstly = response.data.map(element => {
       return {
         value: element.id,
-        name: element.name
+        name: `${element.parent} ${element.name}`
       }
     })
     setSemester(semester_firstly[0].value)

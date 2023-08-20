@@ -208,8 +208,8 @@ export default function TeacherSciencesMain() {
                                                             Vedomost
                                                         </Button>
                                                         </Link>
-                                                        <Link to={"tasks"}>
-                                                        <Button
+                                                        <Link to={"tasks"} state={{data: elem.id, name:elem.name}}>
+                                                        <Button 
                                                             variant="contained"
                                                             size="small"
                                                             color="secondary"

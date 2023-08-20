@@ -1,14 +1,16 @@
-import { Paper, Typography } from '@mui/material'
+import { Modal, Paper, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import { Pagination } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
 import { StudentAIButton, StudentTasksBox } from './styles'
 import { useLocation } from 'react-router-dom'
-import { host, my_patok } from '../../../utils/API_urls'
-import { getMyPatok } from './requests'
+import { host, my_patok, my_task_put, my_task_submission } from '../../../utils/API_urls'
+import { createTaskSubmission, getMyPatok, PutTaskSubmission } from './requests'
 import { dateFormatter } from '../../../utils/dateFormatter'
+import AllSelectFullWidth from '../../AllSelectFullWidth'
+import { MuiFileInput } from 'mui-file-input'
 
 const baho = (ball) => {
   if(ball >= 90){
@@ -220,8 +222,8 @@ export default function Tasks() {
                           </Button>
                         </th>
                         <th>
-                            <StatusTask type={elem.submisson.status} data={elem.submisson}/> 
-                            <AddButtonSubmission data = {elem.submisson}/>
+                            <StatusTask type={elem.submisson.status} data={elem.submisson} id = {elem.id}/> 
+                            <AddButtonSubmission data = {elem.submisson} id = {elem.submisson.id}/>
                         </th>
                       </tr>
                     )
@@ -241,9 +243,35 @@ export default function Tasks() {
 }
 
 
-const StatusTask = ({ type, data }) => {
+const StatusTask = ({ type, data, id }) => {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const [file, setFile] = useState(null);
+  const [changeTasksId, setChangeTasksId] = useState(null);
+  const handleOpen = (id) => {
+    setOpen(true)
+    setChangeTasksId(id)
+  };
+  const setFileHandler = (newValue, info) => {
+    setFile(newValue)
+  }
+  const handleSubmit = async (event) => {
+
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("task", changeTasksId);
+    formData.append("source", file);
+    createTaskSubmission(my_task_submission, formData, (response) => { 
+      console.log(response);
+      handleClose()
+    }, (error) => {
+      console.log(error)
+    })
+}; 
+  
   if (type) {
     return (
+      <>
       <Button
         variant="contained"
         sx={{
@@ -253,6 +281,7 @@ const StatusTask = ({ type, data }) => {
           gap: '8px',
           // padding: "10px 80px"
         }}
+        onClick={(_) => { handleOpen(id) }}
       >
         <div style={{ width: "40px" }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -269,6 +298,83 @@ const StatusTask = ({ type, data }) => {
 
         Добавить учебный материал
       </Button>
+      <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'> 
+
+              <ModalBox>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000"
+                    }}
+                  >
+                    Qo’shish                           
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    File
+                  </Typography>
+                  <MuiFileInput
+                    placeholder="Fayl kiriting"
+                    value={file}
+                    onChange={setFileHandler}
+                    // getInputText={(value) => value ? 'Thanks!' : ''}
+                    fullWidth
+                  />
+                </ModalSelectWrapper>
+
+
+                <ModalButtons>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none" }}
+                    variant="outlined"
+                    onClick={handleClose}
+                  >
+                    Bekor qilish
+                  </Button>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                    variant="contained"
+                    type="submit"
+
+                  >
+                    Saqlash
+                  </Button>
+                </ModalButtons>
+              </ModalBox>
+            </form>
+
+      </Modal>
+        </>
     )
   } else {
     if(type == undefined){
@@ -307,9 +413,36 @@ const StatusTask = ({ type, data }) => {
   }
 }
 
-const AddButtonSubmission = ({ data }) => {
+const AddButtonSubmission = ({ data, id }) => {
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
+    const [file, setFile] = useState(null);
+    const [changeTasksId, setChangeTasksId] = useState(null);
+    const handleOpen = (id) => {
+      setChangeTasksId(id)
+      setOpen(true)
+    };
+    const setFileHandler = (newValue, info) => {
+      setFile(newValue)
+    }
+    const handleSubmit = async (event) => {
+  
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("source", file);
+      PutTaskSubmission(`${my_task_put}${changeTasksId}/`, formData, (response) => { 
+        console.log(response);
+        handleClose()
+      }, (error) => {
+        console.log(error)
+      })
+     };
+
+
   if (data?.deadline_status){
-    return <Button
+    return (
+    <>
+    <Button
         variant="contained"
         sx={{
           borderRadius: "10px",
@@ -318,6 +451,7 @@ const AddButtonSubmission = ({ data }) => {
           gap: '8px',
           marginLeft: "10px"
         }}
+        onClick = {(_) => handleOpen(id)}
       >
         <div style={{ width: "40px" }}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -333,7 +467,88 @@ const AddButtonSubmission = ({ data }) => {
         </div>
 
         O'zgartirish
-      </Button>
+    </Button>
+    
+    <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+          >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'> 
+
+              <ModalBox>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000"
+                    }}
+                  >
+                    Qo’shish                           
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    File
+                  </Typography>
+                  <MuiFileInput
+                    placeholder="Fayl kiriting"
+                    value={file}
+                    onChange={setFileHandler}
+                    // getInputText={(value) => value ? 'Thanks!' : ''}
+                    fullWidth
+                  />
+                </ModalSelectWrapper>
+
+
+                <ModalButtons>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none" }}
+                    variant="outlined"
+                    onClick={handleClose}
+                  >
+                    Bekor qilish
+                  </Button>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                    variant="contained"
+                    type="submit"
+
+                  >
+                    Saqlash
+                  </Button>
+                </ModalButtons>
+              </ModalBox>
+            </form>
+
+    </Modal>
+    </>
+    
+      
+    )
   } else {
     return <></>
   }

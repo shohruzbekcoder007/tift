@@ -1,7 +1,6 @@
-import axios, { headerConfig } from '../../../utils/baseUrl'
+import axios, { headerConfig } from '../../utils/baseUrl'
 
-
-export const getMyPatok = (url, successfulFunction, errorFunction) => {
+export const getTeacheravTasks = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
         headers: headerConfig(),
     }).then(response => {
@@ -11,7 +10,8 @@ export const getMyPatok = (url, successfulFunction, errorFunction) => {
     })
 }
 
-export const createTaskSubmission = (url, data, successfulFunction, errorFunction) => {
+
+export const setTeacheravTasksPost = (url, data, successfulFunction, errorFunction) => {
     axios.post(
         url,
         data,
@@ -31,8 +31,8 @@ export const createTaskSubmission = (url, data, successfulFunction, errorFunctio
 }
 
 
-export const PutTaskSubmission = (url, data, successfulFunction, errorFunction) => {
-    axios.patch(
+export const setTeacheravTasksPut = (url, data, successfulFunction, errorFunction) => {
+    axios.put(
         url,
         data,
         {
@@ -43,6 +43,25 @@ export const PutTaskSubmission = (url, data, successfulFunction, errorFunction) 
         }
     ).then((response) => {
         console.log(response)
+        successfulFunction(response)
+    })
+    .catch((error) => {
+        errorFunction(error)
+    });
+}
+
+
+
+export const setTeacherDeleteTasks = (url, successfulFunction, errorFunction) => {
+    
+    axios.delete(
+        url,
+        {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              },
+        }
+    ).then((response) => {
         successfulFunction(response)
     })
     .catch((error) => {
