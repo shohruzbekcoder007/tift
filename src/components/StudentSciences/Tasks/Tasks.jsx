@@ -194,11 +194,11 @@ export default function Tasks() {
                                 </svg>
                               </div>
 
-                              Mustaqil ish sun’iy intellekt...
+                             {elem.title}
                             </StudentAIButton>
                           </a>
                         </th>
-                        <th>{dateFormatter(elem.deadline)}</th>
+                        <th>{elem.deadline}</th>
                         <th>
                           <Button
                             sx={{

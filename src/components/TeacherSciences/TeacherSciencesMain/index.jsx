@@ -183,7 +183,7 @@ export default function TeacherSciencesMain() {
                                                                 Kalendar reja
                                                             </Button>
                                                         </Link>
-                                                        <Link to={'vedomost'}>
+                                                        <Link to={'vedomost'} state = {{data: elem.id}}>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
