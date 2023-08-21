@@ -43,7 +43,7 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue }) {
+export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="" }) {
 
     const [value, setValue] = useState(defaultValue)
 
