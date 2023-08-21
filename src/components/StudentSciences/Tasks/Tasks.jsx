@@ -262,7 +262,6 @@ const StatusTask = ({ type, data, id }) => {
     formData.append("task", changeTasksId);
     formData.append("source", file);
     createTaskSubmission(my_task_submission, formData, (response) => { 
-      console.log(response);
       handleClose()
     }, (error) => {
       console.log(error)
