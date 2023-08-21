@@ -183,7 +183,7 @@ export default function TeacherSciencesMain() {
                                                                 Kalendar reja
                                                             </Button>
                                                         </Link>
-                                                        <Link to={'vedomost'}>
+                                                        <Link to={'vedomost'} state = {{data: elem.id}}>
                                                         <Button
                                                             variant="contained"
                                                             size="small"
@@ -208,8 +208,8 @@ export default function TeacherSciencesMain() {
                                                             Vedomost
                                                         </Button>
                                                         </Link>
-                                                        <Link to={"tasks"}>
-                                                        <Button
+                                                        <Link to={"tasks"} state={{data: elem.id, name:elem.name}}>
+                                                        <Button 
                                                             variant="contained"
                                                             size="small"
                                                             color="secondary"

@@ -5,7 +5,7 @@ import { TableTHHeader } from '../../DiplomaTable'
 import { TeacherSciencesButtonBox } from '../styles'
 import { UnableToSpecify } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { teacher_calendar_plan } from '../../../utils/API_urls'
+import { teacher_calendar_delay, teacher_calendar_plan } from '../../../utils/API_urls'
 import { getTeacheravCalendar } from './requests'
 
 
@@ -15,12 +15,23 @@ import { getTeacheravCalendar } from './requests'
 export default function CalendarPlan() {
   const { state } = useLocation()
   const [calendarPlansList, setcalendarPlansList] = useState([])
+  const [calendarDelayList, setcalendarDelayList] = useState([])
 
 
 
   useEffect(() => {
     getTeacheravCalendar(`${teacher_calendar_plan}${state.data}/`, (response) => {
       setcalendarPlansList(response.data.data.calendar_plans)
+    }, (error) => {
+        console.log(error)
+    })
+  }, [])
+
+
+  useEffect(() => {
+    getTeacheravCalendar(`${teacher_calendar_delay}${state.data}/`, (response) => {
+      setcalendarDelayList(response.data.data.calendar_plans)
+      console.log(response.data.data.calendar_plans);
     }, (error) => {
         console.log(error)
     })
@@ -129,7 +140,7 @@ export default function CalendarPlan() {
                            
                             <StatusLesson status={elem.status} status_day={elem.status_day}/>
                           
-                            <StatusLessonAttendece status={elem.status} status_day={elem.status_day}/>
+                            <StatusLessonAttendece status={elem.status} status_day={elem.status_day} id={elem.id}/>
                           
                         </TeacherSciencesButtonBox>
                       </th>
@@ -178,11 +189,11 @@ export default function CalendarPlan() {
             </thead>
             <tbody>
               {
-                [1, 2, 3, 4, 5].map((elem, index) => {
+                [1].map((elem, index) => {
                   return (
                     <tr key={index}>
                       <th>1</th>
-                      <th>Тематики блока</th>
+                      <th>10. Dasturiy ta'minotning metrik xususiyatlarini hisoblash tartibi. Jib metrikasi. Chepin metrikasi.</th>
                       <th>29-05-2023</th>
                       <th style={{ width: "200px" }}>
                         <TeacherSciencesButtonBox>
@@ -198,7 +209,7 @@ export default function CalendarPlan() {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Belgilash mumkin emas</p>
+                            <p>Belgilash mumkin</p>
                           </UnableToSpecify>
                           <Link to="thematicblock">
                             <Button
@@ -355,12 +366,11 @@ const StatusLesson = ({ status, status_day }) => {
 }
 
 
-const StatusLessonAttendece = ({ status, status_day }) => {
-  console.log(status, status_day);
+const StatusLessonAttendece = ({ status, status_day, id }) => {
 
   if (status == 'failed' && status_day == 'last'){
     return(
-      <Link to="thematicblock">   
+      <Link to="thematicblock" state={{ data:false , id:id}}>   
       <Button
         variant="contained"
         size="small"
@@ -389,7 +399,7 @@ const StatusLessonAttendece = ({ status, status_day }) => {
    
   } else if(status == 'failed' && status_day == 'today'){
     return(
-      <Link to="thematicblock">   
+      <Link to="thematicblock" state={{ data:true , id:id}}>   
       <Button
         variant="contained"
         size="small"
@@ -419,7 +429,7 @@ const StatusLessonAttendece = ({ status, status_day }) => {
       return <></>
   } else if(status == 'past'){
     return(
-      <Link to="thematicblock">   
+      <Link to="thematicblock" state={{ data:false , id:id}}>   
 
       <Button
           variant="contained"

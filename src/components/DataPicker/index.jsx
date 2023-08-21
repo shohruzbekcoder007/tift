@@ -12,14 +12,12 @@ export default function DataPicker({ setFunction }) {
         <DatePicker 
           sx={{width: "100%"}} 
           views={["day","month", "year"]}
-          label={'lalaku'}
+          label={'Date'}
           renderInput={(params) => <TextField {...params} />}
           mask="__-__-____"
           format="DD/MM/YYYY"
           onChange={(newValue) => {
-            console.log(newValue);
             setFunction(`${new Date(newValue).getFullYear()}-${new Date(newValue).getMonth() + 1}-${new Date(newValue).getDate()}`)
-            console.log(`${new Date(newValue).getFullYear()}-${new Date(newValue).getMonth() + 1}-${new Date(newValue).getDate()}`)
           }}
         />
       </DemoContainer>
