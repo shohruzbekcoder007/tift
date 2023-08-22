@@ -32,3 +32,13 @@ export const getfakultyList = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const deleteFakulty = (url, successfulFunction, errorFunction) => {
+    axios.delete(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
