@@ -99,6 +99,10 @@ export default function FilingApplication() {
         }
     }, [page, pageSize, semester, status])
 
+    function LocaleSelect(text) {
+        console.log(text);
+    }
+
     return (
         <ContentWrapper>
             <Paper
@@ -137,7 +141,7 @@ export default function FilingApplication() {
                         {listLanguage.add['ru']}
                     </Button>
                     <AllSelect
-                        chageValueFunction={val => { setStatus(val) }}
+                        chageValueFunction={(val) => LocaleSelect(val)}
                         selectOptions={application_status.map(elem => {
                             return {
                                 name: elem[langg],

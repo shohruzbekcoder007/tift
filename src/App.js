@@ -123,6 +123,7 @@ import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
 import Vedomost from './components/Vedomost'
+import VedomostKafedra from './components/VedomostKafedra'
 import CalendarPlanStudent from "./components/CalendarPlanStudent"
 import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
@@ -273,14 +274,22 @@ function App() {
                   <Route path="diploma" element={<Thesis />} />
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<CourseManagement />} />
+                  <Route path="coursemanagement" element={<StudentSciences />} >
+                    <Route index element={<CourseManagement />}/>
+                    <Route path='calendarplan' element={<CalendarPlanTeacher />}/>
+                  </Route>
                   <Route path="applications" element={<Applications />} />
-                  <Route path="patoks" element={<Patoks />} />
+                  <Route path="patoks" element={<StudentSciences />}>
+                    <Route index element={<Patoks/>}/>
+                    <Route path="vedomost" element={<VedomostKafedra />} />
+                  </Route>
+
                   <Route path="nb" element={<Attend />} />
                   <Route path="final" element={<StudentSciences />} >
                     <Route index element={<Final_Dep />} />
                     <Route path='questions' element={<Questions />} />
                   </Route>
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
                 <Route path="admin" element={<MainAdmin />}>

@@ -38,8 +38,9 @@ const LoadingPage = () => {
             }}
         >
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
+                
                 <a href="https://www.ictacademy.uz/" target="_blank">
-                    ICT JOBS
+                © ICT JOBS
                 </a>{' tomonidan ishlab chiqildi'}
             </Typography>
         </Box>

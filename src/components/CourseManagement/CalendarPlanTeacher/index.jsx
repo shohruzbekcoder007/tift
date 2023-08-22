@@ -28,7 +28,6 @@ export default function CalendarPlanTeacher() {
   };
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
-  const [lessonType, setlessonType] = useState(null);
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
   const [page, setPage] = useState(1)
@@ -60,7 +59,7 @@ export default function CalendarPlanTeacher() {
 
     event.preventDefault();
     const formData = new FormData();
-    formData.append("types", lessonType);
+    formData.append("types", 'file');
     formData.append("file", file);
     formData.append("lesson", changeLessonId);
     createLessonSource(teacher_lessons_source_create, formData, (response) => { 
@@ -248,32 +247,6 @@ export default function CalendarPlanTeacher() {
                   >
                     Turi                         
                   </Typography>
-                  <AllSelectFullWidth
-                    chageValueFunction={val => setlessonType(val)}
-                    selectOptions={[
-                        { 
-                          name :'literature',
-                          value: 'literature'
-                        },
-                        {
-                          name: 'video',
-                          value: 'video'
-                        },
-                        {
-                          name: 'presentation',
-                          value: 'presentation'
-                        },
-                        {
-                          name: 'file',
-                          value: 'file'
-                        },
-                        // {
-                        //   name: 'url', 
-                        //   value: 'url'
-                        // },
-                      ]
-                    }
-                  />
 
                 </ModalSelectWrapper>
                 <ModalSelectWrapper>
