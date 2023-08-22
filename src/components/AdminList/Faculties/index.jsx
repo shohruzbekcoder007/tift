@@ -15,10 +15,11 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
-import { deleteFakulty, fakultyCreate, getDekanList, getRoles, getfakultyList } from './request'
+import { deleteFakulty, fakultyCreate, fakultyUpdate, getDekanList, getRoles, getfakultyList } from './request'
 import { allusers, fakulty, role } from '../../../utils/API_urls'
 import faculty_type from '../../../dictionary/faculty_type'
 import MuiAlert from '@mui/material/Alert';
+import AllSelectFullWidth1 from '../../AllSelectFullWidth1'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -71,11 +72,10 @@ export default function Faculties() {
       }
     }
     loadData()
-  }, [])
+  },[])
 
   useEffect(() => {
     getfakultyList(`${fakulty}?page_size=${pageSize}&page=${page}`, response => {
-      console.log(response)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setFacultyList(response.data.results)
@@ -91,7 +91,7 @@ export default function Faculties() {
         name: element.uz
       }
     })
-  }, [])
+  },[])
 
   const [requestData, setRequestData] = useState({
     department_user: '',
@@ -162,15 +162,6 @@ export default function Faculties() {
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>
-
-        {/* <BoxHeader>
-          <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Nomi" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Telefon raqam" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Email" />
-          </InputsWrapper>
-        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -190,7 +181,7 @@ export default function Faculties() {
                     </svg>}
                   />
                   <TableTHHeader
-                    text="Yo’nalish"
+                    text="Fakultet nomi:"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -212,7 +203,7 @@ export default function Faculties() {
                 {
                   facultyList.map((elem, index) => {
                     return (
-                      <SimpleFaculty key={index} elem={elem} />
+                      <SimpleFaculty key={index} elem={elem} facultytype={facultytype} dekanList={dekanList}/>
                     )
                   })
                 }
@@ -332,7 +323,7 @@ export default function Faculties() {
               >
                 Fakultet kodi:
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => {
+              <CustomizedInputSimple defaultValue={""} callback_func={(val) => {
                 setRequestData(prev => {
                   return {
                     department_user: prev.department_user,
@@ -357,7 +348,7 @@ export default function Faculties() {
               >
                 Fakultet nomi:
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => {
+              <CustomizedInputSimple defaultValue={""} callback_func={(val) => {
                 setRequestData(prev => {
                   return {
                     department_user: prev.department_user,
@@ -397,12 +388,28 @@ export default function Faculties() {
   )
 }
 
-const SimpleFaculty = ({ elem }) => {
+const SimpleFaculty = ({ elem, facultytype, dekanList }) => {
 
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
   const [haveThisFaculty, setHaveThisFacluty] = useState(true)
+  const [updateData, setUpdateData] = useState({
+    department_user: '',
+    faculty_type: '',
+    name: '',
+    code: ''
+  })
+
+  const updateDataRequest = () => {
+    fakultyUpdate(`${fakulty}${elem.id}/`,updateData, (response) => {
+      console.log(response)
+      handleClose2()
+    }, (error) => {
+      console.log(error)
+    })
+    
+  }
 
   const deleteElementFaculty = (id) => {
     deleteFakulty(`${fakulty}${id}/`,(response) => {
@@ -423,7 +430,7 @@ const SimpleFaculty = ({ elem }) => {
             <th>{elem.name}</th>
             <th>{elem.code}</th>
             <th>
-              <Link to={'kafedra'}>
+              <Link to={'kafedra'} state={{faculty_id: elem.id}}>
                 <IconButton style={{ margin: '0 15px', padding: "10px 25px" }}>
                   Kafedra
                 </IconButton>
@@ -519,77 +526,120 @@ const SimpleFaculty = ({ elem }) => {
                 <BuildingModalLangText>KAR</BuildingModalLangText>
               </BuildingModalLang>
               <ModalSelectWrapper>
-                <Typography
-                  id="keep-mounted-modal-title"
-                  variant="h6"
-                  component="h4"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    color: "#000",
-                    m: "20px 0 10px 0"
-                  }}
-                >
-                  Yo’nalish:
-                </Typography>
-                <CustomizedInputSimple defaultValue={"salom"} callback_func={(val) => { console.log(val) }} placeholder="Mobil tizimlari" />
-              </ModalSelectWrapper>
-              <ModalSelectWrapper>
-                <Typography
-                  id="keep-mounted-modal-title"
-                  variant="h6"
-                  component="h4"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    color: "#000",
-                    mb: "10px"
-                  }}
-                >
-                  Telefon raqam:
-                </Typography>
-                <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="+998 91 234 56 78" />
-
-              </ModalSelectWrapper>
-
-              <ModalSelectWrapper>
-                <Typography
-                  id="keep-mounted-modal-title"
-                  variant="h6"
-                  component="h4"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    color: "#000",
-                    mb: "10px"
-                  }}
-                >
-                  Email                        </Typography>
-                <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="someobe@somewhere.com" />
-              </ModalSelectWrapper>
-
-              <ModalSelectWrapper>
-                <Typography
-                  id="keep-mounted-modal-title"
-                  variant="h6"
-                  component="h4"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    color: "#000",
-                    mb: "10px"
-                  }}
-                >
-                  Universitet
-                </Typography>
-                <AllSelectFullWidth
-                  chageValueFunction={val => console.log(val)}
-                  selectOptions={[{
-                    name: "ТToshkent Axborot Texnologiyalari",
-                    value: 12,
-                  }]}
-                />
-              </ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Dekan
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => {
+                  setUpdateData(prev => {
+                    return {
+                      department_user: val,
+                      faculty_type: prev.faculty_type,
+                      name: prev.name,
+                      code: prev.code
+                    }
+                  })
+                }}
+                selectOptions={dekanList}
+                // selectedElem={departmentUserId}
+              />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Fakultet turi
+              </Typography>
+              <AllSelectFullWidth
+                selectOptions={facultytype}
+                chageValueFunction={val => {
+                  setUpdateData(prev => {
+                    return {
+                      department_user: prev.department_user ,
+                      faculty_type: val,
+                      name: prev.name,
+                      code: prev.code
+                    }
+                  })
+                }}
+              />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                Fakultet kodi:
+              </Typography>
+              <CustomizedInputSimple 
+                callback_func={(val) => {
+                  setUpdateData(prev => {
+                    return {
+                      department_user: prev.department_user,
+                      faculty_type: prev.faculty_type,
+                      name: val,
+                      code: prev.code
+                    }
+                  })
+                }} 
+                placeholder="code"
+                defaultValue={elem.code}
+              />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Fakultet nomi:
+              </Typography>
+              <CustomizedInputSimple 
+                callback_func={(val) => {
+                  setUpdateData(prev => {
+                    return {
+                      department_user: prev.department_user,
+                      faculty_type: prev.faculty_type,
+                      name: prev.name,
+                      code: val
+                    }
+                  })
+                }} 
+                placeholder="Fakultet nomi"
+                defaultValue={elem.name}
+              />
+            </ModalSelectWrapper>
               <ModalButtons>
                 <Button
                   sx={{ width: "50%", textTransform: "none" }}
@@ -601,6 +651,7 @@ const SimpleFaculty = ({ elem }) => {
                 <Button
                   sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                   variant="contained"
+                  onClick={updateDataRequest}
                 >
                   Saqlash
                 </Button>

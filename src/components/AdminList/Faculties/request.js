@@ -42,3 +42,13 @@ export const deleteFakulty = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const fakultyUpdate = (url, data, successfulFunction, errorFunction) => {
+    axios.put(url, data, {
+        headers: headerConfig()
+    }).then(response => {
+        successfulFunction(response)
+    }).catch(error => {
+        errorFunction(error)
+    })
+}

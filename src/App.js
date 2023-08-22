@@ -126,6 +126,7 @@ import Vedomost from './components/Vedomost'
 import CalendarPlanStudent from "./components/CalendarPlanStudent"
 import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
+import SignInSide from './components/SignInSide'
 
 
 function App() {
@@ -150,7 +151,7 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
