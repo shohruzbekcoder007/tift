@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -9,18 +9,58 @@ import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from '../CourseManagement/styles'
 import { DekanGroupsButton } from './styles'
 import { Link } from 'react-router-dom'
-import { getGroups } from './requests'
-import { decan_GroupList } from '../../utils/API_urls'
+import { getChangeDirection, getGroups } from './requests'
+import { Directions, decan_GroupList } from '../../utils/API_urls'
+import { getDirections } from '../AdminList/Directions/request'
 
 export default function DekanGroups() {
-
+    const [DekanGroups, setDekanGroups] = useState([]);
+    const [pageCount, setPageCount] = useState(1)
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+    const [allCount, setAllCount] = useState(0)
+    const [DirectionsList, setDirectionsList] = useState([])
     useEffect(() => {
         getGroups(decan_GroupList, (response) => {
-            console.log(response)
+            console.log(response.data.results);
+            setDekanGroups(response.data.results)
+            setPageCount(response.data.page_count)
+            setAllCount(response.data.count)
         }, (error) => {
             console.log(error)
         })
-    }, [])
+
+        getDirections(Directions, (response) => {
+           console.log(response);
+           let list = [] 
+           list.push({
+               value: -1,
+               name: "Barchasi"
+           })
+           response.map(item => {
+                 list.push({
+                    value: item.id,
+                    name: item.name
+                })
+            })
+            setDirectionsList(list)
+        }, (error) => {
+            console.log(error)
+        })
+
+    }, [ pageSize, page])
+
+
+    const ChangeDirections = (id) => {
+        getChangeDirection(`${decan_GroupList}?direction=${id}`, (response) => {
+            console.log(response.data.results);
+            setDekanGroups(response.data.results)
+         }, (error) => {
+             console.log(error)
+         })
+ 
+    }
+
 
     return (
         <>
@@ -40,24 +80,11 @@ export default function DekanGroups() {
                 </BoxHeader>
                 <BoxHeader>
                     <InputsWrapper>
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
+                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Guruhlar" />
                         <AllSelect
-                        chageValueFunction={val => { console.log(val) }}
-                        selectOptions={[
-                            {
-                                value: "1",
-                                name: "Barchasi"
-                            },
-                            {
-                                value: "2",
-                                name: "2021-2022 Ikkinchi semestr uchun qayta o’qish"
-                            },
-                            {
-                                value: "3",
-                                name: "2020-2021 Ikkinchi semestr uchun qayta o’qish"
-                            }
-                        ]}
+                        chageValueFunction={(val) => ChangeDirections(val)}
+                        selectOptions={DirectionsList}
                     />
                     </InputsWrapper>
                 </BoxHeader>
@@ -114,19 +141,19 @@ export default function DekanGroups() {
                             </thead>
                             <tbody>
                                 {
-                                    [1, 2,3,3,3,3,3].map((elem, index) => {
+                                 DekanGroups?.length > 0 ?  DekanGroups.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>1220</th>
-                                                <th>740-22 KXg</th>
-                                                <th>Kiberxavfsizlik injiniringi</th>
+                                                <th>{elem.id}</th>
+                                                <th>{elem.name}</th>
+                                                <th>{elem.direction}</th>
                                                 <th>
-                                                  <Link to={'appropriation'}>
+                                                  <Link to={'appropriation'} state={elem.id}>
                                                     <DekanGroupsButton>
                                                         O'zlashtirish qaydnomasi
                                                     </DekanGroupsButton>
                                                   </Link>
-                                                  <Link to={'students'}>
+                                                  <Link to={'students'} state={elem}>
                                                     <DekanGroupsButton>
                                                         Talabalar
                                                     </DekanGroupsButton>
@@ -135,14 +162,18 @@ export default function DekanGroups() {
                                             </tr>
                                         )
                                     })
+                                : 
+                                <tr>
+                                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                </tr>
                                 }
                             </tbody>
                         </table>
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + DekanGroups.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
         </>

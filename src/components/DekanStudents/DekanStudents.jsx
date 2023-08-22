@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -9,11 +9,33 @@ import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from '../CourseManagement/styles'
 import listLanguage from '../CourseManagement/language.json'
+import { GroupListStudents } from '../../utils/API_urls'
+import { getStudents } from './requests'
+import { useLocation } from 'react-router-dom'
 
 export default function DekanStudents() {
+  const { state } = useLocation()
+  console.log(state);
+  const [Students, setStudents] = useState([]);
+  const [pageCount, setPageCount] = useState(1)
+  const [science, setScience] = useState(null)
+  const [status, setStatus] = useState('all')
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  useEffect(() => {
+    getStudents(`${GroupListStudents}${state?.id}`, (response) => {
+      console.log(response?.data?.results);
+      setStudents(response?.data?.results)
+      setPageCount(response.data.page_count)
+      setAllCount(response.data.count)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [])
   return (
     <>
-        <Typography
+      <Typography
         variant="h6"
         component="h4"
         sx={{
@@ -24,7 +46,7 @@ export default function DekanStudents() {
           lineHeight: "normal"
         }}
       >
-        740-22 KXr - Talabalar
+        {state?.name} - Talabalar
       </Typography>
       <Paper
         elevation={0}
@@ -33,7 +55,7 @@ export default function DekanStudents() {
           padding: "20px",
           borderRadius: "10px"
         }}
-        >
+      >
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
             console.log(val)
@@ -45,7 +67,7 @@ export default function DekanStudents() {
             <table>
               <thead>
                 <tr>
-                <TableTHHeader
+                  <TableTHHeader
                     text="No"
                     iconc={null}
                   />
@@ -61,23 +83,27 @@ export default function DekanStudents() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 3, 3, 3, 3,3,3,3,3,3,3,3,3,4,1,23,5,].map((elem, index) => {
+                  Students.length > 0 ? Students.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>{index}</th>
-                        <th>1220</th>
-                        <th>Sharipov Jaxongir Shaxobiddin o’g’li</th>
+                        <th>{index + 1}</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.full_name}</th>
                       </tr>
                     )
                   })
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
       </Paper>
     </>

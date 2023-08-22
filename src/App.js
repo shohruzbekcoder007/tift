@@ -127,6 +127,7 @@ import CalendarPlanStudent from "./components/CalendarPlanStudent"
 import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
 import SignInSide from './components/SignInSide'
+import DekanStudent from './components/DekanStudent'
 
 
 function App() {
@@ -211,6 +212,11 @@ function App() {
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<DekanStudent />} />
+                    <Route path='appropriation' element={<Appropriation />} />
+                    <Route path='students' element={<DekanStudents />} />
+                  </Route>
                   <Route path="groups" element={<StudentSciences />} >
                     <Route index element={<DekanGroups />} />
                     <Route path='appropriation' element={<Appropriation />} />

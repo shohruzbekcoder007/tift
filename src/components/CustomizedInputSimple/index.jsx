@@ -55,7 +55,6 @@ export default function CustomizedInputSimple({ label, callback_func, placeholde
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={value}
-                type={type || 'text'}
                 // helperText="Incorrect entry."
                 onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}
                 placeholder={placeholder}

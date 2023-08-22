@@ -2,8 +2,8 @@
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host = "https://api.lms-edu.uz"
-// export const host = "https://jaloliddin1006.jprq.live"
+// export const host = "https://api.lms-edu.uz"
+export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
 export const token_url = "/token/"
@@ -47,6 +47,11 @@ export const my_semesters = '/my-semesters/'
 
 // dekan 
 export const decan_GroupList = '/decan/GroupList/'
+export const GroupListShow = '/decan/GroupList/show/'
+export const Dekan_Students = '/decan/students/'
+export const GroupListStudents = '/decan/GroupList/students/'
+export const Directions = '/statistics/directions/'
+export const Decan_students = '/decan/students/'
 
 
 // kafedra 

@@ -36,7 +36,7 @@ export default function TutorStudents() {
 //?page_size=${pageSize}&page=${page}
   useEffect(() => {
     getStudents(`${Students}${state}?page_size=${pageSize}&page=${page}`, (response) => {
-      console.log(response.results);
+      console.log(response);
       setStudentList(response.results)
       setPageCount(response.page_count)
       setAllCount(response.count)
@@ -140,7 +140,7 @@ export default function TutorStudents() {
               </thead>
               <tbody>
                 {
-                 StudentList.length > 0 ? StudentList.map((elem, index) => {
+                 StudentList?.length > 0 ? StudentList.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.id}</th>
