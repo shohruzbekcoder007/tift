@@ -16,6 +16,7 @@ import { IconButton } from '../Final_Dep/style'
 import { useLocation } from 'react-router-dom'
 import { getStudents } from './request'
 import { Students } from '../../utils/API_urls'
+import { Link } from 'react-router-dom'
 
 export default function TutorStudents() {
   const {state} = useLocation()
@@ -159,16 +160,20 @@ export default function TutorStudents() {
                         </th>
                         <th >{elem.full_name}</th>
                         <th>
-                          <Box sx={{ width: "80%", textAlign: 'center', display: "flex", justifyContent: "space-between", margin: "10px auto", }}>
-                            <IconButton style={{ margin: "0", width: '48%' }}>
-                              Расписание
-                            </IconButton>
-                            <IconButton style={{ margin: "0", width: '48%' }}>
-                              Посмотреть
-                            </IconButton>
+                          <Box>
+                            <Link to="tutor-see-schedule">
+                              <IconButton >
+                                Расписание
+                              </IconButton>
+                            </Link>
+                            <Link to="">
+                              <IconButton >
+                                Посмотреть
+                              </IconButton>
+                            </Link>
                           </Box>
-                          <Box sx={{ width: "80%", textAlign: 'center', margin: "0 auto" }}>
-                            <IconButton style={{ margin: "0", width: '100%', textAlign: "center" }}>
+                          <Box >
+                            <Link to="individual-pysical"><IconButton >
                               <svg width="16" height="16" viewBox="0 0 16 16" style={{margin: "0 10px"}} fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_78_25185)">
                                   <path d="M13.3 3.69068L10.9773 1.36668C10.5449 0.932107 10.0306 0.587569 9.46413 0.352988C8.89771 0.118407 8.2904 -0.00156258 7.67732 1.53658e-05H4.66732C3.78359 0.00107394 2.93636 0.352603 2.31146 0.977495C1.68657 1.60239 1.33504 2.44962 1.33398 3.33335V12.6667C1.33504 13.5504 1.68657 14.3976 2.31146 15.0225C2.93636 15.6474 3.78359 15.999 4.66732 16H11.334C12.2177 15.999 13.0649 15.6474 13.6898 15.0225C14.3147 14.3976 14.6663 13.5504 14.6673 12.6667V6.99002C14.669 6.37696 14.549 5.76968 14.3143 5.20333C14.0796 4.63699 13.7348 4.12284 13.3 3.69068ZM12.3573 4.63335C12.5609 4.84278 12.736 5.07814 12.878 5.33335H10.0007C9.82384 5.33335 9.65427 5.26311 9.52925 5.13809C9.40422 5.01306 9.33398 4.84349 9.33398 4.66668V1.78935C9.58927 1.9313 9.82484 2.10612 10.0347 2.30935L12.3573 4.63335ZM13.334 12.6667C13.334 13.1971 13.1233 13.7058 12.7482 14.0809C12.3731 14.456 11.8644 14.6667 11.334 14.6667H4.66732C4.13688 14.6667 3.62818 14.456 3.2531 14.0809C2.87803 13.7058 2.66732 13.1971 2.66732 12.6667V3.33335C2.66732 2.80292 2.87803 2.29421 3.2531 1.91914C3.62818 1.54406 4.13688 1.33335 4.66732 1.33335H7.67732C7.78665 1.33335 7.89265 1.35468 8.00065 1.36468V4.66668C8.00065 5.19711 8.21136 5.70582 8.58644 6.0809C8.96151 6.45597 9.47022 6.66668 10.0007 6.66668H13.3027C13.3127 6.77468 13.334 6.88002 13.334 6.99002V12.6667Z" fill="black" />
@@ -181,7 +186,7 @@ export default function TutorStudents() {
                               </svg>
 
                               Индивидуальный учебный план
-                            </IconButton>
+                            </IconButton></Link>
                           </Box>
                         </th>
                       </tr>

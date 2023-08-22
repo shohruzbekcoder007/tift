@@ -59,7 +59,8 @@ export const ClassScheduleTableWrapper = styled.div`
         thead {
             border-radius: 10px;
             tr {
-                background-color: #F6F5F1;
+                /* background-color: #F6F5F1; */
+                background-color: ${props => props.color=="transparent"? "transparent":"#F6F5F1"};
             }
         }
         tr {

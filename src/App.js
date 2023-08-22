@@ -32,7 +32,7 @@ import Attendance from './components/StudentSciences/Attendance'
 import Final from './components/Final/Final'
 import ScienceSelection from './components/ScienceSelection/ScienceSelection'
 import Student_services from './components/Student_services/Student_services'
-import CalendarDayWeek from './components/CalendarDayWeek'
+import CalendarDayWeekWrapper from './components/CalendarDayWeekWrapper'
 import MainDekan from './components/MainDekan'
 import MainTutor from './components/MainTutor'
 import MainDepartment from './components/MainDepartment'
@@ -128,6 +128,8 @@ import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
 import SignInSide from './components/SignInSide'
 import DekanStudent from './components/DekanStudent'
+import IndividualPysical from './components/IndividualPysical'
+import TutorSeeSchedule from './components/TutorSeeSchedule'
 
 
 function App() {
@@ -191,7 +193,7 @@ function App() {
                   <Route path="thesisresult" element={<ThesisResult />} />
                   <Route path="information" element={<Information />} />
                   <Route path="request" element={<QuestionnaireTeacher />} />
-                  <Route path="sciencescalendar" element={<CalendarDayWeek />} />
+                  <Route path="sciencescalendar" element={<CalendarDayWeekWrapper />} />
                   <Route path="sciences" element={<StudentSciences />}>
                     <Route index element={<StudentSciencesMain />} />
                     <Route path="attendance" element={<Attendance />} />
@@ -249,13 +251,16 @@ function App() {
                     <Route index element={<DekanOlympics />} />
                   </Route>
                 </Route>
-
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="groups" element={<StudentSciences />} >
                     <Route index element={<TutorGroups />}/>
-                    <Route path='students' element={<TutorStudents />}/>
+                    <Route path='students' >
+                      <Route index element={<TutorStudents />}/>
+                      <Route path='individual-pysical' element={<IndividualPysical />}/>
+                      <Route path='tutor-see-schedule' element={<TutorSeeSchedule />}/>
+                    </Route>
                   </Route>
                 </Route>
 
@@ -265,7 +270,15 @@ function App() {
                   <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
-                  <Route path="sciences" element={<TeacherSciences />} />
+                  <Route path="sciences" element={<TeacherSciences />}>
+                    <Route index element={<TeacherSciencesMain />} />
+                    <Route path="calendarplan" element={<CalendarPlanMain />} >
+                      <Route index element={<CalendarPlan />} />
+                      <Route path="thematicblock" element={<ThematicBlock />} />
+                    </Route>
+                    <Route path="vedomost" element={<Vedomost />} />
+                    <Route path="tasks" element={<TasksTeacher />} />
+                  </Route>
                   <Route path="Ddiploma" element={<Thesis />} />
                   <Route path="Ddiploma/:id" element={<DiplomaTopics />} />
                   <Route path="diploma" element={<Thesis />} />
@@ -274,6 +287,7 @@ function App() {
                   <Route path="coursemanagement" element={<CourseManagement />} />
                   <Route path="applications" element={<Applications />} />
                   <Route path="patoks" element={<Patoks />} />
+                  <Route path="nb" element={<Attend />} />
                   <Route path="final" element={<StudentSciences />} >
                     <Route index element={<Final_Dep />} />
                     <Route path='questions' element={<Questions />} />
