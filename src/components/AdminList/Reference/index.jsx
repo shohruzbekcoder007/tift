@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -12,15 +12,42 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
+import { DeleteStudentNBPetition, getReference } from './request'
+import { host, studentnb } from '../../../utils/API_urls'
 
 export default function Reference() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [StudentNbList, setStudentNbList] = useState([])
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [Status, setStatus] = useState(false)
 
   const setFileHandler = (newValue, info) => {
-      setFile(newValue)
+    setFile(newValue)
+  }
+  //?page_size=${pageSize}&page=${page}
+  useEffect(() => {
+    getReference(`${studentnb}?page_size=${pageSize}&page=${page}`, (response) => {
+      console.log(response);
+      setStudentNbList(response.results)
+      setPageCount(response.page_count)
+      setAllCount(response.count)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [pageSize, page, Status])
+
+  const DeleteStudentNb = (id) => {
+    DeleteStudentNBPetition(`${studentnb}?id=${id}`, (response) => {
+      setStatus(!Status)
+    }, (error) => {
+      console.log(error)
+    })
   }
 
   return (
@@ -159,38 +186,68 @@ export default function Reference() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5].map((elem, index) => {
+                  StudentNbList.length > 0 ? StudentNbList.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1494</th>
-                        <th>11-03-2020</th>
-                        <th >11-03-2020</th>
-                        <th>Mirmurodov Azizbek Umidjon o‘g‘li</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.start_date}</th>
+                        <th >{elem.end_date}</th>
+                        <th>{elem.student}</th>
                         <th>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              borderRadius: "10px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              padding: "6px 12px",
-                              marginRight: "20px"
-                            }}
-                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g clip-path="url(#clip0_1148_18869)">
-                                <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="white" />
-                                <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="white" />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_1148_18869">
-                                  <rect width="16" height="16" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>
-
-                            }
-                          >
-                          </Button>
+                          {
+                            elem.file ? <a href={host + elem.file} target="_blank" >
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  borderRadius: "10px",
+                                  textTransform: "capitalize",
+                                  boxShadow: "none",
+                                  padding: "6px 12px",
+                                  marginRight: "20px"
+                                }}
+                                startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_1148_18869)">
+                                    <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="white" />
+                                    <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="white" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_1148_18869">
+                                      <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                                }>
+                              </Button>
+                            </a>
+                              :
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  borderRadius: "10px",
+                                  textTransform: "capitalize",
+                                  boxShadow: "none",
+                                  padding: "6px 12px",
+                                  marginRight: "20px",
+                                  backgroundColor: "text.secondary",
+                                  "&:hover": {
+                                    backgroundColor: "text.secondary",
+                                  },
+                                  cursor: 'no-drop'
+                                }}
+                                startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clip-path="url(#clip0_1148_18869)">
+                                    <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="white" />
+                                    <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="white" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_1148_18869">
+                                      <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                                }>
+                              </Button>
+                          }
                         </th>
                         <th>
                           <Button
@@ -205,6 +262,7 @@ export default function Reference() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
+                            onClick={() => DeleteStudentNb(elem.id)}
                             startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -225,14 +283,18 @@ export default function Reference() {
                       </tr>
                     )
                   })
+                    :
+                    <tr>
+                      <th colSpan={10} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + StudentNbList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
         <Modal
           keepMounted

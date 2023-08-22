@@ -12,7 +12,7 @@ export default function DataPicker({ setFunction }) {
         <DatePicker 
           sx={{width: "100%"}} 
           views={["day","month", "year"]}
-          label={'lalaku'}
+          label={''}
           renderInput={(params) => <TextField {...params} />}
           mask="__-__-____"
           format="DD/MM/YYYY"

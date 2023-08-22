@@ -28,7 +28,6 @@ const anchorOrigin2 = {
 }
 
 export default function Users() {
-
     const [open, setOpen] = useState(false)
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)

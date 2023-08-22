@@ -1,8 +1,8 @@
 // export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-export const host = "https://oqdevpy.jprq.live"
-// export const host = "https://api.lms-edu.uz"
+// export const host = "https://oqdevpy.jprq.live"
+export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -53,6 +53,11 @@ export const decan_GroupList = '/decan/GroupList/'
 export const syllabus_request_id = '/department/syllabus/status'
 
 
+//tutor
+export const Groups = 'tutor/GroupList/'
+export const Students = 'tutor/GroupList/students/'
+
+
 // admin 
 export const allusers = '/allusers/'
 export const change_password = '/change_password/'
@@ -60,3 +65,6 @@ export const directions = '/direction/'
 export const facultyshortlist = '/facultyshortlist/'
 export const role = '/role/'
 export const fakulty = '/fakulty/'
+export const studentnb = '/studentnb/'
+export const holidays_create_list = '/holidays_create_list/'
+export const holidays_detail = '/holidays_detail/'

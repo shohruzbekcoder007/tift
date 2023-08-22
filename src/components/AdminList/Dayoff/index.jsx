@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -9,6 +9,10 @@ import { AttendSearchButton, BuildingModalLang, BuildingModalLangText } from './
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
+import { holidays_create_list, holidays_detail } from '../../../utils/API_urls'
+import { deleteHolidays, getHolidays, postHolidays } from './request'
+import CustomizedInputSimple from '../../CustomizedInputSimple'
+import DataPicker from '../../DataPicker'
 
 export default function Dayoff() {
   const [open, setOpen] = useState(false);
@@ -17,6 +21,48 @@ export default function Dayoff() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+  const [page, setPage] = useState(1)
+  const [Name, setName] = useState(null)
+  const [Date, setDate] = useState(null)
+
+  const [pageSize, setPageSize] = useState(10)
+  const [Holidays, setHolidays] = useState([])
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [Status, setStatus] = useState(false)
+  //?page_size=${pageSize}&page=${page}
+  useEffect(() => {
+    getHolidays(`${holidays_create_list}?page_size=${pageSize}&page=${page}`, (response) => {
+      console.log(response);
+      setHolidays(response.results)
+      setPageCount(response.page_count)
+      setAllCount(response.count)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [pageSize, page, Status])
+
+
+  const HandleClick = (_) => {
+    postHolidays(`${holidays_create_list}`,{
+      name: Name,
+      date: Date
+    }, (response) => {
+      setStatus(!Status)
+      handleClose()
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  const DeleteHoliday = (id) => {
+    deleteHolidays(`${holidays_detail}${id}`, (response) => {
+      setStatus(!Status)
+      handleClose2()
+    }, (error) => {
+      console.log(error)
+    })
+  }
 
   return (
     <ContentWrapper>
@@ -131,12 +177,12 @@ export default function Dayoff() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                 Holidays.length > 0 ? Holidays.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1234</th>
-                        <th>Bank                                                                                    </th>
-                        <th>0                            </th>
+                        <th>{elem.id}</th>
+                        <th>{elem.name}</th>
+                        <th>{elem.date}</th>
                         <th>
                           <Button
                             variant="contained"
@@ -175,6 +221,7 @@ export default function Dayoff() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
+                            onClick={(_) => DeleteHoliday(elem.id)}
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1221_29003)">
                                 <path d="M14.5026 2.66667H12.4359C12.2812 1.91428 11.8718 1.23823 11.2768 0.752479C10.6817 0.266727 9.93741 0.000969683 9.16927 0L7.83594 0C7.0678 0.000969683 6.32348 0.266727 5.72844 0.752479C5.13339 1.23823 4.724 1.91428 4.56927 2.66667H2.5026C2.32579 2.66667 2.15622 2.7369 2.0312 2.86193C1.90618 2.98695 1.83594 3.15652 1.83594 3.33333C1.83594 3.51014 1.90618 3.67971 2.0312 3.80474C2.15622 3.92976 2.32579 4 2.5026 4H3.16927V12.6667C3.17033 13.5504 3.52186 14.3976 4.14675 15.0225C4.77164 15.6474 5.61887 15.9989 6.5026 16H10.5026C11.3863 15.9989 12.2336 15.6474 12.8585 15.0225C13.4833 14.3976 13.8349 13.5504 13.8359 12.6667V4H14.5026C14.6794 4 14.849 3.92976 14.974 3.80474C15.099 3.67971 15.1693 3.51014 15.1693 3.33333C15.1693 3.15652 15.099 2.98695 14.974 2.86193C14.849 2.7369 14.6794 2.66667 14.5026 2.66667ZM7.83594 1.33333H9.16927C9.58279 1.33384 9.98602 1.46225 10.3237 1.70096C10.6613 1.93967 10.9169 2.27699 11.0553 2.66667H5.94994C6.08833 2.27699 6.34387 1.93967 6.68153 1.70096C7.01919 1.46225 7.42242 1.33384 7.83594 1.33333ZM12.5026 12.6667C12.5026 13.1971 12.2919 13.7058 11.9168 14.0809C11.5417 14.456 11.033 14.6667 10.5026 14.6667H6.5026C5.97217 14.6667 5.46346 14.456 5.08839 14.0809C4.71332 13.7058 4.5026 13.1971 4.5026 12.6667V4H12.5026V12.6667Z" fill="white" />
@@ -194,14 +241,18 @@ export default function Dayoff() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={10} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Holidays.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
         
         <Modal
@@ -232,13 +283,13 @@ export default function Dayoff() {
                 </svg>
               </span>
             </ModalHeader>
-            <BuildingModalLang>
+            {/* <BuildingModalLang>
               <BuildingModalLangText>RU</BuildingModalLangText>
               <BuildingModalLangText>UZC</BuildingModalLangText>
               <BuildingModalLangText>UZL</BuildingModalLangText>
               <BuildingModalLangText>EN</BuildingModalLangText>
               <BuildingModalLangText>KAR</BuildingModalLangText>
-            </BuildingModalLang>
+            </BuildingModalLang> */}
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -252,13 +303,7 @@ export default function Dayoff() {
                 }}
               >
                 Nomi                         </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Filial",
-                  value: 12,
-                }]}
-              />
+                <CustomizedInputSimple callback_func={(val) => { setName(val) }} placeholder="Bayram nomi" />
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
@@ -272,14 +317,8 @@ export default function Dayoff() {
                   mb: "10px"
                 }}
               >
-                Universitet                            </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Ташкентский Университет Информационных Технологий",
-                  value: 12,
-                }]}
-              />
+                Sana                            </Typography>
+                <DataPicker setFunction={(val) => {setDate(val)}}/>
             </ModalSelectWrapper>
             <ModalButtons>
               <Button
@@ -290,6 +329,7 @@ export default function Dayoff() {
                 Bekor qilish
               </Button>
               <Button
+              onClick={(_) => HandleClick()}
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
               >
