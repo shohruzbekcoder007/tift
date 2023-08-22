@@ -3,7 +3,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid'; 
 import interactionPlugin from '@fullcalendar/interaction';
 import uzLocale from '@fullcalendar/core/locales/uz';
-import { ContentWrapper } from '../../global_styles/styles';
 import { Paper } from '@mui/material';
  
 const events = [ 
@@ -34,7 +33,7 @@ const events = [
  
 function CalendarDayWeek() { 
   return ( 
-    <ContentWrapper> 
+    <> 
       <Paper
                 elevation={0}
                 sx={{
@@ -73,7 +72,7 @@ function CalendarDayWeek() {
         locale={uzLocale}
       /> 
       </Paper>
-    </ContentWrapper> 
+    </> 
   ); 
 } 
  
