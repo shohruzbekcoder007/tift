@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
@@ -9,7 +9,21 @@ import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from '../CourseManagement/styles'
 import listLanguage from '../CourseManagement/language.json'
+import { useLocation } from 'react-router-dom'
+import { GroupListShow} from '../../utils/API_urls'
+import { getGroupSemesters } from './requests'
 export default function Appropriation() {
+  const {state} = useLocation()
+  const [DekanGroupsSemestr, setDekanGroupsSemestr] = useState([]);
+  const [GroupName, setGroupName] = useState('');
+    useEffect(() => {
+      getGroupSemesters(`${GroupListShow}${state}`, (response) => {
+            setGroupName(response.data.name)
+            setDekanGroupsSemestr(response.data.semesters)
+        }, (error) => {
+            console.log(error)
+        })
+    }, [])
   return (
     <>
         <Typography
@@ -23,7 +37,7 @@ export default function Appropriation() {
           lineHeight: "normal"
         }}
       >
-        O’zlashtirish qaydonmasi
+        {GroupName} - O’zlashtirish qaydonmasi 
       </Typography>
       <Paper
         elevation={0}
@@ -77,11 +91,11 @@ export default function Appropriation() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 3, 3, 3, 3].map((elem, index) => {
+                   DekanGroupsSemestr?.length > 0 ?  DekanGroupsSemestr.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1220</th>
-                        <th>2022-2023 Ikkinchi semester uchun qayta o’qish</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.parent.name + "  " + elem.name}</th>
                         <th>
                           <Button
                             variant="contained"
@@ -111,15 +125,19 @@ export default function Appropriation() {
                       </tr>
                     )
                   })
+                  : 
+                  <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
-        <BoxFooter>
+        {/* <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
-        </BoxFooter>
+        </BoxFooter> */}
       </Paper>
     </>
   )
