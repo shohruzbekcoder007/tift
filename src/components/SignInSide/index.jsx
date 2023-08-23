@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { LoaderWrapper } from './styles';
+import { LoaderWrapper, LoginLogo } from './styles';
 import { CircularProgress, Snackbar, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
@@ -38,8 +38,9 @@ const LoadingPage = () => {
             }}
         >
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
+                
                 <a href="https://www.ictacademy.uz/" target="_blank">
-                    ICT JOBS
+                © ICT JOBS
                 </a>{' tomonidan ishlab chiqildi'}
             </Typography>
         </Box>
@@ -135,10 +136,13 @@ export default function SignInSide() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              height: "100vh"
+              height: "100vh",
+              padding: "20px"
             }}
           >
-            <img src={require('../../imgs/main_logo.png')} alt="main logo" />
+            <LoginLogo>
+              <img src={require('../../imgs/main_logo.png')} alt="main logo" />
+            </LoginLogo>
             <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"

@@ -19,7 +19,7 @@ import { deleteFakulty, fakultyCreate, fakultyUpdate, getDekanList, getRoles, ge
 import { allusers, fakulty, role } from '../../../utils/API_urls'
 import faculty_type from '../../../dictionary/faculty_type'
 import MuiAlert from '@mui/material/Alert';
-import AllSelectFullWidth1 from '../../AllSelectFullWidth1'
+// import AllSelectFullWidth1 from '../../AllSelectFullWidth1'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;

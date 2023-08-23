@@ -2,7 +2,11 @@
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
+<<<<<<< HEAD
 export const host =   "
+=======
+export const host = "https://api.lms-edu.uz"
+>>>>>>> e4597b0b2552d020ea8db1ff7a718caf93e486ad
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -72,7 +76,6 @@ export const syllabus_request_id = '/department/syllabus/status'
 export const Groups = 'tutor/GroupList/'
 export const Students = 'tutor/GroupList/students/'
 
-
 // admin 
 export const allusers = '/allusers/'
 export const change_password = '/change_password/'
@@ -83,3 +86,4 @@ export const fakulty = '/fakulty/'
 export const studentnb = '/studentnb/'
 export const holidays_create_list = '/holidays_create_list/'
 export const holidays_detail = '/holidays_detail/'
+export const kafedra = '/kafedra/'
