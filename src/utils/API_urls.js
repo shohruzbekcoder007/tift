@@ -2,8 +2,8 @@
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-// export const host = "https://api.lms-edu.uz"
-export const host = "https://jaloliddin1006.jprq.live"
+export const host =   "
+// export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
 export const token_url = "/token/"
