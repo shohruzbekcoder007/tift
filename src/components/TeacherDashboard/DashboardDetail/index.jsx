@@ -12,11 +12,9 @@ export default function Index() {
   return (
     <ContentWrapper>
       <DashboardDetailWrapper>
-        <DetailWrapperTitle>
-          {state.element.title}
+        <DetailWrapperTitle dangerouslySetInnerHTML={{__html: state.element.title}}>
         </DetailWrapperTitle>
-        <DetailWrapperBody>
-          {state.element.description}
+        <DetailWrapperBody dangerouslySetInnerHTML={{__html: state.element.description}}>
         </DetailWrapperBody>
         <hr />
         <DetailWrapperDate>

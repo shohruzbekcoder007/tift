@@ -1,8 +1,9 @@
-// export const host = "https://husanibragimov.jprq.live"
+export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host =   "https://jaloliddin1006.jprq.live"
+// export const host =   "https://api.lms-edu.uz"
+// export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
 export const token_url = "/token/"
@@ -82,3 +83,4 @@ export const studentnb = '/studentnb/'
 export const holidays_create_list = '/holidays_create_list/'
 export const holidays_detail = '/holidays_detail/'
 export const kafedra = '/kafedra/'
+export const teacher_change_nb = "/nbpetition_status/"

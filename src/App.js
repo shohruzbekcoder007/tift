@@ -303,6 +303,9 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
+
+                
+
                 <Route path="admin" element={<MainAdmin />}>
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
