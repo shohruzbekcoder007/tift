@@ -12,3 +12,14 @@ export const LoaderWrapper = styled.div`
     align-items: center;
     justify-content: center;
 `
+
+export const LoginLogo = styled.div`
+    @media screen and (max-width: 400px) {
+        width: 200px;
+        img {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+    
+`
