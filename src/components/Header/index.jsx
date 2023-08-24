@@ -6,12 +6,14 @@ import { setSidebar } from '../../redux/action/sidebarActions'
 import { useSelector } from "react-redux"
 import listLanguage from './language.json'
 import { Badge } from '@mui/material'
+import Notification from '../Notification'
 
 export default function Header() {
 
   const title = useSelector((state) => state.title);
   const dispatch = useDispatch()
   const [headerAccount, setHeaderAccount] = useState(false)
+  const [openNotes, setOpenNotes] = useState(false)
   const handleHeaderAccount = () => {
     setHeaderAccount(prev => {
       return !prev
@@ -43,7 +45,9 @@ export default function Header() {
         <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime>
-          <HeaderAccountItem>
+          <HeaderAccountItem
+            onClick={(_) => {setOpenNotes(prev => !prev)}}
+          >
             <Badge badgeContent={5} color="primary">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_302_332)">
@@ -56,6 +60,7 @@ export default function Header() {
                 </defs>
               </svg>
             </Badge>
+            <Notification open={openNotes}/>
           </HeaderAccountItem>
         <NavLink to="videoguide">
           <HeaderAccountItem>
