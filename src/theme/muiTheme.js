@@ -17,6 +17,9 @@ const muiTheme = createTheme({
         BlueButton: {
             main:  "#00379E"
         },
+        YellowButton: {
+            main:  "yellow"
+        },
     },
     text: {
         secondary: "#115E8C"

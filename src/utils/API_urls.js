@@ -1,8 +1,10 @@
 // export const host = "https://husanibragimov.jprq.live"
 // export const host = "http://oqdevpy.jprq.live"
-export const host = "http://husanibragimov.jprq.live"
+// export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://oqdevpy.jprq.live"
+export const host =   "https://api.lms-edu.uz"
+// export const host = "https://jaloliddin1006.jprq.live"
 // export const host =   "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
 
@@ -49,6 +51,7 @@ export const student_district = "/district/?page_size=100"
 export const my_patok = "/student/my-patok/"
 export const my_task_submission = "/student/my-task-submission/"
 export const my_task_put= "/student/my-submission/"
+export const my_tasschedule= "/student/schedule-table/"
 
 
 
@@ -83,3 +86,6 @@ export const studentnb = '/studentnb/'
 export const holidays_create_list = '/holidays_create_list/'
 export const holidays_detail = '/holidays_detail/'
 export const kafedra = '/kafedra/'
+export const teacher_change_nb = "/nbpetition_status/"
+export const semester = "/semester/"
+export const academic_year = "/academic_year/"

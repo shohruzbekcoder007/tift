@@ -46,11 +46,9 @@ export default function TeacherDashboard() {
                 <TeacherDashboardDate>
                   {`${new Date(elem.created_at).getDate()}:${new Date(elem.created_at).getMonth() + 1}:${new Date(elem.created_at).getFullYear()}`}
                 </TeacherDashboardDate>
-                <TeacherDashboardTitle>
-                  {elem.title.slice(0, 50)}...
+                <TeacherDashboardTitle dangerouslySetInnerHTML={{__html: elem.title.slice(0,50)+'...'}}>
                 </TeacherDashboardTitle>
-                <TeacherDashboardSubTItle>
-                  {elem.description.slice(0, 80)}...
+                <TeacherDashboardSubTItle dangerouslySetInnerHTML={{__html: elem.description.slice(0,150)+'...'}}>
                 </TeacherDashboardSubTItle>
                 <Link to={`${elem.id}`} state={{ element: elem }}>
                   <TeacherDashboardButton>

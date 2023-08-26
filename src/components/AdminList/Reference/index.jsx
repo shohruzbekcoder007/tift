@@ -338,7 +338,6 @@ export default function Reference() {
               >
                 Boshlanish sanasi                         </Typography>
               <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography

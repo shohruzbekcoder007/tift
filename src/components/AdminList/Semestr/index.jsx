@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -16,15 +16,119 @@ import { IconButton } from '../../Final_Dep/style'
 import { ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo } from '../../Information/styles'
 import SelectInput from '@mui/material/Select/SelectInput'
 import { Link } from 'react-router-dom'
+import { PostSemesters, deleteSemester, getAcademecYear, getSemesters } from './requests'
+import { academic_year, semester } from '../../../utils/API_urls'
+import DataPicker from '../../DataPicker'
+import SemesternumList from '../../../dictionary/semesters'
 
 export default function Semestr() {
   const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [SemesterList, setSemesterList] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
   const [file, setFile] = useState(null);
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [YearList, setYearList] = useState([])
+
+  const [Name, setName] = useState('')
+  const [AcademekYear, setAcademekYear] = useState('')
+  const [SemesterNum, setSemesterNum] = useState('')
+
+  const [StartDate, setStartDate] = useState(null)
+  const [EndDate, setEndDate] = useState(null)
+  const [SyylabusStart, setSyylabusStart] = useState(null)
+  const [SyylabusEnd, setSyylabusEnd] = useState(null)
+  const [Status, setStatus] = useState(false)
+
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
+  }
+
+  const Semester = useMemo(() => {
+    return SemesternumList.map(element => {
+      return {
+        value: element.value,
+        name: element.name
+      }
+    })})
+
+
+  useEffect(() => {
+    getSemesters(`${semester}?page_size=${pageSize}&page=${page}`, (response) => {
+      setSemesterList(response.data.results)
+      setPageCount(response.data.page_count)
+      setAllCount(response.data.count)
+    }, (error) => {
+        console.log(error)
+    })
+
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = [...YearList]
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.id
+        })
+      })
+      setYearList(mass)
+      
+    }, (error) => {
+        console.log(error)
+    })
+}, [pageSize, page,Status])
+
+
+  const handleClick = () => {
+    PostSemesters(semester, {
+      parent: AcademekYear,
+      name: Name,
+      season: SemesterNum,
+      start_date: StartDate,
+      end_date: EndDate,
+      syllabus_start: SyylabusStart,
+      syllabus_end: SyylabusEnd
+    }, (response) => {
+      setStatus(!Status)
+      handleClose()
+      console.log(response);
+    }, (error) => {
+        console.log(error)
+    })
+  }
+
+  const handleClick2 = () => {
+    PostSemesters(semester, {
+      parent: AcademekYear,
+      name: Name,
+      season: SemesterNum,
+      start_date: StartDate,
+      end_date: EndDate,
+      syllabus_start: SyylabusStart,
+      syllabus_end: SyylabusEnd
+    }, (response) => {
+      setStatus(!Status)
+      handleClose()
+      console.log(response);
+    }, (error) => {
+        console.log(error)
+    })
+  }
+
+
+  const DeletSemster = (id) => {
+    deleteSemester(`${semester}${id}`, (response) => {
+      setStatus(!Status)
+    }, (error) => {
+        console.log(error)
+    })
   }
 
   return (
@@ -185,14 +289,14 @@ export default function Semestr() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5].map((elem, index) => {
+                  SemesterList.length > 0 ? SemesterList.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1494</th>
-                        <th>2021-2022</th>
-                        <th>1</th>
-                        <th>с 17-09-2018 по 20-09-2018</th>
-                        <th>с 17-09-2018 по 20-09-2018</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.parent}</th>
+                        <th>{elem.name}</th>
+                        <th>{elem.start_date + "    " + elem.end_date}</th>
+                        <th>{elem?.syllabus_start + "    " + elem?.syllabus_end}</th>
                         <th>
                           <Button
                             variant="contained"
@@ -208,27 +312,29 @@ export default function Semestr() {
                           </Button>
                         </th>
                         <th>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              borderRadius: "10px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              padding: "6px 12px",
-                              marginRight: "20px"
-                            }}
-                          >
-                            Faol
-                          </Button>
+                         {
+                          elem.is_active &&  <Button
+                          variant="contained"
+                          sx={{
+                            borderRadius: "10px",
+                            textTransform: "capitalize",
+                            boxShadow: "none",
+                            padding: "6px 12px",
+                            marginRight: "20px"
+                          }}
+                        >
+                          Faol
+                        </Button>
+                         }
                         </th>
                         <th>
-                          <Link to={'control'}>
+                          {/* <Link to={'control'}>
                           <div style={{width: "100%", textAlign: 'center'}}>
                             <IconButton style={{margin: "0", width: '100%'}}>
                               Oraliq nazorat
                             </IconButton>
                           </div>
-                          </Link>
+                          </Link> */}
                           <IconButton style={{margin: '15px 0 0 0'}}>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M18.3307 9.99984C18.3307 14.5998 14.5974 18.3332 9.9974 18.3332C5.3974 18.3332 1.66406 14.5998 1.66406 9.99984C1.66406 5.39984 5.3974 1.6665 9.9974 1.6665C14.5974 1.6665 18.3307 5.39984 18.3307 9.99984Z" stroke="#252525" strokeWidth="1.5" stroke-linecap="round" strokeLinejoin="round" />
@@ -244,6 +350,7 @@ export default function Semestr() {
                               padding: "10px 12px",
                               margin: '0 10px'
                             }}
+                            onClick={handleOpen2}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1184_18370)">
                                 <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
@@ -272,6 +379,7 @@ export default function Semestr() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
+                            onClick={(val) => DeletSemster(elem.id)}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -293,14 +401,18 @@ export default function Semestr() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th align='center' colSpan={13}>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + SemesterList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
      
 
@@ -312,12 +424,13 @@ export default function Semestr() {
         aria-describedby="keep-mounted-modal-description"
       >
         <SemesterModalBoxInfo>
+          
           <div style={{ marginBottom: '20px' }}>
             <ModalHeader>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "20px",
                   fontWeight: 600,
@@ -336,12 +449,13 @@ export default function Semestr() {
             </ModalHeader>
           </div>
 
+
           <div className='modal_box_body'>
             <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -349,17 +463,16 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-                Yil
+               Nomi
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+            <CustomizedInputSimple callback_func={(val) => { setName(val) }} placeholder="  " />
               
             </SemesterModalSelectWrapperInfo>
-
             <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -367,20 +480,22 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-                Boshlanish sanasi (birinchi kurs uchun)
-
+                Akademik year
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-
+              <AllSelectFullWidth
+                chageValueFunction={(val) => setAcademekYear(val)}
+                selectOptions={YearList}
+              />
+              
             </SemesterModalSelectWrapperInfo>
           </div>
-          
+
           <div className='modal_box_body'>
             <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -391,42 +506,18 @@ export default function Semestr() {
                 Semestr
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "1",
-                  value: "Tanlang",
-                }]}
+                chageValueFunction={(_val) => setSemesterNum(val => val)}
+                selectOptions={Semester}
               />
             </SemesterModalSelectWrapperInfo>
-
-            <SemesterModalSelectWrapperInfo>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="HeaderWrapperH4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-               Tugash sanasi (birinchi yil uchun)
-
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-            </SemesterModalSelectWrapperInfo>
           </div>
-
-
-
 
           <div className='modal_box_body'>
             <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -434,9 +525,10 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-                Начала заявки
+               Boshlanish sanasi
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+              <DataPicker setFunction={(val) => {setStartDate(val)}}/>
+
               
             </SemesterModalSelectWrapperInfo>
 
@@ -444,7 +536,7 @@ export default function Semestr() {
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -452,104 +544,20 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-                Предметы
-
+                Tugash sanasi
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-
+              <DataPicker setFunction={(val) => {setEndDate(val)}}/>
             </SemesterModalSelectWrapperInfo>
           </div>
 
           <div className='modal_box_body'>
-            <SemesterModalSelectWrapperInfo>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="HeaderWrapperH4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-               Окончания заявки
-              </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-              
-            </SemesterModalSelectWrapperInfo>
-
-            <SemesterModalSelectWrapperInfo>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="HeaderWrapperH4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-              Предметы (Показать оценки)
-
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-
-            </SemesterModalSelectWrapperInfo>
-          </div>
-
-          <div className='modal_box_body'>
-          <SemesterModalSelectWrapperInfo>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="HeaderWrapperH4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-              Boshlanish sanasi
-
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-            </SemesterModalSelectWrapperInfo>
-
-            <SemesterModalSelectWrapperInfo>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="HeaderWrapperH4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Руководитель
-              </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Xalikov Xazratbek",
-                  value: "Tanlang",
-                }]}
-              />
-            </SemesterModalSelectWrapperInfo>
-
             
-          </div>
 
-          <div className='modal_box_body'>
-          <SemesterModalSelectWrapperInfo>
+            <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -557,17 +565,17 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-              Tugash sanasi
-
+                Boshlanish sanasi (Syylabus)
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
+              <DataPicker setFunction={(val) => {setSyylabusStart(val)}}/>
+
             </SemesterModalSelectWrapperInfo>
 
             <SemesterModalSelectWrapperInfo>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
-                component="HeaderWrapperH4"
+                component="h4"
                 sx={{
                   fontSize: "16px",
                   fontWeight: 600,
@@ -575,18 +583,10 @@ export default function Semestr() {
                   mb: "10px"
                 }}
               >
-              File
+               Tugash sanasi (Syylabus)
               </Typography>
-              <MuiFileInput
-                placeholder="Fayl kiriting"
-                value={file}
-                onChange={setFileHandler}
-                // getInputText={(value) => value ? 'Thanks!' : ''}
-                fullWidth
-              />
+              <DataPicker setFunction={(val) => {setSyylabusEnd(val)}}/>
             </SemesterModalSelectWrapperInfo>
-
-            
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'end' }}>
@@ -600,6 +600,7 @@ export default function Semestr() {
                 Bekor qilish
               </Button>
               <Button
+              onClick={handleClick}
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
               >
@@ -609,7 +610,202 @@ export default function Semestr() {
             </ModalButtonsInfo>
           </div>
         </SemesterModalBoxInfo>
-      </Modal>
+        </Modal>
+
+
+        <Modal
+        keepMounted
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <SemesterModalBoxInfo>
+          
+          <div style={{ marginBottom: '20px' }}>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000",
+                }}
+              >
+                Tahrirlash
+              </Typography>
+              <span
+                onClick={handleClose2}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                </svg>
+              </span>
+            </ModalHeader>
+          </div>
+
+
+          <div className='modal_box_body'>
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Nomi
+              </Typography>
+            <CustomizedInputSimple callback_func={(val) => { setName(val) }} placeholder="  " />
+              
+            </SemesterModalSelectWrapperInfo>
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Akademik year
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={(val) => setAcademekYear(val)}
+                selectOptions={YearList}
+              />
+              
+            </SemesterModalSelectWrapperInfo>
+          </div>
+
+          <div className='modal_box_body'>
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Semestr
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={(val) => setSemesterNum(val)}
+                selectOptions={Semester}
+              />
+            </SemesterModalSelectWrapperInfo>
+          </div>
+
+          <div className='modal_box_body'>
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Boshlanish sanasi
+              </Typography>
+              <DataPicker setFunction={(val) => {setStartDate(val)}}/>
+
+              
+            </SemesterModalSelectWrapperInfo>
+
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Tugash sanasi
+              </Typography>
+              <DataPicker setFunction={(val) => {setEndDate(val)}}/>
+            </SemesterModalSelectWrapperInfo>
+          </div>
+
+          <div className='modal_box_body'>
+            
+
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Boshlanish sanasi (Syylabus)
+              </Typography>
+              <DataPicker setFunction={(val) => {setSyylabusStart(val)}}/>
+
+            </SemesterModalSelectWrapperInfo>
+
+            <SemesterModalSelectWrapperInfo>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+               Tugash sanasi (Syylabus)
+              </Typography>
+              <DataPicker setFunction={(val) => {setSyylabusEnd(val)}}/>
+            </SemesterModalSelectWrapperInfo>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'end' }}>
+            <ModalButtonsInfo>
+              <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                variant="outlined"
+                onClick={handleClose2}
+              >
+                Bekor qilish
+              </Button>
+              <Button
+              onClick={handleClick2}
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+              >
+                Saqlash
+              </Button>
+            </ModalButtonsInfo>
+          </div>
+        </SemesterModalBoxInfo>
+        </Modal>
       </Paper>
     </>
   )
