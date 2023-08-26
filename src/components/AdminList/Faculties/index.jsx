@@ -15,10 +15,11 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
-import { deleteFakulty, fakultyCreate, fakultyUpdate, getDekanList, getRoles, getfakultyList } from './request'
-import { allusers, fakulty, role } from '../../../utils/API_urls'
+import { deleteFakulty, fakultyCreate, fakultyUpdate, getfakultyList } from './request'
+import { fakulty } from '../../../utils/API_urls'
 import faculty_type from '../../../dictionary/faculty_type'
 import MuiAlert from '@mui/material/Alert';
+import { roleUserList } from './roleUserList'
 // import AllSelectFullWidth1 from '../../AllSelectFullWidth1'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -52,16 +53,9 @@ export default function Faculties() {
   const handleClose = () => setOpen(false);
   const handleCloseAlert = () => setOpenAlert(false);
 
-  const roleDekanList = async () => {
-    const userRoles = await getRoles(role) || []
-    const userRole = userRoles.data.find((element) => element.name == "dekan")
-    const dekanListresult = await getDekanList(`${allusers}?role=${userRole?.id}`)
-    return dekanListresult.data.results
-  }
-
   useEffect(() => {
     const loadData = async () => {
-      const dekan_list = await roleDekanList()
+      const dekan_list = await roleUserList("dekan")
       if (dekan_list) {
         setDekanList(dekan_list.map(element => {
           return {
