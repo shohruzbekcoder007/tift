@@ -19,7 +19,7 @@ const events = [
     title: 'event 1', 
     start: '2023-08-26T10:45:00', 
     end: '2023-08-26T12:00:00',
-    backgroundColor: "yellow",
+    backgroundColor: "green",
     allDay: false
   },
   { 
@@ -27,13 +27,16 @@ const events = [
     title: 'event 2', 
     start: '2023-08-26T13:00:00', 
     end: '2023-08-26T15:00:00', 
+    backgroundColor: "green",
     allDay: false
+
   },
   { 
     id: 2, 
     title: 'event 2', 
     start: '2023-08-26T13:00:00', 
     end: '2023-08-26T15:00:00', 
+    backgroundColor: "green",
     allDay: false
   }
 ]; 
@@ -42,14 +45,14 @@ function CalendarDayWeek() {
   return ( 
     <> 
       <Paper
-                elevation={0}
-                sx={{
-                    width: '100%',
-                    padding: "20px",
-                    borderRadius: "10px",
-                    // backgroundColor: "transparent"
-                }}
-            >
+          elevation={0}
+          sx={{
+              width: '100%',
+              padding: "20px",
+              borderRadius: "10px",
+              // backgroundColor: "transparent"
+          }}
+      >
       <FullCalendar 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} 
         initialView="timeGridWeek"
