@@ -311,6 +311,10 @@ const StatusLesson = ({ status, status_day }) => {
           borderRadius: "10px",
           boxShadow: "none",
           width: "181px",
+          backgroundColor: "YellowButton.main",
+          "&:hover": {
+            backgroundColor: "YellowButton.main",
+          },
         }}
         startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
         <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
@@ -331,6 +335,11 @@ const StatusLesson = ({ status, status_day }) => {
           borderRadius: "10px",
           boxShadow: "none",
           width: "181px",
+          backgroundColor: "text.secondary",
+          "&:hover": {
+            backgroundColor: "text.secondary",
+          },
+          cursor: "not-allowed"
         }}
         startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
