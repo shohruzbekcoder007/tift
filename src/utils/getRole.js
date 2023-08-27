@@ -3,6 +3,9 @@ export const getRole = (user) => {
     if (user.role[0] === "student") {
       return 'student'
     }
+    if (user?.role[0] === "lawyer") {
+      return 'lawyer'
+    }
     if (user?.role[0] === "dekan") {
       return 'dekan'
     }
