@@ -1,18 +1,97 @@
-import React, { useState } from 'react'
-import { BoxHeader, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
+import React, { useEffect, useMemo, useState } from 'react'
+import { BoxHeader } from '../../../../global_styles/styles'
 import { Button, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
-import { WrapperBox, WrapperButtons, WrapperHeader, WrapperInputsCard, WrapperSelect, WrapperInputsCard2, WrapperInputsCardTwo } from './styles'
-import { InputsWrapper } from '../../../CourseManagement/styles'
+import { WrapperBox, WrapperButtons, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
 import { MuiFileInput } from 'mui-file-input'
+import jins from '../../../../dictionary/jins'
+import citizenship from '../../../../dictionary/citizenship'
+import nationality from '../../../../dictionary/nationality'
+import { getRegionListRequest } from '../request'
+import { district, region } from '../../../../utils/API_urls'
 
-export default function EditEmployees() {
+export default function AddEmployees() {
+
   const [file, setFile] = useState(null);
+  const [regionList, setRegionList] = useState([])
+  const [districtList, setDistrictList] = useState([])
+  const [newData, setNewData] = useState({
+    citizenship: null,
+    nationality: null,
+    passport: null,
+    jshshr: null,
+    first_name: null,
+    last_name: null,
+    middle_name: null,
+    birthday: null,
+    gender: null,
+    country: null,
+    region: null,
+    district: null,
+    address: null,
+    region2: null,
+    district2: null,
+    address2: null,
+    specialty_employee: null,
+    academic_degree: null,
+    kafedra: null,
+    start_work: null,
+    experience: null,
+    email: null,
+    phone_number: null,
+})
+
+  const reqDataChange = (keyname, value) => {
+    setNewData(prev => prev[keyname] = value )
+  }
 
   const setFileHandler = (newValue, info) => {
       setFile(newValue)
   }
+
+  const jinsList = useMemo(() => {
+    return jins.map(elem => {
+        return {value: elem.value, name: elem.uz}
+    })
+  }, [])
+
+  const citizenshipList = useMemo(() => {
+    return citizenship.map(elem => {
+        return {value: elem.value, name: elem.uz}
+    })
+  },[])
+
+  const nationalityList = useMemo(() => {
+    return nationality.map(elem => {
+        return {value: elem.value, name: elem.uz}
+    })
+  },[])
+
+  useEffect(() => {
+    getRegionListRequest(`${region}?page_size=500`, (response) => {
+        setRegionList(response.data.results.map(elem => {
+            return {
+                name: elem.name,
+                value: elem.id
+            }
+        }))
+    }, (error) => {
+        console.log(error)
+    })
+    getRegionListRequest(`${district}?page_size=500`, (response) => {
+        setDistrictList(response.data.results.map(elem => {
+            return {
+                name: elem.name,
+                value: elem.id
+            }
+        }))
+    }, (error) => {
+        console.log(error)
+    })
+  }, [])
+
+
   return (
     <div>
       <Typography
@@ -23,7 +102,7 @@ export default function EditEmployees() {
           margin: "0 0 20px 10px"
         }}
       >
-        O'zgartirish
+        Qo'shish
       </Typography>
       <WrapperBox>
         <BoxHeader>
@@ -75,10 +154,7 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Qiz",
-                value: 12,
-              }]}
+              selectOptions={jinsList}
             />
           </WrapperInputsCard>
         </BoxHeader>
@@ -189,10 +265,7 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Xorazm viloyati",
-                value: 12,
-              }]}
+              selectOptions={regionList}
             />
           </WrapperInputsCard>
         </BoxHeader>
@@ -246,10 +319,7 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Xorazm viloyati",
-                value: 12,
-              }]}
+              selectOptions={regionList}
             />
           </WrapperInputsCard>
         </BoxHeader>
@@ -271,10 +341,7 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "O’zbek",
-                value: 12,
-              }]}
+              selectOptions={nationalityList}
             />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
@@ -293,10 +360,7 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "O’zbekiston",
-                value: 12,
-              }]}
+              selectOptions={citizenshipList}
             />
           </WrapperInputsCardTwo>
         </BoxHeader>
@@ -362,14 +426,11 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Shahar
+              Shahar, Tuman
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Xo’jaobod tumani",
-                value: 12,
-              }]}
+              selectOptions={districtList}
             />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
@@ -410,14 +471,11 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Shahar (vaqtinchalik)
+              Shahar, Tuman (vaqtinchalik)
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Uchtepa tumani",
-                value: 12,
-              }]}
+              selectOptions={districtList}
             />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
