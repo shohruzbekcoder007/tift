@@ -15,6 +15,7 @@ import { useLocation } from 'react-router-dom'
 import { createDepartment, deleteDepartment, getKafedraList, updateDepartmentInformation } from './request'
 import { kafedra as kafedralink } from '../../../../utils/API_urls'
 import AlertDialog from '../../../AlertDialog'
+import { roleUserList } from '../roleUserList'
 
 export default function Kafedra() {
 
@@ -22,6 +23,8 @@ export default function Kafedra() {
   const [departments, setDepartments] = useState([])
   const [name, setName] = useState('')
   const [department, setDepartment] = useState('')
+  const [departmentHeads, setDepartmentHeads] = useState([])
+  const [newUser, setNewUser] = useState(null)
 
   let { state } = useLocation()
 
@@ -29,20 +32,42 @@ export default function Kafedra() {
   const handleClose = () => setOpen(false)
 
   const createDepartmentF = async () => {
+    console.log({
+      parent: state.faculty_id,
+      name: name,
+      department_user: department
+    })
     createDepartment(`${kafedralink}`, {
-      name
+      parent: state.faculty_id,
+      name: name,
+      department_user: department
     }, (response) => {
-      console.log(response)
+      // console.log(response)
+      setNewUser(response)
+      handleClose()
     }, (error) => {console.log(error)})
+  }
+
+  const kafedraMudorList = async () => {
+    const mudorList = await roleUserList('department_user')
+    setDepartmentHeads(mudorList.map(elem => {
+      return {
+        name: elem.full_name,
+        value: elem.id
+      }
+    }))
   }
 
   useEffect(() => {
     getKafedraList(`${kafedralink}?faculty=${state.faculty_id}&page_size=100`, (response) => {
       setDepartments(response.data.results)
+      if(response.data.results[0]?.id)
+        setDepartment(response.data.results[0]?.id)
     }, (error) => {
       console.error(error)
     })
-  }, [])
+    kafedraMudorList()
+  }, [newUser])
 
   return (
     <>
@@ -151,7 +176,7 @@ export default function Kafedra() {
               <tbody>
                 {
                   departments.map((elem, index) => {
-                    return <OneDepartment key={index} elem={elem} />
+                    return <OneDepartment key={index} elem={elem} departmentHeads={departmentHeads}/>
                   })
                 }
               </tbody>
@@ -224,8 +249,10 @@ export default function Kafedra() {
               >
                 Kafedra mudori:
               </Typography>
-              <CustomizedInputSimple callback_func={(val) => { setDepartment(val) }} placeholder="" />
-
+                <AllSelectFullWidth
+                  chageValueFunction={val => setDepartment(val)}
+                  selectOptions={departmentHeads}
+                />
             </ModalSelectWrapper>
             <ModalButtons>
               <Button
@@ -238,6 +265,7 @@ export default function Kafedra() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={createDepartmentF}
               >
                 Saqlash
               </Button>
@@ -249,24 +277,28 @@ export default function Kafedra() {
   )
 }
 
-const OneDepartment = ({ elem }) => {
+const OneDepartment = ({ elem, departmentHeads }) => {
 
+  console.log(elem)
   const [open2, setOpen2] = useState(false)
   const [alert, setAlert] = useState(false)
-  const [name, setName] = useState('')
-  const [department, setDepartment] = useState('')
+  const [name, setName] = useState(elem.name)
+  const [department, setDepartment] = useState(elem.department_user_id)
   const [deleted, setDeleted] = useState(false)
+  const [dpt, setDpt] = useState(elem) 
 
   const handleOpen2 = () => setOpen2(true)
   const handleClose2 = () => setOpen2(false)
   const openAlert = () => { setAlert(true) }
 
   const updateDepartment = () => {
-    updateDepartmentInformation(`${kafedralink}${elem.id}`, {
+    updateDepartmentInformation(`${kafedralink}${dpt.id}/`, {
       department_user: department,
       name: name
     }, (response) => {
       console.log(response.data)
+      setDpt(response.data)
+      handleClose2()
     }, (error) => {
       console.error(error)
     })
@@ -288,9 +320,9 @@ const OneDepartment = ({ elem }) => {
         deleted ? <></> :
           <>
             <tr>
-              <th>{elem.id}</th>
-              <th>{elem.name}</th>
-              <th>{elem.department_user}</th>
+              <th>{dpt.id}</th>
+              <th>{dpt.name}</th>
+              <th>{dpt.department_user}</th>
               <th>
                 <Button
                   variant="contained"
@@ -354,129 +386,86 @@ const OneDepartment = ({ elem }) => {
                   aria-describedby="keep-mounted-modal-description"
                 >
                   <ModalBox>
-                    <ModalHeader>
-                      <Typography
-                        id="keep-mounted-modal-title"
-                        variant="h6"
-                        component="h4"
-                        sx={{
-                          fontSize: "20px",
-                          fontWeight: 600,
-                          color: "#000"
-                        }}
-                      >
-                        Tahrirlash
-                      </Typography>
-                      <span
-                        onClick={handleClose2}
-                      >
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                        </svg>
-                      </span>
-                    </ModalHeader>
-                    <BuildingModalLang>
-                      <BuildingModalLangText>RU</BuildingModalLangText>
-                      <BuildingModalLangText>UZC</BuildingModalLangText>
-                      <BuildingModalLangText>UZL</BuildingModalLangText>
-                      <BuildingModalLangText>EN</BuildingModalLangText>
-                      <BuildingModalLangText>KAR</BuildingModalLangText>
-                    </BuildingModalLang>
-                    <ModalSelectWrapper>
-                      <Typography
-                        id="keep-mounted-modal-title"
-                        variant="h6"
-                        component="h4"
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "#000",
-                          m: "20px 0 10px 0"
-                        }}
-                      >
-                        Yo’nalish:
-                      </Typography>
-                      <CustomizedInputSimple
-                        callback_func={(val) => { console.log(val) }}
-                        placeholder="Mobil tizimlari"
-                        onChange={(val) => { setName(val) }}
-                      />
-                    </ModalSelectWrapper>
-                    <ModalSelectWrapper>
-                      <Typography
-                        id="keep-mounted-modal-title"
-                        variant="h6"
-                        component="h4"
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "#000",
-                          mb: "10px"
-                        }}
-                      >
-                        Telefon raqam:
-                      </Typography>
-                      <CustomizedInputSimple
-                        callback_func={(val) => { console.log(val) }}
-                        placeholder="+998 91 234 56 78"
-                        onChange={(val) => { setDepartment(val) }}
-                      />
-
-                    </ModalSelectWrapper>
-
-                    <ModalSelectWrapper>
-                      <Typography
-                        id="keep-mounted-modal-title"
-                        variant="h6"
-                        component="h4"
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "#000",
-                          mb: "10px"
-                        }}
-                      >
-                        Email                        </Typography>
-                      <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="someobe@somewhere.com" />
-                    </ModalSelectWrapper>
-
-                    <ModalSelectWrapper>
-                      <Typography
-                        id="keep-mounted-modal-title"
-                        variant="h6"
-                        component="h4"
-                        sx={{
-                          fontSize: "16px",
-                          fontWeight: 600,
-                          color: "#000",
-                          mb: "10px"
-                        }}
-                      >
-                        Universitet                            </Typography>
-                      <AllSelectFullWidth
-                        chageValueFunction={val => console.log(val)}
-                        selectOptions={[{
-                          name: "ТToshkent Axborot Texnologiyalari",
-                          value: 12,
-                        }]}
-                      />
-                    </ModalSelectWrapper>
-                    <ModalButtons>
-                      <Button
-                        sx={{ width: "50%", textTransform: "none" }}
-                        variant="outlined"
-                        onClick={handleClose2}
-                      >
-                        Bekor qilish
-                      </Button>
-                      <Button
-                        sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                        variant="contained"
-                      >
-                        Saqlash
-                      </Button>
-                    </ModalButtons>
-                  </ModalBox>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000"
+                }}
+              >
+                Tahrirlash
+              </Typography>
+              <span
+                onClick={handleClose2}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                </svg>
+              </span>
+            </ModalHeader>
+            <BuildingModalLang>
+              <BuildingModalLangText>RU</BuildingModalLangText>
+              <BuildingModalLangText>UZC</BuildingModalLangText>
+              <BuildingModalLangText>UZL</BuildingModalLangText>
+              <BuildingModalLangText>EN</BuildingModalLangText>
+              <BuildingModalLangText>KAR</BuildingModalLangText>
+            </BuildingModalLang>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                Kafedra nomi:
+              </Typography>
+              <CustomizedInputSimple callback_func={(val) => { setName(val) }} placeholder="" defaultValue={elem.name} />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Kafedra mudori:
+              </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setDepartment(val)}
+                  selectOptions={departmentHeads}
+                />
+            </ModalSelectWrapper>
+            <ModalButtons>
+              <Button
+                sx={{ width: "50%", textTransform: "none" }}
+                variant="outlined"
+                onClick={handleClose2}
+              >
+                Bekor qilish
+              </Button>
+              <Button
+                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                variant="contained"
+                onClick={updateDepartment}
+              >
+                Saqlash
+              </Button>
+            </ModalButtons>
+          </ModalBox>
                 </Modal>
                 <AlertDialog
                   open_alert={alert}
