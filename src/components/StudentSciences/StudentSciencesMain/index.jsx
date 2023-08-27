@@ -223,6 +223,7 @@ export default function StudentSciencesMain() {
                             </Link>
                           </th>
                           <th>
+                          <Link to='calendarplan'>
                             <Button
                               variant="contained"
                               color="secondary"
@@ -245,6 +246,7 @@ export default function StudentSciencesMain() {
                                 </defs>
                               </svg>
                             </Button>
+                          </Link>
                           </th>
                         </tr>
                       )
