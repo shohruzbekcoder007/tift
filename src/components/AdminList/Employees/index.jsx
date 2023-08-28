@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import { AttendSearchButton } from './styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
-import { getEmployes } from './request'
+import { deleteEmployee, getEmployes } from './request'
 import { employee } from '../../../utils/API_urls'
 
 export default function Employees() {
@@ -19,17 +19,17 @@ export default function Employees() {
   const [allCount, setAllCount] = useState(0)
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(1)
+  const [deleted, setDeleted] = useState(true)
 
   useEffect(() => {
     getEmployes(`${employee}?page_size=${pageSize}&search=${searchText}&page=${page}`, response => {
       setEmployes(response.data.results)
       setAllCount(response.data.count)
-      console.log(response.data)
       setPageCount(response.data.page_count)
     }, error => {
       console.log(error)
     })
-  }, [page, pageSize, searchText])
+  }, [page, pageSize, searchText, deleted])
 
   return (
     <>
@@ -160,7 +160,7 @@ export default function Employees() {
               <tbody>
                 {
                   employes.map((elem, index) => {
-                    return <OneEmployee key={index} elem={elem}/>
+                    return <OneEmployee key={index} elem={elem} setDeleted={setDeleted}/>
                   })
                 }
               </tbody>
@@ -177,7 +177,19 @@ export default function Employees() {
 }
 
 
-export const OneEmployee = ({ elem }) => {
+export const OneEmployee = ({ elem, setDeleted }) => {
+
+  const deleteStaff = () => {
+    deleteEmployee(`${employee}${elem.id}`, (response) => {
+      if(response.status)
+        setDeleted(prev => !prev)
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  
+
   return (
     <tr>
       <th>{elem.id}</th>
@@ -238,6 +250,7 @@ export const OneEmployee = ({ elem }) => {
         </Link>
         <Button
           variant="contained"
+          onClick={(_) => {deleteStaff()}}
           sx={{
             borderRadius: "10px",
             textTransform: "capitalize",

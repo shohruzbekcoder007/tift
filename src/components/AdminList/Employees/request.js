@@ -19,3 +19,15 @@ export const getRegionListRequest = (url, successfulFunction, errorFunction) => 
         errorFunction(error)
     })
 }
+
+export const deleteEmployee = (url, successfulFunction, errorFunction) => {
+    axios.delete(
+        url,
+        {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response.data)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
