@@ -8,32 +8,6 @@ import { getClassSchedule } from './requests';
 import { useEffect, useState } from 'react';
 import { my_tasschedule } from '../../utils/API_urls';
 
-const events = [
-  // { 
-  //   id: 1, 
-  //   title: 'event 1', 
-  //   start: '2023-08-09T10:45:00', 
-  //   end: '2023-08-09T12:00:00',
-  //   backgroundColor: "green",
-  //   allDay: false
-  // },
-  // { 
-  //   id: 12, 
-  //   title: 'event 1', 
-  //   start: '2023-07-07T10:45:00', 
-  //   end: '2023-07-07T12:00:00',
-  //   backgroundColor: "yellow",
-  //   allDay: false
-  // },
-  // { 
-  //   id: 2, 
-  //   title: 'event 2', 
-  //   start: '2023-07-07T13:00:00', 
-  //   end: '2023-07-07T18:00:00', 
-  //   allDay: false
-  // }
-];
-
 function CalendarDayWeek() {
   const [Semester, setSemester] = useState(2);
   const [ScheduleList, setScheduleList] = useState([]);
@@ -78,7 +52,7 @@ function CalendarDayWeek() {
           meridiem: false,
           hour12: false,
         }}
-        events={events} 
+        events={ScheduleList} 
         nowIndicator 
         allDaySlot={false}
         dateClick={(e) => console.log(e.dateStr)} 

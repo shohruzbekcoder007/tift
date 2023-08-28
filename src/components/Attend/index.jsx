@@ -61,7 +61,6 @@ export default function Attend() {
             setAllCount(response.data.count)
             setPageCount(response.data.page_count)
             setteacherGetNbList(response.data.results);
-            console.log(response.data.results);
         }, (error) => {
             console.log(error)
         })
