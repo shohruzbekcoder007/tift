@@ -134,6 +134,7 @@ import TutorSeeSchedule from './components/TutorSeeSchedule'
 import MainLawyer from './components/MainLawyer'
 import LawyerAllStudents from './components/LawyerAllStudents'
 import LawyerDashboard from './components/LawyerDashboard'
+import AddEmployees from './components/AdminList/Employees/AddEmployees'
 
 
 function App() {
@@ -354,6 +355,7 @@ function App() {
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
                     <Route path='edit' element={<EditEmployees />} />
+                    <Route path='add' element={<AddEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />

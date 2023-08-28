@@ -1018,7 +1018,6 @@ export const admin_links = [
     to: null,
     type: 'link_header'
   },
-
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_1122_13135)">
@@ -1029,9 +1028,7 @@ export const admin_links = [
           <rect width="24" height="24" fill="currentcolor" />
         </clipPath>
       </defs>
-    </svg>
-
-    ,
+    </svg>,
     text: {
       uz: "Foydalanuvchilar",
       ru: "Пользователи",
@@ -1039,7 +1036,6 @@ export const admin_links = [
     },
     to: "users"
   },
-
   {
     img: null,
     text: {
@@ -1050,8 +1046,6 @@ export const admin_links = [
     to: null,
     type: 'link_header'
   },
-
-
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_1122_12419)">
@@ -1062,9 +1056,7 @@ export const admin_links = [
           <rect width="24" height="24" fill="currentcolor" />
         </clipPath>
       </defs>
-    </svg>
-
-    ,
+    </svg>,
     text: {
       uz: "Davomat",
       ru: "Посещаемость",
@@ -1072,8 +1064,6 @@ export const admin_links = [
     },
     to: "attendance"
   },
-
-
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_1122_13255)">
@@ -1086,9 +1076,7 @@ export const admin_links = [
           <rect width="24" height="24" fill="currentcolor" />
         </clipPath>
       </defs>
-    </svg>
-
-    ,
+    </svg>,
     text: {
       uz: "Malumot",
       ru: "Справка",
@@ -1108,9 +1096,7 @@ export const admin_links = [
           <rect width="24" height="24" fill="currentcolor" />
         </clipPath>
       </defs>
-    </svg>
-
-    ,
+    </svg>,
     text: {
       uz: "Talabalar hujjatlari",
       ru: "Документы студента",
@@ -1118,7 +1104,6 @@ export const admin_links = [
     },
     to: "studentdocuments"
   },
-
   {
     img: null,
     text: {
@@ -1129,9 +1114,6 @@ export const admin_links = [
     to: null,
     type: 'link_header'
   },
-
-
-
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_1122_12412)">

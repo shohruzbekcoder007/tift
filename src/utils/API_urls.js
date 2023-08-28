@@ -7,7 +7,7 @@ export const host =   "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =   "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
-// export const host = "https://2e73-178-218-200-199.ngrok-free.app"
+// export const host = "https://2e73-178-218-200-199.ngrok-free.app/"
 
 export const token_url = "/token/"
 export const user_me = "/users/me/"
@@ -91,10 +91,11 @@ export const kafedra = '/kafedra/'
 export const teacher_change_nb = "/nbpetition_status/"
 export const semester = "/semester/"
 export const academic_year = "/academic_year/"
+export const employee = "/employee/"
+export const region = "/region/"
+export const district = "/district/"
 
 
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"
-
-
