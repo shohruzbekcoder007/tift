@@ -1,4 +1,4 @@
-export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
+// export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
