@@ -1,4 +1,4 @@
-// export const host = "https://husanibragimov.jprq.live"
+// export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
@@ -97,6 +97,9 @@ export const district = "/district/"
 export const science = "/science/"
 
 
+export const building = "/building/"
+export const room_create_list = "/room_create_list/"
+export const room_detail = "/room_detail/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

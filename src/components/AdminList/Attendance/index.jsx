@@ -43,6 +43,7 @@ export default function Attend() {
 
     useEffect(() => {
         getTeacherGroups(teacher_groups, (response) => {
+            console.log(response.data);
             setLessonIdList(response.data[0]?.id)
             setgroupList(response.data.map(elem => {
                 return {

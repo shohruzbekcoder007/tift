@@ -43,7 +43,7 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="" }) {
+export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type }) {
 
     const [value, setValue] = useState(defaultValue)
 
@@ -55,6 +55,7 @@ export default function CustomizedInputSimple({ label, callback_func, placeholde
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={value}
+                type={type}
                 // helperText="Incorrect entry."
                 onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}
                 placeholder={placeholder}
