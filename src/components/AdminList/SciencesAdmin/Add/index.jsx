@@ -143,22 +143,6 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
                   m: "20px 0 10px 0"
                 }}
               >
-                Mustaqil
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
                 Kredit
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
@@ -284,28 +268,6 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
                 }]}
               />
             </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Imtixon uchun fayl (maks. fayl hajmi: 50 mb)
-              </Typography>
-              <MuiFileInput
-                placeholder="Fayl kiriting"
-                value={file}
-                onChange={setFileHandler}
-                // getInputText={(value) => value ? 'Thanks!' : ''}
-                fullWidth
-              />
-            </ModalSelectWrapper>
           <WrapperButtons>
           <Button
             sx={{ width: "50%", textTransform: "none" }}
@@ -321,7 +283,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
           </Button>
           </WrapperButtons>
           </HeaderWrapper>
-
+{/* 
           <HeaderWrapper>
           <Typography
                 id="keep-mounted-modal-title"
@@ -345,7 +307,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
                   )
                 })
               }
-          </HeaderWrapper>
+          </HeaderWrapper> */}
         </div>
         
       </Paper>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -14,6 +14,8 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
+import { getAdminKafedra } from './requests'
+import { kafedra, science } from '../../../utils/API_urls'
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -21,6 +23,43 @@ export default function SciencesAdmin() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+  const [adminkafedra, setadminkafedra] = useState([]);
+  const [kafedrachoes, setkafedrachoes] = useState([]);
+  const [degreechoes, setdegreechoes] = useState([]);
+  const [studytypechoes, setstudytypechoes] = useState([]);
+  const [scienceAdmin, setscienceAdmin] = useState([]);
+
+
+
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [page, setPage] = useState(1)
+
+  useEffect(() => {
+    getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
+      setadminkafedra(response.data.results.map( elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+        console.log(error)
+    })
+  }, [])
+
+
+  useEffect(() => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}`, (response) => {
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      setscienceAdmin(response.data.results)
+    }, (error) => {
+        console.log(error)
+    })
+  }, [])
+
 
   return (
     <>
@@ -36,7 +75,7 @@ export default function SciencesAdmin() {
        
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+              setPageSize(val)
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
@@ -73,14 +112,40 @@ export default function SciencesAdmin() {
 
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Nomi" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kod" />
+          <AllSelectFullWidth
+              chageValueFunction={val => setkafedrachoes(val)}
+              selectOptions={adminkafedra}
+            />
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
+              chageValueFunction={val => setdegreechoes(val)}
+              selectOptions={[
+                {
+                name: "Bakalavr",
+                value: 'bachelor',
+                },
+                {
+                  name: "Magister",
+                  value: 'master',
+                },
+            ]}
+            />
+            <AllSelectFullWidth
+              chageValueFunction={val => setstudytypechoes(val)}
               selectOptions={[{
-                name: "Barchasi",
-                value: 12,
+                name: "morning",
+                value: 'morning',
+              },
+              {
+                name: "evening",
+                value: 'evening',
+              },
+              {
+                name: "external",
+                value: 'external',
+              },
+              {
+                name: "remote",
+                value: 'remote',
               }]}
             />
           </InputsWrapper>
@@ -217,13 +282,13 @@ export default function SciencesAdmin() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                  scienceAdmin.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1234</th>
-                        <th>Основы производство видео</th>
-                        <th>FRE1124</th>
-                        <th>Аудиовизуал технологиялари</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.name}</th>
+                        <th>{elem.code}</th>
+                        <th>{elem.kafedra}</th>
                         <th>
                           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
                             <rect width="36" height="36" rx="10" fill="url(#pattern0)" />
@@ -338,8 +403,8 @@ export default function SciencesAdmin() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+            <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + scienceAdmin.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+            <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
 
         <Modal
