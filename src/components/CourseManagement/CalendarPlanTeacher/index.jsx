@@ -242,22 +242,6 @@ export default function CalendarPlanTeacher() {
                       fontSize: "16px",
                       fontWeight: 600,
                       color: "#000",
-                      m: "20px 0 10px 0"
-                    }}
-                  >
-                    Turi                         
-                  </Typography>
-
-                </ModalSelectWrapper>
-                <ModalSelectWrapper>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#000",
                       mb: "10px"
                     }}
                   >
@@ -451,48 +435,6 @@ const ButtonLessonSource = ({ elem }) => {
                     </svg>
                   </span>
                 </ModalHeader>
-                <ModalSelectWrapper>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#000",
-                      m: "20px 0 10px 0"
-                    }}
-                  >
-                    Turi                         
-                  </Typography>
-                  <AllSelectFullWidth
-                    chageValueFunction={val => setlessonType(val)}
-                    selectOptions={[
-                      { 
-                        name :'literature',
-                        value: 'literature'
-                      },
-                      {
-                        name: 'video',
-                        value: 'video'
-                      },
-                      {
-                        name: 'presentation',
-                        value: 'presentation'
-                      },
-                      {
-                        name: 'file',
-                        value: 'file'
-                      },
-                      // {
-                      //   name: 'url', 
-                      //   value: 'url'
-                      // },
-                      ]
-                    }
-                  />
-
-                </ModalSelectWrapper>
                 <ModalSelectWrapper>
                   <Typography
                     id="keep-mounted-modal-title"

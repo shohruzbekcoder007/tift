@@ -42,7 +42,6 @@ export default function Vedomost() {
 
 
   const openModalBoxGrade = (element) => {
-    console.log(element);
     setstudentSource(element.submission.source)
     setmaxGrade(element.grade)
     settasksGradeId(element.submission.id)

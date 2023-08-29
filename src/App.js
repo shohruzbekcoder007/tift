@@ -131,6 +131,10 @@ import SignInSide from './components/SignInSide'
 import DekanStudent from './components/DekanStudent'
 import IndividualPysical from './components/IndividualPysical'
 import TutorSeeSchedule from './components/TutorSeeSchedule'
+import MainLawyer from './components/MainLawyer'
+import LawyerAllStudents from './components/LawyerAllStudents'
+import LawyerDashboard from './components/LawyerDashboard'
+import AddEmployees from './components/AdminList/Employees/AddEmployees'
 
 
 function App() {
@@ -304,7 +308,10 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
-
+                <Route path="lawyer" element={<MainLawyer />}>
+                      <Route path="dashboard" element={<LawyerDashboard />} />
+                      <Route path="students" element={<LawyerAllStudents />} />
+                </Route>
                 
 
                 <Route path="admin" element={<MainAdmin />}>
@@ -349,6 +356,7 @@ function App() {
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
                     <Route path='edit' element={<EditEmployees />} />
+                    <Route path='add' element={<AddEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
@@ -418,8 +426,6 @@ function App() {
                   </Route>
                   <Route path='roles' element={<Roles />} />
                   <Route path='server' element={<Server />} />
-
-
 
                 </Route>
               </>

@@ -7,6 +7,7 @@ export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =   "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
+// export const host = "https://2e73-178-218-200-199.ngrok-free.app/"
 
 export const token_url = "/token/"
 export const user_me = "/users/me/"
@@ -52,6 +53,7 @@ export const my_patok = "/student/my-patok/"
 export const my_task_submission = "/student/my-task-submission/"
 export const my_task_put= "/student/my-submission/"
 export const my_tasschedule= "/student/schedule-table/"
+export const notifications= "/student/notifications/"
 
 
 
@@ -89,6 +91,14 @@ export const kafedra = '/kafedra/'
 export const teacher_change_nb = "/nbpetition_status/"
 export const semester = "/semester/"
 export const academic_year = "/academic_year/"
+export const employee = "/employee/"
+export const region = "/region/"
+export const district = "/district/"
+
+
 export const building = "/building/"
 export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
+
+// lawyer
+export const lawyer_studentdocument = "/studentdocument/"
