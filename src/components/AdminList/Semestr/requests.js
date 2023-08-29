@@ -50,3 +50,13 @@ export const deleteSemester = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const PatchSemester = (url, data, successfulFunction, errorFunction) => {
+    axios.patch(url, data, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}

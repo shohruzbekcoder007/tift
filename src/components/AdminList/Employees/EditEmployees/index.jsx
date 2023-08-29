@@ -78,7 +78,12 @@ export default function EditEmployees() {
               selectOptions={[{
                 name: "Qiz",
                 value: 12,
-              }]}
+              },
+             { 
+              name: "Og'il",
+              value: 11,
+            }
+            ]}
             />
           </WrapperInputsCard>
         </BoxHeader>

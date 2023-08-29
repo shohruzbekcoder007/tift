@@ -252,6 +252,7 @@ function App() {
                     <Route index element={<DekanOlympics />} />
                   </Route>
                 </Route>
+                
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
