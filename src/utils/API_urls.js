@@ -98,6 +98,7 @@ export const academic_year = "/academic_year/"
 export const employee = "/employee/"
 export const region = "/region/"
 export const district = "/district/"
+export const science = "/science/"
 
 
 export const building = "/building/"
