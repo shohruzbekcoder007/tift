@@ -368,7 +368,8 @@ export default function Reference() {
                   mb: "10px"
                 }}
               >
-                Talaba                            </Typography>
+                Talaba
+              </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
@@ -378,7 +379,6 @@ export default function Reference() {
               />
               {/* <AutocompleteApi/> */}
             </ModalSelectWrapper>
-
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
