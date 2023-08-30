@@ -1,4 +1,4 @@
-export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
+export const host = "https://e181-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
@@ -7,7 +7,6 @@ export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =   "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
-// export const host = "https://2e73-178-218-200-199.ngrok-free.app/"
 
 export const token_url = "/token/"
 export const user_me = "/users/me/"
@@ -94,6 +93,7 @@ export const academic_year = "/academic_year/"
 export const employee = "/employee/"
 export const region = "/region/"
 export const district = "/district/"
+export const news = "/news/"
 
 
 export const building = "/building/"
