@@ -75,14 +75,15 @@ export default function EditEmployees() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Qiz",
-                value: 12,
-              },
-             { 
-              name: "Og'il",
-              value: 11,
-            }
+              selectOptions={[
+                { 
+                  name: "Male",
+                  value: "male",
+                },
+                {
+                name: "Female",
+                value: "female",
+              }
             ]}
             />
           </WrapperInputsCard>
@@ -341,7 +342,7 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Kafedra
+              Yo'nalish
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}

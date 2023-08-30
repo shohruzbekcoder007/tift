@@ -64,7 +64,7 @@ export default function Reference() {
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
             console.log(val)
-          }} />
+          }}/>
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
             <Button

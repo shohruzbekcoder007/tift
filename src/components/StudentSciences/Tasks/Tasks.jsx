@@ -171,7 +171,7 @@ export default function Tasks() {
               </thead>
               <tbody>
                 {
-                  myPatokList.map((elem, index) => {
+                myPatokList.length > 0 ?  myPatokList.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.teacher}</th>
@@ -228,6 +228,10 @@ export default function Tasks() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>

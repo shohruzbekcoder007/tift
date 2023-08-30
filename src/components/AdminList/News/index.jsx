@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -16,6 +16,9 @@ import { IconButton } from '../../Final_Dep/style'
 import { ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo } from '../../Information/styles'
 import SelectInput from '@mui/material/Select/SelectInput'
 import { Link } from 'react-router-dom'
+import {news} from '../../../utils/API_urls'
+import {getNews} from './requests'
+
 
 export default function News() {
   const [open, setOpen] = React.useState(false);
@@ -24,11 +27,28 @@ export default function News() {
   const handleClose = () => setOpen(false);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
-  const [file, setFile] = useState(null);
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [Status, setStatus] = useState(false)
+  const [pageCount, setPageCount] = useState(1)
+  const [NewsList, setNewsList] = useState([])
+  const [Name, setName] = useState('')
+  const [RoomType, setRoomType] = useState('labs')
+  const [Count, setCount] = useState('')
 
-  const setFileHandler = (newValue, info) => {
-    setFile(newValue)
-  }
+  useEffect(() => {
+    getNews(`${news}`, (response) => {
+      console.log(response.data.results);
+      setNewsList(response.data.results)
+      // setPageCount(response.data.page_count)
+      // setAllCount(response.data.count)
+    }, (error) => {
+      console.log(error)
+    })
+
+
+  }, [pageSize, page,Status])
 
   return (
     <ContentWrapper>
@@ -181,21 +201,21 @@ export default function News() {
                     </svg>
                     }
                   />
-                  <th></th>
+                  <th>                                                </th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5].map((elem, index) => {
+                 NewsList.length > 0 ? NewsList.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1494</th>
-                        <th>Подачи заявки</th>
-                        <th>Время подачи заявки</th>
-                        <th>2020-02-23 10:42:19</th>
+                        <th>{elem.id}</th>
+                        <th dangerouslySetInnerHTML={{__html: elem?.title?.slice(0,15) + "..."}}></th>
+                        <th dangerouslySetInnerHTML={{__html: elem?.description?.slice(0,50)+ "..."}}></th>
+                        <th>{elem.created_at}</th>
                         <th>
                         <IconButton style={{margin: "10px 0", width: '100%'}}>
-                         O'qituvchi
+                         {elem.type ?? "Yo'q"}
                         </IconButton>
                         </th>
                         <th>
@@ -256,6 +276,10 @@ export default function News() {
                       </tr>
                     )
                   })
+                  : 
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
