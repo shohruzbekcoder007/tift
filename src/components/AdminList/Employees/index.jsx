@@ -159,9 +159,14 @@ export default function Employees() {
               </thead>
               <tbody>
                 {
-                  employes.map((elem, index) => {
+                 employes.length > 0 ? employes.map((elem, index) => {
                     return <OneEmployee key={index} elem={elem} setDeleted={setDeleted}/>
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
+                
                 }
               </tbody>
             </table>

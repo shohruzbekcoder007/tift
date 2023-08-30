@@ -34,7 +34,7 @@ function CalendarDayWeek() {
       <FullCalendar 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} 
         initialView="timeGridWeek"
-        timeZone= 'UTC'
+        timeZone= 'GMT+5'
         headerToolbar={{ 
           center: 'timeGridWeek,timeGridDay',
           right: "",
