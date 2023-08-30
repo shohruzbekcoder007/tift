@@ -99,6 +99,7 @@ export const employee = "/employee/"
 export const region = "/region/"
 export const district = "/district/"
 export const science = "/science/"
+export const news = "/news/"
 export const academic_group = "/academic_group/"
 
 
