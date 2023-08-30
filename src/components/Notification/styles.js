@@ -27,6 +27,9 @@ export const NotificationWrapperBody = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    :hover {
+        background-color:  ${props => props.theme.color.secondary_color};
+    }
 `
 
 export const DeadlineTitle = styled.p`
