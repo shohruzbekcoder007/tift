@@ -1,0 +1,82 @@
+{
+    "All": {
+        "uz": "Barchasi",
+        "ru": "Все",
+        "eng": "All"
+    },
+    "Course": {
+        "uz": "Kurs",
+        "ru": "Курс",
+        "eng": "Course"
+    },
+    "Group": {
+        "uz": "Guruh",
+        "ru": "Группа",
+        "eng": "Group"
+    },
+    "FullName": {
+        "uz": "To’liq ism sharifi",
+        "ru": "Полное имя",
+        "eng": "Full name"
+    },
+    "Field": {
+        "uz": "Yo'nalish",
+        "ru": "Направление",
+        "eng": "Field"
+    },
+    "StudyType": {
+        "uz": "O'qish turi",
+        "ru": "Тип обучения",
+        "eng": "Study type"
+    },
+    "AppropriationReport": {
+        "uz": "O'zlashtirish qaydnomasi",
+        "ru": "Отчет об успеваемости",
+        "eng": "Appropriation report"
+    },
+    "Timetable": {
+        "uz": "Dars jadvali",
+        "ru": "Расписание занятий",
+        "eng": "Timetable"
+    },
+    "AcademicPerformance": {
+        "uz": "O'zlashtirish",
+        "ru": "Успеваемость",
+        "eng": "Academic performance"
+    },
+    "StudInfo": {
+        "uz": "Student ma'lumotlari",
+        "ru": "Данные студентов",
+        "eng": "Student information"
+    },
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количество",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    }
+}
