@@ -223,7 +223,7 @@ export default function StudentSciencesMain() {
                             </Link>
                           </th>
                           <th>
-                          <Link to='calendarplan'>
+                          <Link to='calendarplan' state={{data:elem.id}}>
                             <Button
                               variant="contained"
                               color="secondary"
