@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { memo, useState } from "react"
 import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 
@@ -43,7 +43,7 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type }) {
+export default memo(function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type }) {
 
     const [value, setValue] = useState(defaultValue)
 
@@ -62,4 +62,4 @@ export default function CustomizedInputSimple({ label, callback_func, placeholde
             />
         </div>
     );
-}
+})
