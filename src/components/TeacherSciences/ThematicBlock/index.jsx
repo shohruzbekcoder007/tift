@@ -14,12 +14,13 @@ export default function ThematicBlock() {
   const [studentAttendanceList, setStudentAttendanceList] = useState([])
   let navigate = useNavigate()
 
+  console.log(state, 'sss');
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   useEffect(() => {
-    getTeacherAttendance(`${teacher_attendance}${state.id}/`, (response) => {
-      setTeacherAttendanceList(response.data)
+    getTeacherAttendance(`${teacher_attendance}${state?.id}/`, (response) => {
+      setTeacherAttendanceList(response?.data)
     }, (error) => {
       console.log(error)
     })
@@ -104,13 +105,11 @@ export default function ThematicBlock() {
                       <th style={{ width: "200px" }}>
                         <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                           {
-                            state.data?
+                            state?.data?
                             <Checkbox {...label} onChange = {(event) => {nbChanged(event, elem.id)}}/> :
                             elem.nb?
                             <p style={{color:'red'}}>НБ</p>:
                             <p style={{color:'green'}}>+</p>
-                            
-
                           }
                         </TeacherSciencesButtonBox>
                       </th>
@@ -121,7 +120,7 @@ export default function ThematicBlock() {
             </tbody>
           </table>
           {
-            state.data? 
+            state?.data? 
             <Button
                 variant="contained"
                 sx={{

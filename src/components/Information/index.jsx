@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody } from './styles'
 import Modal from '@mui/material/Modal'
-import { Button, Typography } from '@mui/material'
+import { Button, Snackbar, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { getStudentInformation, setInformation } from './requests'
-import { host, student_detail, student_district, student_region } from '../../utils/API_urls' 
+import { host, student_detail, student_district, student_region } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
+import MuiAlert from '@mui/material/Alert';
 
 
 
@@ -28,81 +29,105 @@ export default function Information() {
   const [changeDistrictList1, setChangeDistrictList1] = useState(null)
   const [textInfo, setTextInfo] = useState('')
   const [textInfo1, setTextInfo1] = useState('')
+  const [openAlert, setOpenAlert] = useState(false)
+  const [Status, setStatus] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
 
   useEffect(() => {
     getStudentInformation(student_detail, (response) => {
-        setInfoList(response.data.result)
+      setInfoList(response.data.result)
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-    
+
     getStudentInformation(student_region, (response) => {
-      setChangedRegionId(response.data.results[0]?.id)
-      setChangedRegionId1(response.data.results[0]?.id)
-      setRegionList(response.data.results.map(elem => {
+      setChangedRegionId(response.data[0]?.id)
+      setChangedRegionId1(response.data[0]?.id)
+      console.log(response.data);
+      setRegionList(response.data.map(elem => {
         return {
           name: elem.name,
           value: elem.id
         }
       }))
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-}, [])
+  }, [Status])
 
 
-const hangleClick = (_) => {
-
-  setInformation(student_detail,  {
-    region: changedRegionId,
-    district: changeDistrictList,
-    address: textInfo,
-    region2: changedRegionId1,
-    district2: changeDistrictList1,
-    address2: textInfo1,
-  }, (response) => {
-    console.log(response.data.result);
-    handleClose()
-  }, (error) => {
-    console.log(error)
-  } )
-}
-
-
-
-useEffect(() => {
-  if(changedRegionId){
-    getStudentInformation(`${student_district}&region=${changedRegionId}`, (response) => {
-      setChangeDistrictList(response.data.results[0]?.id)
-      setDistrictList(response.data.results.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
+  const hangleClick = (_) => {
+    setInformation(student_detail, {
+      region: changedRegionId,
+      district: changeDistrictList,
+      address: textInfo,
+      region2: changedRegionId1,
+      district2: changeDistrictList1,
+      address2: textInfo1,
+    }, (response) => {
+      console.log(response);
+      setOpenAlert(true)
+      setStatus(!Status)
+      serChanged(true)
+      setAlertMessage("Saqlandi")
+      handleClose()
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
   }
-}, [changedRegionId])
 
 
-useEffect(() => {
-  if(changedRegionId1){
-    getStudentInformation(`${student_district}&region=${changedRegionId1}`, (response) => {
-      setChangeDistrictList1(response.data.results[0]?.id)
-      setDistrictList1(response.data.results.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
+
+  useEffect(() => {
+    if (changedRegionId) {
+      getStudentInformation(`${student_district}&region=${changedRegionId}`, (response) => {
+        setChangeDistrictList(response.data[0]?.id)
+        setDistrictList(response.data.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }))
+      }, (error) => {
         console.log(error)
-    })
-  }
-}, [changedRegionId1])
+      })
+    }
+  }, [changedRegionId])
+
+
+  useEffect(() => {
+    if (changedRegionId1) {
+      getStudentInformation(`${student_district}&region=${changedRegionId1}`, (response) => {
+        setChangeDistrictList1(response.data[0]?.id)
+        setDistrictList1(response.data.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [changedRegionId1])
 
 
   return (
@@ -129,7 +154,7 @@ useEffect(() => {
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
-              <HeaderWrapperP>{infoList.gender == "male"?"Erkak":"Ayol"}</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.gender == "male" ? "Erkak" : "Ayol"}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
@@ -156,7 +181,7 @@ useEffect(() => {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.degree}</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.degree === 'bachelor' ? 'Bakalavr' : 'Magister'}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
@@ -176,7 +201,7 @@ useEffect(() => {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.is_scholarship == true?"Bor":"Yoq"}</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
@@ -267,7 +292,7 @@ useEffect(() => {
                 Manzil (Lotin xarflarda)*
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { setTextInfo(val) }} placeholder="  " />
+              <CustomizedInputSimple callback_func={(val) => { setTextInfo(val) }} placeholder="  " />
             </ModalSelectWrapperInfo>
 
 
@@ -328,8 +353,8 @@ useEffect(() => {
                 Manzil (vaqtincha) (lotin xarflarda)*
 
               </Typography>
-            <CustomizedInputSimple callback_func={(val) => { setTextInfo1(val) }} placeholder="  " />
-              
+              <CustomizedInputSimple callback_func={(val) => { setTextInfo1(val) }} placeholder="  " />
+
             </ModalSelectWrapperInfo>
           </div>
 
@@ -355,6 +380,11 @@ useEffect(() => {
           </div>
         </ModalBoxInfo>
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
 
   )

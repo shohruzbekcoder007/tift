@@ -1,4 +1,4 @@
-import { Modal, Paper, Typography } from '@mui/material'
+import { Modal, Paper, Snackbar, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import { Pagination } from '@mui/material'
@@ -11,13 +11,14 @@ import { createTaskSubmission, getMyPatok, PutTaskSubmission } from './requests'
 import { dateFormatter } from '../../../utils/dateFormatter'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { MuiFileInput } from 'mui-file-input'
+import MuiAlert from '@mui/material/Alert';
 
 const baho = (ball) => {
-  if(ball >= 90){
+  if (ball >= 90) {
     return 5
-  } else if (ball >= 70){
+  } else if (ball >= 70) {
     return 4
-  } else if (ball >= 60){
+  } else if (ball >= 60) {
     return 3
   } else {
     return 2
@@ -27,9 +28,11 @@ const baho = (ball) => {
 
 export default function Tasks() {
   const { state } = useLocation()
+  console.log(state);
   const [myPatokList, setmyPatokList] = useState([])
   const [ball1, setBall1] = useState(0)
   const [ball2, setBall2] = useState(0)
+  const [Status, setStatus] = useState(false)
 
   useEffect(() => {
     getMyPatok(`${my_patok}${state.data}/`, (response) => {
@@ -45,7 +48,7 @@ export default function Tasks() {
     }, (error) => {
       console.log(error)
     })
-  }, [])
+  }, [Status])
 
   return (
     <>
@@ -82,11 +85,11 @@ export default function Tasks() {
           </StudentTasksBox>
           <StudentTasksBox>
             <p>O’zlashtirish</p>
-            <b>{ball1 !== 0 ? Math.round((ball2/ball1)*100):0}%</b>
+            <b>{ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0}%</b>
           </StudentTasksBox>
           <StudentTasksBox>
             <p>Hozirgi bahosi</p>
-            <b>{baho(ball1 !== 0 ? Math.round((ball2/ball1)*100):0)}</b>
+            <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
           </StudentTasksBox>
         </BoxHeader>
         <BoxBody>
@@ -171,7 +174,7 @@ export default function Tasks() {
               </thead>
               <tbody>
                 {
-                myPatokList.length > 0 ?  myPatokList.map((elem, index) => {
+                  myPatokList.length > 0 ? myPatokList.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.teacher}</th>
@@ -194,7 +197,7 @@ export default function Tasks() {
                                 </svg>
                               </div>
 
-                             {elem.title}
+                              {elem.title}
                             </StudentAIButton>
                           </a>
                         </th>
@@ -222,16 +225,16 @@ export default function Tasks() {
                           </Button>
                         </th>
                         <th>
-                            <StatusTask type={elem.submisson.status} data={elem.submisson} id = {elem.id}/> 
-                            <AddButtonSubmission data = {elem.submisson} id = {elem.submisson.id}/>
+                          <StatusTask callBackFunc={(val) => setStatus(val)} status={Status} type={elem.submisson.status} data={elem.submisson} id={elem.id} />
+                          <AddButtonSubmission callBackFunc={(val) => setStatus(val)} status={Status} data={elem.submisson} id={elem.submisson.id} />
                         </th>
                       </tr>
                     )
                   })
-                  :
-                  <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
-                  </tr>
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
@@ -247,11 +250,31 @@ export default function Tasks() {
 }
 
 
-const StatusTask = ({ type, data, id }) => {
+const StatusTask = ({ type, data, id, callBackFunc, status }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
   const [changeTasksId, setChangeTasksId] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
   const handleOpen = (id) => {
     setOpen(true)
     setChangeTasksId(id)
@@ -265,292 +288,349 @@ const StatusTask = ({ type, data, id }) => {
     const formData = new FormData();
     formData.append("task", changeTasksId);
     formData.append("source", file);
-    createTaskSubmission(my_task_submission, formData, (response) => { 
-      handleClose()
-    }, (error) => {
-      console.log(error)
-    })
-}; 
-  
-  if (type) {
-    return (
-      <>
-      <Button
-        variant="contained"
-        sx={{
-          borderRadius: "10px",
-          textTransform: "capitalize",
-          boxShadow: "none",
-          gap: '8px',
-          // padding: "10px 80px"
-        }}
-        onClick={(_) => { handleOpen(id) }}
-      >
-        <div style={{ width: "40px" }}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_78_19718)">
-              <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_78_19718">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
 
-        Добавить учебный материал
-      </Button>
-      <Modal
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="keep-mounted-modal-title"
-              aria-describedby="keep-mounted-modal-description"
-            >
-          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'> 
-
-              <ModalBox>
-                <ModalHeader>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: 600,
-                      color: "#000"
-                    }}
-                  >
-                    Qo’shish                           
-                  </Typography>
-                  <span
-                    onClick={handleClose}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                    </svg>
-                  </span>
-                </ModalHeader>
-                <ModalSelectWrapper>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#000",
-                      mb: "10px"
-                    }}
-                  >
-                    File
-                  </Typography>
-                  <MuiFileInput
-                    placeholder="Fayl kiriting"
-                    value={file}
-                    onChange={setFileHandler}
-                    // getInputText={(value) => value ? 'Thanks!' : ''}
-                    fullWidth
-                  />
-                </ModalSelectWrapper>
-
-
-                <ModalButtons>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none" }}
-                    variant="outlined"
-                    onClick={handleClose}
-                  >
-                    Bekor qilish
-                  </Button>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                    variant="contained"
-                    type="submit"
-
-                  >
-                    Saqlash
-                  </Button>
-                </ModalButtons>
-              </ModalBox>
-            </form>
-
-      </Modal>
-        </>
-    )
-  } else {
-    if(type == undefined){
-      return (
-        <a href={ host+data.source } target="_blank">
-        <Button
-        variant="contained"
-        sx={{
-          borderRadius: "10px",
-          textTransform: "capitalize",
-          boxShadow: "none",
-          gap: '8px',
-          // padding: "10px 80px"
-        }}
-      >
-        <div style={{ width: "40px" }}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_78_19718)">
-              <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_78_19718">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
-
-        Yuklab olish
-      </Button>
-      </a>
-      )
-    } else {
-      return <span style={{color: "red"}}>Muddati o'tgan</span>
-    }
-  }
-}
-
-const AddButtonSubmission = ({ data, id }) => {
-    const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
-    const [file, setFile] = useState(null);
-    const [changeTasksId, setChangeTasksId] = useState(null);
-    const handleOpen = (id) => {
-      setChangeTasksId(id)
-      setOpen(true)
-    };
-    const setFileHandler = (newValue, info) => {
-      setFile(newValue)
-    }
-    const handleSubmit = async (event) => {
-  
-      event.preventDefault();
-      const formData = new FormData();
-      formData.append("source", file);
-      PutTaskSubmission(`${my_task_put}${changeTasksId}/`, formData, (response) => { 
-        console.log(response);
+    if (file.size / 1024 / 1024 <= 30) {
+      createTaskSubmission(my_task_submission, formData, (response) => {
+        callBackFunc(!status)
+        setOpenAlert(true)
+        serChanged(true)
+        setAlertMessage("Vazifa yuklandi")
+        setFile(null)
         handleClose()
       }, (error) => {
         console.log(error)
       })
-     };
+    } else {
+      callBackFunc(!status)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage("File hajmi 30 mb dan katta bo'lmasligi kerak")
+      setFile(null)
+      handleClose()
+    }
 
+  };
 
-  if (data?.deadline_status){
+  if (type) {
     return (
-    <>
-    <Button
-        variant="contained"
-        sx={{
-          borderRadius: "10px",
-          textTransform: "capitalize",
-          boxShadow: "none",
-          gap: '8px',
-          marginLeft: "10px"
-        }}
-        onClick = {(_) => handleOpen(id)}
-      >
-        <div style={{ width: "40px" }}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_78_19718)">
-              <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_78_19718">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-        </div>
+      <>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "10px",
+            textTransform: "capitalize",
+            boxShadow: "none",
+            gap: '8px',
+            // padding: "10px 80px"
+          }}
+          onClick={(_) => { handleOpen(id) }}
+        >
+          <div style={{ width: "40px" }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_78_19718)">
+                <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_78_19718">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
 
-        O'zgartirish
-    </Button>
-    
-    <Modal
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="keep-mounted-modal-title"
-              aria-describedby="keep-mounted-modal-description"
+          Vazifa Yuklash
+        </Button>
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'>
+
+            <ModalBox>
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000"
+                  }}
+                >
+                  Qo’shish
+                </Typography>
+                <span
+                  onClick={handleClose}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+              </ModalHeader>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  File
+                </Typography>
+                <MuiFileInput
+                  placeholder="Fayl kiriting"
+                  value={file}
+                  onChange={setFileHandler}
+                  // getInputText={(value) => value ? 'Thanks!' : ''}
+                  fullWidth
+                />
+              </ModalSelectWrapper>
+
+
+              <ModalButtons>
+                <Button
+                  sx={{ width: "50%", textTransform: "none" }}
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  Bekor qilish
+                </Button>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+
+                >
+                  Saqlash
+                </Button>
+              </ModalButtons>
+            </ModalBox>
+          </form>
+
+        </Modal>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </>
+    )
+  } else {
+    if (type == undefined) {
+      return (
+        <a href={host + data.source} target="_blank">
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "10px",
+              textTransform: "capitalize",
+              boxShadow: "none",
+              gap: '8px',
+              // padding: "10px 80px"
+            }}
           >
-          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'> 
+            <div style={{ width: "40px" }}>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_78_19718)">
+                  <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_78_19718">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
 
-              <ModalBox>
-                <ModalHeader>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: 600,
-                      color: "#000"
-                    }}
-                  >
-                    Qo’shish                           
-                  </Typography>
-                  <span
-                    onClick={handleClose}
-                  >
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                    </svg>
-                  </span>
-                </ModalHeader>
-                <ModalSelectWrapper>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#000",
-                      mb: "10px"
-                    }}
-                  >
-                    File
-                  </Typography>
-                  <MuiFileInput
-                    placeholder="Fayl kiriting"
-                    value={file}
-                    onChange={setFileHandler}
-                    // getInputText={(value) => value ? 'Thanks!' : ''}
-                    fullWidth
-                  />
-                </ModalSelectWrapper>
+            Yuklab olish
+          </Button>
+        </a>
+      )
+    } else {
+      return <span style={{ color: "red" }}>Muddati o'tgan</span>
+    }
+  }
+}
+
+const AddButtonSubmission = ({ data, id, callBackFunc , status}) => {
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const [file, setFile] = useState(null);
+  const [changeTasksId, setChangeTasksId] = useState(null);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
 
-                <ModalButtons>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none" }}
-                    variant="outlined"
-                    onClick={handleClose}
-                  >
-                    Bekor qilish
-                  </Button>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                    variant="contained"
-                    type="submit"
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-                  >
-                    Saqlash
-                  </Button>
-                </ModalButtons>
-              </ModalBox>
-            </form>
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
 
-    </Modal>
-    </>
-    
-      
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
+  const handleOpen = (id) => {
+    setChangeTasksId(id)
+    setOpen(true)
+  };
+  const setFileHandler = (newValue, info) => {
+    setFile(newValue)
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("source", file);
+    if (file.size / 1024 / 1024 <= 30) {
+      PutTaskSubmission(`${my_task_put}${changeTasksId}/`, formData, (response) => {
+        setOpenAlert(true)
+        callBackFunc(!status)
+        serChanged(true)
+        setAlertMessage("Vazifa muvofaqqiyatli o'zgartirildi")
+        setFile(null)
+        handleClose()
+      }, (error) => {
+        console.log(error)
+      })
+    } else {
+      callBackFunc(!status)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage("File hajmi 30 mb dan katta bo'lmasligi kerak")
+      setFile(null)
+      handleClose()
+    }
+  };
+
+
+  if (data?.deadline_status) {
+    return (
+      <>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "10px",
+            textTransform: "capitalize",
+            boxShadow: "none",
+            gap: '8px',
+            marginLeft: "10px"
+          }}
+          onClick={(_) => handleOpen(id)}
+        >
+          <div style={{ width: "40px" }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_78_19718)">
+                <path d="M11.332 9.33335C11.332 9.51016 11.2618 9.67973 11.1368 9.80475C11.0117 9.92978 10.8422 10 10.6654 10H5.33203C5.15522 10 4.98565 9.92978 4.86063 9.80475C4.7356 9.67973 4.66536 9.51016 4.66536 9.33335C4.66536 9.15654 4.7356 8.98697 4.86063 8.86194C4.98565 8.73692 5.15522 8.66668 5.33203 8.66668H10.6654C10.8422 8.66668 11.0117 8.73692 11.1368 8.86194C11.2618 8.98697 11.332 9.15654 11.332 9.33335ZM8.66536 11.3333H5.33203C5.15522 11.3333 4.98565 11.4036 4.86063 11.5286C4.7356 11.6536 4.66536 11.8232 4.66536 12C4.66536 12.1768 4.7356 12.3464 4.86063 12.4714C4.98565 12.5964 5.15522 12.6667 5.33203 12.6667H8.66536C8.84218 12.6667 9.01174 12.5964 9.13677 12.4714C9.26179 12.3464 9.33203 12.1768 9.33203 12C9.33203 11.8232 9.26179 11.6536 9.13677 11.5286C9.01174 11.4036 8.84218 11.3333 8.66536 11.3333ZM14.6654 6.99002V12.6667C14.6643 13.5504 14.3128 14.3976 13.6879 15.0225C13.063 15.6474 12.2158 15.999 11.332 16H4.66536C3.78163 15.999 2.9344 15.6474 2.30951 15.0225C1.68462 14.3976 1.33309 13.5504 1.33203 12.6667V3.33335C1.33309 2.44962 1.68462 1.60239 2.30951 0.977495C2.9344 0.352603 3.78163 0.00107394 4.66536 1.53658e-05H7.67536C8.28844 -0.00156258 8.89575 0.118407 9.46218 0.352988C10.0286 0.587569 10.5429 0.932107 10.9754 1.36668L13.298 3.69068C13.7329 4.12284 14.0776 4.63699 14.3123 5.20333C14.547 5.76968 14.667 6.37696 14.6654 6.99002ZM10.0327 2.30935C9.82289 2.10612 9.58732 1.9313 9.33203 1.78935V4.66668C9.33203 4.84349 9.40227 5.01306 9.52729 5.13809C9.65232 5.26311 9.82189 5.33335 9.9987 5.33335H12.876C12.734 5.07814 12.5589 4.84278 12.3554 4.63335L10.0327 2.30935ZM13.332 6.99002C13.332 6.88002 13.3107 6.77468 13.3007 6.66668H9.9987C9.46827 6.66668 8.95956 6.45597 8.58448 6.0809C8.20941 5.70582 7.9987 5.19711 7.9987 4.66668V1.36468C7.8907 1.35468 7.7847 1.33335 7.67536 1.33335H4.66536C4.13493 1.33335 3.62622 1.54406 3.25115 1.91914C2.87608 2.29421 2.66536 2.80292 2.66536 3.33335V12.6667C2.66536 13.1971 2.87608 13.7058 3.25115 14.0809C3.62622 14.456 4.13493 14.6667 4.66536 14.6667H11.332C11.8625 14.6667 12.3712 14.456 12.7462 14.0809C13.1213 13.7058 13.332 13.1971 13.332 12.6667V6.99002Z" fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_78_19718">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </div>
+
+          O'zgartirish
+        </Button>
+
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <form onSubmit={handleSubmit} method="HTTP_METHOD" encType='multipart/form-data'>
+
+            <ModalBox>
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000"
+                  }}
+                >
+                  O'zgartirish
+                </Typography>
+                <span
+                  onClick={handleClose}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+              </ModalHeader>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  File
+                </Typography>
+                <MuiFileInput
+                  placeholder="Fayl kiriting"
+                  value={file}
+                  onChange={setFileHandler}
+                  // getInputText={(value) => value ? 'Thanks!' : ''}
+                  fullWidth
+                />
+              </ModalSelectWrapper>
+
+
+              <ModalButtons>
+                <Button
+                  sx={{ width: "50%", textTransform: "none" }}
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  Bekor qilish
+                </Button>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+                >
+                  Saqlash
+                </Button>
+              </ModalButtons>
+            </ModalBox>
+          </form>
+
+        </Modal>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+      </>
+
+
     )
   } else {
     return <></>

@@ -30,6 +30,7 @@ export const NotificationWrapperBody = styled.div`
     :hover {
         background-color:  ${props => props.theme.color.secondary_color};
     }
+    border-bottom: 1px dashed ${props => props.theme.color.secondary_color};
 `
 
 export const DeadlineTitle = styled.p`

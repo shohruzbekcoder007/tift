@@ -35,6 +35,7 @@ export default function StudentSciencesMain() {
   const getSemestersEror = (error) => {console.log(error)}
 
   const getSciensesArrayF = (response) => {
+    console.log(response.data.science);
     setSciences(response.data.science)
   }
 

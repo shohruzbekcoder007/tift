@@ -211,7 +211,7 @@ export default function CalendarPlan() {
                             </svg>
                             <p>Belgilash mumkin</p>
                           </UnableToSpecify>
-                          <Link to="thematicblock">
+                          <Link to="thematicblock" state={elem}>
                             <Button
                               variant="contained"
                               size="small"
