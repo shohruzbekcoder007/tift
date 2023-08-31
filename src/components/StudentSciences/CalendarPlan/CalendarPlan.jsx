@@ -1,8 +1,11 @@
-import React from 'react'
+import { Button } from '@mui/material'
+import { element } from 'prop-types'
+import React, { useState } from 'react'
 import { BoxBody, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { TableTHHeader } from '../../DiplomaTable'
 
-export default function CalendarPlan({status}) {
+export default function CalendarPlan({data}) {
+
   return (
     <BoxBody>
       <ClassScheduleTableWrapper>
@@ -56,14 +59,35 @@ export default function CalendarPlan({status}) {
           </thead>
           <tbody>
             {
-              [1, 2, 3, 4, 5].map((elem, index) => {
-                return (
-                  <tr key={index}>
-                    <th>{index+1}</th>
-                    <th>Sun'iy intellekt tarixi. Sun’iy intellekt rivojlanishi. 1943–1955 yillarda SI holati. 1956 yillarda SI holati. 1952–1969 yillarda SI holati. 1966–1973 <br /> yillarda SI holati. 1969–1979 yillarda SI holati. 1980- 1995 yillarda SI holati. 2001 yildan hozirgi kungacha - katta ma'lumotlar to'plami bilan ishlash.</th>
-                    <th>28-02-2023</th>
-                  </tr>
-                )
+              data.lessons.map((elem, index) => {
+                if (elem.failed == true){
+                  return (
+                    <tr key={index} style={{backgroundColor: '#fa343436'}}>
+                      <th>{index+1}</th>
+                      <th>
+                        {elem.lesson}
+                        {
+                          elem.sources.map(element => {
+                            <ButtonSource data={element}/>
+                          })
+                        }
+                      </th>
+                      <th>{elem.lesson_date}</th>
+                    </tr>
+                  )
+                } else {
+                  return (
+                    <tr key={index} >
+                      <th>{index+1}</th>
+                      <th>
+                        {elem.lesson}
+                      
+                      </th>
+                      <th>{elem.lesson_date}</th>
+                    </tr>
+                  )
+                }
+                
               })
             }
           </tbody>
@@ -71,4 +95,32 @@ export default function CalendarPlan({status}) {
       </ClassScheduleTableWrapper>
     </BoxBody>
   )
+}
+
+
+
+const ButtonSource = ({data}) =>{
+  
+    return(
+      <a href={data.file}>
+        <Button
+        variant="contained"
+        sx={{
+          borderRadius: '0',
+          textTransform: "capitalize",
+          boxShadow: "none",
+          padding: "6px 12px",
+          backgroundColor: 'rgb(27, 37, 56)'
+        }}
+        startIcon={<svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.332 9.33335C10.332 9.51016 10.2618 9.67973 10.1368 9.80475C10.0117 9.92978 9.84218 10 9.66537 10H4.33203C4.15522 10 3.98565 9.92978 3.86063 9.80475C3.7356 9.67973 3.66536 9.51016 3.66536 9.33335C3.66536 9.15654 3.7356 8.98697 3.86063 8.86194C3.98565 8.73692 4.15522 8.66668 4.33203 8.66668H9.66537C9.84218 8.66668 10.0117 8.73692 10.1368 8.86194C10.2618 8.98697 10.332 9.15654 10.332 9.33335ZM7.66536 11.3333H4.33203C4.15522 11.3333 3.98565 11.4036 3.86063 11.5286C3.7356 11.6536 3.66536 11.8232 3.66536 12C3.66536 12.1768 3.7356 12.3464 3.86063 12.4714C3.98565 12.5964 4.15522 12.6667 4.33203 12.6667H7.66536C7.84218 12.6667 8.01174 12.5964 8.13677 12.4714C8.26179 12.3464 8.33203 12.1768 8.33203 12C8.33203 11.8232 8.26179 11.6536 8.13677 11.5286C8.01174 11.4036 7.84218 11.3333 7.66536 11.3333ZM13.6654 6.99002V12.6667C13.6643 13.5504 13.3128 14.3976 12.6879 15.0225C12.063 15.6474 11.2158 15.999 10.332 16H3.66536C2.78163 15.999 1.9344 15.6474 1.30951 15.0225C0.684619 14.3976 0.33309 13.5504 0.332031 12.6667V3.33335C0.33309 2.44962 0.684619 1.60239 1.30951 0.977495C1.9344 0.352603 2.78163 0.00107394 3.66536 1.53658e-05H6.67536C7.28844 -0.00156258 7.89575 0.118407 8.46218 0.352988C9.02861 0.587569 9.54292 0.932107 9.97536 1.36668L12.298 3.69068C12.7329 4.12284 13.0776 4.63699 13.3123 5.20333C13.547 5.76968 13.667 6.37696 13.6654 6.99002ZM9.0327 2.30935C8.82289 2.10612 8.58732 1.9313 8.33203 1.78935V4.66668C8.33203 4.84349 8.40227 5.01306 8.52729 5.13809C8.65232 5.26311 8.82189 5.33335 8.9987 5.33335H11.876C11.734 5.07814 11.5589 4.84278 11.3554 4.63335L9.0327 2.30935ZM12.332 6.99002C12.332 6.88002 12.3107 6.77468 12.3007 6.66668H8.9987C8.46827 6.66668 7.95956 6.45597 7.58448 6.0809C7.20941 5.70582 6.9987 5.19711 6.9987 4.66668V1.36468C6.8907 1.35468 6.7847 1.33335 6.67536 1.33335H3.66536C3.13493 1.33335 2.62622 1.54406 2.25115 1.91914C1.87608 2.29421 1.66536 2.80292 1.66536 3.33335V12.6667C1.66536 13.1971 1.87608 13.7058 2.25115 14.0809C2.62622 14.456 3.13493 14.6667 3.66536 14.6667H10.332C10.8625 14.6667 11.3712 14.456 11.7462 14.0809C12.1213 13.7058 12.332 13.1971 12.332 12.6667V6.99002Z" fill="white" />
+        </svg>
+          }
+        >
+          {data.name}
+        </Button>
+    
+      </a>
+    )
+    
 }
