@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -14,6 +14,9 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
+import { getAdminKafedra, setAdminDeleteScience } from './requests'
+import { kafedra, science } from '../../../utils/API_urls'
+
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -21,6 +24,87 @@ export default function SciencesAdmin() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+  const [adminkafedra, setadminkafedra] = useState([]);
+  const [kafedrachoes, setkafedrachoes] = useState([]);
+  const [degreechoes, setdegreechoes] = useState([]);
+  const [studytypechoes, setstudytypechoes] = useState([]);
+  const [scienceAdmin, setscienceAdmin] = useState([]);
+
+  const [deletedElem, setDeleted] = useState(false)
+
+  const [pageSize, setPageSize] = useState(10)
+  const [allCount, setAllCount] = useState(0)
+  const [pageCount, setPageCount] = useState(1)
+  const [page, setPage] = useState(1)
+
+  const admindegree = useMemo(() => {
+    return [
+      {
+      name: "Bakalavr",
+      value: 'bachelor',
+      },
+      {
+        name: "Magister",
+        value: 'master',
+      },
+  ]
+  },[])
+
+
+
+  const adminstudytype = useMemo(() => {
+    return [{
+      name: "morning",
+      value: 'morning',
+    },
+    {
+      name: "evening",
+      value: 'evening',
+    },
+    {
+      name: "external",
+      value: 'external',
+    },
+    {
+      name: "remote",
+      value: 'remote',
+    }]
+  },[])
+
+  useEffect(() => {
+    getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
+      setadminkafedra(response.data.results.map( elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+        console.log(error)
+    })
+  }, [])
+
+
+  useEffect(() => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}`, (response) => {
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      setscienceAdmin(response.data.results)
+    }, (error) => {
+        console.log(error)
+    })
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem])
+
+
+
+  const DeleteScience = (pk) => {
+    setAdminDeleteScience(`${science}${pk}`, (response) => {
+      if(response.status)
+        setDeleted(prev => !prev)
+    }, (error) => {
+      console.log(error)
+    })
+  }
 
   return (
     <>
@@ -36,7 +120,7 @@ export default function SciencesAdmin() {
        
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+              setPageSize(val)
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
@@ -73,15 +157,17 @@ export default function SciencesAdmin() {
 
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Nomi" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kod" />
+          <AllSelectFullWidth
+              chageValueFunction={val => setkafedrachoes(val)}
+              selectOptions={adminkafedra}
+            />
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
+              chageValueFunction={val => setdegreechoes(val)}
+              selectOptions={admindegree}
+            />
+            <AllSelectFullWidth
+              chageValueFunction={val => setstudytypechoes(val)}
+              selectOptions={adminstudytype}
             />
           </InputsWrapper>
         </BoxHeader>
@@ -217,13 +303,13 @@ export default function SciencesAdmin() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                  scienceAdmin.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1234</th>
-                        <th>Основы производство видео</th>
-                        <th>FRE1124</th>
-                        <th>Аудиовизуал технологиялари</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.name}</th>
+                        <th>{elem.code}</th>
+                        <th>{elem.kafedra}</th>
                         <th>
                           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
                             <rect width="36" height="36" rx="10" fill="url(#pattern0)" />
@@ -272,7 +358,7 @@ export default function SciencesAdmin() {
                               </IconButton>
                             </div>
                           </Link>
-                          <Link to={'edit'}>
+                          <Link to={'edit'} state={{data:elem.id}}>
                             <Button
                               variant="contained"
                               sx={{
@@ -311,6 +397,7 @@ export default function SciencesAdmin() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
+                            onClick={(_) => {DeleteScience(elem.id)}}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -338,8 +425,8 @@ export default function SciencesAdmin() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+            <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + scienceAdmin.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+            <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
 
         <Modal
@@ -592,7 +679,7 @@ export default function SciencesAdmin() {
             </ModalButtons>
           </ModalBox>
         </Modal>
-      </Paper>
+        </Paper>
     </>
   )
 }

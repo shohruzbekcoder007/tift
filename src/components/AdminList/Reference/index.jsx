@@ -14,6 +14,7 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { DeleteStudentNBPetition, getReference } from './request'
 import { host, studentnb } from '../../../utils/API_urls'
+import AutocompleteApi from '../../AutocompleteApi'
 
 export default function Reference() {
   const [open, setOpen] = React.useState(false);
@@ -367,7 +368,8 @@ export default function Reference() {
                   mb: "10px"
                 }}
               >
-                Talaba                            </Typography>
+                Talaba
+              </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
@@ -375,8 +377,8 @@ export default function Reference() {
                   value: 12,
                 }]}
               />
+              {/* <AutocompleteApi/> */}
             </ModalSelectWrapper>
-
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"

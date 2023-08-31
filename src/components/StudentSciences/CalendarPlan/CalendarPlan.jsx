@@ -1,6 +1,7 @@
 import React from 'react'
 import { BoxBody, ClassScheduleTableWrapper } from '../../../global_styles/styles'
 import { TableTHHeader } from '../../DiplomaTable'
+
 export default function CalendarPlan({status}) {
   return (
     <BoxBody>
