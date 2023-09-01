@@ -14,18 +14,18 @@ import { my_scince_lessons } from "../../utils/API_urls";
 export default function CalendarPlanStudent() {
   const [lessonsType, setlessonsType] = useState([]);
   const [lessonsTypeSource, setlessonsTypeSource] = useState([]);
-  const {state} = useLocation()
+  const { state } = useLocation()
 
 
   useEffect(() => {
     getStudentLesson(`${my_scince_lessons}?patok=${state.data}`, (response) => {
-      setlessonsType(response.data.types)
+     
       setlessonsTypeSource(response.data.results)
-  }, (error) => {
+    }, (error) => {
       console.log(error)
     })
-  } , [])
- 
+  }, [])
+
   return (
     <Paper
       sx={{
@@ -38,27 +38,23 @@ export default function CalendarPlanStudent() {
         <Tabs defaultValue={0} style={{ width: "100%" }}>
           <TabsList>
             {
-              lessonsType?.map((elem, index) => {
-                return (
-                  
-                    elem === 'lecture' ? <Tab key={index} >Ma'ruza</Tab> :
-                    elem === 'practical' ? <Tab key={index} >Amalyot</Tab> :
-                    elem === 'lab' ? <Tab key={index} >Labaratoriya</Tab> :
-                    <></>
+              lessonsTypeSource.map((elem, index) => {
+                return(
+                  <Tab key={index}>{elem.type}</Tab>
                 )
               })
             }
           </TabsList>
+
           {
-            lessonsTypeSource?.map((elem, index) => {
-              return(
-                <TabPanel value={index}>
-                  <CalendarStudent data = {elem} />
-                </TabPanel>
-              )
-            })
+          lessonsTypeSource.map((elem, index) => {
+            return(
+              <TabPanel value={index} key={index}>
+                <CalendarStudent data={elem} />
+              </TabPanel>
+            )
+          })
           }
-          
           
         </Tabs>
       </ContentWrapper>
