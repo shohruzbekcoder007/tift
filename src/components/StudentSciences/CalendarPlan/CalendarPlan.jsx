@@ -65,7 +65,7 @@ export default function CalendarPlan({data}) {
                     <tr key={index} style={{backgroundColor: '#fa343436'}}>
                       <th>{index+1}</th>
                       <th>
-                        {elem.lesson}
+                        {elem.name}
                         {
                           elem.sources.map(element => {
                             <ButtonSource data={element}/>
@@ -80,7 +80,7 @@ export default function CalendarPlan({data}) {
                     <tr key={index} >
                       <th>{index+1}</th>
                       <th>
-                        {elem.lesson}
+                        {elem.name}
                       
                       </th>
                       <th>{elem.lesson_date}</th>
