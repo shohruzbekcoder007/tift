@@ -3,7 +3,7 @@
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://oqdevpy.jprq.live"
-export const host = "https://api.lms-edu.uz"
+export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =   "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
@@ -106,6 +106,7 @@ export const academic_group = "/academic_group/"
 export const building = "/building/"
 export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
+export const country = "/country/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

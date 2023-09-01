@@ -6,15 +6,33 @@ export default [
         eng: "unvonsiz eng"
     },
     {
-        value: "academic professor",
+        value: "assistent",
+        uz: "assistent",
+        ru: "assistent ru",
+        eng: "assistent eng"
+    },
+    {
+        value: "dotsent",
         uz: "dotsent",
         ru: "dotsent ru",
         eng: "dotsent eng"
     },
     {
-        value: "senior researcher",
+        value: "senior_lecturer",
         uz: "katta ilmiy xodim",
         ru: "katta ilmiy xodim ru",
         eng: "katta ilmiy xodim eng"
+    },
+    {
+        value: "professor",
+        uz: "professor",
+        ru: "professor ru",
+        eng: "professor eng"
+    },
+    {
+        value: "academic",
+        uz: "academic",
+        ru: "academic ru",
+        eng: "academic eng"
     }
 ]

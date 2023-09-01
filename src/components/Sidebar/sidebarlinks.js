@@ -18,7 +18,8 @@ export const teacher_Links = [
   //     ru: "Панель",
   //     eng: "Dashboard"
   //   },
-  //   to: "dashboard"
+  //   to: "dashboard",
+  // type: "text"
   // },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -39,7 +40,8 @@ export const teacher_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -57,7 +59,8 @@ export const teacher_Links = [
       ru: "Коррекция NB",
       eng: "NB correction"
     },
-    to: "nb"
+    to: "nb",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -75,7 +78,8 @@ export const teacher_Links = [
       ru: "Подавать заявление",
       eng: "Filing application",
     },
-    to: "filingapplication"
+    to: "filingapplication",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +97,8 @@ export const teacher_Links = [
       ru: "Мои науки",
       eng: "My sciences",
     },
-    to: "sciences"
+    to: "sciences",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -111,7 +116,8 @@ export const teacher_Links = [
       ru: "Расписание урок",
       eng: "Class schedule"
     },
-    to: "classschedule"
+    to: "classschedule",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +135,8 @@ export const teacher_Links = [
       ru: "Дипломная работа",
       eng: "Diploma work"
     },
-    to: "diploma"
+    to: "diploma",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +158,8 @@ export const teacher_Links = [
       ru: "Анкета",
       eng: "Questionnaire"
     },
-    to: "request"
+    to: "request",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -169,7 +177,8 @@ export const teacher_Links = [
       ru: "Управление курсом",
       eng: "Course management"
     },
-    to: "coursemanagement"
+    to: "coursemanagement",
+    type: "text"
   }
 ]
 
@@ -193,7 +202,8 @@ export const student_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   // {
   //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +222,8 @@ export const student_Links = [
   //     ru: "Наука выбор",
   //     eng: "Science selection"
   //   },
-  //   to: "ScienceSelection"
+  //   to: "ScienceSelection",
+  // type: "text"
   // },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -230,7 +241,8 @@ export const student_Links = [
       ru: "Мои науки",
       eng: "My sciences",
     },
-    to: "sciences"
+    to: "sciences",
+    type: "text"
   },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -248,7 +260,8 @@ export const student_Links = [
       ru: "Расписание урок",
       eng: "Class schedule"
     },
-    to: "sciencescalendar"
+    to: "sciencescalendar",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -267,7 +280,8 @@ export const student_Links = [
       ru: "Прочитай заново",
       eng: "Read again"
     },
-    to: "readagain"
+    to: "readagain",
+    type: "text"
   },
   // {
   //   img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -287,7 +301,8 @@ export const student_Links = [
   //     ru: "Финал",
   //     eng: "Final"
   //   },
-  //   to: "final"
+  //   to: "final",
+  // type: "text"
   // },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -305,7 +320,8 @@ export const student_Links = [
       ru: "Индивидуальный персональный план",
       eng: "Individual personal plan"
     },
-    to: "personalplan"
+    to: "personalplan",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -326,7 +342,8 @@ export const student_Links = [
       ru: "Информация",
       eng: "Information"
     },
-    to: "information"
+    to: "information",
+    type: "text"
   },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -348,7 +365,8 @@ export const student_Links = [
       ru: "Анкета",
       eng: "Questionnaire"
     },
-    to: "request"
+    to: "request",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -366,7 +384,8 @@ export const student_Links = [
       ru: "Студенческие услуги",
       eng: "Student services"
     },
-    to: "services"
+    to: "services",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -384,7 +403,8 @@ export const student_Links = [
       ru: "Олимпийские игры",
       eng: "Olympics"
     },
-    to: "olympics"
+    to: "olympics",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -403,7 +423,8 @@ export const student_Links = [
       ru: "Дипломная работа",
       eng: "Diploma work"
     },
-    to: "thesisresult"
+    to: "thesisresult",
+    type: "text"
   }
 ]
 
@@ -437,7 +458,8 @@ export const headofthedepartment_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -455,7 +477,8 @@ export const headofthedepartment_Links = [
       ru: "Расписание урок",
       eng: "Class schedule"
     },
-    to: "Dclassschedule"
+    to: "Dclassschedule",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -474,7 +497,8 @@ export const headofthedepartment_Links = [
       ru: "Заявки на занятия",
       eng: "Applications for classes"
     },
-    to: "applications"
+    to: "applications",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -493,7 +517,8 @@ export const headofthedepartment_Links = [
       ru: "Патокс",
       eng: "Patoks"
     },
-    to: "patoks"
+    to: "patoks",
+    type: "text"
   },
   {
     img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
@@ -513,7 +538,8 @@ export const headofthedepartment_Links = [
       ru: "Финал",
       eng: "Final"
     },
-    to: "final"
+    to: "final",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -531,7 +557,8 @@ export const headofthedepartment_Links = [
       ru: "Дипломная работа",
       eng: "Diploma work"
     },
-    to: "Ddiploma"
+    to: "Ddiploma",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -550,7 +577,8 @@ export const headofthedepartment_Links = [
       ru: "Материалы",
       eng: "Materials"
     },
-    to: "materials"
+    to: "materials",
+    type: "text"
   },
   {
     img: null,
@@ -578,7 +606,8 @@ export const headofthedepartment_Links = [
       ru: "Коррекция NB",
       eng: "NB correction"
     },
-    to: "nb"
+    to: "nb",
+    type: "text"
   },
   {
     img: null,
@@ -606,7 +635,8 @@ export const headofthedepartment_Links = [
       ru: "Подавать заявление",
       eng: "Filing application",
     },
-    to: "filingapplication"
+    to: "filingapplication",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -624,7 +654,8 @@ export const headofthedepartment_Links = [
       ru: "Мои науки",
       eng: "My sciences",
     },
-    to: "sciences"
+    to: "sciences",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -642,7 +673,8 @@ export const headofthedepartment_Links = [
       ru: "Расписание урок",
       eng: "Class schedule"
     },
-    to: "classschedule"
+    to: "classschedule",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -660,7 +692,8 @@ export const headofthedepartment_Links = [
       ru: "Дипломная работа",
       eng: "Diploma work"
     },
-    to: "diploma"
+    to: "diploma",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -682,7 +715,8 @@ export const headofthedepartment_Links = [
       ru: "Анкета",
       eng: "Questionnaire"
     },
-    to: "request"
+    to: "request",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -700,7 +734,8 @@ export const headofthedepartment_Links = [
       ru: "Управление курсом",
       eng: "Course management"
     },
-    to: "coursemanagement"
+    to: "coursemanagement",
+    type: "text"
   }
 ]
 
@@ -724,7 +759,8 @@ export const tutor_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   {
     img: null,
@@ -752,7 +788,8 @@ export const tutor_Links = [
       ru: "Группы",
       eng: "Groups"
     },
-    to: "groups"
+    to: "groups",
+    type: "text"
   }
 ]
 
@@ -776,7 +813,8 @@ export const dekan_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   {
     img: null,
@@ -805,7 +843,8 @@ export const dekan_Links = [
       ru: "Студенты",
       eng: "Students"
     },
-    to: "students"
+    to: "students",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -823,7 +862,8 @@ export const dekan_Links = [
       ru: "Группы",
       eng: "Groups"
     },
-    to: "groups"
+    to: "groups",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -846,7 +886,8 @@ export const dekan_Links = [
       ru: "Статистика",
       eng: "Statistics"
     },
-    to: "statistika"
+    to: "statistika",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -866,7 +907,8 @@ export const dekan_Links = [
       ru: "Вопросы",
       eng: "Questions"
     },
-    to: "dekanquestions"
+    to: "dekanquestions",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -884,7 +926,8 @@ export const dekan_Links = [
       ru: "Расписание урок",
       eng: "Class schedule"
     },
-    to: "classschedule"
+    to: "classschedule",
+    type: "text"
   },
   {
     img: null,
@@ -912,7 +955,8 @@ export const dekan_Links = [
       ru: "Олимпийские игры",
       eng: "Olympics"
     },
-    to: "dekanolympics"
+    to: "dekanolympics",
+    type: "text"
   }
 ]
 
@@ -937,7 +981,8 @@ export const admin_links = [
   //     ru: "Панель",
   //     eng: "Dashboard"
   //   },
-  //   to: "dashboard"
+  //   to: "dashboard",
+  // type: "text"
   // },
   // {
   //   img: null,
@@ -966,7 +1011,8 @@ export const admin_links = [
   //     ru: "Заявки на ведение",
   //     eng: "Applications for maintenance"
   //   },
-  //   to: "applications"
+  //   to: "applications",
+  // type: "text"
   // },
   // {
   //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -985,7 +1031,8 @@ export const admin_links = [
   //     ru: "Обработка заявок",
   //     eng: "Application processing"
   //   },
-  //   to: "applicationprocess"
+  //   to: "applicationprocess",
+  // type: "text"
   // },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1006,7 +1053,8 @@ export const admin_links = [
       ru: "Переменные",
       eng: "Variables"
     },
-    to: "variables"
+    to: "variables",
+    type: "text"
   },
   {
     img: null,
@@ -1034,7 +1082,8 @@ export const admin_links = [
       ru: "Пользователи",
       eng: "Users"
     },
-    to: "users"
+    to: "users",
+    type: "text"
   },
   {
     img: null,
@@ -1062,7 +1111,8 @@ export const admin_links = [
       ru: "Посещаемость",
       eng: "Attendance"
     },
-    to: "attendance"
+    to: "attendance",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1082,7 +1132,8 @@ export const admin_links = [
       ru: "Справка",
       eng: "Reference"
     },
-    to: "reference"
+    to: "reference",
+    type: "text"
   },
 
 
@@ -1102,7 +1153,8 @@ export const admin_links = [
       ru: "Документы студента",
       eng: "Student Documents"
     },
-    to: "studentdocuments"
+    to: "studentdocuments",
+    type: "text"
   },
   {
     img: null,
@@ -1131,7 +1183,8 @@ export const admin_links = [
       ru: "Семестр",
       eng: "Semester"
     },
-    to: "semester"
+    to: "semester",
+    type: "text"
   },
 
   {
@@ -1152,7 +1205,8 @@ export const admin_links = [
       ru: "Потоки",
       eng: "streams"
     },
-    to: "streams"
+    to: "streams",
+    type: "text"
   },
 
 
@@ -1175,7 +1229,8 @@ export const admin_links = [
   //     ru: "Активности",
   //     eng: "activities"
   //   },
-  //   to: "activities"
+  //   to: "activities",
+  // type: "text"
   // },
   // {
   //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1200,7 +1255,8 @@ export const admin_links = [
   //     ru: "Голосование",
   //     eng: "vote"
   //   },
-  //   to: "vote"
+  //   to: "vote",
+  // type: "text"
   // },
 
 
@@ -1226,7 +1282,8 @@ export const admin_links = [
       ru: "Исправление НБ",
       eng: "NBfix"
     },
-    to: "NBfix"
+    to: "NBfix",
+    type: "text"
   },
 
 
@@ -1242,7 +1299,8 @@ export const admin_links = [
       ru: "Расписание",
       eng: "schedule"
     },
-    to: "schedule"
+    to: "schedule",
+    type: "text"
   },
 
   {
@@ -1257,7 +1315,8 @@ export const admin_links = [
       ru: "Расписание 2",
       eng: "schedule 2"
     },
-    to: "scheduletwo"
+    to: "scheduletwo",
+    type: "text"
   },
 
   // {
@@ -1277,7 +1336,8 @@ export const admin_links = [
   //     ru: "Модули",
   //     eng: "Modules"
   //   },
-  //   to: "modules"
+  //   to: "modules",
+  // type: "text"
   // },
 
 
@@ -1300,7 +1360,8 @@ export const admin_links = [
   //     ru: "Апелляция",
   //     eng: "Appeal"
   //   },
-  //   to: "appeal"
+  //   to: "appeal",
+  // type: "text"
   // },
 
   
@@ -1327,7 +1388,8 @@ export const admin_links = [
   //     ru: "Статистика",
   //     eng: "Statistics"
   //   },
-  //   to: "statistics"
+  //   to: "statistics",
+  // type: "text"
   // },
 
 
@@ -1345,7 +1407,8 @@ export const admin_links = [
       ru: "Перевод студентов",
       eng: "Transfer students"
     },
-    to: "transferstudents"
+    to: "transferstudents",
+    type: "text"
   },
 
 
@@ -1368,7 +1431,8 @@ export const admin_links = [
       ru: "Стипендия",
       eng: "Scholarship"
     },
-    to: "scholarship"
+    to: "scholarship",
+    type: "text"
   },
 
 
@@ -1384,7 +1448,8 @@ export const admin_links = [
   //     ru: "Приказы",
   //     eng: "Orders"
   //   },
-  //   to: "orders"
+  //   to: "orders",
+  // type: "text"
   // },
 
   {
@@ -1399,7 +1464,8 @@ export const admin_links = [
       ru: "Документы студента",
       eng: "Student Documents"
     },
-    to: "studentdocuments"
+    to: "studentdocuments",
+    type: "text"
   },
 
 
@@ -1423,7 +1489,8 @@ export const admin_links = [
       ru: "Добавить кредит",
       eng: "Add credit"
     },
-    to: "addcredit"
+    to: "addcredit",
+    type: "text"
   },
 
    
@@ -1464,7 +1531,8 @@ export const admin_links = [
       ru: "Здание",
       eng: "Building"
     },
-    to: "building"
+    to: "building",
+    type: "text"
   },
 
   
@@ -1491,7 +1559,8 @@ export const admin_links = [
       ru: "Университет",
       eng: "University"
     },
-    to: "university"
+    to: "university",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1512,7 +1581,8 @@ export const admin_links = [
       ru: "Организации",
       eng: "Organizations"
     },
-    to: "organizations"
+    to: "organizations",
+    type: "text"
   },
   {
     img:<svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1536,7 +1606,8 @@ export const admin_links = [
       ru: "Потоки",
       eng: "Day off"
     },
-    to: "dayoff"
+    to: "dayoff",
+    type: "text"
   },
   {
     img: null,
@@ -1568,7 +1639,8 @@ export const admin_links = [
       ru: "Соглашение",
       eng: "Agreement"
     },
-    to: "agreement"
+    to: "agreement",
+    type: "text"
   },
   {
     img:<svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1588,7 +1660,8 @@ export const admin_links = [
       ru: "Прочитай заново",
       eng: "Read again"
     },
-    to: "readagain"
+    to: "readagain",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1609,7 +1682,8 @@ export const admin_links = [
       ru: "Переменные",
       eng: "Variables"
     },
-    to: "variables"
+    to: "variables",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1630,7 +1704,8 @@ export const admin_links = [
       ru: "Контрактные цены",
       eng: "Contract prices"
     },
-    to: "contractpricesmarketing"
+    to: "contractpricesmarketing",
+    type: "text"
   },
 
   {
@@ -1662,7 +1737,8 @@ export const admin_links = [
       ru: "Разделы",
       eng: "Sections"
     },
-    to: "sections"
+    to: "sections",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1691,7 +1767,8 @@ export const admin_links = [
       ru: "Факультеты",
       eng: "Faculties"
     },
-    to: "faculties"
+    to: "faculties",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1713,7 +1790,8 @@ export const admin_links = [
       ru: "Сотрудники",
       eng: "Employees"
     },
-    to: "employees"
+    to: "employees",
+    type: "text"
   },
   {
     img:<svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1734,7 +1812,8 @@ export const admin_links = [
       ru: "Студенты",
       eng: "Students"
     },
-    to: "students"
+    to: "students",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1755,7 +1834,8 @@ export const admin_links = [
       ru: "Направления",
       eng: "Directions"
     },
-    to: "directions"
+    to: "directions",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1769,7 +1849,8 @@ export const admin_links = [
       ru: "Группа",
       eng: "Group"
     },
-    to: "group"
+    to: "group",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1783,7 +1864,8 @@ export const admin_links = [
       ru: "Потоки",
       eng: "News"
     },
-    to: "news"
+    to: "news",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1804,7 +1886,8 @@ export const admin_links = [
       ru: "Контрактные цены",
       eng: "Contract prices"
     },
-    to: "contractprices"
+    to: "contractprices",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1827,7 +1910,8 @@ export const admin_links = [
       ru: "наук",
       eng: "Sciences"
     },
-    to: "sciences"
+    to: "sciences",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1848,7 +1932,8 @@ export const admin_links = [
       ru: "План",
       eng: "Plan"
     },
-    to: "plan"
+    to: "plan",
+    type: "text"
   },
   {
     img: null,
@@ -1879,7 +1964,8 @@ export const admin_links = [
       ru: "Потоки",
       eng: "Users"
     },
-    to: "adminusers"
+    to: "adminusers",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1902,7 +1988,8 @@ export const admin_links = [
       ru: "Роли",
       eng: "Roles"
     },
-    to: "roles"
+    to: "roles",
+    type: "text"
   },
   {
     img: <svg width="24" height="23" viewBox="0 0 24 23" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1916,7 +2003,8 @@ export const admin_links = [
       ru: "Сервер",
       eng: "Server"
     },
-    to: "server"
+    to: "server",
+    type: "text"
   },
 ]
 
@@ -1943,7 +2031,8 @@ export const lawyer_Links = [
       ru: "Панель",
       eng: "Dashboard"
     },
-    to: "dashboard"
+    to: "dashboard",
+    type: "text"
   },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1964,6 +2053,7 @@ export const lawyer_Links = [
       ru: "Студенты",
       eng: "Students"
     },
-    to: "students"
+    to: "students",
+    type: "text"
   },
 ]

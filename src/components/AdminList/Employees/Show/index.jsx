@@ -1,11 +1,13 @@
 import React from 'react'
-import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
+import { ModalSelectWrapper } from '../../../../global_styles/styles'
 import { Button, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { WrapperBox, WrapperButtons, WrapperHeader, WrapperSelect } from '../Career/styles'
+import { useNavigate } from 'react-router-dom';
 
 export default function Show() {
+  const navigate = useNavigate();
   return (
     <div>
      <Typography
@@ -176,6 +178,7 @@ export default function Show() {
           <Button
             sx={{ width: "50%", textTransform: "none" }}
             variant="outlined"
+            onClick={() => navigate(-1)}
           >
             Bekor qilish
           </Button>
