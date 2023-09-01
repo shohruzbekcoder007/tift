@@ -36,6 +36,7 @@ export default function Sidebar({ role }) {
                   key={index}
                   img={elem.img}
                   text={elem.text[language]}
+                  fullText={elem.text}
                   to={elem.to}
                 />
               )
@@ -59,7 +60,7 @@ const chageLinks = (role) => {
 }
 
 
-const ListItem = ({ img, text, to }) => {
+const ListItem = ({ img, text, to, fullText }) => {
 
   const dispatch = useDispatch()
 
@@ -70,7 +71,10 @@ const ListItem = ({ img, text, to }) => {
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? "active" : ""
         }
-        onClick={() => { dispatch(setSidebar('small')); dispatch(setTitle(text)); }}
+        onClick={() => { dispatch(setSidebar('small')); dispatch(setTitle({
+          text: fullText,
+          type: "text"
+        })); }}
       >
         <SidebarLinkListItemImg>
           {img}

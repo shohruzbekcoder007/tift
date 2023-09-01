@@ -1,6 +1,13 @@
 import { ActionTypes } from "../contants/action-types"
 
-const initialLanguage = "Dashboard"
+const initialLanguage = {
+    text: {
+        uz: "Dashboard",
+        ru: "Панель",
+        eng: "Dashboard"
+      },
+      type: "text"
+}
 
 export const titleReducer = (state = initialLanguage, { type, payload }) => {
     switch (type) {
