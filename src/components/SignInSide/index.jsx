@@ -65,6 +65,7 @@ export default function SignInSide() {
 
   const successfulFunctionGetToken = (response) => {
     sessionStorage.setItem('access_token', response.data.access)
+    sessionStorage.setItem('refresh_token', response.data.refresh)
     setHaveatoken(true)
     getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
   }

@@ -77,7 +77,7 @@ export const ProfileButton = styled.button`
 `
 
 
-export const ProfileLogOut = styled.a`
+export const ProfileLogOut = styled.button`
   display: flex;
   place-items:center;
   max-width: 454px;
@@ -87,4 +87,7 @@ export const ProfileLogOut = styled.a`
   padding: 20px;
   margin: 1rem 0;
   cursor: pointer;
+  width: 100%;
+  outline: none;
+  border: none;
 `
