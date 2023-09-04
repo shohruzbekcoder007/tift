@@ -258,6 +258,7 @@ const StatusTask = ({ type, data, id, callBackFunc, status }) => {
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [Save, setSave] = useState("O'zgartirish")
   const handleCloseAlert = () => setOpenAlert(false);
 
 
@@ -469,6 +470,7 @@ const AddButtonSubmission = ({ data, id, callBackFunc , status}) => {
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
+  const [Save, setSave] = useState("Saqlash")
 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -616,7 +618,7 @@ const AddButtonSubmission = ({ data, id, callBackFunc , status}) => {
                   variant="contained"
                   type="submit"
                 >
-                  Saqlash
+                   {Save}
                 </Button>
               </ModalButtons>
             </ModalBox>
