@@ -135,6 +135,8 @@ import MainLawyer from './components/MainLawyer'
 import LawyerAllStudents from './components/LawyerAllStudents'
 import LawyerDashboard from './components/LawyerDashboard'
 import AddEmployees from './components/AdminList/Employees/AddEmployees'
+import ScheduleStudy from './components/AdminList/ScheduleStudy'
+import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 
 
 function App() {
@@ -426,6 +428,8 @@ function App() {
                   </Route>
                   <Route path='roles' element={<Roles />} />
                   <Route path='server' element={<Server />} />
+                  <Route path='schedule' element={<ScheduleStudy />} />
+                  <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
 
                 </Route>
               </>

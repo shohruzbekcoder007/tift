@@ -109,6 +109,7 @@ export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
 export const country = "/country/"
 export const logout = "/logout/"
+export const schedule_admin = "/schedule_admin/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

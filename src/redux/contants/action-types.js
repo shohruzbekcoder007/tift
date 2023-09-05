@@ -3,5 +3,4 @@ export const ActionTypes = {
     SET_USER: "SET_USER",
     SET_SIDEBAR: "SET_SIDEBAR",
     SET_TITLE: "SET_TITLE",
-    SET_USER: "SET_USER"
 }
