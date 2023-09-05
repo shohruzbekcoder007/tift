@@ -6,6 +6,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { getBuildings, getScheduleAdmin, getSemester } from './requests'
 import { building, my_semesters, schedule_admin } from '../../../utils/API_urls'
 import { ScheduleTable } from './styles'
+import DayTable from './DayTable'
 
 export default function ScheduleStudy() {
 
@@ -44,10 +45,10 @@ export default function ScheduleStudy() {
 
     useEffect(() => {
         if(semester != 0 && tour != 0){
-            console.log("request sended")
+            console.log("request sended", semester, tour)
             getScheduleAdmin(`${schedule_admin}?semester=${semester}&building=${tour}`, (response) => {
-                console.log(response.data[0], "result")
-                setRooms(response.data[0].room)
+                console.log(response.data, "result")
+                setRooms(response.data.room)
             }, (error) => {
                 console.log(error)
             })
@@ -286,24 +287,24 @@ export default function ScheduleStudy() {
     )
 }
 
-const DayTable = ({ oneday }) => {
-    return (<>
-        {
-            oneday.map((elem, index) => {
-                return <ScheduleTable 
-                    key={index}
-                    onClick={() => {
-                        console.log("console log and open modal")
-                    }}
-                    style={{cursor: "pointer"}}
-                >
-                    {index}
-                    {
-                    elem.group.map((element, indx) => {
-                        return <span key={indx}>1</span>
-                    })
-                }</ScheduleTable>
-            })
-        }
-    </>)
-}
+// const DayTable = ({ oneday }) => {
+//     return (<>
+//         {
+//             oneday.map((elem, index) => {
+//                 return <ScheduleTable 
+//                     key={index}
+//                     onClick={() => {
+//                         console.log("console log and open modal")
+//                     }}
+//                     style={{cursor: "pointer"}}
+//                 >
+//                     {/* {index} */}
+//                     {
+//                     elem.group.map((element, indx) => {
+//                         return <span key={indx}>1</span>
+//                     })
+//                 }</ScheduleTable>
+//             })
+//         }
+//     </>)
+// }
