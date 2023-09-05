@@ -58,7 +58,7 @@ export default function CalendarPlanTeacher() {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-    const formData = new FormData();lessonlessonlesson
+    const formData = new FormData();
     formData.append("types", 'file');
     formData.append("file", file);
     formData.append("lesson", changeLessonId);
