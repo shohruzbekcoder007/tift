@@ -5,6 +5,7 @@ import { TableTHHeader } from '../../DiplomaTable'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { getBuildings, getScheduleAdmin, getSemester } from './requests'
 import { building, my_semesters, schedule_admin } from '../../../utils/API_urls'
+import { ScheduleTable } from './styles'
 
 export default function ScheduleStudy() {
 
@@ -42,13 +43,15 @@ export default function ScheduleStudy() {
     }, [])
 
     useEffect(() => {
-        if(semester != 0 && tour != 0)
+        if(semester != 0 && tour != 0){
+            console.log("request sended")
             getScheduleAdmin(`${schedule_admin}?semester=${semester}&building=${tour}`, (response) => {
-                // console.log(response.data[0], "result")
+                console.log(response.data[0], "result")
                 setRooms(response.data[0].room)
             }, (error) => {
                 console.log(error)
             })
+        }
     }, [semester, tour])
 
     return (
@@ -264,7 +267,7 @@ export default function ScheduleStudy() {
                                     rooms.map((elem, index) => {
                                         return (
                                             <tr key={index}>
-                                                <th>{elem.name}</th>
+                                                <th>{elem.name} ({elem.count})</th>
                                                 {
                                                     elem.schedule.map((el, ind) => {
                                                         return <DayTable oneday={el.timetable} key={ind}/>
@@ -287,11 +290,19 @@ const DayTable = ({ oneday }) => {
     return (<>
         {
             oneday.map((elem, index) => {
-                // console.log(elem, "<--->")
-                return <th key={index}>{elem.group.map((element, indx) => {
-                    // console.log(element)
-                    return <span key={indx}>1</span>
-                })}</th>
+                return <ScheduleTable 
+                    key={index}
+                    onClick={() => {
+                        console.log("console log and open modal")
+                    }}
+                    style={{cursor: "pointer"}}
+                >
+                    {index}
+                    {
+                    elem.group.map((element, indx) => {
+                        return <span key={indx}>1</span>
+                    })
+                }</ScheduleTable>
             })
         }
     </>)
