@@ -12,6 +12,7 @@ import { ScheduleTable } from './styles'
 import AllSelectFullWidth from '../../AllSelectFullWidth';
 import { ModalSelectWrapper } from '../../../global_styles/styles';
 import week_day from '../../../dictionary/week_day'
+import lesson_types from '../../../dictionary/lesson_types'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -25,6 +26,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function DayTable({ oneday, groups, roomList }) {
 
     const [open, setOpen] = useState(false);
+    const [data, setData] = useState({
+        group: null,
+        weekday: null,
+        para: null,
+        room: null,
+        types: null
+    })
 
     const weekDays = useMemo(() => {
         return week_day.map(elem => {
@@ -34,6 +42,15 @@ export default function DayTable({ oneday, groups, roomList }) {
             }
         })
     },[])
+
+    const lessonTypes = useMemo(() => {
+        return lesson_types.map(elem => {
+            return {
+                name: elem.uz,
+                value: elem.value
+            }
+        })
+    }, [])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -99,7 +116,10 @@ export default function DayTable({ oneday, groups, roomList }) {
                                         Group
                                     </Typography>
                                     <AllSelectFullWidth
-                                        chageValueFunction={val => console.log(val)}
+                                        chageValueFunction={val => setData(prev => {
+                                            prev.group = val
+                                            return prev
+                                        })}
                                         selectOptions={groups}
                                     />
                                 </ModalSelectWrapper>
@@ -201,7 +221,7 @@ export default function DayTable({ oneday, groups, roomList }) {
                                     </Typography>
                                     <AllSelectFullWidth
                                         chageValueFunction={val => console.log(val)}
-                                        selectOptions={[]}
+                                        selectOptions={lessonTypes}
                                     />
                                 </ModalSelectWrapper>
                             </DialogContent>
