@@ -60,7 +60,7 @@ export default function Information() {
     })
 
     getStudentInformation(studentcontract, (response) => {
-      console.log(response);
+      console.log(response, "dsadasdas");
       setStudentContract(response.data)
       // setInfoList(response.data.result)
     }, (error) => {

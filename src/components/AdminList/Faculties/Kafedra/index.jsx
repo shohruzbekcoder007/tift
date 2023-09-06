@@ -175,9 +175,13 @@ export default function Kafedra() {
               </thead>
               <tbody>
                 {
-                  departments.map((elem, index) => {
+                 departments.length > 0 ? departments.map((elem, index) => {
                     return <OneDepartment key={index} elem={elem} departmentHeads={departmentHeads}/>
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>

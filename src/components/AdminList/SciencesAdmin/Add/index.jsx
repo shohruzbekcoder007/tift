@@ -81,6 +81,19 @@ export default function Add() {
   ]
   },[])
 
+  const Selection = useMemo(() => {
+    return [
+      {
+      name: "Selection",
+      value: 'selection',
+      },
+      {
+        name: "Required",
+        value: 'required',
+      },
+  ]
+  },[])
+
   const adminstudytype = useMemo(() => {
     return [{
       name: "morning",
@@ -224,6 +237,22 @@ export default function Add() {
                   m: "20px 0 10px 0"
                 }}
               >
+                Mustaqil ravishda
+              </Typography>
+              <CustomizedInputSimple callback_func={(val) => { reqDataChange('independently',val) }} placeholder="" type={'number'} />
+            </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
                 Kredit
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { reqDataChange('credit', val) }} placeholder="" type={'number'}/>
@@ -298,6 +327,26 @@ export default function Add() {
                 selectOptions={adminstudytype}
               />
             </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Fan Tanlov                      </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => reqDataChange('discipline_type',val)}
+                selectOptions={Selection}
+              />
+            </ModalSelectWrapper>
+            
           <WrapperButtons>
           <Link to={'/admin/sciences'}>
             <Button

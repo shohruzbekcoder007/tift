@@ -180,8 +180,8 @@ function App() {
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
                   <Route path="coursemanagement" element={<StudentSciences />} >
-                    <Route index element={<CourseManagement />}/>
-                    <Route path='calendarplan' element={<CalendarPlanTeacher />}/>
+                    <Route index element={<CourseManagement />} />
+                    <Route path='calendarplan' element={<CalendarPlanTeacher />} />
                   </Route>
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -256,18 +256,19 @@ function App() {
                     <Route index element={<DekanOlympics />} />
                   </Route>
                 </Route>
-                
+
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="groups" element={<StudentSciences />} >
-                    <Route index element={<TutorGroups />}/>
+                    <Route index element={<TutorGroups />} />
                     <Route path='students' >
-                      <Route index element={<TutorStudents />}/>
-                      <Route path='individual-pysical' element={<IndividualPysical />}/>
-                      <Route path='tutor-see-schedule' element={<TutorSeeSchedule />}/>
+                      <Route index element={<TutorStudents />} />
+                      <Route path='individual-pysical' element={<IndividualPysical />} />
+                      <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
                     </Route>
                   </Route>
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
                 <Route path="department" element={<MainDepartment />}>
@@ -291,12 +292,12 @@ function App() {
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
                   <Route path="coursemanagement" element={<StudentSciences />} >
-                    <Route index element={<CourseManagement />}/>
-                    <Route path='calendarplan' element={<CalendarPlanTeacher />}/>
+                    <Route index element={<CourseManagement />} />
+                    <Route path='calendarplan' element={<CalendarPlanTeacher />} />
                   </Route>
                   <Route path="applications" element={<Applications />} />
                   <Route path="patoks" element={<StudentSciences />}>
-                    <Route index element={<Patoks/>}/>
+                    <Route index element={<Patoks />} />
                     <Route path="vedomost" element={<VedomostKafedra />} />
                   </Route>
 
@@ -309,10 +310,10 @@ function App() {
                 </Route>
 
                 <Route path="lawyer" element={<MainLawyer />}>
-                      <Route path="dashboard" element={<LawyerDashboard />} />
-                      <Route path="students" element={<LawyerAllStudents />} />
+                  <Route path="dashboard" element={<LawyerDashboard />} />
+                  <Route path="students" element={<LawyerAllStudents />} />
                 </Route>
-                
+
 
                 <Route path="admin" element={<MainAdmin />}>
                   <Route path="variables" element={<Variables />} />
@@ -431,7 +432,7 @@ function App() {
               </>
             ) : <></>}
             <Route path="pagenotfound" element={<PageNotFound />} />
-            <Route path="*" element={<Navigate to={user==null ? "/" : "pagenotfound"} />} />
+            <Route path="*" element={<Navigate to={user == null ? "/" : "pagenotfound"} />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

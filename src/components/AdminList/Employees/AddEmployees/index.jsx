@@ -242,7 +242,7 @@ export default function AddEmployees() {
             >
               Ism
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Doniyor" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -258,7 +258,7 @@ export default function AddEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="AA 3798787" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -296,7 +296,7 @@ export default function AddEmployees() {
             >
               Familiya
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Yaxshiboyev" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
