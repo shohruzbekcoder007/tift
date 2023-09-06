@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../../PageSelector'
@@ -9,6 +9,9 @@ import { AttendSearchButton, SemesterModalBoxInfo, SemesterModalSelectWrapperInf
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
+import { academic_plan_science, science } from '../../../../utils/API_urls'
+import { useLocation } from 'react-router'
+import { addAcademic_Science, deleteAcademic_Science, editAcademic_Science, getAcademic_Science, getAcademic_ShortScience } from './request'
 
 export default function PlanSciences() {
   const [open, setOpen] = React.useState(false);
@@ -23,6 +26,82 @@ export default function PlanSciences() {
   const setFileHandler = (newValue, info) => {
       setFile(newValue)
   }
+  const {state} = useLocation()
+    
+  const [Sciences, setSciences] = useState([])
+  const [SciencesList, setSciencesList] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [searchText, setSearchText] = useState('')
+  const [allCount, setAllCount] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
+  const [SciencesID, setSciencesID] = useState(null)
+  const [deleted, setDeleted] = useState(true)
+  const [academic_sciencesID, setacademic_sciencesID] = useState(null)
+
+  useEffect(() => {
+    getAcademic_Science(`${academic_plan_science}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_plan=${state}`, response => {
+      console.log(response.data.results);
+      setSciences(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+    }, error => {
+      console.log(error)
+    })
+
+    getAcademic_ShortScience(`${science}short/`, response => {
+      let list = []
+      response.data.data.map(item => {
+        list.push({
+          value: item.id,
+          name: item.name
+        })
+        setSciencesID(response.data.data[0].id)
+      })
+      setSciencesList(list)
+    }, error => {
+      console.log(error)
+    })
+  }, [page, pageSize, searchText, deleted])
+
+  const handleClick = () => {
+    addAcademic_Science(`${academic_plan_science}`,{
+      academic_plan: state,
+      science: SciencesID
+    }, response => {
+      setDeleted(!deleted)
+      handleClose()
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  const OpenEditModal = (id) => {
+    setacademic_sciencesID(id)
+    handleOpen2()
+  }
+  
+  const handleEdit = () => {
+    editAcademic_Science(`${academic_plan_science}${academic_sciencesID}/`,{
+      academic_plan: state,
+      science: SciencesID
+    }, response => {
+      setDeleted(!deleted)
+      handleClose2()
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  const handleDelete = (id) => {
+    deleteAcademic_Science(`${academic_plan_science}${id}`, response => {
+      setDeleted(!deleted)
+    }, error => {
+      console.log(error)
+    })
+  }
+
+
 
   return (
     <>
@@ -135,11 +214,11 @@ export default function PlanSciences() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5].map((elem, index) => {
+                  Sciences.length > 0 ? Sciences.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1494</th>
-                        <th>ИТ/Спец предмет по выбору</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.science}</th>
                         <th>
                             <Button
                             variant="contained"
@@ -150,7 +229,7 @@ export default function PlanSciences() {
                               padding: "10px 12px",
                               margin: '0 10px'
                             }}
-                            onClick={handleOpen2}
+                            onClick={(_) => OpenEditModal(elem.id)}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1184_18370)">
                                 <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
@@ -179,6 +258,7 @@ export default function PlanSciences() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
+                            onClick={(_) => handleDelete(elem.id)}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -199,14 +279,18 @@ export default function PlanSciences() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + Sciences.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
         <Modal
           keepMounted
@@ -252,34 +336,8 @@ export default function PlanSciences() {
                Fan                </Typography>
                
                <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Ma'lumotlar bazasi",
-                  value: 12,
-                }]}
-              />
-
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-               Turi                </Typography>
-               
-               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Majburiy",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setSciencesID(val)}
+                selectOptions={SciencesList}
               />
 
             </ModalSelectWrapper>
@@ -294,6 +352,7 @@ export default function PlanSciences() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleClick}
               >
                 Saqlash
               </Button>
@@ -345,34 +404,8 @@ export default function PlanSciences() {
                Fan                </Typography>
                
                <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Ma'lumotlar bazasi",
-                  value: 12,
-                }]}
-              />
-
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-               Turi                </Typography>
-               
-               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Majburiy",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setSciencesID(val)}
+                selectOptions={SciencesList}
               />
 
             </ModalSelectWrapper>
@@ -387,6 +420,7 @@ export default function PlanSciences() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleEdit}
               >
                 Saqlash
               </Button>

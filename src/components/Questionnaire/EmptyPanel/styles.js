@@ -16,4 +16,9 @@ export const EmptyPanelWrapper = styled.div`
         font-weight: ${props => props.theme.text.subtitle1.font_weight};
         font-size: ${props => props.theme.text.subtitle1.font_size};
     }
+
+    @media (max-width: 576px) {
+        width: 100%;
+        padding: 20px 30px;
+    }
 `

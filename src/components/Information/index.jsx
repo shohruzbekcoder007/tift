@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
-import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody } from './styles'
+import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody, WrapperBodyContract } from './styles'
 import Modal from '@mui/material/Modal'
 import { Button, Snackbar, Typography } from '@mui/material'
 import { ModalHeader } from '../../global_styles/styles'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { getStudentInformation, setInformation } from './requests'
-import { host, student_detail, student_district, student_region } from '../../utils/API_urls'
+import { host, student_detail, student_district, student_region, studentcontract } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import MuiAlert from '@mui/material/Alert';
 
@@ -33,6 +33,7 @@ export default function Information() {
   const [Status, setStatus] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [StudentContract, setStudentContract] = useState([])
 
   const handleCloseAlert = () => setOpenAlert(false);
 
@@ -54,6 +55,14 @@ export default function Information() {
   useEffect(() => {
     getStudentInformation(student_detail, (response) => {
       setInfoList(response.data.result)
+    }, (error) => {
+      console.log(error)
+    })
+
+    getStudentInformation(studentcontract, (response) => {
+      console.log(response);
+      setStudentContract(response.data)
+      // setInfoList(response.data.result)
     }, (error) => {
       console.log(error)
     })
@@ -154,7 +163,7 @@ export default function Information() {
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
-              <HeaderWrapperP>{infoList.gender == "male" ? "Erkak" : "Ayol"}</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "famele" && "Ayol" || ""}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
@@ -168,6 +177,62 @@ export default function Information() {
               <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
+            <WrapperBodyContract>
+              {
+                StudentContract.length > 0 ? StudentContract.map((elem, index) => {
+                  return (
+                    <>
+                      {
+                        elem.type == 'two' ?
+                          elem.file ? <a href={host + elem?.file} target='_blank'>
+                            <Button
+                              sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                              variant="contained"
+                            >
+                              Ikki Tomonlama Shartomani yuklab olish
+                            </Button>
+                          </a>
+                            : <Button
+                              sx={{
+                                width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
+                                "&:hover": {
+                                  backgroundColor: "text.secondary",
+                                },
+                                cursor: 'no-drop'
+                              }}
+                              variant="contained"
+                            >
+                              Ikki Tomonlama Shartomani yuklab olish
+                            </Button>
+                          :
+                          elem.file ? <a href={host + elem?.file} target='_blank'>
+                          <Button
+                            sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                            variant="contained"
+                          >
+                            Uch Tomonlama Shartomani yuklab olish
+                          </Button>
+                        </a>
+                          : <Button
+                            sx={{
+                              width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
+                              "&:hover": {
+                                backgroundColor: "text.secondary",
+                              },
+                              cursor: 'no-drop'
+                            }}
+                            variant="contained"
+                          >
+                            Uch Tomonlama Shartomani yuklab olish
+                          </Button>
+                      }
+                    </>
+                  )
+                })
+                  :
+                  <></>
+              }
+            </WrapperBodyContract>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
@@ -181,7 +246,7 @@ export default function Information() {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.degree === 'bachelor' ? 'Bakalavr' : 'Magister'}</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
@@ -205,6 +270,7 @@ export default function Information() {
           </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
+
       <Modal
         keepMounted
         open={open}

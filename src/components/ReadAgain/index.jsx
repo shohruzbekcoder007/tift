@@ -20,6 +20,7 @@ export default function ReadAgain() {
   return (
     <ContentWrapper>
       <ReadAgainWrapper>
+        
         <ReadAgainLeft>
           <Paper
             elevation={0}
@@ -76,6 +77,7 @@ export default function ReadAgain() {
             </ClassScheduleTableWrapper>
           </Paper>
         </ReadAgainLeft>
+
         <ReadAgainReight>
           <Paper
             elevation={0}
@@ -140,6 +142,7 @@ export default function ReadAgain() {
             }
           </Paper>
         </ReadAgainReight>
+
       </ReadAgainWrapper>
     </ContentWrapper>
   )

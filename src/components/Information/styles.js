@@ -54,6 +54,12 @@ export const WrapperBody = styled.div`
   justify-content: space-between;
 `
 
+export const WrapperBodyContract = styled.div`
+  margin: 1.8rem 0;
+  display: grid;
+  gap: 10px;
+`
+
 export const Hr = styled.hr`
     width:100%;
     height: 2px;
@@ -92,11 +98,22 @@ export const ModalBoxInfo = styled.div`
       display:flex;
       justify-content: space-between;
     }
+
+    @media (max-width: 576px) {
+      .modal_box_body {
+        display: grid;
+        place-items: center;
+      }
+      width: 350px;
+    }
 `
 
 export const ModalSelectWrapperInfo = styled.div`
     width: 32%;
     margin-bottom: 20px;
+    @media (max-width: 576px) {
+      width: 100%;
+    }
 `
 export const ModalButtonsInfo = styled.div`
     width: 50%;
@@ -105,4 +122,8 @@ export const ModalButtonsInfo = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 12px;
+
+    @media (max-width: 576px) {
+      width: 100%;
+    }
 `
