@@ -3,9 +3,9 @@
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://oqdevpy.jprq.live"
-// export const host = "https://api.tift.uz/"
+export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =   "https://api.lms-edu.uz"
@@ -61,6 +61,7 @@ export const my_task_put= "/student/my-submission/"
 export const my_tasschedule= "/student/schedule-table/"
 export const notifications= "/student/notifications/"
 export const my_scince_lessons= "/student/my-scince-lessons/"
+export const studentcontract= "/studentcontract/"
 
 
 
@@ -109,6 +110,8 @@ export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
 export const country = "/country/"
 export const logout = "/logout/"
+export const academic_plan = "/academic_plan/"
+export const academic_plan_science = "/academic_plan_science/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

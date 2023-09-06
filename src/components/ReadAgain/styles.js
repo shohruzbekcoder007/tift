@@ -6,6 +6,10 @@ export const ReadAgainWrapper = styled.div`
     gap: 18px;
     align-items: start;
     justify-content: space-between;
+
+    @media (max-width: 576px) {
+        display: grid;
+    }
 `
 
 export const ReadAgainLeft = styled.div`

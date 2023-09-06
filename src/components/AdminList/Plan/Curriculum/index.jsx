@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../../PageSelector'
@@ -12,8 +12,11 @@ import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import { InputsWrapper } from '../../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../../Building/styles'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { IconButton } from '../../../Final_Dep/style'
+import { Directions, academic_plan } from '../../../../utils/API_urls'
+import { addAcademic_Plan, deletAcademic_Plan, editAcademic_Plan, getAcademic_Plan } from './request'
+import { getDirections } from '../../Directions/request'
 
 export default function Curriculum() {
   const [open, setOpen] = useState(false);
@@ -22,6 +25,144 @@ export default function Curriculum() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
+
+  const { state } = useLocation()
+
+  const [Plans, setPlans] = useState([])
+  const [DirectionsList, setDirectionsList] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [searchText, setSearchText] = useState('')
+  const [allCount, setAllCount] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
+  const [deleted, setDeleted] = useState(true)
+  const [EditedItemID, setEditedItemID] = useState(null)
+
+  const [Semester, setSemester] = useState(1)
+  const [Direction, setDirection] = useState(null)
+  const [Degree, setDegree] = useState('bachelor')
+  const [StudyType, setStudyType] = useState('morning')
+
+
+  useEffect(() => {
+    getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}`, response => {
+      console.log(response.data.results);
+      setPlans(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+    }, error => {
+      console.log(error)
+    })
+
+    getDirections(Directions, (response) => {
+      console.log(response);
+      let list = []
+      response.map(item => {
+        list.push({
+          value: item.id,
+          name: item.name
+        })
+        setDirection(response[0].id)
+      })
+      setDirectionsList(list)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [page, pageSize, searchText, deleted])
+
+  
+  const admindegree = useMemo(() => {
+    return [
+      {
+      name: "Bakalavr",
+      value: 'bachelor',
+      },
+      {
+        name: "Magister",
+        value: 'master',
+      },
+  ]
+  },[])
+
+  const SciencesType = useMemo(() => {
+    return [
+      {
+      name: "Kunduzgi",
+      value: 'morning',
+      },
+      {
+        name: "Kechki",
+        value: 'evening',
+      },
+      {
+        name: "Sirtqi",
+        value: 'external',
+      },
+      {
+        name: "Masofaviy",
+        value: 'remote',
+      },
+      
+  ]
+  },[])
+
+  const SemesterList = useMemo(() => {
+   return [1, 2, 3, 4, 5, 6, 7, 8].map(elem => {
+      return (
+        {
+          name: elem,
+          value: elem,
+        }
+      )
+    })
+  },[])
+
+
+  const handleClick =  (_) => {
+    addAcademic_Plan(academic_plan, {
+      academic_year: state,
+      semester: Semester,
+      direction: Direction,
+      degree: Degree,
+      study_type: StudyType,
+    }, response => {
+      setDeleted(!deleted)
+      handleClose()
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  const OpenEdit = (id) => {
+    setEditedItemID(id)
+    handleOpen2()
+  }
+
+  
+  const handleEdit =  () => {
+    editAcademic_Plan(`${academic_plan}${EditedItemID}/`, {
+      academic_year: state,
+      semester: Semester,
+      direction: Direction,
+      degree: Degree,
+      study_type: StudyType,
+    }, response => {
+      setDeleted(!deleted)
+      handleClose2()
+    }, error => {
+      console.log(error)
+    })
+  }
+
+  const handleDelete = (id) => {
+    deletAcademic_Plan(`${academic_plan}${id}/`, response => {
+      setDeleted(!deleted)
+    }, error => {
+      console.log(error)
+    })
+  }
+
+
 
   return (
     <>
@@ -34,6 +175,7 @@ export default function Curriculum() {
       >
         O’quv reja
       </Typography>
+
       <Paper
         elevation={0}
         sx={{
@@ -165,55 +307,21 @@ export default function Curriculum() {
                     </svg>
                     }
                   />
-
-                  <TableTHHeader
-                    text="Majburiy fanlar"
-                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clipPath="url(#clip0_78_23319)">
-                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
-                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_78_23319">
-                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    }
-                  />
-
-                  <TableTHHeader
-                    text="Fanlar soni"
-                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <g clipPath="url(#clip0_78_23319)">
-                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
-                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
-                      </g>
-                      <defs>
-                        <clipPath id="clip0_78_23319">
-                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
-                        </clipPath>
-                      </defs>
-                    </svg>
-                    }
-                  />
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6].map((elem, index) => {
+                  Plans.length > 0 ? Plans.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1234</th>
-                        <th>Компьютерный инжиниринг</th>
-                        <th>Bakalavr</th>
-                        <th>To’liq stavka</th>
-                        <th>8</th>
-                        <th>8</th>
-                        <th>8</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.direction}</th>
+                        <th>{elem.degree}</th>
+                        <th>{elem.study_type}</th>
+                        <th>{elem.semester}</th>
                         <th>
-                          <Link to={'sciences'}>
+                          <Link to={'sciences'} state={elem.id}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               Fanlar
                             </IconButton>
@@ -227,7 +335,7 @@ export default function Curriculum() {
                               padding: "6px 12px",
                               marginRight: "20px"
                             }}
-                            onClick={handleOpen2}
+                            onClick={(_) => OpenEdit(elem.id)}
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1221_28999)">
                                 <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white" />
@@ -255,7 +363,7 @@ export default function Curriculum() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={handleOpen2}
+                            onClick={(_) => handleDelete(elem.id)}
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1221_31960)">
                                 <path d="M14.5026 2.66667H12.4359C12.2812 1.91428 11.8718 1.23823 11.2768 0.752479C10.6817 0.266727 9.93741 0.000969683 9.16927 0L7.83594 0C7.0678 0.000969683 6.32348 0.266727 5.72844 0.752479C5.13339 1.23823 4.724 1.91428 4.56927 2.66667H2.5026C2.32579 2.66667 2.15622 2.7369 2.0312 2.86193C1.90618 2.98695 1.83594 3.15652 1.83594 3.33333C1.83594 3.51014 1.90618 3.67971 2.0312 3.80474C2.15622 3.92976 2.32579 4 2.5026 4H3.16927V12.6667C3.17033 13.5504 3.52186 14.3976 4.14675 15.0225C4.77164 15.6474 5.61887 15.9989 6.5026 16H10.5026C11.3863 15.9989 12.2336 15.6474 12.8585 15.0225C13.4833 14.3976 13.8349 13.5504 13.8359 12.6667V4H14.5026C14.6794 4 14.849 3.92976 14.974 3.80474C15.099 3.67971 15.1693 3.51014 15.1693 3.33333C15.1693 3.15652 15.099 2.98695 14.974 2.86193C14.849 2.7369 14.6794 2.66667 14.5026 2.66667ZM7.83594 1.33333H9.16927C9.58279 1.33384 9.98602 1.46225 10.3237 1.70096C10.6613 1.93967 10.9169 2.27699 11.0553 2.66667H5.94994C6.08833 2.27699 6.34387 1.93967 6.68153 1.70096C7.01919 1.46225 7.42242 1.33384 7.83594 1.33333ZM12.5026 12.6667C12.5026 13.1971 12.2919 13.7058 11.9168 14.0809C11.5417 14.456 11.033 14.6667 10.5026 14.6667H6.5026C5.97217 14.6667 5.46346 14.456 5.08839 14.0809C4.71332 13.7058 4.5026 13.1971 4.5026 12.6667V4H12.5026V12.6667Z" fill="white" />
@@ -274,14 +382,18 @@ export default function Curriculum() {
                       </tr>
                     )
                   })
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Plans.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
 
         <Modal
@@ -333,44 +445,9 @@ export default function Curriculum() {
               >
                 Blok(semestr)                        </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "ТToshkent Axborot Texnologiyalari",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setSemester(val)}
+                selectOptions={SemesterList}
               />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Majburiy fanlar soni                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Tanlash uchun fanlar soni                        </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -387,11 +464,8 @@ export default function Curriculum() {
               >
                 Yo’nalish                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Elektron tijorat",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setDirection(val)}
+                selectOptions={DirectionsList}
               />
             </ModalSelectWrapper>
 
@@ -407,13 +481,10 @@ export default function Curriculum() {
                   mb: "10px"
                 }}
               >
-                Elektron tijorat                            </Typography>
+                Daraja                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Doktorlik",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setDegree(val)}
+                selectOptions={admindegree}
               />
             </ModalSelectWrapper>
 
@@ -431,11 +502,8 @@ export default function Curriculum() {
               >
                 Ta’lim turi                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "To’liq stavka",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setStudyType(val)}
+                selectOptions={SciencesType}
               />
             </ModalSelectWrapper>
             <ModalButtons>
@@ -447,6 +515,7 @@ export default function Curriculum() {
                 Bekor qilish
               </Button>
               <Button
+              onClick={(_) => handleClick()}
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
               >
@@ -506,44 +575,9 @@ export default function Curriculum() {
               >
                 Blok(semestr)                        </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "ТToshkent Axborot Texnologiyalari",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setSemester(val)}
+                selectOptions={SemesterList}
               />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Majburiy fanlar soni                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Tanlash uchun fanlar soni                        </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -560,11 +594,8 @@ export default function Curriculum() {
               >
                 Yo’nalish                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Elektron tijorat",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setDirection(val)}
+                selectOptions={DirectionsList}
               />
             </ModalSelectWrapper>
 
@@ -580,13 +611,10 @@ export default function Curriculum() {
                   mb: "10px"
                 }}
               >
-                Elektron tijorat                            </Typography>
+                Daraja                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "Doktorlik",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setDegree(val)}
+                selectOptions={admindegree}
               />
             </ModalSelectWrapper>
 
@@ -604,11 +632,8 @@ export default function Curriculum() {
               >
                 Ta’lim turi                            </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "To’liq stavka",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setStudyType(val)}
+                selectOptions={SciencesType}
               />
             </ModalSelectWrapper>
             <ModalButtons>
@@ -620,6 +645,7 @@ export default function Curriculum() {
                 Bekor qilish
               </Button>
               <Button
+              onClick={(_) => handleEdit()}
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
               >

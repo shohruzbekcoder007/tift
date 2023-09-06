@@ -34,6 +34,7 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
                     value={age}
                     onChange={handleChange}
                     fullWidth
+                    
                     sx={{
                         padding: "14px 10px",
                         backgroundColor: "#F6F6F6",
