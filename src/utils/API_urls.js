@@ -110,6 +110,7 @@ export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
 export const country = "/country/"
 export const logout = "/logout/"
+export const schedule_admin = "/schedule_admin/"
 export const academic_plan = "/academic_plan/"
 export const academic_plan_science = "/academic_plan_science/"
 
