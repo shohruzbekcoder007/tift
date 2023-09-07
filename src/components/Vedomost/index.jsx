@@ -134,7 +134,7 @@ export default function Vedomost() {
             </thead>
             <tbody>
               {
-                tasksStudents.map((elem, index) => {
+              tasksStudents.length > 0 ?  tasksStudents.map((elem, index) => {
                   return (
                       <tr key={index}>
                         <th>{index + 1}</th>
@@ -197,6 +197,10 @@ export default function Vedomost() {
                     </tr>
                   )
                 })
+                :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
               }
               
             </tbody>

@@ -1,5 +1,26 @@
 import axios, { headerConfig } from '../../../utils/baseUrl'
 
+export const getSemesters = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
+
+
+export const getTeachersList = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
+
 export const getTeacherGroups = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
         headers: headerConfig(),

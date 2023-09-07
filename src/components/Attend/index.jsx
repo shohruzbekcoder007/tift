@@ -274,7 +274,7 @@ export default function Attend() {
                             </thead>
                             <tbody>
                                 {
-                                    teacherGetNbList.map((elem, index) => {
+                                    teacherGetNbList.length > 0 ? teacherGetNbList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
                                                 <th>{elem.id}</th>
@@ -427,6 +427,10 @@ export default function Attend() {
                                             </tr>
                                         )
                                     })
+                                        :
+                                        <tr>
+                                            <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                        </tr>
                                 }
                             </tbody>
                         </table>

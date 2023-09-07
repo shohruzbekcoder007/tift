@@ -8,7 +8,7 @@ export default function AutocompleteApi() {
     const [itemsAutocomplete, setItemsAutocomplete] = useState([])
 
     useEffect(() => {
-        getStudentsList(`${allusers}?role_name=student&page_size=50`, response => {
+        getStudentsList(`${allusers}?role__name=student`, response => {
             setItemsAutocomplete(response.data.results)
         }, error => {
 

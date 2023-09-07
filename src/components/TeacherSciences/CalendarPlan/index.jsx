@@ -128,7 +128,7 @@ export default function CalendarPlan() {
             </thead>
             <tbody>
               {
-                calendarPlansList.map((elem, index) => {
+               calendarPlansList.length > 0 ? calendarPlansList.map((elem, index) => {
                   return (
                     <tr key={index}>
                       <th>{elem.number}</th>
@@ -147,6 +147,10 @@ export default function CalendarPlan() {
                     </tr>
                   )
                 })
+                :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
               }
             </tbody>
           </table>

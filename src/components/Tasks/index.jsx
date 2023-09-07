@@ -212,11 +212,15 @@ export default function Tasks() {
               </thead>
               <tbody>
                 {
-                  tasksList.map((elem, index) => {
+                 tasksList.length > 0 ? tasksList.map((elem, index) => {
                     return (
                       <ItemTasks key = {index} elem = {elem} index = {index}/>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>

@@ -34,6 +34,11 @@
         "ru": "Студенты",
         "eng": "Students"
     },
+    "Teachers": {
+        "uz": "O'qituvchilar",
+        "ru": "Учителя",
+        "eng": "Teachers"
+    },
    
     "Confirmed": {
         "uz": "Tasdiqlangan",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Box, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -10,8 +10,8 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../.
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import listLanguage from './language.json'
-import { changeNbPetition, getTeacherGroups, setNbPetition } from './requests'
-import { teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
+import { changeNbPetition, getSemesters, getTeacherGroups, getTeachersList, setNbPetition } from './requests'
+import { allusers, semester, teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
 
 
@@ -25,6 +25,7 @@ export default function Attend() {
     const [studentParaList, setstudentParaList] = useState(1)
     const [lessonList, setLessonList] = useState([])
     const [studentsList, setstudentsList] = useState([])
+    const [TeachersList, setTeachersList] = useState([])
     const [teacherGetNbList, setteacherGetNbList] = useState([])
     // const [studentList, setstudentList] = useState([])
 
@@ -33,32 +34,72 @@ export default function Attend() {
     const [allCount, setAllCount] = useState(0)
     const [pageCount, setPageCount] = useState(1)
     const [page, setPage] = useState(1)
-
-
+    const [SemesterID, setSemesterID] = useState(null)
     const [selectedValues, setSelectedValues] = useState([]);
     
     const handleMultiSelectChange = (values) => {
         setSelectedValues(values)
     };
 
+    const Para = useMemo(() => {
+        return [
+            {
+                name: "1",
+                value: 1,
+            },
+            {
+                name: "2",
+                value: 2,
+            },
+            {
+                name: "3",
+                value: 3,
+            },
+            {
+                name: "4",
+                value: 4,
+            },
+            {
+                name: "5",
+                value: 5,
+            },
+            {
+                name: "6",
+                value: 6,
+            }
+            ]
+      })
+
     useEffect(() => {
-        getTeacherGroups(teacher_groups, (response) => {
-            console.log(response.data);
-            setLessonIdList(response.data[0]?.id)
-            setgroupList(response.data.map(elem => {
-                return {
-                  name: elem.name,
-                  value: elem.id
-                }
-              }))
+        getSemesters(`${semester}`, (response) => {
+            setSemesterID(response.data.results[0].id);
         }, (error) => {
             console.log(error)
         })
+       
     }, [])
 
+    useEffect(() => {
+        if (SemesterID) {
+            getTeachersList(`${allusers}?role__name=teacher`, (response) => {
+                console.log(response.data);
+                setTeachersList(response.data.results)
+                setTeachersList(response.data.results.map(elem => {
+                    return {
+                      name: elem.full_name,
+                      value: elem.id
+                    }
+                }))
+                ChangeTeacher(response.data.results[0].id)
+            }, (error) => {
+                console.log(error)
+            })
+        }
+       
+    }, [SemesterID])
 
     useEffect(() => {
-        getTeacherGroups( `${teacher_get_nb}?page_size=${pageSize}&page=${page}`, (response) => {
+        getTeacherGroups(`${teacher_get_nb}?page_size=${pageSize}&page=${page}`, (response) => {
             setAllCount(response.data.count)
             setPageCount(response.data.page_count)
             setteacherGetNbList(response.data.results);
@@ -130,6 +171,20 @@ export default function Attend() {
         } )
       }
 
+      const ChangeTeacher = (id) => {
+        console.log(id);
+        getTeacherGroups(`${teacher_groups}?teacher=${id}&semester=${SemesterID}`, (response) => {
+            setLessonIdList(response.data[0]?.id)
+            setgroupList(response.data.map(elem => {
+                return {
+                  name: elem.name,
+                  value: elem.id
+                }
+              }))
+        }, (error) => {
+            console.log(error)
+        })
+      }
 
     return (
         <ContentWrapper>
@@ -514,6 +569,25 @@ export default function Attend() {
                                     mb: "10px"
                                 }}
                             >
+                                {listLanguage.Teachers['ru']}
+                            </Typography>
+                            <AllSelectFullWidth
+                                chageValueFunction={val => ChangeTeacher(val)}
+                                selectOptions={TeachersList}
+                            />
+                        </ModalSelectWrapper>
+                        <ModalSelectWrapper>
+                            <Typography
+                                id="keep-mounted-modal-title"
+                                variant="h6"
+                                component="h4"
+                                sx={{
+                                    fontSize: "16px",
+                                    fontWeight: 600,
+                                    color: "#000",
+                                    mb: "10px"
+                                }}
+                            >
                                 {listLanguage.Patok['ru']}
                             </Typography>
                             <AllSelectFullWidth
@@ -556,32 +630,7 @@ export default function Attend() {
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setstudentParaList(val)}
-                                selectOptions={[
-                                {
-                                    name: "1",
-                                    value: 1,
-                                },
-                                {
-                                    name: "2",
-                                    value: 2,
-                                },
-                                {
-                                    name: "3",
-                                    value: 3,
-                                },
-                                {
-                                    name: "4",
-                                    value: 4,
-                                },
-                                {
-                                    name: "5",
-                                    value: 5,
-                                },
-                                {
-                                    name: "6",
-                                    value: 6,
-                                }
-                                ]}
+                                selectOptions={Para}
                             />
                         </ModalSelectWrapper>
                         <ModalSelectWrapper>

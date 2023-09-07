@@ -137,6 +137,7 @@ import LawyerDashboard from './components/LawyerDashboard'
 import AddEmployees from './components/AdminList/Employees/AddEmployees'
 import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
+import Schedule from './components/AdminList/Streams/Schedule'
 
 
 function App() {
@@ -331,7 +332,10 @@ function App() {
                     <Route index element={<Semestr />} />
                     <Route path='control' element={<InterimControl />} />
                   </Route>
-                  <Route path="streams" element={<Streams />} />
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                  </Route>
                   <Route path="NBfix" element={<NBfix />} />
                   <Route path="transferstudents" element={<TransferStudents />} />
                   <Route path="scholarship" element={<Scholarship />} />
