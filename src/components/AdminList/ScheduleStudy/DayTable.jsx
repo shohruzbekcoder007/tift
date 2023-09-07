@@ -13,6 +13,8 @@ import AllSelectFullWidth from '../../AllSelectFullWidth';
 import { ModalSelectWrapper } from '../../../global_styles/styles';
 import week_day from '../../../dictionary/week_day'
 import lesson_types from '../../../dictionary/lesson_types'
+import { createScheduleTable } from './requests';
+import { scheduletable } from '../../../utils/API_urls';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -52,6 +54,35 @@ export default function DayTable({ oneday, groups, roomList }) {
         })
     }, [])
 
+    const paraList = useMemo(() => {
+        return [
+            {
+                name: 1,
+                value: 1
+            },
+            {
+                name: 2,
+                value: 2
+            },
+            {
+                name: 3,
+                value: 3
+            },
+            {
+                name: 4,
+                value: 4
+            },
+            {
+                name: 5,
+                value: 5
+            },
+            {
+                name: 6,
+                value: 6
+            }
+        ]
+    }, [])
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -59,6 +90,15 @@ export default function DayTable({ oneday, groups, roomList }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleSubmit = () => {
+        console.log(data)
+        createScheduleTable(scheduletable, data, response => {
+            console.log(response.id)
+        }, error => {
+            console.log(error)
+        })
+    }
 
     return (<>
         {
@@ -117,8 +157,10 @@ export default function DayTable({ oneday, groups, roomList }) {
                                     </Typography>
                                     <AllSelectFullWidth
                                         chageValueFunction={val => setData(prev => {
-                                            prev.group = val
-                                            return prev
+                                            return {
+                                                ...prev,
+                                                group: val
+                                            }
                                         })}
                                         selectOptions={groups}
                                     />
@@ -138,7 +180,12 @@ export default function DayTable({ oneday, groups, roomList }) {
                                         Weekday
                                     </Typography>
                                     <AllSelectFullWidth
-                                        chageValueFunction={val => console.log(val)}
+                                        chageValueFunction={val => setData(prev => {
+                                            return {
+                                                ...prev,
+                                                weekday: val
+                                            }
+                                        })}
                                         selectOptions={weekDays}
                                     />
                                 </ModalSelectWrapper>
@@ -157,33 +204,13 @@ export default function DayTable({ oneday, groups, roomList }) {
                                         Para
                                     </Typography>
                                     <AllSelectFullWidth
-                                        chageValueFunction={val => console.log(val)}
-                                        selectOptions={[
-                                            {
-                                                name: 1,
-                                                value: 1
-                                            },
-                                            {
-                                                name: 2,
-                                                value: 2
-                                            },
-                                            {
-                                                name: 3,
-                                                value: 3
-                                            },
-                                            {
-                                                name: 4,
-                                                value: 4
-                                            },
-                                            {
-                                                name: 5,
-                                                value: 5
-                                            },
-                                            {
-                                                name: 6,
-                                                value: 6
+                                        chageValueFunction={val => setData(prev => {
+                                            return {
+                                                ...prev,
+                                                para: val
                                             }
-                                        ]}
+                                        })}
+                                        selectOptions={paraList}
                                     />
                                 </ModalSelectWrapper>
                                 <ModalSelectWrapper>
@@ -201,7 +228,12 @@ export default function DayTable({ oneday, groups, roomList }) {
                                         Room
                                     </Typography>
                                     <AllSelectFullWidth
-                                        chageValueFunction={val => console.log(val)}
+                                        chageValueFunction={val => setData(prev => {
+                                            return {
+                                                ...prev,
+                                                room: val
+                                            }
+                                        })}
                                         selectOptions={roomList}
                                     />
                                 </ModalSelectWrapper>
@@ -220,13 +252,18 @@ export default function DayTable({ oneday, groups, roomList }) {
                                         Types
                                     </Typography>
                                     <AllSelectFullWidth
-                                        chageValueFunction={val => console.log(val)}
+                                        chageValueFunction={val => setData(prev => {
+                                            return {
+                                                ...prev,
+                                                types: val
+                                            }
+                                        })}
                                         selectOptions={lessonTypes}
                                     />
                                 </ModalSelectWrapper>
                             </DialogContent>
                             <DialogActions>
-                                <Button autoFocus onClick={handleClose}>
+                                <Button autoFocus onClick={handleSubmit}>
                                     Save changes
                                 </Button>
                             </DialogActions>
