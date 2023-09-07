@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -9,6 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { ScheduleTable } from './styles'
+import AllSelectFullWidth from '../../AllSelectFullWidth';
+import { ModalSelectWrapper } from '../../../global_styles/styles';
+import week_day from '../../../dictionary/week_day'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -19,9 +22,18 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export default function DayTable({ oneday }) {
+export default function DayTable({ oneday, groups, roomList }) {
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+
+    const weekDays = useMemo(() => {
+        return week_day.map(elem => {
+            return {
+                value: elem.value,
+                name: elem.uz
+            }
+        })
+    },[])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -30,7 +42,6 @@ export default function DayTable({ oneday }) {
     const handleClose = () => {
         setOpen(false);
     };
-
 
     return (<>
         {
@@ -58,7 +69,7 @@ export default function DayTable({ oneday }) {
                             open={open}
                         >
                             <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                                Modal title
+                                Dars jadvaliga qo'shish
                             </DialogTitle>
                             <IconButton
                                 aria-label="close"
@@ -72,21 +83,127 @@ export default function DayTable({ oneday }) {
                             >
                                 <CloseIcon />
                             </IconButton>
-                            <DialogContent dividers>
-                                <Typography gutterBottom>
-                                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                                    consectetur ac, vestibulum at eros.
-                                </Typography>
-                                <Typography gutterBottom>
-                                    Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                                    Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-                                </Typography>
-                                <Typography gutterBottom>
-                                    Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                                    magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                                    ullamcorper nulla non metus auctor fringilla.
-                                </Typography>
+                            <DialogContent dividers style={{width: "450px"}}>
+                                <ModalSelectWrapper>
+                                    <Typography
+                                        id="keep-mounted-modal-title"
+                                        variant="h6"
+                                        component="h4"
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 600,
+                                            color: "#000",
+                                            mb: "10px"
+                                        }}
+                                    >
+                                        Group
+                                    </Typography>
+                                    <AllSelectFullWidth
+                                        chageValueFunction={val => console.log(val)}
+                                        selectOptions={groups}
+                                    />
+                                </ModalSelectWrapper>
+                                <ModalSelectWrapper>
+                                    <Typography
+                                        id="keep-mounted-modal-title"
+                                        variant="h6"
+                                        component="h4"
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 600,
+                                            color: "#000",
+                                            mb: "10px"
+                                        }}
+                                    >
+                                        Weekday
+                                    </Typography>
+                                    <AllSelectFullWidth
+                                        chageValueFunction={val => console.log(val)}
+                                        selectOptions={weekDays}
+                                    />
+                                </ModalSelectWrapper>
+                                <ModalSelectWrapper>
+                                    <Typography
+                                        id="keep-mounted-modal-title"
+                                        variant="h6"
+                                        component="h4"
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 600,
+                                            color: "#000",
+                                            mb: "10px"
+                                        }}
+                                    >
+                                        Para
+                                    </Typography>
+                                    <AllSelectFullWidth
+                                        chageValueFunction={val => console.log(val)}
+                                        selectOptions={[
+                                            {
+                                                name: 1,
+                                                value: 1
+                                            },
+                                            {
+                                                name: 2,
+                                                value: 2
+                                            },
+                                            {
+                                                name: 3,
+                                                value: 3
+                                            },
+                                            {
+                                                name: 4,
+                                                value: 4
+                                            },
+                                            {
+                                                name: 5,
+                                                value: 5
+                                            },
+                                            {
+                                                name: 6,
+                                                value: 6
+                                            }
+                                        ]}
+                                    />
+                                </ModalSelectWrapper>
+                                <ModalSelectWrapper>
+                                    <Typography
+                                        id="keep-mounted-modal-title"
+                                        variant="h6"
+                                        component="h4"
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 600,
+                                            color: "#000",
+                                            mb: "10px"
+                                        }}
+                                    >
+                                        Room
+                                    </Typography>
+                                    <AllSelectFullWidth
+                                        chageValueFunction={val => console.log(val)}
+                                        selectOptions={roomList}
+                                    />
+                                </ModalSelectWrapper>
+                                <ModalSelectWrapper>
+                                    <Typography
+                                        id="keep-mounted-modal-title"
+                                        variant="h6"
+                                        component="h4"
+                                        sx={{
+                                            fontSize: "16px",
+                                            fontWeight: 600,
+                                            color: "#000",
+                                            mb: "10px"
+                                        }}
+                                    >
+                                        Types
+                                    </Typography>
+                                    <AllSelectFullWidth
+                                        chageValueFunction={val => console.log(val)}
+                                        selectOptions={[]}
+                                    />
+                                </ModalSelectWrapper>
                             </DialogContent>
                             <DialogActions>
                                 <Button autoFocus onClick={handleClose}>

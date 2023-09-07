@@ -3,8 +3,8 @@ import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '.
 import { Paper } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
-import { getBuildings, getScheduleAdmin, getSemester } from './requests'
-import { building, my_semesters, schedule_admin } from '../../../utils/API_urls'
+import { getBuildings, getGroups, getRoomList, getScheduleAdmin, getSemester } from './requests'
+import { academic_group, building, my_semesters, room_create_list, schedule_admin } from '../../../utils/API_urls'
 import { ScheduleTable } from './styles'
 import DayTable from './DayTable'
 
@@ -15,6 +15,8 @@ export default function ScheduleStudy() {
     const [tours, setTours] = useState([])
     const [tour, setTour] = useState([])
     const [rooms, setRooms] = useState([])
+    const [groups, setGroups] = useState([])
+    const [roomList, setRoomList] = useState([])
 
     useEffect(() => {
         getSemester(my_semesters, (response) => {
@@ -41,7 +43,34 @@ export default function ScheduleStudy() {
         }, (error) => {
             console.log(error)
         })
+        getGroups(`${academic_group}?page_size=500`, (response) => {
+            console.log(response.data.results)
+            const result_list = response.data.results.map(elem => {
+                return {
+                    name: elem.name,
+                    value: elem.id
+                }
+            })
+            setGroups(result_list)
+        }, (error) => {
+            console.log(error)
+        })
     }, [])
+
+    useEffect(() => {
+        getRoomList(`${room_create_list}?building=${tour}&page_size=500`, response => {
+            console.log(response.data.results, "<-->")
+            const room_list = response.data.results.map((elem) => {
+                return {
+                    value: elem.id,
+                    name: `${elem.name} ${elem.count}`
+                }
+            })
+            setRoomList(room_list)
+        }, error => {
+            console.log(error)
+        })
+    }, [tour])
 
     useEffect(() => {
         if(semester != 0 && tour != 0){
@@ -271,7 +300,7 @@ export default function ScheduleStudy() {
                                                 <th>{elem.name} ({elem.count})</th>
                                                 {
                                                     elem.schedule.map((el, ind) => {
-                                                        return <DayTable oneday={el.timetable} key={ind}/>
+                                                        return <DayTable oneday={el.timetable} roomList={roomList} groups={groups} key={ind}/>
                                                     })
                                                 }
                                             </tr>
