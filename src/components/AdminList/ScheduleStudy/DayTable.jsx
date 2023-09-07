@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -25,15 +25,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export default function DayTable({ oneday, groups, roomList }) {
-
+export default function DayTable({ oneday, groups, roomList, day, para, room }) {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({
-        group: null,
-        weekday: null,
-        para: null,
-        room: null,
-        types: null
+        group: groups[0]?.value,
+        weekday: getDay(day),
+        para: para,
+        room: room.id,
+        types: lesson_types[0].value
     })
 
     const weekDays = useMemo(() => {
@@ -43,7 +42,7 @@ export default function DayTable({ oneday, groups, roomList }) {
                 name: elem.uz
             }
         })
-    },[])
+    }, [])
 
     const lessonTypes = useMemo(() => {
         return lesson_types.map(elem => {
@@ -94,183 +93,188 @@ export default function DayTable({ oneday, groups, roomList }) {
     const handleSubmit = () => {
         console.log(data)
         createScheduleTable(scheduletable, data, response => {
+            if(response.id){
+                handleClose()
+            }
             console.log(response.id)
         }, error => {
             console.log(error)
         })
     }
 
-    return (<>
-        {
-            oneday.map((elem, index) => {
-                return (
-                    <>
-                        <ScheduleTable
-                            key={index}
-                            onClick={() => {
-                                handleClickOpen()
+    return (
+        <>
+            <ScheduleTable
+                onClick={() => {
+                    handleClickOpen()
+                }}
+            >
+                {
+                    oneday.group.map((element, indx) => {
+                        return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
+                    })
+                }
+            </ScheduleTable>
+            <BootstrapDialog
+                onClose={handleClose}
+                aria-labelledby="customized-dialog-title"
+                open={open}
+            >
+                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                    Dars jadvaliga qo'shish
+                </DialogTitle>
+                <IconButton
+                    aria-label="close"
+                    onClick={handleClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <DialogContent dividers style={{ width: "450px" }}>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
                             }}
                         >
-                            {
-                                elem.group.map((element, indx) => {
-                                    return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
-                                })
-                            }
-                        </ScheduleTable>
-                        {/* <Button variant="outlined" onClick={handleClickOpen}>
-                            Open dialog
-                        </Button> */}
-                        <BootstrapDialog
-                            onClose={handleClose}
-                            aria-labelledby="customized-dialog-title"
-                            open={open}
+                            Group
+                        </Typography>
+                        <AllSelectFullWidth
+                            chageValueFunction={val => setData(prev => {
+                                return {
+                                    ...prev,
+                                    group: val
+                                }
+                            })}
+                            selectOptions={groups}
+                        />
+                    </ModalSelectWrapper>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
                         >
-                            <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                                Dars jadvaliga qo'shish
-                            </DialogTitle>
-                            <IconButton
-                                aria-label="close"
-                                onClick={handleClose}
-                                sx={{
-                                    position: 'absolute',
-                                    right: 8,
-                                    top: 8,
-                                    color: (theme) => theme.palette.grey[500],
-                                }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                            <DialogContent dividers style={{width: "450px"}}>
-                                <ModalSelectWrapper>
-                                    <Typography
-                                        id="keep-mounted-modal-title"
-                                        variant="h6"
-                                        component="h4"
-                                        sx={{
-                                            fontSize: "16px",
-                                            fontWeight: 600,
-                                            color: "#000",
-                                            mb: "10px"
-                                        }}
-                                    >
-                                        Group
-                                    </Typography>
-                                    <AllSelectFullWidth
-                                        chageValueFunction={val => setData(prev => {
-                                            return {
-                                                ...prev,
-                                                group: val
-                                            }
-                                        })}
-                                        selectOptions={groups}
-                                    />
-                                </ModalSelectWrapper>
-                                <ModalSelectWrapper>
-                                    <Typography
-                                        id="keep-mounted-modal-title"
-                                        variant="h6"
-                                        component="h4"
-                                        sx={{
-                                            fontSize: "16px",
-                                            fontWeight: 600,
-                                            color: "#000",
-                                            mb: "10px"
-                                        }}
-                                    >
-                                        Weekday
-                                    </Typography>
-                                    <AllSelectFullWidth
-                                        chageValueFunction={val => setData(prev => {
-                                            return {
-                                                ...prev,
-                                                weekday: val
-                                            }
-                                        })}
-                                        selectOptions={weekDays}
-                                    />
-                                </ModalSelectWrapper>
-                                <ModalSelectWrapper>
-                                    <Typography
-                                        id="keep-mounted-modal-title"
-                                        variant="h6"
-                                        component="h4"
-                                        sx={{
-                                            fontSize: "16px",
-                                            fontWeight: 600,
-                                            color: "#000",
-                                            mb: "10px"
-                                        }}
-                                    >
-                                        Para
-                                    </Typography>
-                                    <AllSelectFullWidth
-                                        chageValueFunction={val => setData(prev => {
-                                            return {
-                                                ...prev,
-                                                para: val
-                                            }
-                                        })}
-                                        selectOptions={paraList}
-                                    />
-                                </ModalSelectWrapper>
-                                <ModalSelectWrapper>
-                                    <Typography
-                                        id="keep-mounted-modal-title"
-                                        variant="h6"
-                                        component="h4"
-                                        sx={{
-                                            fontSize: "16px",
-                                            fontWeight: 600,
-                                            color: "#000",
-                                            mb: "10px"
-                                        }}
-                                    >
-                                        Room
-                                    </Typography>
-                                    <AllSelectFullWidth
-                                        chageValueFunction={val => setData(prev => {
-                                            return {
-                                                ...prev,
-                                                room: val
-                                            }
-                                        })}
-                                        selectOptions={roomList}
-                                    />
-                                </ModalSelectWrapper>
-                                <ModalSelectWrapper>
-                                    <Typography
-                                        id="keep-mounted-modal-title"
-                                        variant="h6"
-                                        component="h4"
-                                        sx={{
-                                            fontSize: "16px",
-                                            fontWeight: 600,
-                                            color: "#000",
-                                            mb: "10px"
-                                        }}
-                                    >
-                                        Types
-                                    </Typography>
-                                    <AllSelectFullWidth
-                                        chageValueFunction={val => setData(prev => {
-                                            return {
-                                                ...prev,
-                                                types: val
-                                            }
-                                        })}
-                                        selectOptions={lessonTypes}
-                                    />
-                                </ModalSelectWrapper>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button autoFocus onClick={handleSubmit}>
-                                    Save changes
-                                </Button>
-                            </DialogActions>
-                        </BootstrapDialog>
-                    </>
-                )
-            })
-        }
-    </>)
+                            Weekday
+                        </Typography>
+                            {getDay(day)}
+                        {/* <AllSelectFullWidth
+                            chageValueFunction={val => setData(prev => {
+                                return {
+                                    ...prev,
+                                    weekday: val
+                                }
+                            })}
+                            selectOptions={weekDays}
+                        /> */}
+                    </ModalSelectWrapper>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
+                        >
+                            Para
+                        </Typography>
+                            {para}
+                        {/* <AllSelectFullWidth
+                            chageValueFunction={val => setData(prev => {
+                                return {
+                                    ...prev,
+                                    para: val
+                                }
+                            })}
+                            selectOptions={paraList}
+                        /> */}
+                    </ModalSelectWrapper>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
+                        >
+                            Room
+                        </Typography>
+                            {room.name}
+                        {/* <AllSelectFullWidth
+                            chageValueFunction={val => setData(prev => {
+                                return {
+                                    ...prev,
+                                    room: val
+                                }
+                            })}
+                            selectOptions={roomList}
+                        /> */}
+                    </ModalSelectWrapper>
+                    <ModalSelectWrapper>
+                        <Typography
+                            id="keep-mounted-modal-title"
+                            variant="h6"
+                            component="h4"
+                            sx={{
+                                fontSize: "16px",
+                                fontWeight: 600,
+                                color: "#000",
+                                mb: "10px"
+                            }}
+                        >
+                            Types
+                        </Typography>
+                        <AllSelectFullWidth
+                            chageValueFunction={val => setData(prev => {
+                                return {
+                                    ...prev,
+                                    types: val
+                                }
+                            })}
+                            selectOptions={lessonTypes}
+                        />
+                    </ModalSelectWrapper>
+                </DialogContent>
+                <DialogActions>
+                    <Button autoFocus onClick={handleSubmit}>
+                        Save changes
+                    </Button>
+                </DialogActions>
+            </BootstrapDialog>
+        </>
+    )
+}
+
+const getDay = (day_number) => {
+    if(day_number == 1) return "monday"
+    if(day_number == 2) return "tuesday"
+    if(day_number == 3) return "wednesday"
+    if(day_number == 4) return "thursday"
+    if(day_number == 5) return "friday"
+    if(day_number == 6) return "saturday"
 }
