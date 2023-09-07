@@ -144,7 +144,7 @@ export default function CourseManagement() {
                             </thead>
                             <tbody>
                                 {
-                                    teacherGroupList.map((elem, index) => {
+                                 teacherGroupList.length > 0 ?   teacherGroupList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
                                                 <th>{elem.name}</th>
@@ -184,6 +184,10 @@ export default function CourseManagement() {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

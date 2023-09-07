@@ -71,6 +71,7 @@ export default function Attend() {
     useEffect(() => {
         if(lessonIdList){
             getTeacherGroups(`${teacher_units}?groups=${lessonIdList}`, (response) => {
+                console.log(response.data);
                 setlessonIdStudentList(response.data[0]?.id)
                 setLessonList(response.data.map(elem => {
                     return {
@@ -87,6 +88,7 @@ export default function Attend() {
     useEffect(() => {
         if(lessonIdStudentList){
             getTeacherGroups(`${teacher_group}${lessonIdStudentList}/`, (response) => {
+                console.log(response.data);
                 setstudentsList(response.data.nb_to_lesson.map(elem => {
                     return {
                       label: elem.full_name,

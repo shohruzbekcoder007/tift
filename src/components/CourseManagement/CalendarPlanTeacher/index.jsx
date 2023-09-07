@@ -31,9 +31,8 @@ export default function CalendarPlanTeacher() {
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
   const [page, setPage] = useState(1)
-
+  const [Status, setStatus] = useState(false)
   const [pageCount, setPageCount] = useState(1)
-
   const [groupLessonList, setgroupLessonList] = useState([]);
 
 
@@ -45,24 +44,24 @@ export default function CalendarPlanTeacher() {
 
   useEffect(() => {
     getTeacherLessons(`${teacher_group_lessons}?groups=${state.data}&page_size=${pageSize}&page=${page}`, (response) => {
-
       setgroupLessonList(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
     }, (error) => {
       console.log(error)
     })
-  }, [pageSize, page])
+  }, [pageSize, page, Status])
 
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
     const formData = new FormData();
     formData.append("types", 'file');
     formData.append("file", file);
     formData.append("lesson", changeLessonId);
     createLessonSource(teacher_lessons_source_create, formData, (response) => { 
+      setStatus(!Status)
+      setFile(null)
       handleClose()
     }, (error) => {
       console.log(error)
@@ -157,7 +156,7 @@ export default function CalendarPlanTeacher() {
               </thead>
               <tbody>
                 {
-                  groupLessonList.map((elem, index) => {
+                groupLessonList.length > 0 ?  groupLessonList.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.number}</th>
@@ -193,6 +192,10 @@ export default function CalendarPlanTeacher() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
@@ -322,6 +325,8 @@ const ButtonLessonSource = ({ elem }) => {
     formData.append("types", lessonType);
     formData.append("file", file);
     createLessonSourcePut(`${teacher_lessons_source}${changeLessonId}/`, formData, (response) => { 
+      setDeleted(!deletedElem)
+      setFile(null)
       handleClose()
     }, (error) => {
       console.log(error)
