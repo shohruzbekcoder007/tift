@@ -4,7 +4,7 @@ import { Paper } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { getBuildings, getGroups, getRoomList, getScheduleAdmin, getSemester } from './requests'
-import { academic_group, building, my_semesters, room_create_list, schedule_admin } from '../../../utils/API_urls'
+import { academic_group, building, my_semesters, room_create_list, schedule_admin, teacher_groups } from '../../../utils/API_urls'
 import { ScheduleTable } from './styles'
 import DayTable from './DayTable'
 
@@ -43,9 +43,9 @@ export default function ScheduleStudy() {
         }, (error) => {
             console.log(error)
         })
-        getGroups(`${academic_group}?page_size=500`, (response) => {
-            console.log(response.data.results)
-            const result_list = response.data.results.map(elem => {
+        getGroups(`${teacher_groups}?page_size=500`, (response) => {
+            console.log(response.data,"lalaku")
+            const result_list = response.data.map(elem => {
                 return {
                     name: elem.name,
                     value: elem.id
@@ -295,12 +295,18 @@ export default function ScheduleStudy() {
                             <tbody>
                                 {
                                     rooms.map((elem, index) => {
+                                        console.log(elem)
                                         return (
                                             <tr key={index}>
                                                 <th>{elem.name} ({elem.count})</th>
                                                 {
                                                     elem.schedule.map((el, ind) => {
-                                                        return <DayTable oneday={el.timetable} roomList={roomList} groups={groups} key={ind}/>
+                                                        return el.timetable.map((ell, innd) => {
+                                                            return (
+                                                                <DayTable oneday={ell} roomList={roomList} groups={groups} day={ind+1} para={innd + 1} key={innd} room={{name: elem.name, id: elem.id}}/>
+                                                            )
+                                                        }
+                                                            )
                                                     })
                                                 }
                                             </tr>
