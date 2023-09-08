@@ -9,11 +9,13 @@ import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
+import { useNavigate } from 'react-router-dom'
 
 export default function Schedule() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -192,12 +194,10 @@ export default function Schedule() {
                       selectOptions={[{
                         name: "Monday",
                         value: 'monday',
-                        selected: false
                       },
                       {
                         name: "Tuesday",
                         value: 'tuesday',
-                        selected: false
                       },
                       {
                         name: "Wednesday",
@@ -207,17 +207,14 @@ export default function Schedule() {
                       {
                         name: "Thursday",
                         value: 'thursday',
-                        selected: false
                       },
                       {
                         name: "Friday",
                         value: 'friday',
-                        selected: false
                       },
                       {
                         name: "Saturday",
                         value: 'saturday',
-                        selected: false
                       }
                       ]}
                     />
@@ -275,6 +272,7 @@ export default function Schedule() {
           <Button
             sx={{ width: "50%", textTransform: "none" }}
             variant="outlined"
+            onClick={() => navigate(-1)}
           >
             Qaytish
           </Button>

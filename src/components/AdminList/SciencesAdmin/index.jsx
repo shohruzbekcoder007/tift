@@ -303,7 +303,7 @@ export default function SciencesAdmin() {
               </thead>
               <tbody>
                 {
-                  scienceAdmin.map((elem, index) => {
+                 scienceAdmin.length> 0 ? scienceAdmin.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.id}</th>
@@ -419,6 +419,10 @@ export default function SciencesAdmin() {
                       </tr>
                     )
                   })
+                  : 
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
