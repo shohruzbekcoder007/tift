@@ -49,3 +49,16 @@ export const getScheduleAdmin = (url, successfulFunction, errorFunction) => {
         errorFunction(error)
     })
 }
+
+export const createScheduleTable = (url, data, successfulFunction, errorFunction) => {
+    axios.post(
+        url,
+        data,
+        {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response.data)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
