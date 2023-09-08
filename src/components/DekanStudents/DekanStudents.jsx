@@ -8,9 +8,14 @@ import Button from '@mui/material/Button'
 import AllSelect from '../AllSelect'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { InputsWrapper } from '../CourseManagement/styles'
-import listLanguage from '../CourseManagement/language.json'
+// import listLanguage from '../CourseManagement/language.json'
+import { useSelector } from 'react-redux'
+import languageList from './language.json'
 
 export default function DekanStudents() {
+
+  const language = useSelector(state => state.language)
+  
   return (
     <>
         <Typography
@@ -76,7 +81,7 @@ export default function DekanStudents() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`${languageList.Total[language]} 3 ${languageList.Ta[language]},${languageList.From[language]} 1 ${languageList.To[language]} 3 ${languageList.AreShown[language]}`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
         </BoxFooter>
       </Paper>

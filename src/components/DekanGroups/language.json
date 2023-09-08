@@ -1,0 +1,47 @@
+{
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количество",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    },
+    "Groups": {
+        "uz": "Guruhlar",
+        "ru": "Группы",
+        "eng": "Groups"
+    },
+    "Students": {
+        "uz": "Talabalar",
+        "ru": "Студенты",
+        "eng": "Students"
+    },
+    "Fields": {
+        "uz": "Yo'nalishlar",
+        "ru": "Направления",
+        "eng": "Fields"
+    },
+    "AppropriationRecord": {
+        "uz": "O'zlashtirish qaydnomasi",
+        "ru": "Отчет об успеваемости",
+        "eng": "Appropriation record"
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количество",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    },
+    "AppropriationRecord": {
+        "uz": "O'zlashtirish qaydnomasi",
+        "ru": "Отчет об успеваемости",
+        "eng": "Appropriation record"
+    },
+    "Download": {
+        "uz": "Yuklash",
+        "ru": "Скачать",
+        "eng": "Download"
+    },
+    "Semester": {
+        "uz": "Semester",
+        "ru": "Семестр",
+        "eng": "Semester"
+    }
+}
