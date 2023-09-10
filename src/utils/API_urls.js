@@ -114,6 +114,7 @@ export const schedule_admin = "/schedule_admin/"
 export const academic_plan = "/academic_plan/"
 export const academic_plan_science = "/academic_plan_science/"
 export const scheduletable = "/scheduletable/"
+export const users_student = "/users/student/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"
