@@ -4,9 +4,8 @@ import { Paper } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { getBuildings, getGroups, getRoomList, getScheduleAdmin, getSemester } from './requests'
-import { academic_group, building, my_semesters, room_create_list, schedule_admin } from '../../../utils/API_urls'
+import { academic_group, building, my_semesters, room_create_list, schedule_admin, teacher_groups } from '../../../utils/API_urls'
 import { ScheduleTable } from './styles'
-import { building, my_semesters, room_create_list, schedule_admin, teacher_groups } from '../../../utils/API_urls'
 import DayTable from './DayTable'
 
 export default function ScheduleStudy() {
