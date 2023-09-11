@@ -9,13 +9,14 @@ import Modal from '@mui/material/Modal'
 import Button from '@mui/material/Button'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function Schedule() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
+  const {state} = useLocation()
 
   return (
     <>
@@ -26,7 +27,7 @@ export default function Schedule() {
           fontSize: "20px"
         }}
       >
-        HSM500
+        {state}
       </Typography>
       <Paper
         elevation={0}

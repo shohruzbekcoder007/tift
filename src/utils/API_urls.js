@@ -1,4 +1,4 @@
-// export const host = "https://c345-194-93-24-106.ngrok-free.app"
+// export const host = "https://e9d2-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 export const host = "https://api.tift.uz"
@@ -114,6 +114,7 @@ export const schedule_admin = "/schedule_admin/"
 export const academic_plan = "/academic_plan/"
 export const academic_plan_science = "/academic_plan_science/"
 export const scheduletable = "/scheduletable/"
+export const patokadmin = "/patokadmin/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"
