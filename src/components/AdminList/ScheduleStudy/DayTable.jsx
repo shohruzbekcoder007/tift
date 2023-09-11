@@ -15,6 +15,7 @@ import week_day from '../../../dictionary/week_day'
 import lesson_types from '../../../dictionary/lesson_types'
 import { createScheduleTable } from './requests';
 import { scheduletable } from '../../../utils/API_urls';
+import { Alert } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -25,8 +26,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     },
 }));
 
-export default function DayTable({ oneday, groups, roomList, day, para, room }) {
+export default function DayTable({ oneday, groups, day, para, room }) {
+
     const [open, setOpen] = useState(false);
+    const [new_lessons, setNewLessons] = useState([])
+    const [error, setError] = useState(false)
     const [data, setData] = useState({
         group: groups[0]?.value,
         weekday: getDay(day),
@@ -91,14 +95,19 @@ export default function DayTable({ oneday, groups, roomList, day, para, room }) 
     };
 
     const handleSubmit = () => {
-        console.log(data)
         createScheduleTable(scheduletable, data, response => {
             if(response.id){
+                setNewLessons(prev => { return [...prev, {
+                    types: data.types,
+                    group: groups.find((el) => el.value == data.group)
+                }]})
                 handleClose()
+            }else{
+                setError(true)
             }
-            console.log(response.id)
         }, error => {
             console.log(error)
+            setError(true)
         })
     }
 
@@ -114,6 +123,11 @@ export default function DayTable({ oneday, groups, roomList, day, para, room }) 
                         return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
                     })
                 }
+                {
+                    new_lessons.map((element, indx) => {
+                        return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element.group.name}</span>
+                    })
+                }
             </ScheduleTable>
             <BootstrapDialog
                 onClose={handleClose}
@@ -123,6 +137,7 @@ export default function DayTable({ oneday, groups, roomList, day, para, room }) 
                 <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
                     Dars jadvaliga qo'shish
                 </DialogTitle>
+                
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
@@ -136,6 +151,9 @@ export default function DayTable({ oneday, groups, roomList, day, para, room }) 
                     <CloseIcon />
                 </IconButton>
                 <DialogContent dividers style={{ width: "450px" }}>
+                    {error?<Alert severity="success" color="error" sx={{my: 1}}>
+                        Jadvalga dars qo'shib bo'lmadi
+                    </Alert>:<></>}
                     <ModalSelectWrapper>
                         <Typography
                             id="keep-mounted-modal-title"

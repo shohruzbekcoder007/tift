@@ -6,6 +6,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { getBuildings, getGroups, getRoomList, getScheduleAdmin, getSemester } from './requests'
 import { academic_group, building, my_semesters, room_create_list, schedule_admin } from '../../../utils/API_urls'
 import { ScheduleTable } from './styles'
+import { building, my_semesters, room_create_list, schedule_admin, teacher_groups } from '../../../utils/API_urls'
 import DayTable from './DayTable'
 
 export default function ScheduleStudy() {
@@ -43,9 +44,11 @@ export default function ScheduleStudy() {
         }, (error) => {
             console.log(error)
         })
-        getGroups(`${academic_group}?page_size=500`, (response) => {
-            console.log(response.data.results)
-            const result_list = response.data.results.map(elem => {
+    }, [])
+
+    useEffect(() => {
+        getGroups(`${teacher_groups}?semester=${semester}&page_size=500`, (response) => {
+            const result_list = response.data.map(elem => {
                 return {
                     name: elem.name,
                     value: elem.id
@@ -55,11 +58,10 @@ export default function ScheduleStudy() {
         }, (error) => {
             console.log(error)
         })
-    }, [])
+    }, [semester])
 
     useEffect(() => {
         getRoomList(`${room_create_list}?building=${tour}&page_size=500`, response => {
-            console.log(response.data.results, "<-->")
             const room_list = response.data.results.map((elem) => {
                 return {
                     value: elem.id,
@@ -73,10 +75,8 @@ export default function ScheduleStudy() {
     }, [tour])
 
     useEffect(() => {
-        if(semester != 0 && tour != 0){
-            console.log("request sended", semester, tour)
+        if (semester != 0 && tour != 0) {
             getScheduleAdmin(`${schedule_admin}?semester=${semester}&building=${tour}`, (response) => {
-                console.log(response.data, "result")
                 setRooms(response.data.room)
             }, (error) => {
                 console.log(error)
@@ -315,25 +315,3 @@ export default function ScheduleStudy() {
         </ContentWrapper>
     )
 }
-
-// const DayTable = ({ oneday }) => {
-//     return (<>
-//         {
-//             oneday.map((elem, index) => {
-//                 return <ScheduleTable 
-//                     key={index}
-//                     onClick={() => {
-//                         console.log("console log and open modal")
-//                     }}
-//                     style={{cursor: "pointer"}}
-//                 >
-//                     {/* {index} */}
-//                     {
-//                     elem.group.map((element, indx) => {
-//                         return <span key={indx}>1</span>
-//                     })
-//                 }</ScheduleTable>
-//             })
-//         }
-//     </>)
-// }
