@@ -7,15 +7,17 @@ import { WrapperBox, WrapperButtons, WrapperHeader, WrapperInputsCard, WrapperSe
 import { InputsWrapper } from '../../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import BasicDatePicker from '../../../BasicDatePicker'
-import jins from '../../../../dictionary/jins'
 import degree from '../../../../dictionary/degree'
 import study_type from '../../../../dictionary/study_type'
+import form_of_payment from '../../../../dictionary/form_of_payment'
+import { createStudent } from '../request'
+import { users_student } from '../../../../utils/API_urls'
 
-export default function EditEmployees() {
+export default function AddStudent() {
 
   const [file, setFile] = useState(null);
   const [data, setData] = useState({
-    student_id: null, //quyiladi tuliq
+    student_id: null, // <qo'yildi>
     passport: null, // <qo'yildi>
     first_name: null, // <qo'yildi>
     last_name: null, // <qo'yildi>
@@ -24,12 +26,14 @@ export default function EditEmployees() {
     course_number: null, // qo'yilmadi
     form_of_payment: null, // choose
     degree: null, // <qo'yildi>
-    study_type: null, // bu nima
-    phone_number: null // <qo'yildi>
+    study_type: null, // <qo'yildi>
+    phone_number: null, // <qo'yildi>
+    avatar: null, // <qo'yildi>
   })
   
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
+    updateData("avatar", newValue)
   }
 
   const updateData = (key, value) => {
@@ -41,9 +45,9 @@ export default function EditEmployees() {
     })
   }
 
-  const jinsList = useMemo(() => {
-    updateData("gender", jins[0].value)
-    return jins.map(elem => {
+  const paymentList = useMemo(() => {
+    updateData("form_of_payment", form_of_payment[0].value)
+    return form_of_payment.map(elem => {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
@@ -61,6 +65,14 @@ export default function EditEmployees() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
+  const createNewStudent = () => {
+    createStudent(users_student, data, response => {
+      console.log(response)
+    }, (error) => {
+      console.log(error)
+    })
+  }
 
   return (
     <div>
@@ -120,13 +132,13 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Jinsi
+              Student Id
             </Typography>
-            <AllSelectFullWidth
+            {/* <AllSelectFullWidth
               chageValueFunction={val => { updateData("gender", val) }}
               selectOptions={jinsList}
-            />
-            
+            /> */}
+            <CustomizedInputSimple callback_func={(val) => { updateData("student_id", val) }} placeholder="3798787" />
           </WrapperInputsCard>
         </BoxHeader>
 
@@ -159,9 +171,12 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Uy telefon raqami
+              Form of payment
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="+9989712386423" />
+            <AllSelectFullWidth
+              chageValueFunction={val => updateData("form_of_payment", val)}
+              selectOptions={paymentList}
+            />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -291,6 +306,7 @@ export default function EditEmployees() {
             <Button
               sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
               variant="contained"
+              onClick={createNewStudent}
             >
               Saqlash
             </Button>
