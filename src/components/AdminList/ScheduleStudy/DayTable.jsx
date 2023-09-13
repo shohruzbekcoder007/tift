@@ -35,7 +35,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
         group: groups[0]?.value,
         weekday: getDay(day),
         para: para,
-        room: room.id,
+        room: room?.id,
         types: lesson_types[0].value
     })
 

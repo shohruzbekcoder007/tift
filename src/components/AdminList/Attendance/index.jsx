@@ -69,7 +69,7 @@ export default function Attend() {
                 value: 6,
             }
             ]
-      })
+      }, [])
 
     useEffect(() => {
         getSemesters(`${semester}`, (response) => {
@@ -77,7 +77,6 @@ export default function Attend() {
         }, (error) => {
             console.log(error)
         })
-       
     }, [])
 
     useEffect(() => {
