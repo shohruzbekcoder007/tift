@@ -1,11 +1,11 @@
 // export const host = "https://9d62-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-// export const host = "https://api.tift.uz"
+export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =  "https://api.lms-edu.uz"
@@ -43,8 +43,6 @@ export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
-
-
 
 
 
