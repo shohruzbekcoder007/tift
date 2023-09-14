@@ -1,30 +1,80 @@
-import React, { useState } from 'react';
-import { FormControl, InputLabel, MenuItem, Select, Checkbox, ListItemText } from '@mui/material';
+import * as React from 'react';
+import { useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
 
-const MultiSelect = ({ label, options, selectedValues, onChange }) => {
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+export default function MultipleSelectChip({chageValueFunction, selectOptions}) {
+  const theme = useTheme();
+  const [personName, setPersonName] = React.useState([]);
+
   const handleChange = (event) => {
-    onChange(event.target.value);
+    console.log(event.target);
+    chageValueFunction(event.target.value)
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
   };
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
-      <InputLabel>{label}</InputLabel>
-      <Select
-        multiple
-        value={selectedValues}
-        onChange={handleChange}
-        renderValue={(selected) => selected.join(', ')}
-        fullWidth
-      >
-        {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            <Checkbox checked={selectedValues.includes(option.value)} />
-            <ListItemText primary={option.label} />
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <div>
+      <FormControl sx={{ width: "100%" }}>
+        <InputLabel  id="demo-multiple-chip-label">Tanlang</InputLabel>
+        <Select
+          labelId="demo-multiple-chip-label"
+          id="demo-multiple-chip"
+          multiple
+          value={personName}
+          onChange={handleChange}
+          input={<OutlinedInput id="select-multiple-chip" label="Tanlang" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {selectOptions?.map((elem,index) => (
+            <MenuItem
+              key={index} 
+              value={elem.value}
+              style={getStyles(elem, personName, theme)}
+            >
+              {elem.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
   );
-};
-
-export default MultiSelect;
+}

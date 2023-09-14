@@ -14,6 +14,10 @@ export const LoaderWrapper = styled.div`
 `
 
 export const LoginLogo = styled.div`
+    /* width: 100%; */
+    img {
+        width: 300px;
+    }
     @media screen and (max-width: 400px) {
         width: 200px;
         img {

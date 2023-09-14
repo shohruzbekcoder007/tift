@@ -35,6 +35,7 @@ export default function Attend() {
     const [pageCount, setPageCount] = useState(1)
     const [page, setPage] = useState(1)
     const [SemesterID, setSemesterID] = useState(null)
+    const [TeacherID, setTeacherID] = useState(null)
     const [selectedValues, setSelectedValues] = useState([]);
     
     const handleMultiSelectChange = (values) => {
@@ -68,7 +69,7 @@ export default function Attend() {
                 value: 6,
             }
             ]
-      })
+      }, [])
 
     useEffect(() => {
         getSemesters(`${semester}`, (response) => {
@@ -76,7 +77,6 @@ export default function Attend() {
         }, (error) => {
             console.log(error)
         })
-       
     }, [])
 
     useEffect(() => {
@@ -148,6 +148,7 @@ export default function Attend() {
     const hangleClick = (_) => {
 
         setNbPetition(teacher_set_nb,  {
+            teacher: TeacherID,
             patok: lessonIdList,
             calendar_plan: lessonIdStudentList,
             para: studentParaList,
@@ -172,7 +173,7 @@ export default function Attend() {
       }
 
       const ChangeTeacher = (id) => {
-        console.log(id);
+        setTeacherID(id)
         getTeacherGroups(`${teacher_groups}?teacher=${id}&semester=${SemesterID}`, (response) => {
             setLessonIdList(response.data[0]?.id)
             setgroupList(response.data.map(elem => {
