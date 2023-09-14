@@ -70,46 +70,9 @@ export default function ServicesTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>1494</th>
-                        <th>DT loyihalarini boshqarish</th>
-                        <th>01-06-2023 13:58</th>
-                        <th>
-                        <Link>
-                                <Button 
-                                    variant="contained"
-                                    sx={{
-                                        borderRadius: "10px",
-                                        textTransform: "capitalize",
-                                        boxShadow: "none",
-                                        padding: "10px 80px"
-                                    }}
-                                >
-                                    {'Navbatda'}
-                                </Button>
-                            </Link>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>1494</th>
-                        <th>SWD002</th>
-                        <th>01-06-2023 13:58</th>
-                        <th>
-                            <Link>
-                                <Button 
-                                    variant="contained"
-                                    sx={{
-                                        borderRadius: "10px",
-                                        textTransform: "capitalize",
-                                        boxShadow: "none",
-                                        padding: "10px 80px"
-                                    }}
-                                >
-                                    {'Navbatda'}
-                                </Button>
-                            </Link>
-                        </th>
-                    </tr>
+                   <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                   </tr>
                 </tbody>
             </table>
         </ClassScheduleTableWrapper>

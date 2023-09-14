@@ -109,9 +109,9 @@ export default function Users() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"}/>
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Login" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="F.I.O" />
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>

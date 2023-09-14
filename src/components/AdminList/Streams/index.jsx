@@ -14,7 +14,7 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { IconButton } from '../../Final_Dep/style'
 import { Link } from 'react-router-dom'
-import { academic_group_short, my_semesters, patokadmin, science_short } from '../../../utils/API_urls'
+import { academic_group_short, my_semesters, parentpatoklist, patokadmin, science_short } from '../../../utils/API_urls'
 import { getAcademicGroup, getSciense, getSemesters, getStreams, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
@@ -30,6 +30,7 @@ export default function Streams() {
   const handleClose2 = () => setOpen2(false);
   const [file, setFile] = useState(null);
   const [StreamsList, setStreamsList] = useState([]);
+  const [ParentStreams, setParentStreams] = useState([]);
   const [SemesterList, setSemesterList] = useState([]);
   const [ScineseList, setScineseList] = useState([]);
   const [AcademicGroupList, setAcademicGroupList] = useState([]);
@@ -41,9 +42,12 @@ export default function Streams() {
   const [ScienseSelect, setScienseSelect] = useState(null);
   const [SemesterSelect, setSemesterSelect] = useState(null);
   const [LangSelect, setLangSelect] = useState('uz');
+  const [RoomType, setRoomType] = useState('lecture');
   const [GroupSelect, setGroupSelect] = useState(null);
   const [AmaliyotSelect, setAmaliyotSelect] = useState(0);
   const [LabaratoriyaSelect, setLabaratoriyaSelect] = useState(0);
+  const [ParentNaameSelect, setParentNaameSelect] = useState(0);
+  const [ScienceType, setScienceType] = useState();
 
 
   const setFileHandler = (newValue, info) => {
@@ -71,7 +75,7 @@ export default function Streams() {
       name: "4",
       value: 4,
     }]
-  },[])
+  }, [])
 
   const Labaratoriya = useMemo(() => {
     return [{
@@ -94,7 +98,7 @@ export default function Streams() {
       name: "4",
       value: 4,
     }]
-  },[])
+  }, [])
 
   const LangList = useMemo(() => {
     return [{
@@ -109,7 +113,22 @@ export default function Streams() {
       name: "EN",
       value: 'en',
     }]
-  },[])
+  }, [])
+
+  const ROOM_TYPE = useMemo(() => {
+    return [{
+      name: "Leksiya",
+      value: 'lecture',
+    }, {
+      name: "Labaratoriya",
+      value: 'labs',
+    },
+    {
+      name: "Amaliyot",
+      value: 'practical',
+    },
+    ]
+  }, [])
 
 
 
@@ -123,31 +142,51 @@ export default function Streams() {
         }
       }))
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
 
     getSciense(`${science_short}`, (response) => {
       console.log(response.data);
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
-          return {
-            name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester)",
-            value: elem.id
+        return {
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester)",
+          value: elem.id
         }
       }))
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-}, [] )
+  }, [])
 
   useEffect(() => {
-    getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}`, (response) => {
-      setStreamsList(response.data.results);
-      setPageCount(response.data.page_count)
-      setAllCount(response.data.count)
-    }, (error) => {
+    if (SemesterSelect && ScienseSelect) {
+      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+        setStreamsList(response.data.results);
+        setPageCount(response.data.page_count)
+        setAllCount(response.data.count)
+      }, (error) => {
         console.log(error)
-    })
+      })
+
+      getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+        setParentNaameSelect(response.data[0].id)
+        setParentStreams(response.data.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }));
+      }, (error) => {
+        console.log(error)
+      })
+    }
+    
+
+  }, [pageSize, page, SemesterSelect, ScienseSelect])
+
+
+  useEffect(() => {
     getAcademicGroup(`${academic_group_short}`, (response) => {
       setGroupSelect(response?.data[0]?.id)
       setAcademicGroupList(response.data.map(elem => {
@@ -157,11 +196,9 @@ export default function Streams() {
         }
       }))
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-   
-}, [pageSize, page, ])
-
+  }, []);
 
   const handleClick = (_) => {
     postPatoks(patokadmin, {
@@ -171,13 +208,15 @@ export default function Streams() {
       science: ScienseSelect,
       practical: AmaliyotSelect,
       labs: LabaratoriyaSelect,
-      academic_group: GroupSelect
-    },(response) => {
+      academic_group: GroupSelect,
+      parent: ParentNaameSelect,
+      science_type: RoomType
+    }, (response) => {
       console.log(response);
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-  } 
+  }
 
   return (
     <>
@@ -207,11 +246,11 @@ export default function Streams() {
               }]}
             /> */}
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
+              chageValueFunction={val => setScienseSelect(val)}
               selectOptions={ScineseList}
             />
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
+              chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
           </InputsWrapper>
@@ -364,7 +403,7 @@ export default function Streams() {
               </thead>
               <tbody>
                 {
-               StreamsList?.length > 0 ? StreamsList?.map((elem, index) => {
+                  StreamsList?.length > 0 ? StreamsList?.map((elem, index) => {
                     return (
                       <tr>
                         <th>{elem.id}</th>
@@ -373,25 +412,25 @@ export default function Streams() {
                         <th>{elem.students_count}</th>
                         <th>{elem.parent_name}</th>
                         <th>
-                       <Link to={'schedule'} state={elem.name}>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              borderRadius: "10px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              padding: "8px 12px",
-                              backgroundColor: "text.secondary",
-                              "&:hover": {
+                          <Link to={'schedule'} state={elem.name}>
+                            <Button
+                              variant="contained"
+                              sx={{
+                                borderRadius: "10px",
+                                textTransform: "capitalize",
+                                boxShadow: "none",
+                                padding: "8px 12px",
                                 backgroundColor: "text.secondary",
-                              },
-                            }}
-                            onClick={(val) => { }}
-                            startIcon={null}
-                          >
-                            Jadval
-                          </Button>
-                       </Link>
+                                "&:hover": {
+                                  backgroundColor: "text.secondary",
+                                },
+                              }}
+                              onClick={(val) => { }}
+                              startIcon={null}
+                            >
+                              Jadval
+                            </Button>
+                          </Link>
                           {/* <Button
                             variant="contained"
                             sx={{
@@ -451,10 +490,10 @@ export default function Streams() {
                       </tr>
                     )
                   })
-                  :
-                  <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
-                  </tr>
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
                 {/* <tr>
                   <th colSpan={7} align='center'>Ma’lumot yo’q</th>
@@ -517,6 +556,48 @@ export default function Streams() {
               />
 
             </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Guruh turi                        </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={(val) => setRoomType(val)}
+                selectOptions={ROOM_TYPE}
+              />
+            </ModalSelectWrapper>
+
+                {
+                  RoomType !== 'lecture' ?  <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Ota patok                        </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={(val) => setScienceType(val)}
+                    selectOptions={ParentStreams}
+                  />
+                </ModalSelectWrapper>
+                : <></>
+                }
+
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -550,18 +631,20 @@ export default function Streams() {
                 }}
               >
                 Guruh                         </Typography>
-                {/* <AllSelectFullWidth
+              {/* <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={AcademicGroupList}
               /> */}
               <MultipleSelectChip
-               chageValueFunction={val => setGroupSelect(val)}
-               selectOptions={AcademicGroupList}/>
+                chageValueFunction={val => setGroupSelect(val)}
+                selectOptions={AcademicGroupList} />
             </ModalSelectWrapper>
 
 
 
-            <ModalSelectWrapper>
+            {
+              RoomType == 'lecture' ? <>
+              <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -600,6 +683,10 @@ export default function Streams() {
 
 
             </ModalSelectWrapper>
+              </>
+            :
+            <> </>  
+          }
 
             <ModalButtons>
               <Button

@@ -23,42 +23,42 @@ function CalendarDayWeek() {
   return (
     <>
       <Paper
-                elevation={0}
-                sx={{
-                    width: '100%',
-                    padding: "20px",
-                    borderRadius: "10px",
-                    // backgroundColor: "transparent"
-                }}
-            >
-      <FullCalendar 
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]} 
-        initialView="timeGridWeek"
-        timeZone= 'GMT+5'
-        headerToolbar={{ 
-          center: 'timeGridWeek,timeGridDay',
-          right: "",
-          left: ""
-        }} 
-        customButtons={{ 
-          new: { 
-            text: 'new', 
-            click: () => console.log('new event'), 
-          }, 
+        elevation={0}
+        sx={{
+          width: '100%',
+          padding: "20px",
+          borderRadius: "10px",
+          // backgroundColor: "transparent"
         }}
-        slotLabelFormat={{
-          hour: "numeric",
-          minute: "2-digit",
-          meridiem: false,
-          hour12: false,
-        }}
-        events={ScheduleList} 
-        nowIndicator 
-        allDaySlot={false}
-        dateClick={(e) => console.log(e.dateStr)} 
-        eventClick={(e) => console.log(e.event.id)}
-        locale={uzLocale}
-      /> 
+      >
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="timeGridWeek"
+          timeZone='GMT+5'
+          headerToolbar={{
+            center: 'timeGridWeek,timeGridDay',
+            right: "",
+            left: ""
+          }}
+          customButtons={{
+            new: {
+              text: 'new',
+              click: () => console.log('new event'),
+            },
+          }}
+          slotLabelFormat={{
+            hour: "numeric",
+            minute: "2-digit",
+            meridiem: false,
+            hour12: false,
+          }}
+          events={ScheduleList}
+          nowIndicator
+          allDaySlot={false}
+          dateClick={(e) => console.log(e.dateStr)}
+          eventClick={(e) => console.log(e.event.id)}
+          locale={uzLocale}
+        />
       </Paper>
     </>
   );

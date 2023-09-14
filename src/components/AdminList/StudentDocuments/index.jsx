@@ -70,10 +70,10 @@ export default function StudentDocuments() {
 
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"} />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Talabalar" />
+            {/* <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" /> */}
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
