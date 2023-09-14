@@ -12,7 +12,6 @@ export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =  "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
-// export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "https://e181-178-218-200-199.ngrok-free.app"
 
 export const token_url = "/token/"
