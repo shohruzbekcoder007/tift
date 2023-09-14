@@ -430,7 +430,9 @@ export const student_Links = [
 
 export const headofthedepartment_Links = [
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "KAFEDRA MUDIRI",
       ru: "ГЛАВА ДЕПАРТАМЕНТА",
@@ -581,7 +583,9 @@ export const headofthedepartment_Links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Bildirgi",
       ru: "Уведомление",
@@ -610,7 +614,9 @@ export const headofthedepartment_Links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "O'qituvchi",
       ru: "Учитель",
@@ -763,7 +769,9 @@ export const tutor_Links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Bildirgi",
       ru: "Уведомление",
@@ -817,7 +825,9 @@ export const dekan_Links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Dekanat",
       ru: "благочиние",
@@ -930,7 +940,9 @@ export const dekan_Links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Olimpiada",
       ru: "Олимпийские игры",
@@ -1057,7 +1069,9 @@ export const admin_links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "YORDAMCHI",
       ru: "ПОМОЩНИК",
@@ -1086,7 +1100,9 @@ export const admin_links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "TASHRIF",
       ru: "ПОСЕЩЕНИЕ",
@@ -1157,7 +1173,9 @@ export const admin_links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "KREDIT TIZIMI",
       ru: "КРЕДИТНАЯ СИСТЕМА",
@@ -1500,7 +1518,9 @@ export const admin_links = [
 
 
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Lug'atlar",
       ru: "Словари",
@@ -1610,7 +1630,9 @@ export const admin_links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Marketing",
       ru: "Маркетинг",
@@ -1709,7 +1731,9 @@ export const admin_links = [
   },
 
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "Tashkilot tuzilishi",
       ru: "Структура организации",
@@ -1936,7 +1960,9 @@ export const admin_links = [
     type: "text"
   },
   {
-    img: null,
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+</svg>,
     text: {
       uz: "SYS.admin",
       ru: "СЙС.администратор",

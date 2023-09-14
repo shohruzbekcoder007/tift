@@ -29,7 +29,7 @@ export default function Sidebar({ role }) {
         {
           chageLinks(role).map((elem, index) => {
             if(elem.type && elem.type === "link_header"){
-              return <SidebarLinksHead key={index}>{elem.text[language]}</SidebarLinksHead>
+              return <SidebarLinksHead key={index}>{elem.text[language]} {elem.img}</SidebarLinksHead>
             }else{
               return (
                 <ListItem
