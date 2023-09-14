@@ -1,7 +1,7 @@
-// export const host = "https://9d62-194-93-24-106.ngrok-free.app"
+export const host = "https://8f13-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-export const host = "https://api.tift.uz"
+// export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
@@ -117,6 +117,7 @@ export const academic_plan_science = "/academic_plan_science/"
 export const scheduletable = "/scheduletable/"
 export const patokadmin = "/patokadmin/"
 export const users_student = "/users/student/"
+export const parentpatoklist = "/parentpatoklist/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

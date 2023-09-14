@@ -73,15 +73,16 @@ export default function ScheduleStudy() {
     })
   }, [tour])
 
-  // useEffect(() => {
-  //   if (semester != 0 && tour != 0) {
-  //     getScheduleAdmin(`${schedule_admin}?semester=${semester}&building=${tour}`, (response) => {
-  //       setRooms(response.data.room)
-  //     }, (error) => {
-  //       console.log(error)
-  //     })
-  //   }
-  // }, [semester, tour])
+  useEffect(() => {
+    if (semester != 0 && tour != 0) {
+      getScheduleAdmin(`${schedule_admin}?semester=${semester}&building=${tour}`, (response) => {
+        setRooms(response.data.room)
+        console.log(response.data);
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [semester, tour])
 
   return (
     <ContentWrapper>

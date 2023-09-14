@@ -59,7 +59,7 @@ export default function CalendarPlan({data}) {
           </thead>
           <tbody>
             {
-              data.lessons.map((elem, index) => {
+              data?.lessons?.length > 0 ? data.lessons.map((elem, index) => {
                 if (elem.failed == true){
                   return (
                     <tr key={index} style={{backgroundColor: '#fa343436'}}>
@@ -89,6 +89,10 @@ export default function CalendarPlan({data}) {
                 }
                 
               })
+              :
+              <tr>
+                <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+              </tr>
             }
           </tbody>
         </table>
