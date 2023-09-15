@@ -172,6 +172,7 @@ function App() {
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
                     <Route index element={<TeacherSciencesMain />} />
+                    <Route path='addcalendarplan' element={<CalendarPlanTeacher />} />
                     <Route path="calendarplan" element={<CalendarPlanMain />} >
                       <Route index element={<CalendarPlan />} />
                       <Route path="thematicblock" element={<ThematicBlock />} />
@@ -183,10 +184,10 @@ function App() {
                   <Route path="diploma" element={<Thesis />} />
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<StudentSciences />} >
+                  {/* <Route path="coursemanagement" element={<StudentSciences />} >
                     <Route index element={<CourseManagement />} />
                     <Route path='calendarplan' element={<CalendarPlanTeacher />} />
-                  </Route>
+                  </Route> */}
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="profile" element={<Profile />} />

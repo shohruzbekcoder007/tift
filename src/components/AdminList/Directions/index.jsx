@@ -17,6 +17,7 @@ import { IconButton } from '../../Final_Dep/style'
 import { AddDirection, DeleteDirection, getDirections, getFakulty } from './request'
 import { directions, facultyshortlist } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
+import { useMemo } from 'react'
 
 export default function Directions() {
   const [open, setOpen] = useState(false);
@@ -78,6 +79,19 @@ export default function Directions() {
     handleOpen2()
   }
 
+
+  const DegreeList = useMemo(() => {
+   return [{
+      name: "Bakalavr",
+      value: 'bachelor',
+    },
+    {
+      name: "Magisrtatura",
+      value: 'master',
+    },
+    ]}
+  ,[])
+
   const hangleClick = (_) => {
 
     AddDirection(directions,  {
@@ -106,6 +120,10 @@ export default function Directions() {
       console.log(error)
     })
   }
+
+  const  patchDirection = (_) => {
+    
+  } 
 
   return (
     <>
@@ -425,15 +443,7 @@ export default function Directions() {
                 Daraja                            </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setDegree(val)}
-                selectOptions={[{
-                  name: "Bakalavr",
-                  value: 'bachelor',
-                },
-                {
-                  name: "Magisrtatura",
-                  value: 'master',
-                },
-              ]}
+                selectOptions={DegreeList}
               />
             </ModalSelectWrapper>
 
@@ -599,6 +609,7 @@ export default function Directions() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={patchDirection}
               >
                 Saqlash
               </Button>

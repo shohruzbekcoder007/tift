@@ -65,7 +65,7 @@ export const ProfileButtonGroup = styled.div`
 export const ProfileButton = styled.button`
   width: 45%;
   height: 45px;
-  text-aligin: center; 
+  text-align: center;
   background-color: white;
   border-radius: 10px;
   border: 3px solid ${props => props.theme.color.main_color} !important;

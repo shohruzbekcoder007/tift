@@ -19,7 +19,6 @@ export default function CalendarPlanStudent() {
 
   useEffect(() => {
     getStudentLesson(`${my_scince_lessons}?patok=${state.data}`, (response) => {
-     
       setlessonsTypeSource(response.data.results)
     }, (error) => {
       console.log(error)
@@ -47,13 +46,15 @@ export default function CalendarPlanStudent() {
           </TabsList>
 
           {
-          lessonsTypeSource.map((elem, index) => {
+         lessonsTypeSource.length > 0 ? lessonsTypeSource.map((elem, index) => {
             return(
               <TabPanel value={index} key={index}>
                 <CalendarStudent data={elem} />
               </TabPanel>
             )
           })
+          :
+          <CalendarStudent data={[]} />
           }
           
         </Tabs>

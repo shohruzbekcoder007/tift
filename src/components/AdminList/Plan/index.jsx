@@ -181,7 +181,7 @@ export default function Plan() {
                           >
                             GPA ni yangilash
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="contained"
                             sx={{
                               borderRadius: "10px",
@@ -205,7 +205,7 @@ export default function Plan() {
 
                             }
                           >
-                          </Button>
+                          </Button> */}
                           <Button
                             variant="contained"
                             sx={{
@@ -217,6 +217,7 @@ export default function Plan() {
                               "&:hover": {
                                 backgroundColor: "redButton.main",
                               },
+                              margin: '0 10px'
                             }}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">

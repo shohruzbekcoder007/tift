@@ -1,80 +1,105 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
+import React from "react";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Chip from "@mui/material/Chip";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import { useFormik } from "formik";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+const savedTask = {
+  id: 1,
+  name: "Task A",
+  assignTo: [
+    
+  ]
 };
 
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+const personList = [
+  {
+    id: 1,
+    name: "Oliver Hansen",
+    age: 32
+  },
+  {
+    id: 2,
+    name: "Van Henry",
+    age: 25
+  },
+  {
+    id: 3,
+    name: "Oliver",
+    age: 27
+  }
+];
 
-export default function MultipleSelectChip({chageValueFunction, selectOptions}) {
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
-
-  const handleChange = (event) => {
-    console.log(event.target);
-    chageValueFunction(event.target.value)
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-
+const FormHumanSelect = ({chageValueFunction, selectOptions}) => {
+  const formik = useFormik({
+    initialValues: savedTask,
+    onSubmit: (values) => {
+      console.log("values", values);
+      chageValueFunction(values)
+    }
+  });
   return (
-    <div>
-      <FormControl sx={{ width: "100%" }}>
-        <InputLabel  id="demo-multiple-chip-label">Tanlang</InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Tanlang" />}
-          renderValue={(selected) => (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-          MenuProps={MenuProps}
-        >
-          {selectOptions?.map((elem,index) => (
-            <MenuItem
-              key={index} 
-              value={elem.value}
-              style={getStyles(elem, personName, theme)}
-            >
-              {elem.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl sx={{ width: "100%" }}>
+      <Select
+        labelId="test-label"
+        id="assignTo"
+        multiple
+        value={formik.values.assignTo}
+        onChange={(e) => {
+          console.log("set ", e.target.value);
+          formik.setFieldValue("assignTo", e.target.value);
+        }}
+        sx={{
+          padding: "14px 10px",
+          backgroundColor: "#F6F6F6",
+          fontSize: '14px',
+          fontFamily: 'Inter',
+          fontWeight: '500',
+          color: '#151515',
+          borderRadius: "10px",
+          // minWidth: '70px',
+          '& .MuiInputBase-root': {
+              // width: "100%",
+              borderColor: "red",
+              outlineColor: "red",
+          },
+          '& .MuiSelect-select': {
+              padding: 0,
+              color: "#151515",
+              paddingRight: "22px !important",
+          },
+          '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: "#F6F6F6",
+          },
+          '& .MuiOutlinedInput-notchedOutline:hover': {
+              borderColor: "#F6F6F6",
+          },
+          '& legend': {
+            width: 0,
+          }
+      }}
+        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+        renderValue={(selected) => (
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+            {selected.map((person, index) => (
+              <Chip key={index} label={person.name} />
+            ))}
+          </Box>
+        )}
+        // sx={{ mt: 2 }}
+      >
+        {selectOptions.map((person, index) => (
+          <MenuItem key={index} value={person}>
+            {person.name}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
-}
+};
+
+export default FormHumanSelect;
