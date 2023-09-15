@@ -86,9 +86,10 @@ export default function Attend() {
     useEffect(() => {
         if (lessonIdStudentList) {
             getTeacherGroups(`${teacher_group}${lessonIdStudentList}/`, (response) => {
+                console.log(response.data.nb_to_lesson);
                 setstudentsList(response.data.nb_to_lesson.map(elem => {
                     return {
-                        label: elem.full_name,
+                        name: elem.full_name,
                         value: elem.student_id
                     }
                 }))
@@ -588,9 +589,9 @@ export default function Attend() {
                                 selectOptions={studentsList}
                             /> */}
                             <MultiSelect
-                                options={studentsList}
+                                selectOptions={studentsList}
                                 selectedValues={selectedValues}
-                                onChange={handleMultiSelectChange}
+                                chageValueFunction={handleMultiSelectChange}
                             />
                         </ModalSelectWrapper>
                         <ModalButtons>

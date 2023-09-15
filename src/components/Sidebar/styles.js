@@ -87,10 +87,14 @@ export const SidebarLinkListItemText = styled.span`
 `
 
 export const SidebarLinksHead = styled.li`
-    color: #000;
+    /* color: #000; */
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-bottom: 10px;
+    color: ${props => props.theme.color.main_color};
+    display: flex;
+    align-items: end;
+    gap: 7px;
 `

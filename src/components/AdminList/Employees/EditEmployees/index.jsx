@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { BoxHeader, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import { Button, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
@@ -6,62 +6,13 @@ import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { WrapperBox, WrapperButtons, WrapperHeader, WrapperInputsCard, WrapperSelect, WrapperInputsCard2, WrapperInputsCardTwo } from './styles'
 import { InputsWrapper } from '../../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
-import BasicDatePicker from '../../../BasicDatePicker'
-import jins from '../../../../dictionary/jins'
-import degree from '../../../../dictionary/degree'
-import study_type from '../../../../dictionary/study_type'
 
 export default function EditEmployees() {
-
   const [file, setFile] = useState(null);
-  const [data, setData] = useState({
-    student_id: null, //quyiladi tuliq
-    passport: null, // <qo'yildi>
-    first_name: null, // <qo'yildi>
-    last_name: null, // <qo'yildi>
-    middle_name: null, // <qo'yildi>
-    birthday: null, // <qo'yildi>
-    course_number: null, // qo'yilmadi
-    form_of_payment: null, // choose
-    degree: null, // <qo'yildi>
-    study_type: null, // bu nima
-    phone_number: null // <qo'yildi>
-  })
-  
+
   const setFileHandler = (newValue, info) => {
-    setFile(newValue)
+      setFile(newValue)
   }
-
-  const updateData = (key, value) => {
-    setData(prev => {
-      return {
-        ...prev,
-        [key]: value
-      }
-    })
-  }
-
-  const jinsList = useMemo(() => {
-    updateData("gender", jins[0].value)
-    return jins.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
-
-  const degreeList = useMemo(() => {
-    updateData("degree", degree[0].value)
-    return degree.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
-
-  const studyTypeList = useMemo(() => {
-    updateData("study_type", study_type[0].value)
-    return study_type.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
-
   return (
     <div>
       <Typography
@@ -72,7 +23,7 @@ export default function EditEmployees() {
           margin: "0 0 20px 10px"
         }}
       >
-        Qo'shish
+        O'zgartirish
       </Typography>
       <WrapperBox>
         <BoxHeader>
@@ -90,7 +41,7 @@ export default function EditEmployees() {
             >
               Ism
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { updateData("first_name", val) }} placeholder="Doniyor" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Doniyor" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -106,7 +57,7 @@ export default function EditEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { updateData("passport", val) }} placeholder="AA 3798787" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="AA 3798787" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -123,10 +74,18 @@ export default function EditEmployees() {
               Jinsi
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => { updateData("gender", val) }}
-              selectOptions={jinsList}
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[
+                { 
+                  name: "Male",
+                  value: "male",
+                },
+                {
+                name: "Female",
+                value: "female",
+              }
+            ]}
             />
-            
           </WrapperInputsCard>
         </BoxHeader>
 
@@ -145,7 +104,7 @@ export default function EditEmployees() {
             >
               Familiya
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { updateData("last_name", val) }}placeholder="Yaxshiboyev" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Yaxshiboyev" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -175,11 +134,14 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Daraja
+              Mamlakat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => updateData("degree", val)}
-              selectOptions={degreeList}
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "O’zbekiston",
+                value: 12,
+              }]}
             />
           </WrapperInputsCard>
         </BoxHeader>
@@ -199,7 +161,7 @@ export default function EditEmployees() {
             >
               Sharifi
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { updateData("middle_name", val) }} placeholder="Sultonbayevich" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Sultonbayevich" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -215,7 +177,7 @@ export default function EditEmployees() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { updateData("phone_number", val) }} placeholder="08-02-1984" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="08-02-1984" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -229,17 +191,20 @@ export default function EditEmployees() {
                 mb: "10px"
               }}
             >
-              Studentning turi
+              Viloyat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => updateData("study_type", val)}
-              selectOptions={studyTypeList}
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Xorazm viloyati",
+                value: 12,
+              }]}
             />
           </WrapperInputsCard>
         </BoxHeader>
 
         <BoxHeader>
-        <WrapperInputsCard>
+          <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -248,16 +213,246 @@ export default function EditEmployees() {
                 fontSize: "16px",
                 fontWeight: 600,
                 color: "#000",
-                mb: "0"
+                mb: "10px"
               }}
             >
               Tug’ilgan kuni
             </Typography>
-            <BasicDatePicker setFunction={(val) => {updateData("birthday", val)}} label="Tug'ilgan kuni"/>
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="08-02-1984" />
           </WrapperInputsCard>
           <WrapperInputsCard>
-            <WrapperInputsCard style={{width: '100%'}}>
-              <Typography
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Elektron pochta
+            </Typography>
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="d.yaxshibayev@tuit.ux" />
+          </WrapperInputsCard>
+          <WrapperInputsCard>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Viloyat
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Xorazm viloyati",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCard>
+        </BoxHeader>
+
+        <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Millat
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "O’zbek",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Fuqarolik
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "O’zbekiston",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+        </BoxHeader>
+
+        <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Universitet
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Tashkent Axborot Universiteti",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Yo'nalish
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Tashkent Axborot Universiteti",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+        </BoxHeader>
+
+
+        <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Shahar
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Xo’jaobod tumani",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Adress
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "000000",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+        </BoxHeader>
+
+
+        <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Shahar (vaqtinchalik)
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "Uchtepa tumani",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Adress(vaqtinchalik)
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => console.log(val)}
+              selectOptions={[{
+                name: "14-4-32",
+                value: 12,
+              }]}
+            />
+          </WrapperInputsCardTwo>
+        </BoxHeader>
+
+        <BoxHeader>
+        <WrapperInputsCard>
+        <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
                 component="h4"
@@ -265,7 +460,7 @@ export default function EditEmployees() {
                   fontSize: "16px",
                   fontWeight: 600,
                   color: "#000",
-                  mb: "4px"
+                  mb: "10px"
                 }}
               >
                 Avatar
@@ -277,23 +472,163 @@ export default function EditEmployees() {
                 // getInputText={(value) => value ? 'Thanks!' : ''}
                 fullWidth
               />
-            </WrapperInputsCard>
-          </WrapperInputsCard>
+        </WrapperInputsCard>
         </BoxHeader>
+        {/* <WrapperSelect>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              m: "20px 0 10px 0"
+            }}
+          >
+            Turi      
+          </Typography>
+          <AllSelectFullWidth
+            chageValueFunction={val => console.log(val)}
+            selectOptions={[{
+              name: "Fakultet",
+              value: 12,
+            }]}
+          />
+        </WrapperSelect>
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+            Fakultet                  </Typography>
+          <AllSelectFullWidth
+            chageValueFunction={val => console.log(val)}
+            selectOptions={[{
+              name: "Kompyuter injeneringi",
+              value: 12,
+            }]}
+          />
+
+        </ModalSelectWrapper>
+
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+            Vazifasi                        </Typography>
+          <AllSelectFullWidth
+            chageValueFunction={val => console.log(val)}
+            selectOptions={[{
+              name: "Dekan",
+              value: 12,
+            }]}
+          />
+        </ModalSelectWrapper>
+
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+            Stavka
+          </Typography>
+          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="1" />
+
+        </ModalSelectWrapper>
+
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+            Ishning boshlanishi:
+          </Typography>
+          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+        </ModalSelectWrapper>
+
+
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+          Ishning boshlanishi:
+
+          </Typography>
+          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+        </ModalSelectWrapper>
+
+
+        <ModalSelectWrapper>
+          <Typography
+            id="keep-mounted-modal-title"
+            variant="h6"
+            component="h4"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 600,
+              color: "#000",
+              mb: "10px"
+            }}
+          >
+              Ishning tugashi:
+          </Typography>
+          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+
+        </ModalSelectWrapper> */}
         <WrapperInputsCardTwo>
           <WrapperButtons>
-            <Button
-              sx={{ width: "50%", textTransform: "none" }}
-              variant="outlined"
-            >
-              Bekor qilish
-            </Button>
-            <Button
-              sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-              variant="contained"
-            >
-              Saqlash
-            </Button>
+          <Button
+            sx={{ width: "50%", textTransform: "none" }}
+            variant="outlined"
+          >
+            Bekor qilish
+          </Button>
+          <Button
+            sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+            variant="contained"
+          >
+            Saqlash
+          </Button>
           </WrapperButtons>
         </WrapperInputsCardTwo>
       </WrapperBox>

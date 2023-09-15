@@ -155,7 +155,7 @@ export default function Attendance() {
                             </thead>
                             <tbody>
                                 {
-                                    nbList.map((elem, index) => {
+                                 nbList.length > 0 ?   nbList.map((elem, index) => {
                                         return (
                                             <tr key={elem.id}>
                                                 <th>{elem.lesson_date}</th>
@@ -166,6 +166,10 @@ export default function Attendance() {
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

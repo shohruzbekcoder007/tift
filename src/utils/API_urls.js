@@ -1,4 +1,4 @@
-// export const host = "https://c345-194-93-24-106.ngrok-free.app"
+// export const host = "https://8f13-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 // export const host = "https://api.tift.uz"
@@ -12,7 +12,6 @@ export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =  "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
-// export const host = "https://5fbd-178-218-200-199.ngrok-free.app"
 // export const host = "https://e181-178-218-200-199.ngrok-free.app"
 
 export const token_url = "/token/"
@@ -24,6 +23,7 @@ export const teacher_syllabus = "/teacher/syllabus"
 export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
+export const lesson_edit = "/lesson_edit/"
 
 
 export const teacher_groups = "/teacher/groups/"
@@ -43,8 +43,6 @@ export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
-
-
 
 
 
@@ -103,8 +101,11 @@ export const employee = "/employee/"
 export const region = "/region/"
 export const district = "/district/"
 export const science = "/science/"
+export const science_short = "/science/short/"
 export const news = "/news/"
 export const academic_group = "/academic_group/"
+export const academic_group_short = "/academic_group/short/"
+
 export const building = "/building/"
 export const room_create_list = "/room_create_list/"
 export const room_detail = "/room_detail/"
@@ -114,7 +115,9 @@ export const schedule_admin = "/schedule_admin/"
 export const academic_plan = "/academic_plan/"
 export const academic_plan_science = "/academic_plan_science/"
 export const scheduletable = "/scheduletable/"
+export const patokadmin = "/patokadmin/"
 export const users_student = "/users/student/"
+export const parentpatoklist = "/parentpatoklist/"
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"

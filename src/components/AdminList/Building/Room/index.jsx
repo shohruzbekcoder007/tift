@@ -55,7 +55,7 @@ export default function Room() {
       name: "Computer",
       value: 'computer',
     }]
-  })
+  },[])
 
 
   useEffect(() => {

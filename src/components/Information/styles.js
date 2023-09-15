@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const HeaderWrapper = styled.div`
-  width: 400px;
+  width: 450px;
   height: auto;
   background-color: #fff;
   border-radius: 10px;
@@ -21,6 +21,7 @@ export const HeaderWrapperTop = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  gap: 20px;
 
   img {
     width: 70px;
@@ -52,6 +53,7 @@ export const WrapperBody = styled.div`
   margin: 1.8rem 0;
   display: flex;
   justify-content: space-between;
+  gap: 30px;
 `
 
 export const WrapperBodyContract = styled.div`
