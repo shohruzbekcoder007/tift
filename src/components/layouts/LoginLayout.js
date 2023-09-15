@@ -43,9 +43,9 @@ export default function LoginLayout({ children }) {
         <StyledSectionBg />
       </StyledSection>
 
-      <StyledContent>
+      <div>
         <Stack sx={{ width: 1 }}> {children} </Stack>
-      </StyledContent>
+      </div>
     </StyledRoot>
   );
 }

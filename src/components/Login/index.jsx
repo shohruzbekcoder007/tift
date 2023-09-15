@@ -155,12 +155,15 @@ import { Alert, Tooltip, Stack, Typography, Link, Box } from '@mui/material';
 //
 import AuthLoginForm from '../auth/AuthLoginForm';
 import LoginLayout from '../layouts/LoginLayout';
+import SignInSide from '../SignInSide';
 
 // ----------------------------------------------------------------------
 
 export default function Login() {
 
   return (
-    <LoginLayout/>
+    <LoginLayout>
+      <SignInSide/>
+    </LoginLayout>
   );
 }
