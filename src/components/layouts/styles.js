@@ -15,6 +15,7 @@ export const StyledRoot = styled('main')(() => ({
 export const StyledSection = styled('div')(({ theme }) => ({
   display: 'none',
   position: 'relative',
+  backgroundColor: '#eeeeee47',
   [theme.breakpoints.up('md')]: {
     flexGrow: 1,
     display: 'flex',

@@ -1,10 +1,5 @@
 import PropTypes from 'prop-types';
-// @mui
-import { Typography, Stack } from '@mui/material';
-// components
-// import Logo from '../../components/logo';
-import Image from '../../components/image';
-//
+import { Typography, Stack, Box } from '@mui/material';
 import { StyledRoot, StyledSectionBg, StyledSection, StyledContent } from './styles';
 import login_pahe_img from '../../imgs/Login_Right.png' 
 
@@ -16,21 +11,25 @@ LoginLayout.propTypes = {
   illustration: PropTypes.string,
 };
 
-export default function LoginLayout({ children, illustration, title }) {
+export default function LoginLayout({ children }) {
   return (
     <StyledRoot >
-      {/* <Logo
+      <Box
         sx={{
           zIndex: 9,
           position: 'absolute',
           mt: { xs: 1.5, md: 5 },
           ml: { xs: 2, md: 5 },
         }}
-      /> */}
+      />
 
-      <StyledSection>
+      <StyledSection
+        sx={{
+          backgroundColor: '#eeeeee47'
+        }}
+      >
         <Typography variant="h3" sx={{ mb: 10, maxWidth: 480, textAlign: 'center' }}>
-          {title || 'Hi, Welcome back'}
+          { 'Hi, Welcome back'}
         </Typography>
 
         <img
