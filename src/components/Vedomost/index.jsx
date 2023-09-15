@@ -22,6 +22,7 @@ export default function Vedomost() {
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
   const [open, setOpen] = useState(false);
+  const [Status, setStatus] = useState(false);
   
 
   
@@ -38,7 +39,7 @@ export default function Vedomost() {
           console.log(error)
       })
   
-  }, [])
+  }, [Status])
 
 
   const openModalBoxGrade = (element) => {
@@ -55,6 +56,7 @@ export default function Vedomost() {
     formData.append("submission", tasksGradeId);
     formData.append("grade", tasksGrade);
     createTaskGrade(teacher_submission_grade, formData, (response) => { 
+      setStatus(!Status)
       handleClose()
     }, (error) => {
       console.log(error)
