@@ -234,7 +234,7 @@ export default function TeacherSciencesMain() {
                               Vazifalar
                             </Button>
                           </Link>
-                          <Link to={'/teacher/coursemanagement/calendarplan'} state={{data: elem.id, science: elem.science}}>
+                          <Link to={'addcalendarplan'} state={{data: elem.id, science: elem.science}}>
                             <Button
                               variant="contained"
                               size="small"

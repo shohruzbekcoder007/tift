@@ -118,6 +118,8 @@ export const scheduletable = "/scheduletable/"
 export const patokadmin = "/patokadmin/"
 export const users_student = "/users/student/"
 export const parentpatoklist = "/parentpatoklist/"
+export const bot_para = "/bot/para/"
+
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"
