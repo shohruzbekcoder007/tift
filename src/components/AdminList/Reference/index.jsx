@@ -98,10 +98,10 @@ export default function Reference() {
 
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"} />
+            {/* <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" /> */}
+            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Talabalar" />
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>

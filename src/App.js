@@ -197,8 +197,8 @@ function App() {
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="readagain" element={<ReadAgain />} />
                   <Route path="personalplan" element={<PersonalPlan />} />
-                  <Route path="olympics" element={<Olympics />} />
-                  <Route path="thesisresult" element={<ThesisResult />} />
+                  {/* <Route path="olympics" element={<Olympics />} /> */}
+                  {/* <Route path="thesisresult" element={<ThesisResult />} /> */}
                   <Route path="information" element={<Information />} />
                   <Route path="request" element={<QuestionnaireTeacher />} />
                   <Route path="sciencescalendar" element={<CalendarDayWeekWrapper />} />

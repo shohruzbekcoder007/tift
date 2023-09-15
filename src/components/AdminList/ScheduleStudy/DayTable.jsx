@@ -35,7 +35,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
         group: groups[0]?.value,
         weekday: getDay(day),
         para: para,
-        room: room.id,
+        room: room?.id,
         types: lesson_types[0].value
     })
 
@@ -119,12 +119,12 @@ export default function DayTable({ oneday, groups, day, para, room }) {
                 }}
             >
                 {
-                    oneday.group.map((element, indx) => {
+                    oneday?.group?.map((element, indx) => {
                         return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
                     })
                 }
                 {
-                    new_lessons.map((element, indx) => {
+                    new_lessons?.map((element, indx) => {
                         return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element.group.name}</span>
                     })
                 }
@@ -242,7 +242,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
                         >
                             Room
                         </Typography>
-                            {room.name}
+                            {room?.name}
                         {/* <AllSelectFullWidth
                             chageValueFunction={val => setData(prev => {
                                 return {
