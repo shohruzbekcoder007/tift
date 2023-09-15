@@ -24,6 +24,7 @@ export const teacher_syllabus = "/teacher/syllabus"
 export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
+export const teacher_schedule = "/teacher/schedule/"
 
 
 export const teacher_groups = "/teacher/groups/"
