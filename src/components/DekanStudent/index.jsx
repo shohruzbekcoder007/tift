@@ -18,8 +18,9 @@ export default function DekanStudent() {
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
+    
     useEffect(() => {
-        getDekanStudents(Decan_students, (response) => {
+        getDekanStudents(`${Decan_students}?page_size=${pageSize}&page=${page}`, (response) => {
             console.log(response.data.results);
             setStudents(response.data.results)
             setPageCount(response.data.page_count)
@@ -47,8 +48,8 @@ export default function DekanStudent() {
                 </BoxHeader>
                 <BoxHeader>
                     <InputsWrapper>
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"} />
+                        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="F.I.O" />
                         <AllSelect
                         chageValueFunction={val => { console.log(val) }}
                         selectOptions={[
@@ -230,8 +231,8 @@ export default function DekanStudent() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-                    <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
             </Paper>
         </>

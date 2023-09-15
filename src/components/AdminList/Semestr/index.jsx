@@ -56,7 +56,7 @@ export default function Semestr() {
         name: element.name
       }
     })
-  })
+  },[])
 
 
   useEffect(() => {

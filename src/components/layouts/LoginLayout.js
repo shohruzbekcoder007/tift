@@ -29,7 +29,7 @@ export default function LoginLayout({ children }) {
         }}
       >
         <Typography variant="h3" sx={{ mb: 10, maxWidth: 480, textAlign: 'center' }}>
-          { 'Hi, Welcome back'}
+          { 'TIFT LMS tizimi'}
         </Typography>
 
         <img

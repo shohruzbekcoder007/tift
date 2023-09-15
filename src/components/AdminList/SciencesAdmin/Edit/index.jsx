@@ -6,14 +6,16 @@ import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import { WrapperButtons } from '../../Employees/Career/styles'
 import { getAdminKafedra } from '../requests'
-import { kafedra, science } from '../../../../utils/API_urls'
+import { directions, kafedra, science } from '../../../../utils/API_urls'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { updatescience } from './requests'
+import { getDirection } from '../Add/requests'
 
 export default function Edit() {
   
   const [adminkafedra, setadminkafedra] = useState([]);
   const [returndata, setreturndata] = useState(null);
+  const [DirectionList, setDirectionList] = useState([]);
 
   const [adminData, setadminData] = useState({
     name: null,
@@ -47,6 +49,18 @@ export default function Edit() {
       }))
     }, (error) => {
         console.log(error)
+    })
+
+    getDirection(`${directions}`, (response) => {
+      reqDataChange('direction', response.data.results[0]['id'])
+      setDirectionList(response.data.results.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error)
     })
   }, [])
 
@@ -133,7 +147,7 @@ export default function Edit() {
           fontSize: "20px"
         }}
       >
-        Qo’shish
+        Tahrirlash
       </Typography>
       <BoxTableCard>
       <Paper
@@ -283,6 +297,25 @@ export default function Edit() {
                 selectOptions={adminkafedra}
               />
             </ModalSelectWrapper>
+
+            <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Yo'nalish                        </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange('direction', val)}
+                  selectOptions={DirectionList}
+                />
+              </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
