@@ -173,6 +173,7 @@ export default function Schedule() {
                     <AllSelectFullWidth
                       chageValueFunction={val => setDaySelect(val)}
                       selectOptions={WeekList}
+                      selectedOptionP="wednesday"
                     />
                   </th>
                   <th style={{ border: "0px", padding: '12px 5px' }}>
