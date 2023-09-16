@@ -1321,21 +1321,21 @@ export const admin_links = [
     type: "text"
   },
 
-  {
-    img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 2H5C2.243 2 0 4.243 0 7V17C0 19.757 2.243 22 5 22H19C21.757 22 24 19.757 24 17V7C24 4.243 21.757 2 19 2ZM2 10H6V14H2V10ZM8 10H22V14H8V10ZM22 7V8H8V4H19C20.654 4 22 5.346 22 7ZM5 4H6V8H2V7C2 5.346 3.346 4 5 4ZM2 17V16H6V20H5C3.346 20 2 18.654 2 17ZM19 20H8V16H22V17C22 18.654 20.654 20 19 20Z" fill="currentcolor"/>
-    </svg>
+  // {
+  //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
+  //   <path d="M19 2H5C2.243 2 0 4.243 0 7V17C0 19.757 2.243 22 5 22H19C21.757 22 24 19.757 24 17V7C24 4.243 21.757 2 19 2ZM2 10H6V14H2V10ZM8 10H22V14H8V10ZM22 7V8H8V4H19C20.654 4 22 5.346 22 7ZM5 4H6V8H2V7C2 5.346 3.346 4 5 4ZM2 17V16H6V20H5C3.346 20 2 18.654 2 17ZM19 20H8V16H22V17C22 18.654 20.654 20 19 20Z" fill="currentcolor"/>
+  //   </svg>
     
 
-    ,
-    text: {
-      uz: "Jadval 2",
-      ru: "Расписание 2",
-      eng: "schedule 2"
-    },
-    to: "scheduletwo",
-    type: "text"
-  },
+  //   ,
+  //   text: {
+  //     uz: "Jadval 2",
+  //     ru: "Расписание 2",
+  //     eng: "schedule 2"
+  //   },
+  //   to: "scheduletwo",
+  //   type: "text"
+  // },
 
   // {
   //   img:<svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1522,9 +1522,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Lug'atlar",
-      ru: "Словари",
-      eng: "Dictionaries"
+      uz: "INFORMATION",
+      ru: "ИНФОРМАЦИЯ",
+      eng: "INFORMATION"
     },
     to: null,
     type: 'link_header'
@@ -1634,9 +1634,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Marketing",
-      ru: "Маркетинг",
-      eng: "Marketing"
+      uz: "MARKETING",
+      ru: "МАРКЕТИНГ",
+      eng: "MARKETING"
     },
     to: null,
     type: 'link_header'
@@ -1735,9 +1735,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Tashkilot tuzilishi",
-      ru: "Структура организации",
-      eng: "Organization structure"
+      uz: "TASHKILOT TUZILISHI",
+      ru: "ОРГАНИЗАЦИОННАЯ СТРУКТУРА",
+      eng: "ORGANIZATIONAL STRUCTURE"
     },
     to: null,
     type: 'link_header'
@@ -1964,9 +1964,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "SYS.admin",
-      ru: "СЙС.администратор",
-      eng: "SYS.admin"
+      uz: "SYS.ADMIN",
+      ru: "СИС.АДМИН",
+      eng: "SYS.ADMIN"
     },
     to: null,
     type: 'link_header'

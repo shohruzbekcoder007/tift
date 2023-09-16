@@ -60,7 +60,7 @@ export default function Schedule() {
   },[])
 
   const TypeList = useMemo(() => {
-    return lesson_types.map(elem => {
+    return lesson_types?.map(elem => {
       return {
         name: elem.uz,
         value: elem.value
@@ -71,7 +71,7 @@ export default function Schedule() {
   useEffect(() => {
     getPara(bot_para, (response) => {
       setParaSelect(response.data[0].id)
-      setParaList(response.data.map(elem => {
+      setParaList(response.data?.map(elem => {
         return {
           name: elem.name,
           value: elem.id
@@ -83,7 +83,7 @@ export default function Schedule() {
 
     getRooms(room_create_list, (response) => {
       setRoomSelect(response?.data?.results[0]?.id)
-      setRoomList(response?.data?.results.map(elem => {
+      setRoomList(response?.data?.results?.map(elem => {
         return {
           name: elem.name + " (" + elem.building + " bino)",
           value: elem.id
