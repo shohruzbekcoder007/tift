@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
+=======
+import React, { useEffect, useState } from 'react';
+>>>>>>> main
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,12 +13,11 @@ import { LoaderWrapper, LoginLogo } from './styles';
 import { CircularProgress, Snackbar, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { token_url, user_me } from '../../utils/API_urls'
 import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'
-import login_pahe_img from '../../imgs/login_pahe_img.jpg'
 
 const LoadingPage = () => {
     return (
@@ -54,6 +57,7 @@ export default function SignInSide() {
   const [pageLoading, setPageLoading] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
   const [haveatoken, setHaveatoken] = useState(false)
+  const user = useSelector(state => state.user)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -105,6 +109,10 @@ export default function SignInSide() {
     setPageLoading(true)
   }
 
+  useEffect(() => {
+    getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
+  },[])
+
   return (
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
@@ -114,6 +122,7 @@ export default function SignInSide() {
           {haveatoken?<p>Foydalanuvchi topilmadi</p>:<p>Login yoki password noto'g'ri kiritildi</p>}
         </Alert>
       </Snackbar>
+<<<<<<< HEAD
         <Grid
           item
           xs={false}
@@ -129,10 +138,14 @@ export default function SignInSide() {
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+=======
+        <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
+>>>>>>> main
           <Box
             sx={{
             //   my: 8,
             //   mx: 4,
+<<<<<<< HEAD
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -181,5 +194,57 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
+=======
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: "100vh",
+            padding: "20px"
+          }}
+        >
+          <LoginLogo>
+            <img src={require('../../imgs/main_logo.png')} alt="main logo" />
+          </LoginLogo>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 , p: "10px 0 "}}
+            >
+              Tizimga Kirish
+            </Button>
+            <Typography variant="body2" color="text.secondary" align="center">
+              Savol va takliflar uchun: <a href="https://t.me/creditsystembot">Bog'laning</a>
+            </Typography>
+            <Copyright sx={{ mt: 5 }} />
+          </Box>
+        </Box>
+      </Grid>
+
+      
+    </Grid>
+>>>>>>> main
   );
 }

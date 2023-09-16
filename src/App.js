@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
 import VideoGuide from './components/VideoGuide'
@@ -101,7 +101,7 @@ import Employees from './components/AdminList/Employees'
 import ApplicationsReport from './components/ApplicationsReport'
 import Career from './components/AdminList/Employees/Career'
 import Show from './components/AdminList/Employees/Show'
-import EditEmployees from './components/AdminList/Employees/EditEmployees'
+import EditEmployees from './components/AdminList/Students/AddStudent'
 import Students from './components/AdminList/Students'
 import InformationStudent from './components/AdminList/Students/Information'
 import Directions from './components/AdminList/Directions'
@@ -144,7 +144,6 @@ function App() {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
-
   
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
@@ -163,7 +162,7 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInSide />} />
+            <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
@@ -172,6 +171,7 @@ function App() {
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
                     <Route index element={<TeacherSciencesMain />} />
+                    <Route path='addcalendarplan' element={<CalendarPlanTeacher />} />
                     <Route path="calendarplan" element={<CalendarPlanMain />} >
                       <Route index element={<CalendarPlan />} />
                       <Route path="thematicblock" element={<ThematicBlock />} />
@@ -183,10 +183,10 @@ function App() {
                   <Route path="diploma" element={<Thesis />} />
                   <Route path="diploma/:id" element={<DiplomaTopics />} />
                   <Route path="request" element={<Questionnaire />} />
-                  <Route path="coursemanagement" element={<StudentSciences />} >
+                  {/* <Route path="coursemanagement" element={<StudentSciences />} >
                     <Route index element={<CourseManagement />} />
                     <Route path='calendarplan' element={<CalendarPlanTeacher />} />
-                  </Route>
+                  </Route> */}
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="profile" element={<Profile />} />

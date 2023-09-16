@@ -47,6 +47,7 @@ export default function Streams() {
   const [AmaliyotSelect, setAmaliyotSelect] = useState(0);
   const [LabaratoriyaSelect, setLabaratoriyaSelect] = useState(0);
   const [ParentNaameSelect, setParentNaameSelect] = useState(0);
+  const [Status, setStatus] = useState(false);
   const [ScienceType, setScienceType] = useState();
 
 
@@ -183,7 +184,7 @@ export default function Streams() {
     }
     
 
-  }, [pageSize, page, SemesterSelect, ScienseSelect])
+  }, [pageSize, page, SemesterSelect, ScienseSelect, Status])
 
 
   useEffect(() => {
@@ -213,6 +214,8 @@ export default function Streams() {
       science_type: RoomType
     }, (response) => {
       console.log(response);
+      setStatus(!Status)
+      handleClose2()
     }, (error) => {
       console.log(error)
     })
@@ -412,7 +415,7 @@ export default function Streams() {
                         <th>{elem.students_count}</th>
                         <th>{elem.parent_name}</th>
                         <th>
-                          <Link to={'schedule'} state={elem.name}>
+                          <Link to={'schedule'} state={elem}>
                             <Button
                               variant="contained"
                               sx={{
@@ -591,7 +594,7 @@ export default function Streams() {
                   >
                     Ota patok                        </Typography>
                   <AllSelectFullWidth
-                    chageValueFunction={(val) => setScienceType(val)}
+                    chageValueFunction={(val) => setParentNaameSelect(val)}
                     selectOptions={ParentStreams}
                   />
                 </ModalSelectWrapper>
