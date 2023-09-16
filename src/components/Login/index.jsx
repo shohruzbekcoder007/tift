@@ -219,3 +219,27 @@ export default function Login() {
 //     <LoginLayout/>
 //   );
 // }
+
+
+
+
+
+// @mui
+import { Alert, Tooltip, Stack, Typography, Link, Box } from '@mui/material';
+// auth
+// layouts
+//
+// import AuthLoginForm from '../auth/AuthLoginForm';
+import LoginLayout from '../layouts/LoginLayout';
+import SignInSide from '../SignInSide';
+
+// ----------------------------------------------------------------------
+
+export default function Login() {
+
+  return (
+    <LoginLayout>
+      <SignInSide/>
+    </LoginLayout>
+  );
+}

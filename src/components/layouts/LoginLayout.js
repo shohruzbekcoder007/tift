@@ -29,7 +29,7 @@ export default function LoginLayout({ children }) {
         }}
       >
         <Typography variant="h3" sx={{ mb: 10, maxWidth: 480, textAlign: 'center' }}>
-          { 'Hi, Welcome back'}
+          { 'TIFT LMS tizimi'}
         </Typography>
 
         <img
@@ -43,9 +43,9 @@ export default function LoginLayout({ children }) {
         <StyledSectionBg />
       </StyledSection>
 
-      <StyledContent>
+      <div>
         <Stack sx={{ width: 1 }}> {children} </Stack>
-      </StyledContent>
+      </div>
     </StyledRoot>
   );
 }

@@ -1,11 +1,11 @@
 // export const host = "https://8f13-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-// export const host = "https://api.tift.uz"
+export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =  "https://api.lms-edu.uz"
@@ -24,6 +24,7 @@ export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
 export const lesson_edit = "/lesson_edit/"
+export const teacher_schedule = "/teacher/schedule/"
 
 
 export const teacher_groups = "/teacher/groups/"
@@ -118,6 +119,8 @@ export const scheduletable = "/scheduletable/"
 export const patokadmin = "/patokadmin/"
 export const users_student = "/users/student/"
 export const parentpatoklist = "/parentpatoklist/"
+export const bot_para = "/bot/para/"
+
 
 // lawyer
 export const lawyer_studentdocument = "/studentdocument/"
