@@ -54,10 +54,10 @@ export default function NBfix() {
                 </BoxHeader>
                 <BoxHeader>
                   <InputsWrapper>
-                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="  " />
-                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"} />
+                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="O’qituvchi" />
+                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Patok" />
+                    <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Para" />
                   </InputsWrapper>
                 </BoxHeader>
                 <BoxBody>
@@ -172,7 +172,7 @@ export default function NBfix() {
                             </thead>
                             <tbody>
                                 {
-                                    teacherGetNbList.map((elem, index) => {
+                                  teacherGetNbList?.length > 0 ? teacherGetNbList.map((elem, index) => {
                                         return (
                                             <tr key={index}>
                                                 <th>{elem.id}</th>
@@ -231,6 +231,10 @@ Yuklash                                                   </Button>
                                             </tr>
                                         )
                                     })
+                                    :
+                                    <tr>
+                                        <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                    </tr>
                                 }
                             </tbody>
                         </table>

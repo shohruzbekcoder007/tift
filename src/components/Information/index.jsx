@@ -27,6 +27,7 @@ export default function Information() {
   const [changedRegionId1, setChangedRegionId1] = useState(null)
   const [changeDistrictList, setChangeDistrictList] = useState(null)
   const [changeDistrictList1, setChangeDistrictList1] = useState(null)
+  const [Passport, setPassport] = useState('')
   const [textInfo, setTextInfo] = useState('')
   const [textInfo1, setTextInfo1] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
@@ -51,21 +52,27 @@ export default function Information() {
     horizontal: "left"
   }
 
+  useEffect(() => {
+    if (Passport) {
+      getStudentInformation(`${studentcontract}?contract_id=${Passport}`, (response) => {
+        console.log(response, "dsadasdas");
+        setStudentContract(response.data)
+        // setInfoList(response.data.result)
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [Passport]);
 
   useEffect(() => {
     getStudentInformation(student_detail, (response) => {
+      setPassport(response.data.result.passport)
       setInfoList(response.data.result)
     }, (error) => {
       console.log(error)
     })
 
-    getStudentInformation(studentcontract, (response) => {
-      console.log(response, "dsadasdas");
-      setStudentContract(response.data)
-      // setInfoList(response.data.result)
-    }, (error) => {
-      console.log(error)
-    })
+    
 
     getStudentInformation(student_region, (response) => {
       setChangedRegionId(response.data[0]?.id)
@@ -157,6 +164,14 @@ export default function Information() {
           </HeaderWrapperTop>
           <Hr />
           <HeaderWrapperBottom>
+          <WrapperBody>
+              <HeaderWrapperH4>Passport seriya:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.passport}</HeaderWrapperP>
+            </WrapperBody>
+            <WrapperBody>
+              <HeaderWrapperH4>Jshshr:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.jshshr}</HeaderWrapperP>
+            </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Tug’ilgan sanasi:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
@@ -177,7 +192,43 @@ export default function Information() {
               <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
-            <WrapperBodyContract>
+           
+          </HeaderWrapperBottom>
+        </HeaderWrapper>
+        <HeaderWrapper margin='true'>
+          <WrapperBody>
+            <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
+          </WrapperBody>
+          <WrapperBodyContract>
               {
                 StudentContract.length > 0 ? StudentContract.map((elem, index) => {
                   return (
@@ -233,41 +284,6 @@ export default function Information() {
                   <></>
               }
             </WrapperBodyContract>
-          </HeaderWrapperBottom>
-        </HeaderWrapper>
-        <HeaderWrapper margin='true'>
-          <WrapperBody>
-            <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
-          </WrapperBody>
-          <WrapperBody>
-            <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
-          </WrapperBody>
         </HeaderWrapper>
       </InfoBody>
 

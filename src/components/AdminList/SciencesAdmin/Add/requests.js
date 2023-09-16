@@ -16,3 +16,13 @@ export const createscience = (url, data, successfulFunction, errorFunction) => {
         errorFunction(error)
     });
 }
+
+export const getDirection = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
