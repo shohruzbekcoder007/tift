@@ -18,6 +18,7 @@ import { academic_group_short, my_semesters, parentpatoklist, patokadmin, scienc
 import { getAcademicGroup, getSciense, getSemesters, getStreams, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
+import AutocompleteJames from '../../AutocompleteJames'
 
 export default function Streams() {
   const [open, setOpen] = React.useState(false);
@@ -148,7 +149,7 @@ export default function Streams() {
     })
 // ?semester${SemesterSelect}
     getSciense(`${science_short}`, (response) => {
-      console.log(response.data);
+      // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
         return {
@@ -171,17 +172,18 @@ export default function Streams() {
         console.log(error)
       })
 
-      getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
-        setParentNaameSelect(response.data[0].id)
-        setParentStreams(response.data.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
-          }
-        }));
-      }, (error) => {
-        console.log(error)
-      })
+      // kodi type error bor 
+      // getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+      //   setParentNaameSelect(response.data[0].id)
+      //   setParentStreams(response.data.map(elem => {
+      //     return {
+      //       name: elem.name,
+      //       value: elem.id
+      //     }
+      //   }));
+      // }, (error) => {
+      //   console.log(error)
+      // })
     }
     
 
@@ -249,7 +251,12 @@ export default function Streams() {
                 value: 12,
               }]}
             /> */}
-             <AllSelectFullWidth
+            <AllSelectFullWidth
+              chageValueFunction={val => setScienseSelect(val)}
+              selectOptions={ScineseList}
+            />
+            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
+            <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
