@@ -13,6 +13,7 @@ import listLanguage from './language.json'
 import { getTeacherGroups, setNbPetition } from './requests'
 import { teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../utils/API_urls'
 import MultiSelect from '../Multisellect'
+import { useSelector } from 'react-redux'
 
 
 export default function Attend() {
@@ -33,6 +34,9 @@ export default function Attend() {
     const [allCount, setAllCount] = useState(0)
     const [pageCount, setPageCount] = useState(1)
     const [page, setPage] = useState(1)
+
+    //  Lang
+    // const language = useSelector()
 
 
     const [selectedValues, setSelectedValues] = useState([]);
