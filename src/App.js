@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
 import VideoGuide from './components/VideoGuide'
@@ -144,7 +144,7 @@ function App() {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
-
+  
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
   }
@@ -162,7 +162,7 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInSide />} />
+            <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
