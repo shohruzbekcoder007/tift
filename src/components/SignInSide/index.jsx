@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-=======
 import React, { useEffect, useState } from 'react';
->>>>>>> main
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -122,79 +118,11 @@ export default function SignInSide() {
           {haveatoken?<p>Foydalanuvchi topilmadi</p>:<p>Login yoki password noto'g'ri kiritildi</p>}
         </Alert>
       </Snackbar>
-<<<<<<< HEAD
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: `url(${login_pahe_img})`,
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-=======
         <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
->>>>>>> main
           <Box
             sx={{
             //   my: 8,
             //   mx: 4,
-<<<<<<< HEAD
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: "100vh",
-              padding: "20px"
-            }}
-          >
-            <LoginLogo>
-              <img src={require('../../imgs/main_logo.png')} alt="main logo" />
-            </LoginLogo>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="User name"
-            name="username"
-            autoComplete="username"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Tizimga Kirish
-          </Button>
-          <Typography variant="body2" color="text.secondary" align="center">
-                Admin:  (90) 037 68 09 , (90) 037 68 09
-            </Typography>
-          <Copyright sx={{ mt: 5 }} />
-        </Box>
-          </Box>
-        </Grid>
-      </Grid>
-=======
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -245,6 +173,5 @@ export default function SignInSide() {
 
       
     </Grid>
->>>>>>> main
   );
 }
