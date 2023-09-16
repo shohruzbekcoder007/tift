@@ -16,7 +16,7 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
     useEffect(() =>{
         if(selectedOptionP){
             console.log(selectedOptionP)
-            setAge(selectedOptionP) 
+            setAge(selectedOptionP || selectOptions[0]?.value || 0) 
         }
     },[selectedOptionP])
 
