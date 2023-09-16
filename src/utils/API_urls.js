@@ -25,6 +25,7 @@ export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
 export const lesson_edit = "/lesson_edit/"
 export const teacher_schedule = "/teacher/schedule/"
+export const teacher_statistics = "teacher/statistics/"
 
 
 export const teacher_groups = "/teacher/groups/"

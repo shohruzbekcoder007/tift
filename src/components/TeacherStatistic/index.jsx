@@ -1,39 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { TeacherStatisticWrapper, TeacherStatisticWrapperBottom, TeacherStatisticWrapperHeader, WrapperHeaderLeft, WrapperHeaderRight } from './styles'
-import { my_semesters, teacher_mylessons } from '../../utils/API_urls'
-import { getTeacherMyLesson } from '../TeacherSciences/TeacherSciencesMain/requests'
-import { getStatisticSemester } from './requests'
+import { teacher_statistics } from '../../utils/API_urls'
+import { getStatistics } from './requests'
+import { Link } from 'react-router-dom'
 
 export default function TeacherStatistic() {
 
-  const [semester, setSemester] = useState(0)
-  const [ScienceListCount, setScienceListCount] = useState(0)
+  const [ScienceListCount, setScienceListCount] = useState({})
 
   useEffect(() => {
-    getStatisticSemester(my_semesters, (response) => {
-      setSemester(response[0].id);
+    getStatistics(teacher_statistics, (response) => {
+      console.log(response);
+      setScienceListCount(response[0]);
     }, (error) => {
       console.log(error)
     })
   }, [])
-
-  useEffect(() => {
-    if (semester !== 0) {
-      getTeacherMyLesson(`${teacher_mylessons}?semester=${semester}`, (response) => {
-        setScienceListCount(response.data.results.length);
-      }, (error) => {
-        console.log(error)
-      })
-    }
-  }, [semester])
 
   return (
     <ContentWrapper>
       <TeacherStatisticWrapper>
         <TeacherStatisticWrapperHeader>
           <WrapperHeaderLeft>
-            <h2>{ScienceListCount}</h2>
+            <h2>{ScienceListCount.journals}</h2>
             <p>Davomat jurnali</p>
           </WrapperHeaderLeft>
           <WrapperHeaderRight>
@@ -44,19 +34,21 @@ export default function TeacherStatistic() {
             </svg>
           </WrapperHeaderRight>
         </TeacherStatisticWrapperHeader>
+        <Link to={'/teacher/sciences'}>
         <TeacherStatisticWrapperBottom>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+          </svg>
           <p>Davomat jurnali</p>
         </TeacherStatisticWrapperBottom>
+        </Link>
       </TeacherStatisticWrapper>
 
 
       <TeacherStatisticWrapper>
         <TeacherStatisticWrapperHeader>
           <WrapperHeaderLeft>
-            <h2>10</h2>
+            <h2>{ScienceListCount.lesson_hours}</h2>
             <p>Mening dars jadvalim</p>
           </WrapperHeaderLeft>
           <WrapperHeaderRight>
@@ -65,12 +57,14 @@ export default function TeacherStatistic() {
             </svg>
           </WrapperHeaderRight>
         </TeacherStatisticWrapperHeader>
+        <Link to={'/teacher/classschedule'}>
         <TeacherStatisticWrapperBottom>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+          </svg>
           <p>Mening dars jadvalim</p>
         </TeacherStatisticWrapperBottom>
+        </Link>
       </TeacherStatisticWrapper>
 
 
@@ -78,7 +72,7 @@ export default function TeacherStatistic() {
       <TeacherStatisticWrapper>
         <TeacherStatisticWrapperHeader>
           <WrapperHeaderLeft>
-            <h2>12</h2>
+            <h2>{ScienceListCount.tasks}</h2>
             <p>Darslar ro'yxati</p>
           </WrapperHeaderLeft>
           <WrapperHeaderRight>
@@ -89,12 +83,14 @@ export default function TeacherStatistic() {
             </svg>
           </WrapperHeaderRight>
         </TeacherStatisticWrapperHeader>
-        <TeacherStatisticWrapperBottom>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-</svg>
-          <p>Darslar ro'yxati</p>
-        </TeacherStatisticWrapperBottom>
+        <Link to={'/teacher/sciences'}>
+          <TeacherStatisticWrapperBottom>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
+            </svg>
+            <p>Darslar ro'yxati</p>
+          </TeacherStatisticWrapperBottom>
+        </Link>
       </TeacherStatisticWrapper>
     </ContentWrapper>
   )

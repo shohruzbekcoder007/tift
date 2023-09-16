@@ -1,6 +1,6 @@
 import axios, { headerConfig } from '../../utils/baseUrl'
 
-export const getStatisticSemester = (url, successfulFunction, errorFunction) => {
+export const getStatistics = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
         headers: headerConfig(),
     }).then(response => {
