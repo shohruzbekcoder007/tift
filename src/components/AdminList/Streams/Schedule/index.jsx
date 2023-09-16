@@ -259,6 +259,7 @@ export default function Schedule() {
                   <th style={{ border: "0px", padding: '12px 5px'}}>
                     <AllSelectFullWidth
                       chageValueFunction={val => console.log(val)}
+                      selectedOptionP = {'wednesday'}
                       selectOptions={[{
                         name: "Monday",
                         value: 'monday',
@@ -269,8 +270,7 @@ export default function Schedule() {
                       },
                       {
                         name: "Wednesday",
-                        value: 'wednesday',
-                        selected: true
+                        value: 'wednesday'
                       },
                       {
                         name: "Thursday",
