@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import lesson_types from '../../../../dictionary/lesson_types'
-import { getPara, getRooms, getSchudelTable, postSchudelTable } from './request'
+import { getPara, getRooms, getScheduleGroup, getSchudelTable, postSchudelTable } from './request'
 import { bot_para, room_create_list, scheduletable } from '../../../../utils/API_urls'
 
 export default function Schedule() {
@@ -92,6 +92,21 @@ export default function Schedule() {
     }, (error) => {
       console.log(error);
     })
+    getScheduleGroup(`${scheduletable}?page_size=100&group=${state.state.id}`, (response) => {
+      console.log(response.data.results);
+      // for (let i = 0; i < response.data.results.length; i++) {
+      //   for (let j = 0; j < WeekList.length; j++) {
+      //     if (response.data.results[i].weekday === WeekList[j].value) {
+      //       WeekList[j].selected = true;
+      //     }
+      //   }
+      // }
+
+      // console.log(WeekList);
+    }, (error) => {
+      console.log(error);
+    })
+
   }, []);
 
   const handleClick = (_) => {

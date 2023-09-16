@@ -148,7 +148,7 @@ export default function Streams() {
       console.log(error)
     })
 // ?semester${SemesterSelect}
-    getSciense(`${science_short}`, (response) => {
+    getSciense(`${science_short}?semester=3`, (response) => {
       // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
@@ -160,11 +160,11 @@ export default function Streams() {
     }, (error) => {
       console.log(error)
     })
-  }, [SemesterSelect])
+  }, [])
 
   useEffect(() => {
     if (SemesterSelect && ScienseSelect) {
-      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}&search=${searchText}`, (response) => {
+      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
         setStreamsList(response.data.results);
         setPageCount(response.data.page_count)
         setAllCount(response.data.count)
@@ -252,18 +252,10 @@ export default function Streams() {
               }]}
             /> */}
             <AllSelectFullWidth
-              chageValueFunction={val => setScienseSelect(val)}
-              selectOptions={ScineseList}
-            />
-            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
-            <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
-            <AllSelectFullWidth
-              chageValueFunction={val => setScienseSelect(val)}
-              selectOptions={ScineseList}
-            />
+            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
            
           </InputsWrapper>
         </BoxHeader>
@@ -562,11 +554,7 @@ export default function Streams() {
                 }}
               >
                 Fan                         </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setScienseSelect(val)}
-                selectOptions={ScineseList}
-              />
-
+                <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
