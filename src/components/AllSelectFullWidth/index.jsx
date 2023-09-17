@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions, selectedOptionP}) {
-
+    console.log(selectedOptionP);
     const selectedOption = selectOptions.find(option => option?.selected) || {};
     const [age, setAge] = React.useState(selectedOption?.value || selectOptions[0]?.value || 0);
     
