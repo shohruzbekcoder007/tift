@@ -656,7 +656,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на практику                        </Typography>
+                Amaliyot guruhga ajratish                        </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setAmaliyotSelect(val)}
                 selectOptions={Amaliyot}
@@ -675,7 +675,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на лаборатории                        </Typography>
+                Labaratoriya guruhga ajratish                          </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setLabaratoriyaSelect(val)}
                 selectOptions={Labaratoriya}
