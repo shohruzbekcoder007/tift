@@ -31,7 +31,7 @@ export default function TeacherJournal() {
 
   useEffect(() => {
     
-    getTeacherJurnal(`${teacher_jurnal}${state.data}`, (response) => {
+    getTeacherJurnal(`${teacher_jurnal}${state.data}/`, (response) => {
         console.log(response);
         settasksName(response.data.name)
         settasksTasks(response.data.tasks)
