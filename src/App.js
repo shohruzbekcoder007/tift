@@ -139,6 +139,7 @@ import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
 import TeacherStatistic from './components/TeacherStatistic'
+import TeacherJournal from './components/TeacherJournal'
 
 
 function App() {
@@ -180,6 +181,7 @@ function App() {
                     </Route>
                     <Route path="vedomost" element={<Vedomost />} />
                     <Route path="tasks" element={<TasksTeacher />} />
+                    <Route path="journal" element={<TeacherJournal />} />
                   </Route>
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="diploma" element={<Thesis />} />

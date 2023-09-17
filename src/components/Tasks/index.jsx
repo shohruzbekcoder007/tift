@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper,ClassScheduleTableWrapper } from '../../global_styles/styles'
 import { Button, Pagination, Paper, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
@@ -15,6 +15,7 @@ import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
 import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
 import { teacher_tasks } from '../../utils/API_urls'
+import AllSelect from '../AllSelect'
 
 export default function Tasks() {
   const { state } = useLocation()
@@ -27,6 +28,12 @@ export default function Tasks() {
   const [titleTasks, settitleTasks] = useState(null);
   const [dedlineTasks, setdedlineTasks] = useState(null);
   const [maxgradeTasks, setmaxgradeTasks] = useState(null);
+
+  const [tasktypeVal, setTasktype] = useState('oraliq')
+  const [taskmethodVal, setTaskmethod] = useState('oddiy')
+  const [trycount, settrycount] = useState(null);
+  const [testtime, settesttime] = useState(null);
+
 
 
   const setFileHandler = (newValue, info) => {
@@ -52,16 +59,62 @@ export default function Tasks() {
     })
   }, [])
 
+  const tasktype = useMemo(() => {
+    return [
+      {
+        name: "Oraliq",
+        value: 'oraliq',
+      },
+      {
+        name: "Yakuniy",
+        value: 'yakuniy',
+      },
+      {
+        name: "Joriy",
+        value: 'joriy',
+      },
+      {
+        name: "ananaviy",
+        value: 'ananaviy',
+      },
+    ]
+  }, [])
+
+  const taskmethod = useMemo(() => {
+    return [
+      {
+        name: "Oddiy",
+        value: 'oddiy',
+      },
+      {
+        name: "Test",
+        value: 'test',
+      },
+      {
+        name: "File",
+        value: 'file',
+      },
+    ]
+  }, [])
+
+  
 
   const handleSubmit = async (event) => {
 
     event.preventDefault();
     const formData = new FormData();
-    formData.append("source", file);
+    if(file){
+      formData.append("source", file);
+    }
+    
     formData.append("title", titleTasks);
     formData.append("grade", maxgradeTasks);
     formData.append("deadline", dedlineTasks);
     formData.append("group", state.data);
+    formData.append("type", tasktypeVal);
+    formData.append("method", taskmethodVal);
+    formData.append("try_count", trycount);
+    formData.append("time", testtime);
 
 
     setTeacheravTasksPost(teacher_tasks, formData, (response) => { 
@@ -295,7 +348,73 @@ export default function Tasks() {
             <DataPicker setFunction={(val) => {setdedlineTasks(val)}}/>
             
           </ModalSelectWrapper>
+            
           <ModalSelectWrapper>
+            <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Vazifa Turi
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => { setTasktype(val); }}
+                selectOptions={tasktype}
+              />
+          </ModalSelectWrapper>
+
+          <ModalSelectWrapper>
+            <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Vazifa Olish Usuli
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => { setTaskmethod(val); }}
+                selectOptions={taskmethod}
+              />
+          </ModalSelectWrapper>
+
+          {taskmethodVal == "test"?<ModalSelectWrapper>
+            <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Shablon 
+              </Typography>
+              <a href="#" target="_blank" rel="noopener noreferrer">
+                <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+                >
+                  Yuklab Olish
+                </Button>
+              </a>
+          </ModalSelectWrapper>:<></>}
+
+
+          {taskmethodVal != "oddiy"?<ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -307,7 +426,7 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Qo'llanma
+                File Yuklash
               </Typography>
               <MuiFileInput
                 placeholder="Fayl kiriting"
@@ -316,8 +435,44 @@ export default function Tasks() {
                 // getInputText={(value) => value ? 'Thanks!' : ''}
                 fullWidth
               />
-            </ModalSelectWrapper>
-          <ModalSelectWrapper>
+            </ModalSelectWrapper>:<></>}
+
+            {taskmethodVal == "test"?<ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Urinishlar soni
+              </Typography>
+              <CustomizedInputSimple callback_func={(val) => { settrycount(val)}} placeholder="" type={'number'} />
+            </ModalSelectWrapper>:<></>}
+
+            
+            {taskmethodVal == "test"?<ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Test uchun vaqt
+              </Typography>
+              <CustomizedInputSimple callback_func={(val) => { settesttime(val)}} placeholder="" type={'number'} />
+            </ModalSelectWrapper>:<></>}
+                
+          {(tasktypeVal == 'yakuniy' || tasktypeVal == 'oraliq')?<></>:<ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -332,7 +487,7 @@ export default function Tasks() {
               Maks ball
             </Typography>
             <CustomizedInputSimple callback_func={val => setmaxgradeTasks(val)} />
-          </ModalSelectWrapper>
+          </ModalSelectWrapper>}
           <ModalButtons>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
