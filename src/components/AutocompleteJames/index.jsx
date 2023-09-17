@@ -9,7 +9,8 @@ export default function AutocompleteJames({selectOptions, chageValueFunction}) {
       id="combo-box-demo"
       options={selectOptions}
       sx={{
-        width: 300,
+        width: '100%',
+        minWidth: '300px',
         backgroundColor: "#F6F6F6",
         fontSize: '14px',
         fontFamily: 'Inter',

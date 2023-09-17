@@ -17,6 +17,7 @@ export const TeacherSciencesButtonBox = styled.div`
     width: 100%;
     display: flex;
     gap: 10px;
+    min-width: 200px;
 `
 
 export const ModalSubtitle = styled.p`
