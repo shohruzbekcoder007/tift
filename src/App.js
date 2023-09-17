@@ -138,6 +138,8 @@ import AddEmployees from './components/AdminList/Employees/AddEmployees'
 import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
+import TeacherStatistic from './components/TeacherStatistic'
+import TeacherJournal from './components/TeacherJournal'
 
 
 function App() {
@@ -166,7 +168,8 @@ function App() {
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard" element={<TeacherStatistic />} />
+                  <Route path="news" element={<TeacherDashboard />} />
                   <Route path="nb" element={<Attend />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
@@ -178,6 +181,7 @@ function App() {
                     </Route>
                     <Route path="vedomost" element={<Vedomost />} />
                     <Route path="tasks" element={<TasksTeacher />} />
+                    <Route path="journal" element={<TeacherJournal />} />
                   </Route>
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="diploma" element={<Thesis />} />
@@ -316,6 +320,7 @@ function App() {
                 <Route path="lawyer" element={<MainLawyer />}>
                   <Route path="dashboard" element={<LawyerDashboard />} />
                   <Route path="students" element={<LawyerAllStudents />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
 

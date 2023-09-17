@@ -12,13 +12,15 @@ import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 import lesson_types from '../../../../dictionary/lesson_types'
-import { getPara, getRooms, getSchudelTable, postSchudelTable } from './request'
+import { getPara, getRooms, getScheduleGroup, getSchudelTable, patchScheduleGroup, postSchudelTable } from './request'
 import { bot_para, room_create_list, scheduletable } from '../../../../utils/API_urls'
 
 export default function Schedule() {
   const [open, setOpen] = React.useState(false);
+  const [Status, setStatus] = React.useState(false);
   const [ParaList, setParaList] = React.useState([]);
   const [RoomList, setRoomList] = React.useState([]);
+  const [ScheduleGroupList, setScheduleGroupList] = React.useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
@@ -29,10 +31,14 @@ export default function Schedule() {
   const [TypeSelect, setTypeSelect] = React.useState('full');
   const [RoomSelect, setRoomSelect] = React.useState(null);
 
+  const [DaySelectChange, setDaySelectChange] = React.useState(null);
+  const [ParaSelectChange, setParaSelectChange] = React.useState(null);
+  const [TypeSelectChange, setTypeSelectChange] = React.useState(null);
+  const [RoomSelectChange, setRoomSelectChange] = React.useState(null);
 
 
   const WeekList = useMemo(() => {
-  return  [{
+    return [{
       name: "Monday",
       value: 'monday',
     },
@@ -57,7 +63,7 @@ export default function Schedule() {
       value: 'saturday',
     }
     ]
-  },[])
+  }, [])
 
   const TypeList = useMemo(() => {
     return lesson_types.map(elem => {
@@ -66,7 +72,7 @@ export default function Schedule() {
         value: elem.value
       }
     })
-  },[])
+  }, [])
 
   useEffect(() => {
     getPara(bot_para, (response) => {
@@ -81,7 +87,7 @@ export default function Schedule() {
       console.log(error);
     })
 
-    getRooms(room_create_list, (response) => {
+    getRooms(`${room_create_list}?page_size=1000`, (response) => {
       setRoomSelect(response?.data?.results[0]?.id)
       setRoomList(response?.data?.results.map(elem => {
         return {
@@ -92,7 +98,19 @@ export default function Schedule() {
     }, (error) => {
       console.log(error);
     })
+   
+
   }, []);
+
+
+  useEffect(() => {
+    getScheduleGroup(`${scheduletable}?page_size=100&group=${state.state.id}`, (response) => {
+      setScheduleGroupList(response.data.results);
+    }, (error) => {
+      console.log(error);
+    })
+  }, [Status]);
+
 
   const handleClick = (_) => {
     postSchudelTable(scheduletable, {
@@ -102,13 +120,31 @@ export default function Schedule() {
       room: RoomSelect,
       types: TypeSelect
     }, (response) => {
-      console.log(response);
+      setStatus(!Status)
     }, (error) => {
       console.log(error);
     })
   }
 
-  
+  const EditScheduleGroup = (id) => {
+    let ChangeList = {}
+
+    if (DaySelectChange) ChangeList.weekday = DaySelectChange
+    else if (ParaSelectChange) ChangeList.para = ParaSelectChange
+    else if (RoomSelectChange) ChangeList.room = RoomSelectChange
+    else if (TypeSelectChange) ChangeList.types = TypeSelectChange
+    
+
+    if (ChangeList) {
+      patchScheduleGroup(`${scheduletable}${id}/`, ChangeList, (response) => {
+        setStatus(!Status)
+      }, (error) => {
+        console.log(error);
+      })
+    }
+  }
+
+
   return (
     <>
       <Typography
@@ -154,10 +190,11 @@ export default function Schedule() {
               </thead>
               <tbody>
                 <tr>
-                  <th style={{ border: "0px", padding: '12px 5px'}}>
+                  <th style={{ border: "0px", padding: '12px 5px' }}>
                     <AllSelectFullWidth
                       chageValueFunction={val => setDaySelect(val)}
                       selectOptions={WeekList}
+                      selectedOptionP="monday"
                     />
                   </th>
                   <th style={{ border: "0px", padding: '12px 5px' }}>
@@ -170,6 +207,7 @@ export default function Schedule() {
                     <AllSelectFullWidth
                       chageValueFunction={val => setTypeSelect(val)}
                       selectOptions={TypeList}
+                      selectedOptionP="full"
                     />
                   </th>
                   <th style={{ border: "0px", padding: '12px 5px' }}>
@@ -206,17 +244,17 @@ export default function Schedule() {
 
 
         <Typography
-        sx={{
-          color: "#000",
-          fontWeight: "600",
-          fontSize: "20px",
-          margin: '20px 0'
-        }}
-      >
-        O'zgartirish
-      </Typography>
+          sx={{
+            color: "#000",
+            fontWeight: "600",
+            fontSize: "20px",
+            margin: '20px 0'
+          }}
+        >
+          O'zgartirish
+        </Typography>
 
-      <BoxBody>
+        <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
               <thead>
@@ -237,13 +275,61 @@ export default function Schedule() {
                     text={"Аудитория"}
                     iconc={null}
                   />
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                {
+                  ScheduleGroupList.map(elem => {
+                    return (
+                      <tr>
+                        <th style={{ border: "0px", padding: '12px 5px' }}>
+                          <AllSelectFullWidth
+                            chageValueFunction={val => setDaySelectChange(val)}
+                            selectedOptionP={elem.weekday}
+                            selectOptions={WeekList}
+                          />
+                        </th>
+
+                        <th style={{ border: "0px", padding: '12px 5px' }}>
+                          <AllSelectFullWidth
+                            chageValueFunction={val => setParaSelectChange(val)}
+                            selectedOptionP={elem.para}
+                            selectOptions={ParaList}
+                          />
+                        </th>
+                        <th style={{ border: "0px", padding: '12px 5px' }}>
+                          <AllSelectFullWidth
+                            chageValueFunction={val => setTypeSelectChange(val)}
+                            selectedOptionP={elem.types}
+                            selectOptions={TypeList}
+                          />
+                        </th>
+                        <th style={{ border: "0px", padding: '12px 5px' }}>
+                          <AllSelectFullWidth
+                            chageValueFunction={val => setRoomSelectChange(val)}
+                            selectedOptionP={elem.room}
+                            selectOptions={RoomList}
+                          />
+                        </th>
+                        <th style={{ border: "0px", }}>
+                          <Button
+                            sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                            variant="contained"
+                            onClick={(_) => {EditScheduleGroup(elem.id)}}
+                          >
+                            Saqlash
+                          </Button>
+                        </th>
+                      </tr>
+                    )
+                  })
+                }
+                {/* <tr>
                   <th style={{ border: "0px", padding: '12px 5px'}}>
                     <AllSelectFullWidth
                       chageValueFunction={val => console.log(val)}
+                      selectedOptionP = {'wednesday'}
                       selectOptions={[{
                         name: "Monday",
                         value: 'monday',
@@ -254,8 +340,7 @@ export default function Schedule() {
                       },
                       {
                         name: "Wednesday",
-                        value: 'wednesday',
-                        selected: true
+                        value: 'wednesday'
                       },
                       {
                         name: "Thursday",
@@ -299,44 +384,28 @@ export default function Schedule() {
                       }]}
                     />
                   </th>
-                  {/* <th style={{ border: "0px", }}>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        borderRadius: "10px",
-                        textTransform: "capitalize",
-                        boxShadow: "none",
-                        padding: "10px 12px",
-                        margin: '0 10px'
-                      }}
-                      onClick={(_) => { }}
-                      startIcon={null}
-                    >
-                      Qo'shish
-                    </Button>
-                  </th> */}
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
-        <WrapperInputsCardTwo>
+        {/* <WrapperInputsCardTwo>
           <WrapperButtons>
-          <Button
-            sx={{ width: "50%", textTransform: "none" }}
-            variant="outlined"
-            onClick={() => navigate(-1)}
-          >
-            Qaytish
-          </Button>
-          <Button
-            sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-            variant="contained"
-          >
-            Saqlash
-          </Button>
+            <Button
+              sx={{ width: "50%", textTransform: "none" }}
+              variant="outlined"
+              onClick={() => navigate(-1)}
+            >
+              Qaytish
+            </Button>
+            <Button
+              sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+              variant="contained"
+            >
+              Saqlash
+            </Button>
           </WrapperButtons>
-        </WrapperInputsCardTwo>
+        </WrapperInputsCardTwo> */}
       </Paper>
 
     </>

@@ -1,14 +1,14 @@
-// export const host = "https://8f13-178-218-200-199.ngrok-free.app"
+// export const host = "https://e4d6-178-218-200-199.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-// export const host = "https://api.tift.uz"
+export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host =  "https://api.lms-edu.uz"
+// export const host =  "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =  "https://jaloliddin1006.jprq.live"
 // export const host = "https://xusandev.pythonanywhere.com"
@@ -25,6 +25,7 @@ export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
 export const lesson_edit = "/lesson_edit/"
 export const teacher_schedule = "/teacher/schedule/"
+export const teacher_statistics = "teacher/statistics/"
 
 
 export const teacher_groups = "/teacher/groups/"
@@ -44,6 +45,8 @@ export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
+export const teacher_jurnal = "/teacher/jurnal/"
+
 
 
 
