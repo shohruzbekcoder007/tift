@@ -64,7 +64,7 @@ export const my_tasschedule= "/student/schedule-table/"
 export const notifications= "/student/notifications/"
 export const my_scince_lessons= "/student/my-scince-lessons/"
 export const studentcontract= "/studentcontract/"
-
+export const student_test_detail = "student/test-detail/"
 
 
 // semester 

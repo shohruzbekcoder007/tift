@@ -140,7 +140,8 @@ import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
 import TeacherStatistic from './components/TeacherStatistic'
 import TeacherJournal from './components/TeacherJournal'
-import { Quiz } from '@mui/icons-material'
+import Quiz from './components/Quiz'
+import QuizWrapper from './components/QuizWrapper'
 
 
 function App() {
@@ -222,7 +223,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
                 </Route>
-                {/* <Router path="quiz" element={<Quiz/>}/> */}
+                <Route path="quiz" element={<QuizWrapper/>}/>
 
                 <Route path="dekan" element={<MainDekan />}>
                   <Route path="profile" element={<Profile />} />
