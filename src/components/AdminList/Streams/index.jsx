@@ -148,7 +148,7 @@ export default function Streams() {
       console.log(error)
     })
 // ?semester${SemesterSelect}
-    getSciense(`${science_short}?semester=3`, (response) => {
+    getSciense(`${science_short}?semester=1`, (response) => {
       // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
