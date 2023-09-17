@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Router } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
 import VideoGuide from './components/VideoGuide'
@@ -140,6 +140,7 @@ import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
 import TeacherStatistic from './components/TeacherStatistic'
 import TeacherJournal from './components/TeacherJournal'
+import { Quiz } from '@mui/icons-material'
 
 
 function App() {
@@ -221,6 +222,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
                 </Route>
+                {/* <Router path="quiz" element={<Quiz/>}/> */}
 
                 <Route path="dekan" element={<MainDekan />}>
                   <Route path="profile" element={<Profile />} />
