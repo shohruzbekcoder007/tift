@@ -5,7 +5,7 @@
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =  "https://api.lms-edu.uz"
