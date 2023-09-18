@@ -180,9 +180,10 @@ export default function Tasks() {
                         <th>
                           {elem.title}
                           {
-                            elem.method === 'test'?
+                            (elem.method === 'test' || elem.method === 'oddiy')?
                             <>
                             </>:
+                            
                             <>
                               <a href={host + elem.source} target="_blank" >
                                 <StudentAIButton>
