@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -9,12 +9,11 @@ import { LoaderWrapper, LoginLogo } from './styles';
 import { CircularProgress, Snackbar, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { token_url, user_me } from '../../utils/API_urls'
 import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'
-import login_pahe_img from '../../imgs/login_pahe_img.jpg'
 
 const LoadingPage = () => {
   return (
@@ -54,6 +53,7 @@ export default function SignInSide() {
   const [pageLoading, setPageLoading] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
   const [haveatoken, setHaveatoken] = useState(false)
+  const user = useSelector(state => state.user)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -105,6 +105,10 @@ export default function SignInSide() {
     setPageLoading(true)
   }
 
+  useEffect(() => {
+    getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
+  },[])
+
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
       <CssBaseline />
@@ -114,27 +118,9 @@ export default function SignInSide() {
           {haveatoken ? <p>Foydalanuvchi topilmadi</p> : <p>Login yoki password noto'g'ri kiritildi</p>}
         </Alert>
       </Snackbar>
-
-
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={8}
-        sx={{
-          backgroundImage: `url(${login_pahe_img})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: (t) =>
-          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-      {/* <img style={{width: "100%"}} src={`url(${login_pahe_img})`} alt="" /> */}
-      </Grid>
-      <Grid item xs={12} sm={8} md={4} component={Paper} elevation={6} square>
-        <Box
-          sx={{
+        <Grid item xs={12} sm={12} md={12} component={Paper} elevation={6} square>
+          <Box
+            sx={{
             //   my: 8,
             //   mx: 4,
             display: 'flex',

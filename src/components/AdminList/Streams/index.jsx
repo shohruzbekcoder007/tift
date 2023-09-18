@@ -18,6 +18,7 @@ import { academic_group_short, my_semesters, parentpatoklist, patokadmin, scienc
 import { getAcademicGroup, getSciense, getSemesters, getStreams, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
+import AutocompleteJames from '../../AutocompleteJames'
 
 export default function Streams() {
   const [open, setOpen] = React.useState(false);
@@ -147,8 +148,8 @@ export default function Streams() {
       console.log(error)
     })
 // ?semester${SemesterSelect}
-    getSciense(`${science_short}`, (response) => {
-      console.log(response.data);
+    getSciense(`${science_short}?semester=1`, (response) => {
+      // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
         return {
@@ -171,17 +172,18 @@ export default function Streams() {
         console.log(error)
       })
 
-      getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
-        setParentNaameSelect(response.data[0].id)
-        setParentStreams(response.data.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
-          }
-        }));
-      }, (error) => {
-        console.log(error)
-      })
+      // kodi type error bor 
+      // getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+      //   setParentNaameSelect(response.data[0].id)
+      //   setParentStreams(response.data.map(elem => {
+      //     return {
+      //       name: elem.name,
+      //       value: elem.id
+      //     }
+      //   }));
+      // }, (error) => {
+      //   console.log(error)
+      // })
     }
     
 
@@ -253,11 +255,7 @@ export default function Streams() {
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
-            <AllSelectFullWidth
-              chageValueFunction={val => setScienseSelect(val)}
-              selectOptions={ScineseList}
-            />
-           
+            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
           </InputsWrapper>
         </BoxHeader>
         <BoxHeader>
@@ -555,11 +553,7 @@ export default function Streams() {
                 }}
               >
                 Fan                         </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setScienseSelect(val)}
-                selectOptions={ScineseList}
-              />
-
+                <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -661,7 +655,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на практику                        </Typography>
+                Amaliyot guruhga ajratish                        </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setAmaliyotSelect(val)}
                 selectOptions={Amaliyot}
@@ -680,7 +674,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на лаборатории                        </Typography>
+                Labaratoriya guruhga ajratish                          </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setLabaratoriyaSelect(val)}
                 selectOptions={Labaratoriya}

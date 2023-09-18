@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
 import VideoGuide from './components/VideoGuide'
@@ -138,13 +138,15 @@ import AddEmployees from './components/AdminList/Employees/AddEmployees'
 import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
+import TeacherStatistic from './components/TeacherStatistic'
+import TeacherJournal from './components/TeacherJournal'
 
 
 function App() {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
-
+  
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
   }
@@ -162,11 +164,12 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<SignInSide />} />
+            <Route path="/" element={<Login />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard" element={<TeacherStatistic />} />
+                  <Route path="news" element={<TeacherDashboard />} />
                   <Route path="nb" element={<Attend />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
@@ -178,6 +181,7 @@ function App() {
                     </Route>
                     <Route path="vedomost" element={<Vedomost />} />
                     <Route path="tasks" element={<TasksTeacher />} />
+                    <Route path="journal" element={<TeacherJournal />} />
                   </Route>
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="diploma" element={<Thesis />} />
@@ -316,6 +320,7 @@ function App() {
                 <Route path="lawyer" element={<MainLawyer />}>
                   <Route path="dashboard" element={<LawyerDashboard />} />
                   <Route path="students" element={<LawyerAllStudents />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
 

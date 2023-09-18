@@ -1,3 +1,4 @@
+// export const host = "https://0513-178-218-200-199.ngrok-free.app"
 // export const host = "https://978d-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
@@ -23,8 +24,9 @@ export const teacher_syllabus = "/teacher/syllabus"
 export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
+export const lesson_edit = "/lesson_edit"
 export const teacher_schedule = "/teacher/schedule/"
-export const lesson_edit = "/lesson_edit/"
+export const teacher_statistics = "teacher/statistics/"
 
 
 export const teacher_groups = "/teacher/groups/"
@@ -44,6 +46,8 @@ export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
+export const teacher_jurnal = "/teacher/jurnal/"
+
 
 
 

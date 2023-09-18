@@ -8,7 +8,7 @@ import { getNews } from './requests'
 import { get_news } from '../../utils/API_urls'
 import { useSelector } from 'react-redux'
 
-export default function TeacherDashboard() {
+export default function TeacherNews() {
 
   const [news, setNews] = useState([])
   const [pageCount, setPageCount] = useState(0)

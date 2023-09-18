@@ -6,10 +6,10 @@ import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from './styl
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
-import { createTaskGrade, getTeacherVedemost } from './requests'
-import { host, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
+import { createTaskGrade, getTeacherJurnal, getTeacherVedemost } from './requests'
+import { host, teacher_jurnal, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
 
-export default function Vedomost() {
+export default function TeacherJournal() {
   const { state } = useLocation()
 
   const [tasksName, settasksName] = useState(null)
@@ -31,8 +31,8 @@ export default function Vedomost() {
 
   useEffect(() => {
     
-    getTeacherVedemost(`${teacher_vedemost}${state.data}`, (response) => {
-      console.log(response.data);
+    getTeacherJurnal(`${teacher_jurnal}${state.data}/`, (response) => {
+        console.log(response);
         settasksName(response.data.name)
         settasksTasks(response.data.tasks)
         settasksStudents(response.data.students)
@@ -43,27 +43,26 @@ export default function Vedomost() {
   }, [Status])
 
 
-  const openModalBoxGrade = (element) => {
-    setstudentSource(element.submission?.source)
-    setmaxGrade(element.grade)
-    settasksGradeId(element.submission.id)
+  // const openModalBoxGrade = (element) => {
+  //   setstudentSource(element.submission.source)
+  //   setmaxGrade(element.grade)
+  //   settasksGradeId(element.submission.id)
 
-    handleOpen()
-  }
- 
+  //   handleOpen()
+  // }
 
-  const SubmintGradeTasks = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("submission", tasksGradeId);
-    formData.append("grade", tasksGrade);
-    createTaskGrade(teacher_submission_grade, formData, (response) => { 
-      setStatus(!Status)
-      handleClose()
-    }, (error) => {
-      console.log(error)
-    })
-  }
+  // const SubmintGradeTasks = async (event) => {
+  //   event.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("submission", tasksGradeId);
+  //   formData.append("grade", tasksGrade);
+  //   createTaskGrade(teacher_submission_grade, formData, (response) => { 
+  //     setStatus(!Status)
+  //     handleClose()
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }
 
 
   return (
@@ -86,28 +85,8 @@ export default function Vedomost() {
           mb: "26px"
         }}
       >
-        O’zlashtirish qaydnomasi
+        O'qituvchi Jurnali {state.data}
       </Typography>
-      <BoxHeader>
-        <Typography
-          variant='h2'
-          sx={{
-            color: '#00753B',
-            fontSize: '14px',
-            fontStyle: 'normal',
-            fontWeight: '500',
-            lineHeight: '150%',
-            padding: "10px",
-            alignItem: "center",
-            bgcolor: "rgba(0, 138, 22, 0.08)",
-            borderRadius: "10px",
-            width: "100%"
-          }}
-        >
-          Talabalarga baxo qo'yish muddati: Topshirish muddatidan keyin 2 kun.
-        </Typography>
-
-      </BoxHeader>
       <BoxBody>
         <ClassScheduleTableWrapper>
           <table>
@@ -118,7 +97,7 @@ export default function Vedomost() {
                   iconc={null}
                 />
                 <TableTHHeader
-                  text={tasksName}
+                  text="Studentlar                                "
                   iconc={null}
                 />
                 {
@@ -126,7 +105,7 @@ export default function Vedomost() {
                      return (
                       <>
                         <TableTHHeader key={index}
-                          text={elem.title?.slice(0, 20)}
+                          text={elem.name?.slice(0, 20)}
                           iconc={null}
                           />
                       </>
@@ -147,10 +126,6 @@ export default function Vedomost() {
                           elem.tasks.map((element, index) => {
                             return(
                               <th style={{ width: "200px" }} key={index}>
-                                
-                                {
-
-                                  element.submission?.source ?
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       <div style={{width: "60px"}}>
                                       <Button
@@ -164,56 +139,13 @@ export default function Vedomost() {
                                             background:' var(--secondary-color, #F6F6F6)',
                                           }
                                         }   
-                                      onClick={(_) => {if(element.status){openModalBoxGrade(element)}}}
-                                      >
-                                        {element.submission.grade}
-                                      </Button>
-                                      </div>
-
-                                        <a href={host + element.submission.source} target='_blank'>
-                                          <Button 
-                                            variant="contained"
-                                            sx={{
-                                              borderRadius: '10px',
-                                              textTransform: "capitalize",
-                                              boxShadow: "none",
-                                              padding: "10px 12px",
-                                            }}
-                                            startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                            </svg>
-                                            }
-                                          >
-                                          </Button>
-                                        </a>
-
-                                    </TeacherSciencesButtonBox>
-                                    :
-                                    <>
-                                    {
-                                      element.method == 'oddiy'?
-                                      <div style={{width: "60px"}}>
-                                      <Button
-                                        sx={
-                                          {
-                                            width: '36px',
-                                            height: '36px',
-                                            padding: '8px 18px',
-                                            borderRadius: '10px',
-                                            border: "1px solid #EEE",
-                                            background:' var(--secondary-color, #F6F6F6)',
-                                          }
-                                        }   
-                                      onClick={(_) => {if(element.status){openModalBoxGrade(element)}}}
+                                      // onClick={(_) => {{openModalBoxGrade(element)}}}
                                       >
                                         {element.submission?.grade}
                                       </Button>
                                       </div>
-                                      :<></>
-                                    }
-                                    </>
-                                }
+                                    </TeacherSciencesButtonBox>
+
                                 
                               </th>
                             )
@@ -232,7 +164,7 @@ export default function Vedomost() {
             </tbody>
           </table>
         </ClassScheduleTableWrapper>
-        <Modal
+        {/* <Modal
             keepMounted
             open={open}
             onClose={handleClose}
@@ -265,32 +197,6 @@ export default function Vedomost() {
 
                   </ModalHeader>
                 </div>
-                { studentSource?
-                  <ModalSelectWrapper>
-                  <ModalSubtitle>Fayl: 
-                    <a href={host + studentSource} target='_blank'>
-                    <Button 
-                      variant="contained"
-                      sx={{
-                        marginLeft: '15px',
-                        borderRadius: '10px',
-                        textTransform: "capitalize",
-                        boxShadow: "none",
-                        padding: "10px 12px",
-                      }}
-                      startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                      </svg>
-                      }
-                    >
-                      Yuklab Olish
-                    </Button>
-                    </a>
-                    
-                  </ModalSubtitle>
-                </ModalSelectWrapper>:<></>
-                }
 
                 <ModalSelectWrapper>
                   <ClassScheduleTableWrapper>
@@ -345,7 +251,7 @@ export default function Vedomost() {
               </ModalBox>
             </form>
 
-          </Modal>
+        </Modal>  */}
       </BoxBody>
     </Paper>
   )
