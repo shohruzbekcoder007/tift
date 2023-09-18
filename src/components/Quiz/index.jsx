@@ -31,7 +31,7 @@ const styles = theme => ({
   }
 });
 
-function PaperSheet(props){
+function PaperSheet(props) {
 
   const location = useLocation();
   const testId = location.state?.testId;
@@ -41,10 +41,12 @@ function PaperSheet(props){
   const [selectedValue, setSelectedValue] = useState('0')
   const [answers, setAnswers] = useState([])
   const [quizText, setQuizText] = useState('')
+  const [taskId, setTaskId] = useState(0)
 
   useEffect(() => {
     getQuizs(`${student_test_detail}${testId}`, response => {
-      
+      // console.log(response)
+      setTaskId(response.task_id)
       setQuizText(response.task)
       setQuiz(response.questions)
 
@@ -55,22 +57,22 @@ function PaperSheet(props){
 
   const handleChange = event => {
     setSelectedValue(event.target.value);
-      const isLargeNumber = (element) => element.question_id == event.target.name;
-      const fInd = answers.findIndex(isLargeNumber);
-      if(fInd >= 0){
-        setAnswers(prev => {
-          prev[fInd].aswer_id=event.target.value
-          return prev
+    const isLargeNumber = (element) => element.question_id == event.target.name;
+    const fInd = answers.findIndex(isLargeNumber);
+    if (fInd >= 0) {
+      setAnswers(prev => {
+        prev[fInd].aswer_id = event.target.value
+        return prev
+      })
+    } else {
+      setAnswers(prev => {
+        prev.push({
+          question_id: event.target.name,
+          aswer_id: event.target.value
         })
-      } else {
-        setAnswers(prev => {
-          prev.push({
-            question_id: event.target.name,
-            aswer_id: event.target.value
-          })
-          return prev;
-        })
-      }
+        return prev;
+      })
+    }
   };
 
   const moveNext = () => {
@@ -82,65 +84,85 @@ function PaperSheet(props){
   }
 
   const revealCorrect = () => {
-
+    // {
+    //   "task":66,
+    //   "answers":[
+    //       {"answer":1425},
+    //       {"answer":809},
+    //       {"answer":805},
+    //       {"answer":72}
+    //   ]
+    // }
+    // let my_answers = {
+    //   task: taskId,
+    //   task: []
+    // }
+    // answers.map(element => {
+    //   my_answers.task.push({
+    //     answer: element.aswer_id
+    //   })
+    // })
+    // console.log(my_answers)
   }
 
-    return (
-      <>
-        <Paper className={props.classes.root} elevation={4} sx={{p: 3}}>
-          <Typography component="p">
-            <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
-              <LiveHelp />
-            </Button>
-            <span className={props.classes.questionMeta}> {quizText} #### {current + 1} / {quiz.length}</span>
+  return (
+    <>
+      <Paper className={props.classes.root} elevation={4} sx={{ p: 3 }}>
+        <Typography component="p">
+          <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
+            <LiveHelp />
+          </Button>
+          <span className={props.classes.questionMeta}> {quizText} #### {current + 1} / {quiz.length}</span>
 
-          </Typography>
+        </Typography>
 
-          <hr style={{ marginBottom: "20px" }} />
-          <Typography variant="headline" component="h3">
-            {quiz[current]?.question}
-          </Typography>
+        <hr style={{ marginBottom: "20px" }} />
+        <Typography variant="headline" component="h3">
+          {quiz[current]?.question}
+        </Typography>
 
-          {quiz[current]?.answers.map((opt, index) => {
-            const isLargeNumber = (element) => element.question_id == quiz[current].id;
-            const fInd = answers.findIndex(isLargeNumber);
-            console.log(answers[fInd].question_id, "<--shu yerda", opt, "-->", quiz[current].id)
-            return (
-              <div key={index} style={{ marginTop: "5px" }} 
-              // ref={index.toString()}
-              >
-                <Radio
-                  checked={
-                    selectedValue == selectedValue
-                    // answers[fInd].aswer_id
-                  }
-                  onChange={handleChange}
-                  value={opt.id}
-                  name={`${quiz[current].id}`}
-                />
-                {opt.answer}
-              </div>
-            )
-          })}
-          <div className={props.classes.footer}>
-            <Button onClick={revealCorrect} variant="raised" color="secondary">
-              Yakunlash
-            </Button>
-            {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="raised" color="primary" style={{ float: "right" }}>
-              Keyingi
-            </Button>) : (<Button onClick={moveNext} disabled variant="raised" color="primary" style={{ float: "right" }}>
-              Keyingi
-            </Button>)}
+        {quiz[current]?.answers.map((opt, index) => {
+          const isLargeNumber = (element) => element.question_id == quiz[current].id;
+          const fInd = answers.findIndex(isLargeNumber);
+          let selectedquestion = -1;
+          if (fInd > 0) {
+            selectedquestion = answers[fInd].aswer_id
+            console.log(selectedquestion , answers[fInd].aswer_id)
+          }
+          console.log(selectedquestion == selectedValue)
+          return (
+            <div key={index} style={{ marginTop: "5px" }}
+            // ref={index.toString()}
+            >
+              <Radio
+                checked={selectedquestion == selectedValue}
+                onChange={handleChange}
+                value={opt.id}
+                name={`${quiz[current].id}`}
+              />
+              {opt.answer}
+            </div>
+          )
+        })}
+        <div className={props.classes.footer}>
+          <Button onClick={revealCorrect} variant="raised" color="secondary">
+            Yakunlash
+          </Button>
+          {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="raised" color="primary" style={{ float: "right" }}>
+            Keyingi
+          </Button>) : (<Button onClick={moveNext} disabled variant="raised" color="primary" style={{ float: "right" }}>
+            Keyingi
+          </Button>)}
 
-            {(current == 0) ? (<Button onClick={movePrevious} disabled variant="raised" color="primary" style={{ float: "right", marginRight: "50px" }}>
-              Oldingi
-            </Button>) : (<Button onClick={movePrevious} variant="raised" color="primary" style={{ float: "right", marginRight: "50px" }}>
-              Oldingi
-            </Button>)}
-          </div>
-        </Paper>
-      </>
-    );
+          {(current == 0) ? (<Button onClick={movePrevious} disabled variant="raised" color="primary" style={{ float: "right", marginRight: "50px" }}>
+            Oldingi
+          </Button>) : (<Button onClick={movePrevious} variant="raised" color="primary" style={{ float: "right", marginRight: "50px" }}>
+            Oldingi
+          </Button>)}
+        </div>
+      </Paper>
+    </>
+  );
 }
 
 PaperSheet.propTypes = {
