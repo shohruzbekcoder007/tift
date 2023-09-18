@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { getQuizs, postQuiz } from './requests';
 import { student_test_detail, student_test_solve } from '../../utils/API_urls';
 import MyTimer from './MyTimer';
+import { Alert } from '@mui/material';
 
 const styles = theme => ({
   root: {
@@ -17,7 +18,7 @@ const styles = theme => ({
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3,
     minWidth: "500px",
-    margin: "0 auto"
+    margin: "10px auto"
   },
   button: {
     pointerEvents: "none",
@@ -45,6 +46,9 @@ function PaperSheet(props) {
   const [taskId, setTaskId] = useState(0)
   const [tryCount, setTryCount] = useState(0)
   const [testTime, setTestTime] = useState(0)
+  const [finishedTest, setFinishedTest] = useState(false)
+  const [graduate, setGraduate] = useState(0)
+  const [nextTime, setNextTime] = useState(true)
 
   const getSelectedValue = () => {
     const isLargeNumber = (element) => element.question_id == quiz[current].id;
@@ -63,7 +67,6 @@ function PaperSheet(props) {
     getQuizs(`${student_test_detail}${testId}`, response => {
       const startDate = new Date('1995-12-17T00:00:00')
       const endDate = new Date(`1995-12-17T${response.time}`)
-      console.log(endDate.getMinutes() - startDate.getMinutes());
       setTestTime(endDate.getMinutes() - startDate.getMinutes())
       setTaskId(response.task_id)
       setQuizText(response.task)
@@ -72,7 +75,7 @@ function PaperSheet(props) {
     }, error => {
       console.log(error)
     })
-  }, [])
+  }, [nextTime])
 
   const handleChange = event => {
     setSelectedValue(event.target.value);
@@ -105,15 +108,6 @@ function PaperSheet(props) {
   }
 
   const revealCorrect = () => {
-    // {
-    //   "task":66,
-    //   "answers":[
-    //       {"answer":1425},
-    //       {"answer":809},
-    //       {"answer":805},
-    //       {"answer":72}
-    //   ]
-    // }
     let my_answers = {
       task: taskId,
       answers: []
@@ -123,10 +117,11 @@ function PaperSheet(props) {
         answer: element.aswer_id
       })
     })
-    console.log(my_answers)
-    // student_test_solve
     postQuiz(student_test_solve, my_answers, response => {
       console.log(response)
+      setFinishedTest(true)
+      setTestTime(0)
+      setGraduate(response.grade)
     }, error => {
       console.log(error)
     })
@@ -135,38 +130,63 @@ function PaperSheet(props) {
   return (
     <>
       <Paper className={props.classes.root} elevation={4} sx={{ p: 3 }}>
-        <Typography component="p">
-          <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
-            <LiveHelp />
-          </Button>
-          <span className={props.classes.questionMeta}> {quizText}</span><br/>
-          <span className={props.classes.questionMeta}>savol: {current + 1} / {quiz.length} </span><br/>
-          <span className={props.classes.questionMeta}>qolgan urinishlar soni: {tryCount}</span><br/>
-        </Typography>
-        <MyTimer testTime={testTime*60}/>
+        {tryCount == 0 ? <>
+          <Alert variant="outlined" severity="error">
+            Urinishlar soni tugagan!!!
+          </Alert>
+        </> : <>
+          {(testTime != 0) ? <MyTimer testTime={2} finishFunction={revealCorrect} /> : <></>}
+          <Typography component="h3" variant="headline" sx={{ my: 1 }}>Qolgan urinishlar soni: {tryCount}</Typography>
+          <Typography component="h3">
+            <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
+              <LiveHelp />
+            </Button>
+            <span className={props.classes.questionMeta}> {quizText}</span><br />
+          </Typography>
+          {
+            finishedTest?<>
+              <Alert
+                action={
+                  <Button 
+                    color="inherit" 
+                    size="small"
+                    onClick={() => {setNextTime(prev => {return (!prev)}); setFinishedTest(false); setCurrent(0)}}
+                  >
+                    Qaytda urinish
+                  </Button>
+                }
+                variant="outlined"
+                severity="warning"
+                sx={{ mt: 2 }}
+              >
+                <p>Test yakunlandi.</p>
+                <p>Sizning balingiz: {graduate}</p>
+              </Alert>
+            </>:null
+          }
 
-        <hr style={{ marginBottom: "20px" }} />
-        <Typography variant="headline" component="h3">
-          {quiz[current]?.question}
-        </Typography>
+          <hr style={{ marginBottom: "20px" }} />
+          <Typography variant="headline" component="h3">
+            {current + 1} / {quiz.length} | {quiz[current]?.question}
+          </Typography>
 
-        {quiz[current]?.answers.map((opt, index) => {
-          return (
-            <div key={index} style={{ marginTop: "5px" }}
-            >
-              <Radio
-                checked={opt.id == selectedValue}
-                onChange={handleChange}
-                value={opt.id}
-                name={`${quiz[current].id}`}
-              />
-              {opt.answer}
-            </div>
-          )
-        })}
-        <div className={props.classes.footer}>
-          {/* {komentni uchirmang} */}
-          {/* <Button onClick={revealCorrect} variant="raised" color="secondary">
+          {quiz[current]?.answers.map((opt, index) => {
+            return (
+              <div key={index} style={{ marginTop: "5px" }}
+              >
+                <Radio
+                  checked={opt.id == selectedValue}
+                  onChange={handleChange}
+                  value={opt.id}
+                  name={`${quiz[current].id}`}
+                />
+                {opt.answer}
+              </div>
+            )
+          })}
+          <div className={props.classes.footer}>
+            {/* {komentni uchirmang} */}
+            {/* <Button onClick={revealCorrect} variant="raised" color="secondary">
             Yakunlash
           </Button>
           {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="raised" color="primary" style={{ float: "right" }}>
@@ -180,12 +200,19 @@ function PaperSheet(props) {
           </Button>) : (<Button onClick={movePrevious} variant="raised" color="primary" style={{ float: "right", marginRight: "50px" }}>
             Oldingi
           </Button>)} */}
-          {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="raised" color="primary" style={{ float: "right" }}>
-            Keyingi
-          </Button>) : (<Button onClick={revealCorrect} variant="raised" color="secondary">
-            Yakunlash
-          </Button>)}
-        </div>
+            {
+              (!finishedTest)?<>
+              {
+                (current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="raised" color="primary" style={{ float: "right" }}>
+                Keyingi
+              </Button>) : (<Button onClick={revealCorrect} variant="raised" color="secondary">
+                Yakunlash
+              </Button>)
+              }
+            </>:<></>
+            }
+          </div>
+        </>}
       </Paper>
     </>
   );
