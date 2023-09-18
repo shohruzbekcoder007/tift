@@ -74,7 +74,7 @@ export const decan_GroupList = '/decan/GroupList/'
 export const GroupListShow = '/decan/GroupList/show/'
 export const Dekan_Students = '/decan/students/'
 export const GroupListStudents = '/decan/GroupList/students/'
-export const Directions = '/statistics/directions/'
+export const Directions = '/direction/short/'
 export const Decan_students = '/decan/students/'
 
 
