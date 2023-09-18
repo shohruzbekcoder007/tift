@@ -164,7 +164,7 @@ function App() {
       <ThemeProvider theme={defaultTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
