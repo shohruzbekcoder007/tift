@@ -90,7 +90,7 @@ export const SidebarLinksHead = styled.li`
     /* color: #000; */
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
     margin-bottom: 10px;
     color: ${props => props.theme.color.main_color};

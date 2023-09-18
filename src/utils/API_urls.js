@@ -1,4 +1,5 @@
-// export const host = "https://e4d6-178-218-200-199.ngrok-free.app"
+// export const host = "https://0513-178-218-200-199.ngrok-free.app"
+// export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
 export const host = "https://api.tift.uz"
@@ -11,8 +12,6 @@ export const host = "https://api.tift.uz"
 // export const host =  "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host =  "https://jaloliddin1006.jprq.live"
-// export const host = "https://xusandev.pythonanywhere.com"
-// export const host = "https://e181-178-218-200-199.ngrok-free.app"
 
 export const token_url = "/token/"
 export const user_me = "/users/me/"
@@ -23,7 +22,7 @@ export const teacher_syllabus = "/teacher/syllabus"
 export const view_patok = "/teacher/view-patok/"
 export const syllabus_create = "/teacher/syllabus/upload/"
 export const teacher_sciences = "/teacher/sciences/"
-export const lesson_edit = "/lesson_edit/"
+export const lesson_edit = "/lesson_edit"
 export const teacher_schedule = "/teacher/schedule/"
 export const teacher_statistics = "teacher/statistics/"
 
@@ -75,7 +74,7 @@ export const decan_GroupList = '/decan/GroupList/'
 export const GroupListShow = '/decan/GroupList/show/'
 export const Dekan_Students = '/decan/students/'
 export const GroupListStudents = '/decan/GroupList/students/'
-export const Directions = '/statistics/directions/'
+export const Directions = '/direction/short/'
 export const Decan_students = '/decan/students/'
 
 

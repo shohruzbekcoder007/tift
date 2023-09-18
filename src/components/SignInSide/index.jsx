@@ -78,11 +78,15 @@ export default function SignInSide() {
   }
 
   const successfulFunctionGetRole = (response) => {
+    sessionStorage.setItem('UserID', response.data.id)
     dispatch(setUser(response.data))
     const user_role = getRoleUser(response.data)
     setPageLoading(false)
+    
     if (user_role == "admin") {
       navigate(`/${user_role}/users`)
+    } else if (user_role == "student") {
+      navigate(`/${user_role}/personalplan`)
     } else {
       navigate(`/${user_role}/dashboard`)
     }

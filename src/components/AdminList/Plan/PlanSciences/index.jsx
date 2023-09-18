@@ -5,13 +5,14 @@ import PageSelector from '../../../PageSelector'
 import CustomizedInput from '../../../CustomizedInput'
 import { TableTHHeader } from '../../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton, SemesterModalBoxInfo, SemesterModalSelectWrapperInfo } from './styles'
+import { AttendSearchButton, ModalBody, ModalBoxScience, SemesterModalBoxInfo, SemesterModalSelectWrapperInfo } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { academic_plan_science, science } from '../../../../utils/API_urls'
 import { useLocation } from 'react-router'
 import { addAcademic_Science, deleteAcademic_Science, editAcademic_Science, getAcademic_Science, getAcademic_ShortScience } from './request'
+import AutocompleteJames from '../../../AutocompleteJames'
 
 export default function PlanSciences() {
   const [open, setOpen] = React.useState(false);
@@ -300,7 +301,7 @@ export default function PlanSciences() {
           aria-labelledby="keep-mounted-modal-title"
           aria-describedby="keep-mounted-modal-description"
         >
-          <ModalBox>
+          <ModalBoxScience>
             <ModalHeader>
               <Typography
                 id="keep-mounted-modal-title"
@@ -322,6 +323,7 @@ export default function PlanSciences() {
               </span>
             </ModalHeader>
 
+            <ModalBody>
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -336,12 +338,10 @@ export default function PlanSciences() {
               >
                Fan                </Typography>
                
-               <AllSelectFullWidth
-                chageValueFunction={val => setSciencesID(val)}
-                selectOptions={SciencesList}
-              />
+              <AutocompleteJames selectOptions={SciencesList} chageValueFunction={val => setSciencesID(val)}/>
 
             </ModalSelectWrapper>
+
             <ModalButtons>
               <Button
                 sx={{ width: "50%", textTransform: "none" }}
@@ -358,7 +358,8 @@ export default function PlanSciences() {
                 Saqlash
               </Button>
             </ModalButtons>
-          </ModalBox>
+            </ModalBody>
+          </ModalBoxScience>
         </Modal>
 
         <Modal
