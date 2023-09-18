@@ -46,7 +46,7 @@ export default function Streams() {
   const [LangSelect, setLangSelect] = useState('uz');
   const [searchText, setSearchText] = useState('')
   const [RoomType, setRoomType] = useState('lecture');
-  const [GroupSelect, setGroupSelect] = useState(null);
+  const [GroupSelect, setGroupSelect] = useState([]);
   const [AmaliyotSelect, setAmaliyotSelect] = useState(0);
   const [LabaratoriyaSelect, setLabaratoriyaSelect] = useState(0);
   const [ParentNaameSelect, setParentNaameSelect] = useState(NaN);
@@ -56,6 +56,11 @@ export default function Streams() {
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
+  }
+
+  const setGroups = (val) => {
+    let nimadir = val.map(element => element.value)
+    setGroupSelect(nimadir)
   }
 
 
@@ -231,7 +236,6 @@ export default function Streams() {
 
   useEffect(() => {
     getAcademicGroup(`${academic_group_short}`, (response) => {
-      setGroupSelect(response?.data[0]?.id)
       setAcademicGroupList(response.data.map(elem => {
         return {
           name: elem.name,
@@ -680,10 +684,12 @@ export default function Streams() {
                 chageValueFunction={val => console.log(val)}
                 selectOptions={AcademicGroupList}
               /> */}
+              
               <MultipleSelectChip
-                chageValueFunction={val => setGroupSelect(val)}
+                chageValueFunction={setGroups}
                 selectOptions={AcademicGroupList} />
             </ModalSelectWrapper>
+
 
 
 

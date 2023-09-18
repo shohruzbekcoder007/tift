@@ -52,6 +52,7 @@ const FormHumanSelect = ({chageValueFunction, selectOptions}) => {
         onChange={(e) => {
           console.log("set ", e.target.value);
           formik.setFieldValue("assignTo", e.target.value);
+          chageValueFunction(e.target.value)
         }}
         sx={{
           padding: "14px 10px",
