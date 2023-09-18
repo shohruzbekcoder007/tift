@@ -206,6 +206,25 @@ export const teacher_Links = [
 
 export const student_Links = [
   {
+    img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
+      <g clipPath="url(#clip0_313_9539)">
+        <path d="M12 10C10.07 10 8.5 11.57 8.5 13.5C8.5 15.43 10.07 17 12 17C13.93 17 15.5 15.43 15.5 13.5C15.5 11.57 13.93 10 12 10ZM12 15C11.173 15 10.5 14.327 10.5 13.5C10.5 12.673 11.173 12 12 12C12.827 12 13.5 12.673 13.5 13.5C13.5 14.327 12.827 15 12 15ZM19.949 5.536L16.465 2.05C15.142 0.728 13.384 0 11.515 0H7C4.243 0 2 2.243 2 5V19C2 21.757 4.243 24 7 24H17C19.757 24 22 21.757 22 19V10.485C22 8.614 21.271 6.858 19.949 5.536ZM18.535 6.951C18.853 7.268 19.122 7.621 19.34 8.001H14.999C14.447 8.001 13.999 7.552 13.999 7.001V2.659C14.379 2.877 14.732 3.146 15.05 3.464L18.534 6.95L18.535 6.951ZM9.172 22.001C9.585 20.837 10.696 20.001 12 20.001C13.304 20.001 14.415 20.837 14.828 22.001H9.172ZM20 19.001C20 20.655 18.654 22.001 17 22.001H16.899C16.434 19.722 14.414 18.001 12 18.001C9.586 18.001 7.565 19.722 7.101 22.001H7C5.346 22.001 4 20.655 4 19.001V5C4 3.346 5.346 2 7 2H11.515C11.678 2 11.84 2.008 12 2.023V7C12 8.654 13.346 10 15 10H19.977C19.992 10.16 20 10.322 20 10.485V19.001Z" fill="currentcolor" />
+      </g>
+      <defs>
+        <clipPath id="clip0_313_9539">
+          <rect width="24" height="24" fill="currentcolor" />
+        </clipPath>
+      </defs>
+    </svg>,
+    text: {
+      uz: "Invidual shaxsiy reja",
+      ru: "Индивидуальный персональный план",
+      eng: "Individual personal plan"
+    },
+    to: "personalplan",
+    type: "text"
+  },
+  {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_107_13306)">
         <path d="M7 0H4C2.93913 0 1.92172 0.421427 1.17157 1.17157C0.421427 1.92172 0 2.93913 0 4L0 7C0 8.06087 0.421427 9.07828 1.17157 9.82843C1.92172 10.5786 2.93913 11 4 11H7C8.06087 11 9.07828 10.5786 9.82843 9.82843C10.5786 9.07828 11 8.06087 11 7V4C11 2.93913 10.5786 1.92172 9.82843 1.17157C9.07828 0.421427 8.06087 0 7 0ZM9 7C9 7.53043 8.78929 8.03914 8.41421 8.41421C8.03914 8.78929 7.53043 9 7 9H4C3.46957 9 2.96086 8.78929 2.58579 8.41421C2.21071 8.03914 2 7.53043 2 7V4C2 3.46957 2.21071 2.96086 2.58579 2.58579C2.96086 2.21071 3.46957 2 4 2H7C7.53043 2 8.03914 2.21071 8.41421 2.58579C8.78929 2.96086 9 3.46957 9 4V7Z" fill="currentcolor" />
@@ -220,9 +239,9 @@ export const student_Links = [
       </defs>
     </svg>,
     text: {
-      uz: "Dashboard",
-      ru: "Панель",
-      eng: "Dashboard"
+      uz: "Yangiliklar",
+      ru: "Новости",
+      eng: "News"
     },
     to: "dashboard",
     type: "text"
@@ -326,25 +345,7 @@ export const student_Links = [
   //   to: "final",
   // type: "text"
   // },
-  {
-    img: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor">
-      <g clipPath="url(#clip0_313_9539)">
-        <path d="M12 10C10.07 10 8.5 11.57 8.5 13.5C8.5 15.43 10.07 17 12 17C13.93 17 15.5 15.43 15.5 13.5C15.5 11.57 13.93 10 12 10ZM12 15C11.173 15 10.5 14.327 10.5 13.5C10.5 12.673 11.173 12 12 12C12.827 12 13.5 12.673 13.5 13.5C13.5 14.327 12.827 15 12 15ZM19.949 5.536L16.465 2.05C15.142 0.728 13.384 0 11.515 0H7C4.243 0 2 2.243 2 5V19C2 21.757 4.243 24 7 24H17C19.757 24 22 21.757 22 19V10.485C22 8.614 21.271 6.858 19.949 5.536ZM18.535 6.951C18.853 7.268 19.122 7.621 19.34 8.001H14.999C14.447 8.001 13.999 7.552 13.999 7.001V2.659C14.379 2.877 14.732 3.146 15.05 3.464L18.534 6.95L18.535 6.951ZM9.172 22.001C9.585 20.837 10.696 20.001 12 20.001C13.304 20.001 14.415 20.837 14.828 22.001H9.172ZM20 19.001C20 20.655 18.654 22.001 17 22.001H16.899C16.434 19.722 14.414 18.001 12 18.001C9.586 18.001 7.565 19.722 7.101 22.001H7C5.346 22.001 4 20.655 4 19.001V5C4 3.346 5.346 2 7 2H11.515C11.678 2 11.84 2.008 12 2.023V7C12 8.654 13.346 10 15 10H19.977C19.992 10.16 20 10.322 20 10.485V19.001Z" fill="currentcolor" />
-      </g>
-      <defs>
-        <clipPath id="clip0_313_9539">
-          <rect width="24" height="24" fill="currentcolor" />
-        </clipPath>
-      </defs>
-    </svg>,
-    text: {
-      uz: "Invidual shaxsiy reja",
-      ru: "Индивидуальный персональный план",
-      eng: "Individual personal plan"
-    },
-    to: "personalplan",
-    type: "text"
-  },
+
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_313_9543)">
@@ -1343,21 +1344,21 @@ export const admin_links = [
     type: "text"
   },
 
-  {
-    img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 2H5C2.243 2 0 4.243 0 7V17C0 19.757 2.243 22 5 22H19C21.757 22 24 19.757 24 17V7C24 4.243 21.757 2 19 2ZM2 10H6V14H2V10ZM8 10H22V14H8V10ZM22 7V8H8V4H19C20.654 4 22 5.346 22 7ZM5 4H6V8H2V7C2 5.346 3.346 4 5 4ZM2 17V16H6V20H5C3.346 20 2 18.654 2 17ZM19 20H8V16H22V17C22 18.654 20.654 20 19 20Z" fill="currentcolor"/>
-    </svg>
+  // {
+  //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
+  //   <path d="M19 2H5C2.243 2 0 4.243 0 7V17C0 19.757 2.243 22 5 22H19C21.757 22 24 19.757 24 17V7C24 4.243 21.757 2 19 2ZM2 10H6V14H2V10ZM8 10H22V14H8V10ZM22 7V8H8V4H19C20.654 4 22 5.346 22 7ZM5 4H6V8H2V7C2 5.346 3.346 4 5 4ZM2 17V16H6V20H5C3.346 20 2 18.654 2 17ZM19 20H8V16H22V17C22 18.654 20.654 20 19 20Z" fill="currentcolor"/>
+  //   </svg>
     
 
-    ,
-    text: {
-      uz: "Jadval 2",
-      ru: "Расписание 2",
-      eng: "schedule 2"
-    },
-    to: "scheduletwo",
-    type: "text"
-  },
+  //   ,
+  //   text: {
+  //     uz: "Jadval 2",
+  //     ru: "Расписание 2",
+  //     eng: "schedule 2"
+  //   },
+  //   to: "scheduletwo",
+  //   type: "text"
+  // },
 
   // {
   //   img:<svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
@@ -1544,9 +1545,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Lug'atlar",
-      ru: "Словари",
-      eng: "Dictionaries"
+      uz: "TASHKILOTLAR",
+      ru: "ОРГАНИЗАЦИИ",
+      eng: "ORGANIZATIONS"
     },
     to: null,
     type: 'link_header'
@@ -1656,9 +1657,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Marketing",
-      ru: "Маркетинг",
-      eng: "Marketing"
+      uz: "MARKETING",
+      ru: "МАРКЕТИНГ",
+      eng: "MARKETING"
     },
     to: null,
     type: 'link_header'
@@ -1757,9 +1758,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "Tashkilot tuzilishi",
-      ru: "Структура организации",
-      eng: "Organization structure"
+      uz: "TASHKILOT TUZILISHI",
+      ru: "ОРГАНИЗАЦИОННАЯ СТРУКТУРА",
+      eng: "ORGANIZATIONAL STRUCTURE"
     },
     to: null,
     type: 'link_header'
@@ -1907,7 +1908,7 @@ export const admin_links = [
     ,
     text: {
       uz: "Yangiliklar",
-      ru: "Потоки",
+      ru: "Новости",
       eng: "News"
     },
     to: "news",
@@ -1986,9 +1987,9 @@ export const admin_links = [
   <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
 </svg>,
     text: {
-      uz: "SYS.admin",
-      ru: "СЙС.администратор",
-      eng: "SYS.admin"
+      uz: "SYS.ADMIN",
+      ru: "СИС.АДМИН",
+      eng: "SYS.ADMIN"
     },
     to: null,
     type: 'link_header'
