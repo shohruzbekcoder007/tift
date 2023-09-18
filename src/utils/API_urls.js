@@ -1,11 +1,12 @@
+// export const host = "https://0513-178-218-200-199.ngrok-free.app"
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-export const host = "https://api.tift.uz"
+// export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://37f0-194-93-24-106.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
-// export const host = "https://api.lms-edu.uz"
+export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host =  "https://api.lms-edu.uz"
@@ -73,7 +74,7 @@ export const decan_GroupList = '/decan/GroupList/'
 export const GroupListShow = '/decan/GroupList/show/'
 export const Dekan_Students = '/decan/students/'
 export const GroupListStudents = '/decan/GroupList/students/'
-export const Directions = '/statistics/directions/'
+export const Directions = '/direction/short/'
 export const Decan_students = '/decan/students/'
 
 

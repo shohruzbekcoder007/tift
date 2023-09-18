@@ -285,7 +285,19 @@ function App() {
                 <Route path="department" element={<MainDepartment />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                  </Route>
+                  <Route path='schedule' element={<ScheduleStudy />} />
+                  <Route path="plan" element={<StudentSciences />} >
+                    <Route index element={<Plan />} />
+                    <Route path="curriculum" element={<Outlet />} >
+                      <Route index element={<Curriculum />} />
+                      <Route path='sciences' element={<PlanSciences />} />
+                    </Route>
+                  </Route>
+                  {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
@@ -316,7 +328,7 @@ function App() {
                   <Route path="final" element={<StudentSciences />} >
                     <Route index element={<Final_Dep />} />
                     <Route path='questions' element={<Questions />} />
-                  </Route>
+                  </Route> */}
                   <Route path="profile" element={<Profile />} />
                 </Route>
 

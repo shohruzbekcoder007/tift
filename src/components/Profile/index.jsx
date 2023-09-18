@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { PasswordInput, ProfileButton, ProfileButtonGroup, ProfileLogOut, ProfileWrapper, ProfileWrapperSubtitle, ProfileWrapperTitle, SelectCard } from './style'
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Button } from '@mui/material';
+import { Button, Snackbar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux'
 import { setLanguage } from '../../redux/action/languageActions'
 import { useNavigate } from "react-router-dom";
 import { logoutRequest } from './requests';
-import { logout } from '../../utils/API_urls';
+import { change_password, logout } from '../../utils/API_urls';
 import { setUser } from '../../redux/action/userActions';
+import { setPasswordUser } from '../AdminList/Users/requests';
+import MuiAlert from '@mui/material/Alert';
 
 export default function Profile() {
 
@@ -20,14 +22,39 @@ export default function Profile() {
   const dispatch = useDispatch()
   const language = useSelector(state => state.language)
   
-  const [Lang, setLang] = React.useState(language);
-
+  const [Lang, setLang] = useState(language);
+  const [OldPass, setOldPass] = useState('');
+  const [NewPass1, setNewPass1] = useState('');
+  const [NewPass2, setNewPass2] = useState('');
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
   const handleChange = (event) => {
     setLang(event.target.value);
     dispatch(setLanguage(event.target.value))
   };
 
+  const ClearInput = () => {
+    setOldPass('')
+    setNewPass1('')
+    setNewPass2('')
+  } 
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
   const handleLogOut = (_) => {
     logoutRequest(logout, {
       refresh_token: sessionStorage.getItem('refresh_token')
@@ -41,6 +68,41 @@ export default function Profile() {
     }, (error) => {
       console.log(error)
     })
+  }
+
+  const handleChangePass = (_) => {
+      setPasswordUser(`${change_password}${sessionStorage.getItem('UserID')}/`, {
+        old_password: OldPass,
+        new_password1: NewPass1,
+        new_password2: NewPass2
+      }, (response) => {
+        setOldPass('')
+        setNewPass1('')
+        setNewPass2('')
+        serChanged(true)
+        setOpenAlert(true)
+        setAlertMessage("Parol yangilandi")
+      }, (error) => {
+        serChanged(false)
+        setOpenAlert(true)
+        let msg = ``
+        if (error.response.data.detail) {
+          msg = msg + " " + error.response.data.detail
+        }
+        if (error.response.data.new_password1) {
+          msg = msg + " " + error.response.data.new_password1[0]
+        }
+        if (error.response.data.new_password2) {
+          msg = msg + " " + error.response.data.new_password2[0]
+        }
+        if (error.response.data.old_password) {
+          msg = msg + " " + error.response.data.old_password[0]
+        }
+        if (error.response.data.non_field_errors) {
+          msg = msg + " " + error.response.data.non_field_errors[0]
+        }
+        setAlertMessage(msg)
+      })
   }
 
   return (
@@ -71,20 +133,21 @@ export default function Profile() {
           <ProfileWrapperSubtitle>
             Eski parol
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Eski parolni kiriting' type='password' />
+          <PasswordInput value={OldPass} onInput={(e) => {setOldPass(e.target.value)}} placeholder='Eski parolni kiriting' type='password' />
           <ProfileWrapperSubtitle>
             Yangi parol
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Yangi parolni kiriting' type='password' />
+          <PasswordInput value={NewPass1} onInput={(e) => {setNewPass1(e.target.value)}} placeholder='Yangi parolni kiriting' type='password' />
           <ProfileWrapperSubtitle>
             Yangi parolni tasdiqlash
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Yangi parolni kiriting' type='password' />
+          <PasswordInput value={NewPass2} onInput={(e) => {setNewPass2(e.target.value)}} placeholder='Yangi parolni kiriting' type='password' />
           <ProfileButtonGroup>
-            <ProfileButton>
+            <ProfileButton onClick={(_) => {ClearInput()}}>
               Bekor qilish
             </ProfileButton>
             <Button
+            onClick={handleChangePass}
               variant="contained"
               sx={{
                 textTransform: "capitalize",
@@ -117,6 +180,11 @@ export default function Profile() {
           <p style={{ color: '#F41B35' }}>Chiqish</p>
         </ProfileLogOut>
       </div>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
 
   )

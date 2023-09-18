@@ -84,7 +84,7 @@ export default function Attend() {
             getTeachersList(`${allusers}?role__name=teacher`, (response) => {
                 console.log(response.data);
                 setTeachersList(response.data.results)
-                setTeachersList(response.data.results.map(elem => {
+                setTeachersList(response.data?.results?.map(elem => {
                     return {
                       name: elem.full_name,
                       value: elem.id
@@ -114,7 +114,7 @@ export default function Attend() {
             getTeacherGroups(`${teacher_units}?groups=${lessonIdList}`, (response) => {
                 console.log(response.data);
                 setlessonIdStudentList(response.data[0]?.id)
-                setLessonList(response.data.map(elem => {
+                setLessonList(response?.data?.map(elem => {
                     return {
                       name: elem.name,
                       value: elem.id
@@ -130,7 +130,7 @@ export default function Attend() {
         if(lessonIdStudentList){
             getTeacherGroups(`${teacher_group}${lessonIdStudentList}/`, (response) => {
                 console.log(response.data);
-                setstudentsList(response.data.nb_to_lesson.map(elem => {
+                setstudentsList(response.data?.nb_to_lesson?.map(elem => {
                     return {
                       label: elem.full_name,
                       value: elem.student_id
@@ -176,7 +176,7 @@ export default function Attend() {
         setTeacherID(id)
         getTeacherGroups(`${teacher_groups}?teacher=${id}&semester=${SemesterID}`, (response) => {
             setLessonIdList(response.data[0]?.id)
-            setgroupList(response.data.map(elem => {
+            setgroupList(response?.data?.map(elem => {
                 return {
                   name: elem.name,
                   value: elem.id
@@ -351,7 +351,7 @@ export default function Attend() {
                                                 <th style={{ width: "100px" }}>{ elem.created_at }</th>
                                                 <th>{ elem.para }</th>
                                                 <th>{ elem.lesson }</th>
-                                                <th>{ elem.student.map((element, index) => {
+                                                <th>{ elem?.student?.map((element, index) => {
                                                    return (<p key = {index}>{element.full_name}</p>) 
                                                 }) }</th>
                                                 <th style={{ width: "400px", display: "flex", justifyContent: "center", gap: "10px" }}>
