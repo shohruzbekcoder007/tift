@@ -294,7 +294,7 @@ export default function ScheduleStudy() {
               </thead>
               <tbody>
                 {
-                  rooms.map((elem, index) => {
+                 rooms.length > 0 ? rooms.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.name} ({elem.count})</th>
@@ -311,6 +311,10 @@ export default function ScheduleStudy() {
                       </tr>
                     )
                   })
+                  :
+                  <tr>
+                    <th colSpan={150} align='center'>Ma'lumot yo'q</th>
+                  </tr>
                 }
               </tbody>
             </table>
