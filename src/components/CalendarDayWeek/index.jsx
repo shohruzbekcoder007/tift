@@ -29,12 +29,14 @@ function CalendarDayWeek() {
           padding: "20px",
           borderRadius: "10px",
           // backgroundColor: "transparent"
+          // minWidth: "300px"
         }}
       >
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           timeZone='GMT+5'
+          eventMinWidth="100px"
           headerToolbar={{
             center: 'timeGridWeek,timeGridDay',
             right: "",
