@@ -9,7 +9,7 @@ export const host = "https://api.tift.uz"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-export const host = "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 
