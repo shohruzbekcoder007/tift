@@ -85,7 +85,7 @@ export default function TeacherJournal() {
           mb: "26px"
         }}
       >
-        O'qituvchi Jurnali {state.data}
+        O'qituvchi Jurnali
       </Typography>
       <BoxBody>
         <ClassScheduleTableWrapper>
