@@ -12,7 +12,7 @@ function CalendarDayWeek() {
   const [Semester, setSemester] = useState(2);
   const [ScheduleList, setScheduleList] = useState([]);
   useEffect(() => {
-    getClassSchedule(`${my_tasschedule}?semester=${Semester}`, (response) => {
+    getClassSchedule(`${my_tasschedule}`, (response) => {
       console.log(response.data);
       setScheduleList(response.data)
     }, (error) => {

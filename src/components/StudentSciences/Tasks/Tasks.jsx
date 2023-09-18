@@ -180,12 +180,13 @@ export default function Tasks() {
                         <th>
                           {elem.title}
                           {
-                            elem.method === 'test' ?
-                              <>
-                              </> :
-                              <>
-                                <a href={host + elem.source} target="_blank" >
-                                  <StudentAIButton>
+                            (elem.method === 'test' || elem.method === 'oddiy')?
+                            <>
+                            </>:
+                            
+                            <>
+                              <a href={host + elem.source} target="_blank" >
+                                <StudentAIButton>
 
                                     <div style={{ width: "40px" }}>
                                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
