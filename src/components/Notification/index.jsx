@@ -31,7 +31,7 @@ export default function Notification({ open, setCountNote }) {
         {
           notes.map((elem, index) => {
             return (
-              (getRole(user) === "  ") ?
+              (getRole(user) === "student") ?
                 <span key={index}>
                   <Link to={`/student/sciences/tasks`} state={{ data: elem.patok }}>
                     <NotificationWrapperBody>
