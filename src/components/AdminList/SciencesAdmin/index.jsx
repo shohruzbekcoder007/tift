@@ -93,7 +93,7 @@ export default function SciencesAdmin() {
     }, (error) => {
         console.log(error)
     })
-  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem])
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem,pageSize ,page])
 
 
 

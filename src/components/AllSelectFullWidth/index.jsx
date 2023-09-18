@@ -14,10 +14,10 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
         chageValueFunction(event.target.value)
     };
 
-    useEffect(() => {
-        const newSelectedOption = selectOptions.find(option => option?.selected) || {};
-        setAge(newSelectedOption?.value || selectOptions[0]?.value || 0);
-    }, [selectOptions])
+  useEffect(() => {
+    const newSelectedOption = selectOptions.find(option => option?.selected) || {};
+    setAge(newSelectedOption?.value || selectOptions[0]?.value || 0);
+  }, [selectOptions])
 
     useEffect(() => {
         setAge(selectedOptionP)
