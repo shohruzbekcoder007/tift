@@ -192,7 +192,7 @@ export default function Vedomost() {
                                     :
                                     <>
                                     {
-                                      element.method == 'oddiy'?
+                                      (element.method == 'oddiy')?
                                       <div style={{width: "60px"}}>
                                       <Button
                                         sx={
@@ -210,7 +210,27 @@ export default function Vedomost() {
                                         {element.submission?.grade}
                                       </Button>
                                       </div>
-                                      :<></>
+                                      :<>{
+                                        element.method == 'test'?
+                                        <div style={{width: "60px"}}>
+
+                                          <Button
+                                          sx={
+                                            {
+                                              width: '36px',
+                                              height: '36px',
+                                              padding: '8px 18px',
+                                              borderRadius: '10px',
+                                              border: "1px solid #EEE",
+                                              background:' var(--secondary-color, #F6F6F6)',
+                                            }
+                                          }   
+                                        >
+                                        {element.submission?.grade}
+                                      </Button>
+                                      </div>:
+                                      <></>
+                                      }</>
                                     }
                                     </>
                                 }
