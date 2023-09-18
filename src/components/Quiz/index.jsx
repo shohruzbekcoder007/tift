@@ -101,19 +101,27 @@ function PaperSheet(props){
             {quiz[current]?.question}
           </Typography>
 
-          {quiz[current]?.answers.map((opt, index) => (
-            <div key={index} style={{ marginTop: "5px" }} 
-            // ref={index.toString()}
-            >
-              <Radio
-                checked={selectedValue == opt.id}
-                onChange={handleChange}
-                value={opt.id}
-                name={`${quiz[current].id}`}
-              />
-              {opt.answer}
-            </div>
-          ))}
+          {quiz[current]?.answers.map((opt, index) => {
+            const isLargeNumber = (element) => element.question_id == quiz[current].id;
+            const fInd = answers.findIndex(isLargeNumber);
+            console.log(answers[fInd].question_id, "<--shu yerda", opt, "-->", quiz[current].id)
+            return (
+              <div key={index} style={{ marginTop: "5px" }} 
+              // ref={index.toString()}
+              >
+                <Radio
+                  checked={
+                    selectedValue == selectedValue
+                    // answers[fInd].aswer_id
+                  }
+                  onChange={handleChange}
+                  value={opt.id}
+                  name={`${quiz[current].id}`}
+                />
+                {opt.answer}
+              </div>
+            )
+          })}
           <div className={props.classes.footer}>
             <Button onClick={revealCorrect} variant="raised" color="secondary">
               Yakunlash
