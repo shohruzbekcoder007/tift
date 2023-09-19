@@ -4,8 +4,8 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions}) {
-
+export default memo(function AllSelectFullWidth({chageValueFunction, selectOptions, selectedOptionP}) {
+    console.log(selectedOptionP);
     const selectedOption = selectOptions.find(option => option?.selected) || {};
     const [age, setAge] = React.useState(selectedOption?.value || selectOptions[0]?.value || 0);
     
@@ -18,6 +18,10 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
         const newSelectedOption = selectOptions.find(option => option?.selected) || {};
         setAge(newSelectedOption?.value || selectOptions[0]?.value || 0);
     }, [selectOptions])
+
+    useEffect(() => {
+        setAge(selectedOptionP)
+    }, [selectedOptionP])
 
     return (
         <div>
