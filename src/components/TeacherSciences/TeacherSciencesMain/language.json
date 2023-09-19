@@ -1,0 +1,72 @@
+{
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количетво",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    },
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Subject": {
+        "uz": "Fan",
+        "ru": "Предмет",
+        "eng": "Subject"
+    },
+    "Type": {
+        "uz": "Turi",
+        "ru": "Тип",
+        "eng": "Type"
+    },
+    "Students": {
+        "uz": "Talabalar",
+        "ru": "Студенты",
+        "eng": "Students"
+    },
+    "Settings": {
+        "uz": "Sozlamalar",
+        "ru": "Настройки",
+        "eng": "Settings"
+    },
+    "CalendarPlan": {
+        "uz": "Kalendar reja",
+        "ru": "Календарь план",
+        "eng": "Calendar plan"
+    },
+    "Statement": {
+        "uz": "Bayonot",
+        "ru": "Ведомость",
+        "eng": "Statement"
+    },
+    "AddMaterial": {
+        "uz": "Material qo'shish",
+        "ru": "Добавить материал",
+        "eng": "Adding material"
+    },
+    "Tasks": {
+        "uz": "Vazifalar",
+        "ru": "Задания",
+        "eng": "Tasks"
+    }
+}

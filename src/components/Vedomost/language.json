@@ -1,0 +1,82 @@
+{
+    "AppropriationRecord": {
+        "uz": "O'zlashtirish qaydnomasi",
+        "ru": "Отчет об успеваемости",
+        "eng": "Appropriation recort"
+    },
+    "EvaluationPeriud": {
+        "uz": "Talabalarga baxo qo'yish muddati:",
+        "ru": "Период оценки студента:",
+        "eng": "Student evaluation period:"
+    },
+    "SubmissionDeadline": {
+        "uz": "Topshirish muddatidan keyin",
+        "ru": "По истечении срока подачи",
+        "eng": "After the submission deadline"
+    },
+    "Day": {
+        "uz": "kun",
+        "ru": "день",
+        "eng": "day"
+    },
+    "Days": {
+        "uz": "kun",
+        "ru": "дней",
+        "eng": "days"
+    },
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Evaluation": {
+        "uz": "Baholash",
+        "ru": "Оценить",
+        "eng": "Evaluate"
+    },
+    "Download": {
+        "uz": "Yuklab olish",
+        "ru": "Скачать",
+        "eng": "Download"
+    },
+    "Criterion": {
+        "uz": "Mezon",
+        "ru": "Критерии",
+        "eng": "Criterion"
+    },
+    "Ball": {
+        "uz": "Ball",
+        "ru": "Балл",
+        "eng": "Ball"
+    },
+    "MaximalBall": {
+        "uz": "Eng yuqori ball",
+        "ru": "Максимальный бал",
+        "eng": "Maximal ball"
+    },
+    "File": {
+        "uz": "Fayl",
+        "ru": "Файл",
+        "eng": "File"
+    },
+    "FractionalNum": {
+        "uz": "Kasr sonlar «.» (nuqta) simvoli orqali kiritiladi.",
+        "ru": "Дробные числа пишутся с «.» (точкой).",
+        "eng": "Fractional numbers write with «.» (point)"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранять",
+        "eng": "Save"
+    },
+    "AssessmentForTheTask": {
+        "uz": "Vazifa uchun baho",
+        "ru": "Оценка за задание",
+        "eng": "Assessment for the task"
+    }
+}

@@ -7,6 +7,9 @@ import { TableTHHeader } from '../../DiplomaTable'
 import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from '../../Vedomost/styles'
 import { getTeacherAttendance, setSetNbStudents } from './requests'
 import { useNavigate } from "react-router-dom"
+// Lang
+import listLanguage from './language.json'
+import { useSelector } from 'react-redux'
 
 export default function ThematicBlock() {
   const { state } = useLocation()
@@ -51,6 +54,8 @@ export default function ThematicBlock() {
     })
   }
 
+  // Lang
+  const language = useSelector(state => state.language)
 
   return (
     <>
@@ -65,7 +70,7 @@ export default function ThematicBlock() {
       mb: "26px"
     }}
   >
-    O’zlashtirish qaydnomasi
+    {listLanguage.AppropriationRecord[language]}
   </Typography>
     <Paper
       elevation={0}
@@ -86,7 +91,7 @@ export default function ThematicBlock() {
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Studentlar"
+                  text={listLanguage.Students[language]}
                   iconc={null}
                 />
                 <TableTHHeader
@@ -118,7 +123,7 @@ export default function ThematicBlock() {
                 })
                 :
                   <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    <th colSpan={12} align='center'>{listLanguage.NoInfo[language]}</th>
                   </tr>
               }
             </tbody>
@@ -150,7 +155,7 @@ export default function ThematicBlock() {
                   </defs>
                 </svg>}
               >
-            Saqlash
+            {listLanguage.Save[language]}
             </Button>:
           <></>
           }

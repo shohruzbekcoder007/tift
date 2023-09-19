@@ -1,0 +1,22 @@
+{
+    "AppropriationRecord": {
+        "uz": "O'zlashtirish qaydnomasi",
+        "ru": "Отчет об успеваемости",
+        "eng": "Appropriation record"
+    },
+    "Students": {
+        "uz": "Studentlar",
+        "ru": "Студенты",
+        "eng": "Students"
+    },
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    }
+}

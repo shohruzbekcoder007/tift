@@ -9,9 +9,9 @@ import { lesson_edit, teacher_calendar_delay, teacher_calendar_plan } from '../.
 import { getTeacheravCalendar } from './requests'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { patchTeacheravCalendar } from './request'
-
-
-
+// Lang
+import listLanguage from './language.json'
+import { useSelector } from 'react-redux'
 
 
 export default function CalendarPlan() {
@@ -39,6 +39,9 @@ export default function CalendarPlan() {
   }, [])
 
 
+   // Lang
+ const language = useSelector(state => state.language)
+
   return (
     <Paper
       elevation={0}
@@ -59,7 +62,7 @@ export default function CalendarPlan() {
           mb: "26px"
         }}
       >
-        Kalendar reja
+        {listLanguage.CalendarPlan[language]}
       </Typography>
       <BoxHeader>
         <Typography
@@ -76,7 +79,7 @@ export default function CalendarPlan() {
             borderRadius: "10px"
           }}
         >
-          Kalendar planni belgilash va davomatni qo'yish muddati: 2 kun
+          {listLanguage.Duration[language]} { '1' ? "1" + listLanguage.Day[language] : listLanguage.Days[language]}
         </Typography>
         <Button
           variant="contained"
@@ -101,7 +104,7 @@ export default function CalendarPlan() {
             </defs>
           </svg>}
         >
-          Shakllantirish
+         {listLanguage.Shaping[language]}
         </Button>
       </BoxHeader>
       <BoxBody>
@@ -110,19 +113,19 @@ export default function CalendarPlan() {
             <thead>
               <tr>
                 <TableTHHeader
-                  text="Raqam"
+                  text={listLanguage.Number[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mavzu"
+                  text={listLanguage.Theme[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mashg'ulot vaqti"
+                  text={listLanguage.StudyingTime[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Status"
+                  text={listLanguage.Status[language]}
                   iconc={null}
                 />
               </tr>
@@ -136,7 +139,7 @@ export default function CalendarPlan() {
                 })
                   :
                   <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    <th colSpan={12} align='center'>{listLanguage.NoInfo[language]}</th>
                   </tr>
               }
             </tbody>
@@ -156,25 +159,25 @@ export default function CalendarPlan() {
               borderLeft: "1px solid #eee",
             }}
           >
-            Ko’chirilgan vaqt
+            {listLanguage.RescheduledTime[language]}
           </Typography>
           <table>
             <thead>
               <tr>
                 <TableTHHeader
-                  text="Raqam"
+                  text={listLanguage.Number[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mavzu"
+                  text={listLanguage.Theme[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Mashg'ulot vaqti"
+                  text={listLanguage.StudyingTime[language]}
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Status"
+                  text={listLanguage.Status[language]}
                   iconc={null}
                 />
               </tr>
@@ -201,7 +204,7 @@ export default function CalendarPlan() {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Belgilash mumkin</p>
+                            <p>{listLanguage.Unspecifiable[language]}</p>
                           </UnableToSpecify>
                           <Link to="thematicblock" state={elem}>
                             <Button
@@ -225,7 +228,7 @@ export default function CalendarPlan() {
                                 </defs>
                               </svg>}
                             >
-                              Davomat
+                              {listLanguage.Attendance[language]}
                             </Button>
                           </Link>
                         </TeacherSciencesButtonBox>
@@ -250,6 +253,10 @@ export function CalendarPlanMain() {
 }
 
 const StatusLesson = ({ status, status_day }) => {
+
+  // Lang
+ const language = useSelector(state => state.language)
+
   if (status == 'failed' && status_day == 'last') {
     return (
       <Button
@@ -268,7 +275,7 @@ const StatusLesson = ({ status, status_day }) => {
           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
         </svg>}
       >
-        O'tilmadi
+        {listLanguage.NotCompleted[language]}
       </Button>
     )
   } else if (status == 'failed' && status_day == 'next') {
@@ -288,7 +295,7 @@ const StatusLesson = ({ status, status_day }) => {
           <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
         </svg>}
       >
-        O'tiladi
+        {listLanguage.WillBeCompleted[language]}
       </Button>
     )
 
@@ -313,7 +320,7 @@ const StatusLesson = ({ status, status_day }) => {
           <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
         </svg>}
       >
-        Joriy dars
+       {listLanguage.Current[language]}
       </Button>
     )
   } else if (status == 'past') {
@@ -338,7 +345,7 @@ const StatusLesson = ({ status, status_day }) => {
           <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
         </svg>}
       >
-        O'tildi
+        {listLanguage.Completed[language]}
       </Button>
     )
   } else if (status == 'delay') {
@@ -360,7 +367,7 @@ const StatusLesson = ({ status, status_day }) => {
           <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
         </svg>}
       >
-        Qoldirildi
+        {listLanguage.Postponed[language]}
       </Button>
     )
   }
@@ -368,6 +375,9 @@ const StatusLesson = ({ status, status_day }) => {
 
 
 const StatusLessonAttendece = ({ status, status_day, id }) => {
+
+   // Lang
+   const language = useSelector(state => state.language)
 
   if (status == 'failed' && status_day == 'last') {
     return (
@@ -393,7 +403,7 @@ const StatusLessonAttendece = ({ status, status_day, id }) => {
             </defs>
           </svg>}
         >
-          Davomat
+          {listLanguage.Attendance[language]}
         </Button>
       </Link>
     )
@@ -422,7 +432,7 @@ const StatusLessonAttendece = ({ status, status_day, id }) => {
             </defs>
           </svg>}
         >
-          Davomat
+          {listLanguage.Attendance[language]}
         </Button>
       </Link>
     )
@@ -453,7 +463,7 @@ const StatusLessonAttendece = ({ status, status_day, id }) => {
             </defs>
           </svg>}
         >
-          Davomat
+          {listLanguage.Attendance[language]}
         </Button>
       </Link>
     )
@@ -480,6 +490,9 @@ const Fakultets = ({ elem, callback_func, status }) => {
       console.log(error);
     })
   }
+
+  // Lang
+ const language = useSelector(state => state.language)
 
   return (
     <>
@@ -541,7 +554,7 @@ const Fakultets = ({ elem, callback_func, status }) => {
                   color: "#000",
                 }}
               >
-                Tahrirlash
+                {listLanguage.Edit[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -564,7 +577,7 @@ const Fakultets = ({ elem, callback_func, status }) => {
                 mb: "10px"
               }}
             >
-              Mavzu
+              {listLanguage.Theme[language]}
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { setName(val) }} defaultValue={elem.lesson} placeholder="Kiriting" />
           </ModalSelectWrapper>
@@ -574,7 +587,7 @@ const Fakultets = ({ elem, callback_func, status }) => {
               variant="outlined"
               onClick={handleClose}
             >
-              Bekor qilish
+              {listLanguage.Cancel[language]}
             </Button>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
@@ -582,7 +595,7 @@ const Fakultets = ({ elem, callback_func, status }) => {
               type="submit"
               onClick={handleChangeName}
             >
-              Saqlash
+              {listLanguage.Save[language]}
             </Button>
           </ModalButtons>
         </ModalBox>

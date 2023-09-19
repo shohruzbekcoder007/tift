@@ -26,6 +26,8 @@ export default function Header() {
     })
   }
 
+// Lang
+const language = useSelector(state => state.language)
 
 
   return (
@@ -41,7 +43,7 @@ export default function Header() {
         {
           title.type == "text"?
           <HeaderTitle>
-            {title.text.uz}
+            {title.text[language]}
           </HeaderTitle>:<></>
         }
         {

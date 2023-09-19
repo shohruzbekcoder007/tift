@@ -1,0 +1,107 @@
+{
+    "CalendarPlan": {
+        "uz": "Kalendar reja",
+        "ru": "Календарь план",
+        "eng": "Calendar plan"
+    },
+    "Duration": {
+        "uz": "Kalendar planni belgilash va davomatni qo'yish muddati:",
+        "ru": "Продолжительность настройки календарного плана и настройки посещаемости:",
+        "eng": "Duration of setting the calendar plan and setting the attendance:"
+    },
+    "Days": {
+        "uz": "kun",
+        "ru": "дней",
+        "eng": "days"
+    },
+    "Day": {
+        "uz": "kun",
+        "ru": "день",
+        "eng": "day"
+    },
+    "Shaping": {
+        "uz": "Shakllantirish",
+        "ru": "Формирование",
+        "eng": "Shaping"
+    },
+    "Number": {
+        "uz": "Raqam",
+        "ru": "Число",
+        "eng": "Number"
+    },
+    "Theme": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Theme"
+    },
+    "StudyingTime": {
+        "uz": "Mashg'ulot vaqti",
+        "ru": "Время обучения",
+        "eng": "Studying time"
+    },
+    "Status": {
+        "uz": "Holat",
+        "ru": "Положение",
+        "eng": "Status"
+    },
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "RescheduledTime": {
+        "uz": "Ko'chirilgan vaqt",
+        "ru": "перенесенное время",
+        "eng": "Rescheduled time"
+    },
+    "Unspecifiable": {
+        "uz": "Belgilash mumkin emas",
+        "ru": "Невозможно указать",
+        "eng": "Unable to specify"
+    },
+    "Attendance": {
+        "uz": "Davomat",
+        "ru": "Посещаемость",
+        "eng": "Attendance"
+    },
+    "Completed": {
+        "uz": "O'tildi",
+        "ru": "Пройдено",
+        "eng": "Completed"
+    },
+    "WillBeCompleted": {
+        "uz": "O'tiladi",
+        "ru": "Будет пройдено",
+        "eng": "Will be completed"
+    },  
+    "NotCompleted": {
+        "uz": "O'tilmadi",
+        "ru": "Не пройдено",
+        "eng": "Not completed"
+    },  
+    "Postponed": {
+        "uz": "Qoldirildi",
+        "ru": "Отложено",
+        "eng": "Postponed"
+    },
+    "Current": {
+        "uz": "Joriy dars",
+        "ru": "Текущий урок",
+        "eng": "Actual lesson"
+    },
+    "Edit": {
+        "uz": "Tahrirlash",
+        "ru": "Редактировать",
+        "eng": "Edit"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    }
+}

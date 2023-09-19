@@ -8,6 +8,8 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { createTaskGrade, getTeacherVedemost } from './requests'
 import { host, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
+import listLanguage from './language.json'
+import { useSelector } from 'react-redux'
 
 export default function Vedomost() {
   const { state } = useLocation()
@@ -64,6 +66,9 @@ export default function Vedomost() {
   }
 
 
+  // Lang
+  const language =  useSelector(state => state.language)
+
   return (
     <Paper
       elevation={0}
@@ -84,7 +89,7 @@ export default function Vedomost() {
           mb: "26px"
         }}
       >
-        O’zlashtirish qaydnomasi
+        {listLanguage.AppropriationRecord[language]}
       </Typography>
       <BoxHeader>
         <Typography
@@ -102,7 +107,7 @@ export default function Vedomost() {
             width: "100%"
           }}
         >
-          Talabalarga baxo qo'yish muddati: Topshirish muddatidan keyin 2 kun.
+          {listLanguage.EvaluationPeriud[language]} {listLanguage.SubmissionDeadline[language]} {"1" ? '1 ' + listLanguage.Day[language] : listLanguage.Days[language]}.
         </Typography>
 
       </BoxHeader>
@@ -201,7 +206,7 @@ export default function Vedomost() {
                 })
                 :
                   <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    <th colSpan={12} align='center'>{listLanguage.NoInfo[language]}</th>
                   </tr>
               }
               
@@ -229,7 +234,7 @@ export default function Vedomost() {
                         color: "#000",
                       }}
                     >
-                      Baholash
+                      {listLanguage.Evaluation[language]}
                     </Typography>
                     <span
                       onClick={handleClose}
@@ -242,7 +247,7 @@ export default function Vedomost() {
                   </ModalHeader>
                 </div>
                 <ModalSelectWrapper>
-                  <ModalSubtitle>Fayl: 
+                  <ModalSubtitle>{listLanguage.File[language]}: 
                     <a href={host + studentSource} target='_blank'>
                     <Button 
                       variant="contained"
@@ -259,7 +264,7 @@ export default function Vedomost() {
                       </svg>
                       }
                     >
-                      Yuklab Olish
+                      {listLanguage.Download[language]}
                     </Button>
                     </a>
                     
@@ -272,22 +277,22 @@ export default function Vedomost() {
                       <thead>
                         <tr>
                           <TableTHHeader
-                            text="Me’zon"
+                            text={listLanguage.Criterion[language]}
                             iconc={null}
                           />
                           <TableTHHeader
-                            text="Ball"
+                            text={listLanguage.Ball[language]}
                             iconc={null}
                           />
                           <TableTHHeader
-                            text="Maksimal ball"
+                            text={listLanguage.MaximalBall[language]}
                             iconc={null}
                           />
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <th>Vazifa uchun baho</th>
+                          <th>{listLanguage.AssessmentForTheTask[language]}</th>
                           <th>
                             <CustomizedInputSimple  callback_func={(val) => { settasksGrade(val) }} placeholder="" />
                           </th>
@@ -298,7 +303,7 @@ export default function Vedomost() {
                   </ClassScheduleTableWrapper>
                 </ModalSelectWrapper>
                 <ModalSelectWrapper>
-                  <ModalSubtitle>* Kasr sonlar «.» (nuqta) simvoli orqali kiritiladi. </ModalSubtitle>
+                  <ModalSubtitle>* {listLanguage.FractionalNum[language]} </ModalSubtitle>
                 </ModalSelectWrapper>
                 <ModalButtons>
                   <Button
@@ -306,14 +311,14 @@ export default function Vedomost() {
                     variant="outlined"
                     onClick={handleClose}
                   >
-                    Bekor qilish
+                    {listLanguage.Cancel[language]}
                   </Button>
                   <Button
                     sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                     variant="contained"
                     type="submit"
                   >
-                    Saqlash
+                    {listLanguage.Save[language]}
                   </Button>
                 </ModalButtons>
               </ModalBox>

@@ -9,10 +9,10 @@ import { AttendSearchButton } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
-import listLanguage from './language.json'
 import { getTeacherGroups, setNbPetition } from './requests'
 import { teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../utils/API_urls'
 import MultiSelect from '../Multisellect'
+import listLanguage from './language.json'
 import { useSelector } from 'react-redux'
 
 
@@ -36,7 +36,7 @@ export default function Attend() {
     const [page, setPage] = useState(1)
 
     //  Lang
-    // const language = useSelector()
+    const language = useSelector(state => state.language)
 
 
     const [selectedValues, setSelectedValues] = useState([]);
@@ -163,7 +163,7 @@ export default function Attend() {
                             </svg>
                             }
                         >
-                            {listLanguage.clearance["ru"]}
+                            {listLanguage.clearance[language]}
                         </Button>
                     </AttendSearchButton>
                 </BoxHeader>
@@ -186,7 +186,7 @@ export default function Attend() {
                                         </svg>}
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Patok['ru']}
+                                        text={listLanguage.Patok[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -201,7 +201,7 @@ export default function Attend() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Date['ru']}
+                                        text={listLanguage.Date[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -216,7 +216,7 @@ export default function Attend() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Para['ru']}
+                                        text={listLanguage.Para[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -231,7 +231,7 @@ export default function Attend() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Theme['ru']}
+                                        text={listLanguage.Theme[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -246,7 +246,7 @@ export default function Attend() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Students['ru']}
+                                        text={listLanguage.Students[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -261,7 +261,7 @@ export default function Attend() {
                                         }
                                     />
                                     <TableTHHeader
-                                        text={listLanguage.Status['ru']}
+                                        text={listLanguage.Status[language]}
                                         iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g clipPath="url(#clip0_78_23319)">
                                                 <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -314,7 +314,7 @@ export default function Attend() {
                                                                 </defs>
                                                             </svg>}
                                                         >
-                                                            {listLanguage.Confirmed['uz']}
+                                                            {listLanguage.Confirmed[language]}
                                                         </Button>
                                                     }
                                                     {
@@ -338,7 +338,7 @@ export default function Attend() {
                                                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                                                             </svg>}
                                                         >
-                                                            Rad etildi
+                                                            {listLanguage.Rejected[language]}
                                                         </Button>
                                                     }
                                                     {
@@ -393,7 +393,7 @@ export default function Attend() {
                                                                 </svg>
                                                                 }
                                                             >
-                                                                {listLanguage.Separation['ru']}
+                                                                {listLanguage.Separation[language]}
                                                             </Button>
 
                                                                 :
@@ -423,7 +423,7 @@ export default function Attend() {
                                                                     </svg>
                                                                     }
                                                                 >
-                                                                    {listLanguage.Separation['ru']}
+                                                                    {listLanguage.Separation[language]}
                                                                 </Button>
                                                         }
 
@@ -434,7 +434,7 @@ export default function Attend() {
                                     })
                                         :
                                         <tr>
-                                            <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                                            <th colSpan={12} align='center' >{listLanguage.NoInfo[language]}</th>
                                         </tr>
                                 }
                             </tbody>
@@ -442,7 +442,7 @@ export default function Attend() {
                     </ClassScheduleTableWrapper>
                 </BoxBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + teacherGetNbList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <BoxFooterText>{`${listLanguage.Total[language]} ${allCount} ${listLanguage.Ta[language]},${listLanguage.From[language]} ${pageSize * (page - 1) + 1} ${listLanguage.To[language]} ${pageSize * (page - 1) + teacherGetNbList.length} ${listLanguage.AreShown[language]}`}</BoxFooterText>
                     <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
                 </BoxFooter>
                 <Modal
@@ -464,7 +464,7 @@ export default function Attend() {
                                     color: "#000"
                                 }}
                             >
-                                {listLanguage.clearance['ru']}
+                                {listLanguage.clearance[language]}
                             </Typography>
                             <span
                                 onClick={handleClose}
@@ -488,7 +488,7 @@ export default function Attend() {
                                 mb: "20px"
                             }}
                         >
-                            {listLanguage.ClearanceText['ru']}
+                            {listLanguage.ClearanceText[language]}
 
                         </Typography>
                         <ModalSelectWrapper>
@@ -503,7 +503,7 @@ export default function Attend() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.Patok['ru']}
+                                {listLanguage.Patok[language]}
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setLessonIdList(val)}
@@ -522,7 +522,7 @@ export default function Attend() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.Calendar['ru']}
+                                {listLanguage.Calendar[language]}
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setlessonIdStudentList(val)}
@@ -541,7 +541,7 @@ export default function Attend() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.Para['ru']}
+                                {listLanguage.Para[language]}
                             </Typography>
                             <AllSelectFullWidth
                                 chageValueFunction={val => setstudentParaList(val)}
@@ -585,7 +585,7 @@ export default function Attend() {
                                     mb: "10px"
                                 }}
                             >
-                                {listLanguage.Students['ru']}
+                                {listLanguage.Students[language]}
 
                             </Typography>
                             {/* <AllSelectFullWidth
@@ -604,7 +604,7 @@ export default function Attend() {
                                 variant="outlined"
                                 onClick={handleClose}
                             >
-                                {listLanguage.Cancel['ru']}
+                                {listLanguage.Cancel[language]}
 
                             </Button>
                             <Button
@@ -612,7 +612,7 @@ export default function Attend() {
                                 variant="contained"
                                 onClick={hangleClick}
                             >
-                                {listLanguage.Save['ru']}
+                                {listLanguage.Save[language]}
 
                             </Button>
                         </ModalButtons>
