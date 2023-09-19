@@ -14,7 +14,9 @@ import token_url, { user_me } from '../../utils/API_urls'
 import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'
-import login_pahe_img from '../../imgs/login_pahe_img.jpg' 
+import VideoPlayer from "react-background-video-player";
+import login_pahe_img from '../../imgs/tift.mp4' 
+// import zIndex from '@mui/material/styles/zIndex';
 
 const LoadingPage = () => {
     return (
@@ -122,14 +124,25 @@ export default function SignInSide() {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: `url(${login_pahe_img})`,
+          // backgroundImage: `url(${login_pahe_img})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          position: "relative"
         }}
+      >
+        <VideoPlayer
+        className="video"
+        src={
+          login_pahe_img
+        }
+        autoPlay={true}
+        muted={true}
       />
+        salom
+      </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
           sx={{
@@ -140,8 +153,10 @@ export default function SignInSide() {
             alignItems: 'center',
             justifyContent: 'center',
             height: "100vh",
-            padding: "20px"
+            padding: "20px",
+            zIndex: 1
           }}
+          style={{zIndex: 1}}
         >
           <LoginLogo>
             <img src={require('../../imgs/main_logo.png')} alt="main logo" />
