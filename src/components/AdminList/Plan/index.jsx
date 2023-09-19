@@ -215,7 +215,7 @@ export default function Plan() {
                             }
                           >
                           </Button> */}
-                          <Button
+                          {/* <Button
                             variant="contained"
                             sx={{
                               borderRadius: "10px",
@@ -244,7 +244,7 @@ export default function Plan() {
 
                             }
                           >
-                          </Button>
+                          </Button> */}
                         </th>
                         <AlertDialog
                           open_alert={alert}
