@@ -197,7 +197,7 @@ export default function Streams() {
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
         return {
-          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester)",
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
           value: elem.id
         }
       }))
