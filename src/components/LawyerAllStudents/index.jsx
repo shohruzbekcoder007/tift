@@ -2,12 +2,12 @@ import { Box, Button, Checkbox, Modal, Pagination, Paper, Typography } from '@mu
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
-import { TeacherSciencesButtonBox } from './styles'
+import { ModalBoxInfo, TeacherSciencesButtonBox } from './styles'
 import { MuiFileInput } from 'mui-file-input'
 import AllSelect from '../AllSelect'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
-import { getLawyerStudent } from './requests'
+import { getLawyerStudent, postLawyerStudent } from './requests'
 import { host, lawyer_studentdocument } from '../../utils/API_urls'
 
 export default function LawyerAllStudents() {
@@ -27,7 +27,7 @@ export default function LawyerAllStudents() {
 
 
 
-  
+
 
 
 
@@ -120,7 +120,7 @@ export default function LawyerAllStudents() {
                 {
                   allStudent.map((elem) => {
                     return (
-                      <LawyerStudent elem={elem}/>
+                      <LawyerStudent elem={elem} />
                     )
                   })
                 }
@@ -146,11 +146,20 @@ const LawyerStudent = ({ elem }) => {
   const [file1, setFile1] = useState(null)
   const [file2, setFile2] = useState(null)
   const [file3, setFile3] = useState(null)
+
+  const [CheckBox, setCheckBox] = useState(null)
+  const [CheckBox1, setCheckBox1] = useState(null)
+  const [CheckBox2, setCheckBox2] = useState(null)
+  const [CheckBox3, setCheckBox3] = useState(null)
+
+
+
   const [studentDocument, setstudentDocument] = useState([])
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
@@ -171,15 +180,69 @@ const LawyerStudent = ({ elem }) => {
   }
 
   const SubmintGradeTasks = (event) => {
-    // event.preventDefault();
-    // const formData = new FormData();
-    // formData.append("submission", tasksGradeId);
-    // formData.append("grade", tasksGrade);
-    // createTaskGrade(teacher_submission_grade, formData, (response) => { 
-    //   handleClose()
-    // }, (error) => {
-    //   console.log(error)
-    // })
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("student", elem.id);
+
+    let array = []
+    if (CheckBox) {
+      array.push({
+        type: "diplom",
+        is_submission: true
+      })
+    }else if (CheckBox1) {
+      array.push({
+        type: "passport",
+        is_submission: true
+      })
+    }else if (CheckBox2) {
+      array.push({
+        type: "photo",
+        is_submission: true
+      })
+    }
+    else if (CheckBox3) {
+      array.push({
+        type: "contract",
+        is_submission: true
+      })
+    }
+
+    if (file) {
+      array.push({
+        type: "diplom",
+        is_submission: true,
+        file: file
+      })
+    }else if (file1) {
+      array.push({
+        type: "passport",
+        is_submission: true,
+         file: file1
+      })
+    }else if (file2) {
+      array.push({
+        type: "photo",
+        is_submission: true,
+         file: file2
+      })
+    }
+    else if (file3) {
+      array.push({
+        type: "contract",
+        is_submission: true,
+         file: file3
+      })
+    }
+
+    if (array.length > 0) formData.append("document", array);
+
+    postLawyerStudent(`${lawyer_studentdocument}`, formData, (response) => { 
+      console.log(response);
+      handleClose()
+    }, (error) => {
+      console.log(error)
+    })
   }
 
   return (
@@ -214,168 +277,157 @@ const LawyerStudent = ({ elem }) => {
         </Button>
       </th>
       <th>
-      <Modal
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="keep-mounted-modal-title"
-            aria-describedby="keep-mounted-modal-description"
-          >
-            <form onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='multipart/form-data'>
-              <ModalBox>
-                <div style={{ marginBottom: '20px' }}>
-                  <ModalHeader>
-                    <Typography
-                      id="keep-mounted-modal-title"
-                      variant="h6"
-                      component="h4"
-                      sx={{
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        color: "#000",
-                      }}
-                    >
-                      Student dokumentlari
-                    </Typography>
-                    <span
-                      onClick={handleClose}
-                    >
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                      </svg>
-                    </span>
-                  </ModalHeader>
-                </div>
-                <ModalSelectWrapper>
-                </ModalSelectWrapper>
-                <ModalSelectWrapper>
-                  <ClassScheduleTableWrapper>
-                    <table>
-                      <thead>
-                        <tr>
-                          <TableTHHeader
-                            text="Diplom/Atstat"
-                            iconc={null}
-                          />
-                          <TableTHHeader
-                            text="Pasport kopiya"
-                            iconc={null}
-                          />
-                          <TableTHHeader
-                            text="Rasm"
-                            iconc={null}
-                          />
-                          <TableTHHeader
-                            text="Kantrakt"
-                            iconc={null}
-                          />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          {
-                            studentDocument.length > 0 ?
-                              studentDocument.map((elem, index) => {
-                                return (
-                                  elem.is_submission ?
-                                    <th key={index}>
-                                      <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                        {
-                                          <Checkbox {...label} onChange={(event) => {}} checked />
-                                        }
-                                      </TeacherSciencesButtonBox>
-                                    </th> :
-                                    <th>
-                                      <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                        {
-                                          <Checkbox {...label} onChange={(event) => { }} />
-                                        }
-                                      </TeacherSciencesButtonBox>
-                                    </th>
-                                )
-                              }) :
-                              <>
-                                {
-                                  [1, 2, 3, 4].map((elem, index) => {
-                                    return (
-                                      <th key={index}>
-                                        <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                          {
-                                            <Checkbox {...label} onChange={(event) => { }} />
-                                          }
-                                        </TeacherSciencesButtonBox>
-                                      </th>
-                                    )
-                                  })
-                                }
-                              </>
-                          }
-                        </tr>
-                        <tr>
-                          <th>
-                            <MuiFileInput
-                              placeholder="Fayl"
-                              value={file}
-                              onChange={setFileHandler}
-                              id="dsga1"
-                              fullWidth
-                            />
-                          </th>
-                          <th>
-                            <MuiFileInput
-                              placeholder="Fayl"
-                              value={file1}
-                              onChange={setFileHandler1}
-                              id="dsga2"
-                              fullWidth
-                            />
-                          </th>
-                          <th>
-                            <MuiFileInput
-                              placeholder="Fayl"
-                              value={file2}
-                              onChange={setFileHandler2}
-                              id="dsga3"
-                              fullWidth
-                            />
-                          </th>
-                          <th>
-                            <MuiFileInput
-                              placeholder="Fayl"
-                              value={file3}
-                              onChange={setFileHandler}
-                              id="dsga4"
-                              fullWidth
-                            />
-                          </th>
-                        </tr>
-                        <tr>
-                          {
-                            studentDocument ?
-                              studentDocument.map((elem, index) => {
-                                return (
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <form style={{ width: "100%" }} onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='multipart/form-data'>
+            <ModalBoxInfo>
+              <div style={{ marginBottom: '20px' }}>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000",
+                    }}
+                  >
+                    Student dokumentlari
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+              </div>
+              <ModalSelectWrapper>
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+                <ClassScheduleTableWrapper>
+                  <table>
+                    <thead>
+                      <tr>
+                        <TableTHHeader
+                          text="Diplom/Atstat"
+                          iconc={null}
+                        />
+                        <TableTHHeader
+                          text="Pasport kopiya"
+                          iconc={null}
+                        />
+                        <TableTHHeader
+                          text="Rasm"
+                          iconc={null}
+                        />
+                        <TableTHHeader
+                          text="Kantrakt"
+                          iconc={null}
+                        />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {
+                          studentDocument.length > 0 ?
+                            studentDocument.map((elem, index) => {
+                              return (
+                                elem.is_submission ?
+                                  <th key={index}>
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      {
+                                        <Checkbox {...label} onChange={(event) => { }} checked />
+                                      }
+                                    </TeacherSciencesButtonBox>
+                                  </th> :
                                   <th>
-                                    {
-                                      elem.file ?
-                                        <a href={host + elem?.file} target='_blank'>
-                                          <Button
-                                            variant="contained"
-                                            sx={{
-                                              borderRadius: '0',
-                                              textTransform: "capitalize",
-                                              boxShadow: "none",
-                                              padding: "10px 12px",
-                                            }}
-                                            startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                                              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                                              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-                                            </svg>
-                                            }
-                                          >
-                                          </Button>
-                                        </a>
-                                        :
-
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      {
+                                        <Checkbox {...label} onChange={(event) => { }} />
+                                      }
+                                    </TeacherSciencesButtonBox>
+                                  </th>
+                              )
+                            }) :
+                            <>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox1(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox2(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox3(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                            </>
+                        }
+                      </tr>
+                      <tr>
+                        <th>
+                          <MuiFileInput
+                            placeholder="Fayl"
+                            value={file}
+                            onChange={setFileHandler}
+                            id="dsga1"
+                            fullWidth
+                          />
+                        </th>
+                        <th>
+                          <MuiFileInput
+                            placeholder="Fayl"
+                            value={file1}
+                            onChange={setFileHandler1}
+                            id="dsga2"
+                            fullWidth
+                          />
+                        </th>
+                        <th>
+                          <MuiFileInput
+                            placeholder="Fayl"
+                            value={file2}
+                            onChange={setFileHandler2}
+                            id="dsga3"
+                            fullWidth
+                          />
+                        </th>
+                        <th>
+                          <MuiFileInput
+                            placeholder="Fayl"
+                            value={file3}
+                            onChange={setFileHandler}
+                            id="dsga4"
+                            fullWidth
+                          />
+                        </th>
+                      </tr>
+                      <tr>
+                        {
+                          studentDocument ?
+                            studentDocument.map((elem, index) => {
+                              return (
+                                <th>
+                                  {
+                                    elem.file ?
+                                      <a href={host + elem?.file} target='_blank'>
                                         <Button
                                           variant="contained"
                                           sx={{
@@ -383,11 +435,6 @@ const LawyerStudent = ({ elem }) => {
                                             textTransform: "capitalize",
                                             boxShadow: "none",
                                             padding: "10px 12px",
-                                            backgroundColor: "red",
-                                            "&:hover": {
-                                              backgroundColor: "red",
-                                            },
-                                            cursor: "not-allowed"
                                           }}
                                           startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                                             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -396,41 +443,64 @@ const LawyerStudent = ({ elem }) => {
                                           }
                                         >
                                         </Button>
-                                    }
-                                  </th>
-                                )
+                                      </a>
+                                      :
 
-                              }) :
-                              <></>
-                          }
-                        </tr>
+                                      <Button
+                                        variant="contained"
+                                        sx={{
+                                          borderRadius: '0',
+                                          textTransform: "capitalize",
+                                          boxShadow: "none",
+                                          padding: "10px 12px",
+                                          backgroundColor: "red",
+                                          "&:hover": {
+                                            backgroundColor: "red",
+                                          },
+                                          cursor: "not-allowed"
+                                        }}
+                                        startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                        </svg>
+                                        }
+                                      >
+                                      </Button>
+                                  }
+                                </th>
+                              )
 
-                      </tbody>
-                    </table>
-                  </ClassScheduleTableWrapper>
-                </ModalSelectWrapper>
-                <ModalSelectWrapper>
-                </ModalSelectWrapper>
-                <ModalButtons>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-                    variant="outlined"
-                    onClick={handleClose}
-                  >
-                    Bekor qilish
-                  </Button>
-                  <Button
-                    sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                    variant="contained"
-                    type="submit"
-                  >
-                    Saqlash
-                  </Button>
-                </ModalButtons>
-              </ModalBox>
-            </form>
+                            }) :
+                            <></>
+                        }
+                      </tr>
 
-          </Modal>
+                    </tbody>
+                  </table>
+                </ClassScheduleTableWrapper>
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+              </ModalSelectWrapper>
+              <ModalButtons>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  Bekor qilish
+                </Button>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+                >
+                  Saqlash
+                </Button>
+              </ModalButtons>
+            </ModalBoxInfo>
+          </form>
+
+        </Modal>
       </th>
     </tr>
   )

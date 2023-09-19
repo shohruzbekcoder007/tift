@@ -31,6 +31,7 @@ export default function SciencesAdmin() {
   const [scienceAdmin, setscienceAdmin] = useState([]);
 
   const [deletedElem, setDeleted] = useState(false)
+  const [searchText, setsearchText] = useState('')
 
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
@@ -86,14 +87,14 @@ export default function SciencesAdmin() {
 
 
   useEffect(() => {
-    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}`, (response) => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)
     }, (error) => {
         console.log(error)
     })
-  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem])
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem,pageSize ,page, searchText])
 
 
 
@@ -123,7 +124,7 @@ export default function SciencesAdmin() {
               setPageSize(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
             <Link to={'add'}>
               <Button
                 variant="contained"

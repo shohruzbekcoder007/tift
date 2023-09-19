@@ -31,7 +31,7 @@ export default function TeacherJournal() {
 
   useEffect(() => {
     
-    getTeacherJurnal(`${teacher_jurnal}${state.data}`, (response) => {
+    getTeacherJurnal(`${teacher_jurnal}${state.data}/`, (response) => {
         console.log(response);
         settasksName(response.data.name)
         settasksTasks(response.data.tasks)
@@ -85,7 +85,7 @@ export default function TeacherJournal() {
           mb: "26px"
         }}
       >
-        O'qituvchi Jurnali {state.data}
+        O'qituvchi Jurnali
       </Typography>
       <BoxBody>
         <ClassScheduleTableWrapper>

@@ -52,12 +52,13 @@ export default function Notification({ open, setCountNote }) {
                   </Link>
                 </span>
                 :
-                <Link to={`/student/sciences/tasks`} state={{ data: elem.id }}>
-                  <span key={index}>
-                    <p>{elem.science}</p>
-                    <p>Baholashgacha {elem.deadline.day} kun {elem.deadline.hours} soat qoldi</p>
-                  </span>
-                </Link>
+                <></>
+                // <Link to={`/student/sciences/tasks`} state={{ data: elem.id }}>
+                //   <span key={index}>
+                //     <p>{elem.science}</p>
+                //     <p>Baholashgacha {elem.deadline.day} kun {elem.deadline.hours} soat qoldi</p>
+                //   </span>
+                // </Link>
 
             )
           })

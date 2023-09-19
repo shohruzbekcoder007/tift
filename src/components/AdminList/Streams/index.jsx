@@ -42,10 +42,11 @@ export default function Streams() {
 
   const [ScienseSelect, setScienseSelect] = useState(null);
   const [SemesterSelect, setSemesterSelect] = useState(null);
+  const [SemesterNumber, setSemesterNumber] = useState(1);
   const [LangSelect, setLangSelect] = useState('uz');
   const [searchText, setSearchText] = useState('')
   const [RoomType, setRoomType] = useState('lecture');
-  const [GroupSelect, setGroupSelect] = useState(null);
+  const [GroupSelect, setGroupSelect] = useState([]);
   const [AmaliyotSelect, setAmaliyotSelect] = useState(0);
   const [LabaratoriyaSelect, setLabaratoriyaSelect] = useState(0);
   const [ParentNaameSelect, setParentNaameSelect] = useState(NaN);
@@ -56,6 +57,49 @@ export default function Streams() {
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
+
+  const setGroups = (val) => {
+    let nimadir = val.map(element => element.value)
+    setGroupSelect(nimadir)
+  }
+
+
+  const SemesterNum = useMemo(() => {
+    return [
+    {
+      name: "1",
+      value: 1,
+    },
+    {
+      name: "2",
+      value: 2,
+    },
+    {
+      name: "3",
+      value: 3,
+    },
+    {
+      name: "4",
+      value: 4,
+    },
+    {
+      name: "5",
+      value: 5,
+    },
+    {
+      name: "6",
+      value: 6,
+    },
+    {
+      name: "7",
+      value: 7,
+    },
+    {
+      name: "8",
+      value: 8,
+    }]
+  }, [])
+
 
   const Amaliyot = useMemo(() => {
     return [{
@@ -148,7 +192,7 @@ export default function Streams() {
       console.log(error)
     })
 // ?semester${SemesterSelect}
-    getSciense(`${science_short}?semester=1`, (response) => {
+    getSciense(`${science_short}?semester=${SemesterNumber}`, (response) => {
       // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
@@ -160,11 +204,11 @@ export default function Streams() {
     }, (error) => {
       console.log(error)
     })
-  }, [])
+  }, [SemesterSelect , SemesterNumber])
 
   useEffect(() => {
     if (SemesterSelect && ScienseSelect) {
-      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}&search=${searchText}`, (response) => {
         setStreamsList(response.data.results);
         setPageCount(response.data.page_count)
         setAllCount(response.data.count)
@@ -192,7 +236,6 @@ export default function Streams() {
 
   useEffect(() => {
     getAcademicGroup(`${academic_group_short}`, (response) => {
-      setGroupSelect(response?.data[0]?.id)
       setAcademicGroupList(response.data.map(elem => {
         return {
           name: elem.name,
@@ -205,17 +248,19 @@ export default function Streams() {
   }, []);
 
   const handleClick = (_) => {
-    postPatoks(patokadmin, {
-      // name: ScienseSelect,
+    let PatokList = {
       lang: LangSelect,
       semester: SemesterSelect,
       science: ScienseSelect,
       practical: AmaliyotSelect,
       labs: LabaratoriyaSelect,
       academic_group: GroupSelect,
-      parent: ParentNaameSelect ?? NaN,
       science_type: RoomType
-    }, (response) => {
+    }
+    if (ParentNaameSelect) {
+      PatokList.parent = ParentNaameSelect
+    }
+    postPatoks(patokadmin, PatokList, (response) => {
       console.log(response);
       setStatus(!Status)
       handleClose2()
@@ -251,12 +296,16 @@ export default function Streams() {
                 value: 12,
               }]}
             /> */}
-            <AllSelectFullWidth
+             <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
             <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)}/>
-           
+            <AllSelectFullWidth
+              chageValueFunction={val => setSemesterNumber(val)}
+              selectedOptionP={1}
+              selectOptions={SemesterNum}
+            />
           </InputsWrapper>
         </BoxHeader>
         <BoxHeader>
@@ -635,10 +684,12 @@ export default function Streams() {
                 chageValueFunction={val => console.log(val)}
                 selectOptions={AcademicGroupList}
               /> */}
+              
               <MultipleSelectChip
-                chageValueFunction={val => setGroupSelect(val)}
+                chageValueFunction={setGroups}
                 selectOptions={AcademicGroupList} />
             </ModalSelectWrapper>
+
 
 
 
@@ -656,7 +707,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на практику                        </Typography>
+                Amaliyot guruhga ajratish                        </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setAmaliyotSelect(val)}
                 selectOptions={Amaliyot}
@@ -675,7 +726,7 @@ export default function Streams() {
                   mb: "10px"
                 }}
               >
-                Разделение потока на лаборатории                        </Typography>
+                Labaratoriya guruhga ajratish                          </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setLabaratoriyaSelect(val)}
                 selectOptions={Labaratoriya}

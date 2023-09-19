@@ -6,3 +6,9 @@ export const QuizWrapperStyle = styled.div`
     display: flex;
     align-items: center;
 `
+
+export const QuizBack = styled.div`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+`

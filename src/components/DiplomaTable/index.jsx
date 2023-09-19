@@ -72,46 +72,7 @@ export default function DiplomaTable() {
                 </thead>
                 <tbody>
                     <tr>
-                        <th>1494</th>
-                        <th>DT loyihalarini boshqarish</th>
-                        <th>01-06-2023 13:58</th>
-                        <th>SPM201</th>
-                        <th>
-                        <Link to={'1'}>
-                                <Button 
-                                    variant="contained"
-                                    sx={{
-                                        borderRadius: "10px",
-                                        textTransform: "capitalize",
-                                        boxShadow: "none",
-                                        padding: "6px 10px"
-                                    }}
-                                >
-                                    {listLanguage.DiplomTopics['ru']}
-                                </Button>
-                            </Link>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>1494</th>
-                        <th>SWD002</th>
-                        <th>01-06-2023 13:58</th>
-                        <th>SPM201</th>
-                        <th>
-                            <Link to={'1'}>
-                                <Button 
-                                    variant="contained"
-                                    sx={{
-                                        borderRadius: "10px",
-                                        textTransform: "capitalize",
-                                        boxShadow: "none",
-                                        padding: "6px 10px"
-                                    }}
-                                >
-                                    {listLanguage.DiplomTopics['ru']}
-                                </Button>
-                            </Link>
-                        </th>
+                        <th colSpan={12} align='center'>Ma'lumot yo'q</th>
                     </tr>
                 </tbody>
             </table>

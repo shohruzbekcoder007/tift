@@ -40,22 +40,31 @@ export default function Curriculum() {
 
   const [Semester, setSemester] = useState(1)
   const [Direction, setDirection] = useState(null)
+  const [DirectionID, setDirectionID] = useState(null)
   const [Degree, setDegree] = useState('bachelor')
   const [StudyType, setStudyType] = useState('morning')
 
 
   useEffect(() => {
-    getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}`, response => {
-      console.log(response.data.results);
-      setPlans(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-    }, error => {
-      console.log(error)
-    })
+    if (DirectionID) {
+      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}&direction=${DirectionID}`, response => {
+        console.log(response.data.results);
+        setPlans(response.data.results)
+        setAllCount(response.data.count)
+        setPageCount(response.data.page_count)
+      }, error => {
+        console.log(error)
+      })
+    }
 
+   
+  }, [page, pageSize, searchText, deleted,DirectionID])
+
+
+  useEffect(() => {
     getDirections(Directions, (response) => {
       console.log(response);
+      setDirectionID(response[0].id)
       let list = []
       response.map(item => {
         list.push({
@@ -68,7 +77,7 @@ export default function Curriculum() {
     }, (error) => {
       console.log(error)
     })
-  }, [page, pageSize, searchText, deleted])
+  }, []);
 
   
   const admindegree = useMemo(() => {
@@ -185,10 +194,15 @@ export default function Curriculum() {
         }}
       >
         <BoxHeader>
+      
           <PageSelector chageValueFunction={(val) => {
             console.log(val)
           }} />
           <AttendSearchButton>
+          <AllSelectFullWidth
+                chageValueFunction={val => setDirectionID(val)}
+                selectOptions={DirectionsList}
+              />
             <Button
               variant="contained"
               onClick={handleOpen}
