@@ -73,9 +73,9 @@ export default function Header() {
         </svg>
       </TreeDots>
       <HeaderAccount open={headerAccount}>
-        <HeaderAccountTime>
+        {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
-        </HeaderAccountTime>
+        </HeaderAccountTime> */}
         {
           (getRole(user) == "student" || getRole(user) == "teacher")?<>
             <HeaderAccountItem

@@ -151,7 +151,7 @@ export default function Information() {
       <InfoBody>
         <HeaderWrapper>
           <HeaderWrapperTop>
-            <img src={`${host}${infoList.avatar}`} alt="UserImage" />
+            <img src={`${host}${infoList.avatar}`} alt="Photo" />
             <HeaderWrapperTopDiv>
               <HeaderWrapperH4>{infoList.full_name}</HeaderWrapperH4>
               {/* Xayrulla o’g’li */}
