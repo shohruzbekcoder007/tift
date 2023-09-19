@@ -224,7 +224,7 @@ export default function StudentSciencesMain() {
                             </Link>
                           </th>
                           <th>
-                          <Link to='calendarplan' state={{data:elem.id}}>
+                          <Link to='calendarplan' state={{data:elem.groups[0].id}}>
                             <Button
                               variant="contained"
                               color="secondary"
@@ -248,7 +248,7 @@ export default function StudentSciencesMain() {
                             </svg>}
                             >
                               
-                              Materiallar
+                              Materiallar 
                             </Button>
                           </Link>
                           </th>

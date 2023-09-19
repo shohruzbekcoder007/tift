@@ -16,7 +16,6 @@ export default function ClassScheduleTeacher() {
   const [ScheduleList, setScheduleList] = useState([]);
   useEffect(() => {
     getClassSchedule(teacher_schedule, (response) => {
-      console.log(response.data);
       setScheduleList(response.data)
     }, (error) => {
       console.log(error)

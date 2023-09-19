@@ -4,14 +4,14 @@
 // export const host = "http://husanibragimov.jprq.live"
 export const host = "https://api.tift.uz"
 // export const host = "https://oqdevpy.jprq.live"
-// export const host = "https://37f0-194-93-24-106.ngrok-free.app"
+// export const host = "https://c68d-178-218-200-199.ngrok-free.app"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://api.lms-edu.uz"
 // export const host = "https://jonibekyorkulov.jprq.live"
 // export const host = "https://oqdevpy.jprq.live"
-// export const host =  "https://api.lms-edu.uz"
+// export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
-// export const host =  "https://jaloliddin1006.jprq.live"
+// export const host = "https://jaloliddin1006.jprq.live"
 
 export const token_url = "/token/"
 export const user_me = "/users/me/"
@@ -63,7 +63,8 @@ export const my_tasschedule= "/student/schedule-table/"
 export const notifications= "/student/notifications/"
 export const my_scince_lessons= "/student/my-scince-lessons/"
 export const studentcontract= "/studentcontract/"
-
+export const student_test_detail = "student/test-detail/"
+export const student_test_solve = "student/test-solve/"
 
 
 // semester 
