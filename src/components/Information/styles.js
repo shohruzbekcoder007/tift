@@ -80,7 +80,7 @@ export const Hr = styled.hr`
 export const HeaderWrapperBottom = styled.div`
   height: 80%;
   width: 100%;
-
+  padding: 1rem 0;
   `
 
 export const InfoBody = styled.div`
