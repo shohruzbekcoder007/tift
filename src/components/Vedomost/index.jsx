@@ -8,6 +8,7 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { createTaskGrade, getTeacherVedemost } from './requests'
 import { host, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
+import { ThesisHeader } from '../Thesis/styles'
 
 export default function Vedomost() {
   const { state } = useLocation()
@@ -75,7 +76,8 @@ export default function Vedomost() {
         borderRadius: "10px"
       }}
     >
-      <Typography
+      <ThesisHeader>
+        <Typography
         variant='h2'
         sx={{
           color: '#000',
@@ -87,7 +89,29 @@ export default function Vedomost() {
         }}
       >
         O’zlashtirish qaydnomasi
-      </Typography>
+        </Typography>
+        <Button
+                            variant="contained"
+                            onClick={(_) => {}}
+                            sx={{
+                                textTransform: "capitalize",
+                                boxShadow: "none",
+                                padding: "12px 70px",
+                                borderRadius: "10px",
+                                fontWeight: "600",
+                                fontSize: "14px",
+                                lineHeight: "17px"
+                            }}
+                            startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                          </svg>
+                            }
+                        >
+                            Vedemost Yuklab olish
+                        </Button>
+      </ThesisHeader>
+
       <BoxHeader>
         <Typography
           variant='h2'
