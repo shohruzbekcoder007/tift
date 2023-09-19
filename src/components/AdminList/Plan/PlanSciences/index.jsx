@@ -53,10 +53,10 @@ export default function PlanSciences() {
     getAcademic_ShortScience(`${science}short/`, response => {
       let list = []
       console.log(response);
-      response.data.map(item => {
+      response.data.map(elem => {
         list.push({
-          value: item.id,
-          name: item.name + " (" + item.direction + " " + item.semester + "-semester)"
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
+          value: elem.id
         })
         setSciencesID(response.data[0].id)
       })
