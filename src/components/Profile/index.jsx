@@ -156,7 +156,10 @@ export default function Profile() {
                 borderRadius: "10px",
                 fontWeight: "600",
                 fontSize: "14px",
-                lineHeight: "17px"
+                lineHeight: "17px",
+                '@media screen and (max-width: 456px)': {
+                  width: '45%'
+                },
               }}
             >
               Saqlash

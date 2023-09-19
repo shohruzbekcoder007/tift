@@ -13,7 +13,7 @@ export const host = "https://api.lms-edu.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 
-export const token_url = "/token/"
+export default "/token/"
 export const user_me = "/users/me/"
 
 // teacher 

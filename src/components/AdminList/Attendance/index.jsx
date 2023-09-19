@@ -11,8 +11,9 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import listLanguage from './language.json'
 import { changeNbPetition, getSemesters, getTeacherGroups, getTeachersList, setNbPetition } from './requests'
-import { allusers, semester, teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
+import { allusers, my_semesters, semester, teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
+import MultipleSelectChip from '../../Multisellect'
 
 
 export default function Attend() {
@@ -39,7 +40,8 @@ export default function Attend() {
     const [selectedValues, setSelectedValues] = useState([]);
     
     const handleMultiSelectChange = (values) => {
-        setSelectedValues(values)
+        let nimadir = values.map(element => element.value)
+        setSelectedValues(nimadir)
     };
 
     const Para = useMemo(() => {
@@ -72,8 +74,8 @@ export default function Attend() {
       }, [])
 
     useEffect(() => {
-        getSemesters(`${semester}`, (response) => {
-            setSemesterID(response.data.results[0].id);
+        getSemesters(`${my_semesters}`, (response) => {
+            setSemesterID(response.data?.[0]?.id);
         }, (error) => {
             console.log(error)
         })
@@ -82,7 +84,6 @@ export default function Attend() {
     useEffect(() => {
         if (SemesterID) {
             getTeachersList(`${allusers}?role__name=teacher`, (response) => {
-                console.log(response.data);
                 setTeachersList(response.data.results)
                 setTeachersList(response.data?.results?.map(elem => {
                     return {
@@ -653,10 +654,9 @@ export default function Attend() {
                                 chageValueFunction={val => console.log(val)}
                                 selectOptions={studentsList}
                             /> */}
-                            <MultiSelect
-                                options={studentsList}
-                                selectedValues={selectedValues}
-                                onChange={handleMultiSelectChange}
+                            <MultipleSelectChip
+                                selectOptions={studentsList}
+                                chageValueFunction={handleMultiSelectChange}
                             />
                         </ModalSelectWrapper>
                         <ModalButtons>

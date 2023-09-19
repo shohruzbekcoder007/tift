@@ -52,7 +52,7 @@ export default function Student_services() {
                 fontSize: "14px",
                 lineHeight: "17px"
               }}
-              onClick={handleOpen}
+              // onClick={handleOpen}
             >
               Ariza berish
             </Button>
@@ -61,10 +61,10 @@ export default function Student_services() {
         <ThesisBody>
           <ServicesTable />
         </ThesisBody>
-        <BoxFooter>
+        {/* <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
-        </BoxFooter>
+        </BoxFooter> */}
       </Paper>
       <Modal
         keepMounted

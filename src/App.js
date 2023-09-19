@@ -139,10 +139,9 @@ import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
 import TeacherStatistic from './components/TeacherStatistic'
-import TeacherJournal from './components/TeacherJournal'
 import Quiz from './components/Quiz'
+import TeacherJournal from './components/TeacherJournal/index'
 import QuizWrapper from './components/QuizWrapper'
-
 
 function App() {
 

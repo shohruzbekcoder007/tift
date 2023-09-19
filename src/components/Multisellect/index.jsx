@@ -34,7 +34,7 @@ const personList = [
   }
 ];
 
-const FormHumanSelect = ({chageValueFunction, selectOptions}) => {
+const MultipleSelectChip = ({chageValueFunction, selectOptions}) => {
   const formik = useFormik({
     initialValues: savedTask,
     onSubmit: (values) => {
@@ -103,4 +103,4 @@ const FormHumanSelect = ({chageValueFunction, selectOptions}) => {
   );
 };
 
-export default FormHumanSelect;
+export default MultipleSelectChip;

@@ -177,9 +177,9 @@ export default function NBfix() {
                                             <tr key={index}>
                                                 <th>{elem.id}</th>
                                                 <th>Saidvalieva Dilafruz Ravshanovna</th>
-                                                <th>SWD002</th>
-                                                <th>31-03-2023</th>
-                                                <th>1</th>
+                                                <th>{elem.patok}</th>
+                                                <th>{elem.created_at}</th>
+                                                <th>{elem.lesson}</th>
                                                 <th>2. IT organizations: talking about what IT <br /> companies do; Present simple question; IT businesses and product;</th>
                                                 <th style={{ display: "flex" }}>
                                                     <Button

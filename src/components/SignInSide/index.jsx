@@ -10,7 +10,7 @@ import { CircularProgress, Snackbar, Typography } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { token_url, user_me } from '../../utils/API_urls'
+import token_url, { user_me } from '../../utils/API_urls'
 import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'

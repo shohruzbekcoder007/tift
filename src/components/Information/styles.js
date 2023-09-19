@@ -29,6 +29,11 @@ export const HeaderWrapperTop = styled.div`
     border-radius: 50%;
     background-color: ${props => props.theme.color.secondary_color};
     object-fit: contain;
+    display: flex;
+    align-items: center;
+    @media (max-width: 456px) {
+     width: 110px;
+    }
   }
   `
 
@@ -47,6 +52,9 @@ export const EditIcon = styled.div`
     justify-content: center;
     border-radius: 5px;
     cursor: pointer;
+    @media (max-width: 456px) {
+      width: 55px;
+    }
 `
 
 export const WrapperBody = styled.div`
