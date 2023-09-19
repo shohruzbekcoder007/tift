@@ -143,7 +143,6 @@ import Quiz from './components/Quiz'
 import TeacherJournal from './components/TeacherJournal/index'
 import QuizWrapper from './components/QuizWrapper'
 
-
 function App() {
 
   const user = useSelector((state) => state.user);
