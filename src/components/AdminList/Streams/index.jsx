@@ -289,7 +289,8 @@ export default function Streams() {
     getChangeTeacher(`${patok_teacher}?patok_id=${PatokID}`, {
       teacher: TeachersListSelect
     }, (response) => {
-      console.log(response);
+      setStatus(!Status)
+      handleClose()
     }, (error) => {
       console.log(error);
     })
