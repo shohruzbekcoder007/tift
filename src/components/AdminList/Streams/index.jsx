@@ -251,7 +251,7 @@ export default function Streams() {
     }, (error) => {
       console.log(error)
     })
-    getTeachers(`${allusers}?role__name=teacher`, (response) => {
+    getTeachers(`${allusers}?role__name=teacher&page_size=1000`, (response) => {
       setTeachersList(response.data.results.map(elem => {
         return {
           name: elem.full_name,
