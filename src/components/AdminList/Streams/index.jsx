@@ -5,7 +5,7 @@ import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton } from './styles'
+import { AttendSearchButton, ModalBody, ModalBoxTeacher } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
@@ -57,7 +57,7 @@ export default function Streams() {
   const [Status, setStatus] = useState(false);
   const [ScienceType, setScienceType] = useState();
   const [TeachersList, setTeachersList] = useState([]);
-  const [TeachersListSelect, setTeachersListSelect] = useState([]);
+  const [TeachersListSelect, setTeachersListSelect] = useState(null);
 
 
   const setFileHandler = (newValue, info) => {
@@ -68,6 +68,11 @@ export default function Streams() {
     let nimadir = val.map(element => element.value)
     setGroupSelect(nimadir)
   }
+
+  // const setTeacher = (val) => {
+  //   let nimadir = val.map(element => element.value)
+  //   setTeachersListSelect(nimadir)
+  // }
 
 
   const SemesterNum = useMemo(() => {
@@ -264,6 +269,7 @@ export default function Streams() {
   }, []);
 
   const handleClick = (_) => {
+    console.log(TeachersListSelect);
     let PatokList = {
       lang: LangSelect,
       semester: SemesterSelect,
@@ -286,6 +292,8 @@ export default function Streams() {
   }
 
   const handleChangeTeacher = (_) => {
+    console.log(TeachersListSelect);
+
     getChangeTeacher(`${patok_teacher}?patok_id=${PatokID}`, {
       teacher: TeachersListSelect
     }, (response) => {
@@ -837,7 +845,7 @@ export default function Streams() {
           aria-describedby="keep-mounted-modal-description"
         >
           {/* <form> */}
-          <ModalBox>
+          <ModalBoxTeacher>
             <div style={{ marginBottom: '20px' }}>
               <ModalHeader>
                 <Typography
@@ -862,6 +870,7 @@ export default function Streams() {
               </ModalHeader>
             </div>
             <ModalSelectWrapper>
+              <ModalBody>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -875,10 +884,10 @@ export default function Streams() {
               >
                 O'qituvchilar
               </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setTeachersListSelect(val)}
-                selectOptions={TeachersList}
-              />
+            <AutocompleteJames selectOptions={TeachersList} chageValueFunction={val => setTeachersListSelect(val)} />
+
+              </ModalBody>
+                
               {/* <CustomizedInputSimple callback_func={(val) => { setName(val) }} defaultValue={elem.lesson} placeholder="Kiriting" /> */}
             </ModalSelectWrapper>
             <ModalButtons>
@@ -898,7 +907,7 @@ export default function Streams() {
                 Saqlash
               </Button>
             </ModalButtons>
-          </ModalBox>
+          </ModalBoxTeacher>
           {/* </form> */}
 
         </Modal>
