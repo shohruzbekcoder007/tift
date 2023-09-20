@@ -1,12 +1,13 @@
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import uzLocale from '@fullcalendar/core/locales/uz';
+// import FullCalendar from '@fullcalendar/react';
+// import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import interactionPlugin from '@fullcalendar/interaction';
+// import uzLocale from '@fullcalendar/core/locales/uz';
 import { Paper } from '@mui/material';
 import { getClassSchedule } from './requests';
 import { useEffect, useState } from 'react';
 import { my_tasschedule } from '../../utils/API_urls';
+import ClassScheduleTable from '../../components/ClassScheduleTeacher/ClassScheduleTable'
 
 function CalendarDayWeek() {
   const [Semester, setSemester] = useState(2);
@@ -32,7 +33,7 @@ function CalendarDayWeek() {
           // minWidth: "300px"
         }}
       >
-        <FullCalendar
+        {/* <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           timeZone='GMT+5'
@@ -60,7 +61,8 @@ function CalendarDayWeek() {
           dateClick={(e) => console.log(e.dateStr)}
           eventClick={(e) => console.log(e.event.id)}
           locale={uzLocale}
-        />
+        /> */}
+        <ClassScheduleTable/>
       </Paper>
     </>
   );

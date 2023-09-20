@@ -9,6 +9,7 @@ export default function ClassScheduleTable() {
                 <thead>
                     <tr>
                         <th>{listLanguage.Week['ru']}</th>
+                        <th>Vaqt</th>
                         <th>{listLanguage.Couple['ru']}</th>
                         <th>{listLanguage.Monday['ru']}</th>
                         <th>{listLanguage.Tuesday['ru']}</th>
@@ -20,7 +21,7 @@ export default function ClassScheduleTable() {
                 </thead>
                 <tbody>
                     <TableWeek weekNumber={1}/>
-                    <TableWeek weekNumber={2}/>
+                    {/* <TableWeek weekNumber={2}/> */}
                 </tbody>
             </table>
         </ClassScheduleTableWrapper>
