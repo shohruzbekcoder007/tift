@@ -5,7 +5,7 @@ export default function TableWeek({ weekNumber }) {
   return (
     <>
         <tr>
-                        <th rowSpan={6}>{weekNumber}</th>
+                        {/* <th rowSpan={6}>{weekNumber}</th> */}
                         <th>9:00 - 10:20</th>
                         <th>1</th>
                         <th><ScheduleTableBox/></th>
