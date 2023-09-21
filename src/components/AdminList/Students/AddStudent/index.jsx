@@ -10,7 +10,7 @@ import citizenship from '../../../../dictionary/citizenship'
 import nationality from '../../../../dictionary/nationality'
 import academic_title from '../../../../dictionary/academic_title'
 import academic_degree from '../../../../dictionary/academic_degree'
-import { PatchEmployee, createEmployee, getOneEmployees, getRegionListRequest } from './request'
+import { PatchEmployee, getOneEmployees, getRegionListRequest } from './request'
 import { country, district, employee, kafedra, region } from '../../../../utils/API_urls'
 import BasicDatePicker from '../../../BasicDatePicker'
 import { useLocation, useNavigate } from 'react-router-dom';
