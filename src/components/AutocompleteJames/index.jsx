@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function AutocompleteJames({selectOptions, chageValueFunction}) {
+export default function AutocompleteJames({selectOptions, chageValueFunction, label}) {
   return (
     <Autocomplete
       disablePortal
@@ -39,7 +39,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction}) {
           ({ name }) => name.toLowerCase().includes(inputValue.toLowerCase())
         )
       }
-      renderInput={(params) => <TextField {...params} label="Fan" />}
+      renderInput={(params) => <TextField {...params} label={label} />}
       renderOption={(props, option) => {
         return <li {...props} key={option.value}>
           {option.name}

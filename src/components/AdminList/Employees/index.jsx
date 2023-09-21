@@ -223,7 +223,7 @@ export const OneEmployee = ({ elem, setDeleted }) => {
       <th>{elem.full_name}</th>
       <th>{elem.gender}</th>
       <th>
-        <Link to={'career'}>
+        {/* <Link to={'career'}> */}
           <IconButton style={{ margin: '0 15px', padding: "10px 25px" }}>
             {
               elem.role.map( (element, ind) => <span key={ind} style={{margin: "0 5px"}}>“{element}”,</span>
@@ -231,15 +231,15 @@ export const OneEmployee = ({ elem, setDeleted }) => {
             }
             
           </IconButton>
-        </Link>
+        {/* </Link> */}
       </th>
       <th>
-        <Link to={'show'}>
+        {/* <Link to={'show'}>
           <IconButton style={{ margin: '0 15px', padding: "10px 25px" }}>
             Ko’rsatish
           </IconButton>
-        </Link>
-        <Link to={'edit'}>
+        </Link> */}
+        <Link to={'edit'} state={{employeesID: elem.id}}>
           <Button
             variant="contained"
             sx={{
@@ -264,7 +264,7 @@ export const OneEmployee = ({ elem, setDeleted }) => {
           >
           </Button>
         </Link>
-        <Button
+        {/* <Button
           variant="contained"
           onClick={(_) => {deleteStaff()}}
           sx={{
@@ -291,7 +291,7 @@ export const OneEmployee = ({ elem, setDeleted }) => {
             </defs>
           </svg>}
         >
-        </Button>
+        </Button> */}
       </th>
     </tr>
   )
