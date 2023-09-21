@@ -12,9 +12,11 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
-import { DeleteStudentNBPetition, getReference } from './request'
-import { host, studentnb } from '../../../utils/API_urls'
+import { AddStudentNB, DeleteStudentNBPetition, getReference } from './request'
+import { allusers, host, studentnb, user_me, users_student } from '../../../utils/API_urls'
 import AutocompleteApi from '../../AutocompleteApi'
+import BasicDatePicker from '../../BasicDatePicker'
+import AutocompleteJames from '../../AutocompleteJames'
 
 export default function Reference() {
   const [open, setOpen] = React.useState(false);
@@ -24,16 +26,21 @@ export default function Reference() {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [StudentNbList, setStudentNbList] = useState([])
+  const [StudentsList, setStudentsList] = useState([])
+  const [StudentsListSelect, setStudentsListSelect] = useState([])
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [Status, setStatus] = useState(false)
+  const [StartDate, setStartDate] = useState(null)
+  const [EndDate, setEndDate] = useState(null)
+  const [SearchText, setSearchText] = useState('')
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
   //?page_size=${pageSize}&page=${page}
   useEffect(() => {
-    getReference(`${studentnb}?page_size=${pageSize}&page=${page}`, (response) => {
+    getReference(`${studentnb}?page_size=${pageSize}&page=${page}&search=${SearchText}`, (response) => {
       console.log(response);
       setStudentNbList(response.results)
       setPageCount(response.page_count)
@@ -41,10 +48,43 @@ export default function Reference() {
     }, (error) => {
       console.log(error)
     })
-  }, [pageSize, page, Status])
+  }, [pageSize, page, Status,SearchText])
+
+  useEffect(() => {
+    getReference(`${allusers}?role__name=student&page_size=10000`, (response) => {
+      console.log(response.results.length);
+      setStudentsList(response.results.map(elem => {
+        return {
+          name: elem.full_name,
+          value: elem.id
+        }
+      }));
+    }, (error) => {
+      console.log(error)
+    })
+  }, [])
 
   const DeleteStudentNb = (id) => {
     DeleteStudentNBPetition(`${studentnb}?id=${id}`, (response) => {
+      setStatus(!Status)
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  const handleCLick = () => {
+    const formData = new FormData();
+    formData.append("types", 'file');
+    formData.append("file", file);
+    formData.append("student", StudentsListSelect);
+    formData.append("start_date", StartDate);
+    formData.append("end_date", EndDate);
+
+    AddStudentNB(`${studentnb}`, formData, (response) => {
+      setFile(null)
+      setStartDate(null)
+      setEndDate(null)
+      handleClose()
       setStatus(!Status)
     }, (error) => {
       console.log(error)
@@ -66,7 +106,7 @@ export default function Reference() {
             console.log(val)
           }}/>
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -338,7 +378,7 @@ export default function Reference() {
                 }}
               >
                 Boshlanish sanasi                         </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+                <BasicDatePicker setFunction={(val) => setStartDate(val)} label="Boshlanish sanasi"/>
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
@@ -352,8 +392,10 @@ export default function Reference() {
                   mb: "10px"
                 }}
               >
-                Tugash sanasi                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+                Tugash sanasi                            
+              </Typography>
+                <BasicDatePicker setFunction={(val) => setEndDate(val)} label="Tugash sanasi"/>
+
 
             </ModalSelectWrapper>
             <ModalSelectWrapper>
@@ -370,13 +412,15 @@ export default function Reference() {
               >
                 Talaba
               </Typography>
-              <AllSelectFullWidth
+            <AutocompleteJames selectOptions={StudentsList} label={'tanlang'} chageValueFunction={val => setStudentsListSelect(val)} />
+
+              {/* <AllSelectFullWidth
                 chageValueFunction={val => console.log(val)}
                 selectOptions={[{
                   name: "name",
                   value: 12,
                 }]}
-              />
+              /> */}
               {/* <AutocompleteApi/> */}
             </ModalSelectWrapper>
             <ModalSelectWrapper>
@@ -412,6 +456,7 @@ export default function Reference() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleCLick}
               >
                 Saqlash
               </Button>
