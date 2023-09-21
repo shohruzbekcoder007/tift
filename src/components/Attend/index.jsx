@@ -567,6 +567,13 @@ export default function Attend() {
                                     {
                                         name: "6",
                                         value: 6,
+                                    },
+                                    {
+                                        name: "7",
+                                        value: 7,
+                                    },  {
+                                        name: "8",
+                                        value: 8,
                                     }
                                 ]}
                             />

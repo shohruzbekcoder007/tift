@@ -117,33 +117,34 @@ export default function ScheduleStudy() {
                   <TableTHHeader
                     text="Dushanba"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
                   <TableTHHeader
                     text="Seshanba"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
                   <TableTHHeader
                     text="Chorshanba"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
                   <TableTHHeader
                     text="Payshanba"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
                   <TableTHHeader
                     text="Juma"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
                   <TableTHHeader
                     text="Shanba"
                     iconc={null}
-                    colspan={6}
+                    colspan={7}
                   />
+                  
                 </tr>
                 <tr>
                   <TableTHHeader
@@ -171,27 +172,7 @@ export default function ScheduleStudy() {
                     iconc={null}
                   />
                   <TableTHHeader
-                    text="1"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="2"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="3"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="4"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="5"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="6"
+                    text="7"
                     iconc={null}
                   />
                   <TableTHHeader
@@ -219,27 +200,7 @@ export default function ScheduleStudy() {
                     iconc={null}
                   />
                   <TableTHHeader
-                    text="1"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="2"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="3"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="4"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="5"
-                    iconc={null}
-                  />
-                  <TableTHHeader
-                    text="6"
+                    text="7"
                     iconc={null}
                   />
                   <TableTHHeader
@@ -267,6 +228,10 @@ export default function ScheduleStudy() {
                     iconc={null}
                   />
                   <TableTHHeader
+                    text="7"
+                    iconc={null}
+                  />
+                  <TableTHHeader
                     text="1"
                     iconc={null}
                   />
@@ -288,6 +253,66 @@ export default function ScheduleStudy() {
                   />
                   <TableTHHeader
                     text="6"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="7"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="1"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="2"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="3"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="4"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="5"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="6"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="7"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="1"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="2"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="3"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="4"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="5"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="6"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="7"
                     iconc={null}
                   />
                 </tr>
