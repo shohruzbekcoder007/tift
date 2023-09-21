@@ -1,10 +1,10 @@
 import React from 'react'
-import Quiz from '../Quiz'
 import { useSelector } from 'react-redux'
 import PageNotFound from '../PageNotFound'
 import { getRole } from '../../utils/getRole'
 import { QuizWrapperStyle } from './styles'
 import Spinner from '../Spinner'
+import Quiz2 from '../Quiz/Quiz2'
 
 export default function QuizWrapper() {
 
@@ -13,7 +13,7 @@ export default function QuizWrapper() {
     return (
         <QuizWrapperStyle>
             {
-                getRole(user) === "student" ? <Quiz/>:user == null ? 
+                getRole(user) === "student" ? <Quiz2/>:user == null ? 
                     <Spinner/>:
                     <PageNotFound/>
             }

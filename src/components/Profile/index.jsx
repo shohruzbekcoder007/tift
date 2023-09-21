@@ -21,7 +21,7 @@ export default function Profile() {
   
   const dispatch = useDispatch()
   const language = useSelector(state => state.language)
-  
+  const {id} = useSelector(state => state.user)
   const [Lang, setLang] = useState(language);
   const [OldPass, setOldPass] = useState('');
   const [NewPass1, setNewPass1] = useState('');
@@ -71,7 +71,7 @@ export default function Profile() {
   }
 
   const handleChangePass = (_) => {
-      setPasswordUser(`${change_password}${sessionStorage.getItem('UserID')}/`, {
+      setPasswordUser(`${change_password}${id}/`, {
         old_password: OldPass,
         new_password1: NewPass1,
         new_password2: NewPass2
