@@ -2,7 +2,10 @@ import React from 'react'
 import { ClassScheduleTableWrapper } from './styles'
 import TableWeek from './TableWeek'
 import listLanguage from './language.json'
+import { useSelector } from 'react-redux'
 export default function ClassScheduleTable() {
+    const language = useSelector(state => state.language)
+
     return (
         <ClassScheduleTableWrapper>
             <table>
@@ -10,13 +13,13 @@ export default function ClassScheduleTable() {
                     <tr>
                         {/* <th>{listLanguage.Week['ru']}</th> */}
                         <th>Vaqt</th>
-                        <th>{listLanguage.Couple['ru']}</th>
-                        <th>{listLanguage.Monday['ru']}</th>
-                        <th>{listLanguage.Tuesday['ru']}</th>
-                        <th>{listLanguage.Wednesday['ru']}</th>
-                        <th>{listLanguage.thursday['ru']}</th>
-                        <th>{listLanguage.Friday['ru']}</th>
-                        <th>{listLanguage.saturday['ru']}</th>
+                        <th>{listLanguage.Couple[language]}</th>
+                        <th>{listLanguage.Monday[language]}</th>
+                        <th>{listLanguage.Tuesday[language]}</th>
+                        <th>{listLanguage.Wednesday[language]}</th>
+                        <th>{listLanguage.thursday[language]}</th>
+                        <th>{listLanguage.Friday[language]}</th>
+                        <th>{listLanguage.saturday[language]}</th>
                     </tr>
                 </thead>
                 <tbody>
