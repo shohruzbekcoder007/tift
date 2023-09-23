@@ -344,7 +344,7 @@ const OneStudent = ({student, setDeleted}) => {
         >
         </Button>
         </Link>
-        <Button
+        {/* <Button
           variant="contained"
           sx={{
             borderRadius: "10px",
@@ -372,7 +372,7 @@ const OneStudent = ({student, setDeleted}) => {
           }
           onClick={studentDeleted}
         >
-        </Button>
+        </Button> */}
       </th>
     </tr>
   )
