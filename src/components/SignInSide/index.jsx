@@ -116,7 +116,7 @@ export default function SignInSide() {
       {pageLoading?<LoadingPage/>:<></>}
     <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-        {haveatoken?<p>Foydalanuvchi topilmadi</p>:<p>Login yoki password noto'g'ri kiritildi</p>}
+        { haveatoken ? <p>Foydalanuvchi topilmadi</p> : <p>Login yoki password noto'g'ri kiritildi</p> }
       </Alert>
     </Snackbar>
       <Grid

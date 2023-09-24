@@ -12,17 +12,19 @@ import academic_title from '../../../../dictionary/academic_title'
 import { createStudent, getRegionListRequest } from './request'
 import { academic_group_short, country, directions, district, employee, region, users_student } from '../../../../utils/API_urls'
 import BasicDatePicker from '../../../BasicDatePicker'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 import { getAcademicGroup } from '../../Streams/request'
 import contract_type from '../../../../dictionary/contract_type'
 import study_type from '../../../../dictionary/study_type'
 import degree from '../../../../dictionary/degree'
 import language from '../../../../dictionary/language'
+import { PatchEmployee, getOneEmployees } from '../EditEmployees/request'
 
-export default function AddStudents() {
+export default function EditStudents() {
 
   const navigate = useNavigate();
+  const {state} = useLocation()
 
   const [file, setFile] = useState(null);
   const [regionList, setRegionList] = useState([])
@@ -38,6 +40,7 @@ export default function AddStudents() {
   const [academicGroupList, setacademicGroupList] = useState([])
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
+  const [Status, setStatus] = useState(false)
 
   const [newData, setNewData] = useState({
     citizenship: null,
@@ -256,12 +259,15 @@ export default function AddStudents() {
       })
     }
   },[regionId1])
+
+  
+
+
 // admin/employees
-  const createEmployes = () => {
+  const EditStudent = () => {
     // console.log(newData)
-    createStudent(users_student, newData, response => {
+    PatchEmployee(`${users_student}${state?.StudentID}/`, newData, response => {
       navigate(-1)
-      console.log(response)
     }, error => {
       serChanged(false)
       setOpenAlert(true)
@@ -290,6 +296,22 @@ export default function AddStudents() {
     })
   }
 
+  useEffect(() => {
+    getOneEmployees(`${users_student}${state?.StudentID}/`, response => {
+      console.log("response", response);
+      const updatedData = {
+        ...newData,
+        ...response.data,
+      };
+      // Set the updated data in your state
+      updatedData.avatar = null
+      setNewData(updatedData);
+      setStatus(true)
+      console.log(updatedData);
+    }, error => {
+      console.log(error)
+    })
+  }, []);
 
   return (
     <div>
@@ -301,9 +323,10 @@ export default function AddStudents() {
           margin: "0 0 20px 10px"
         }}
       >
-        Qo'shish
+        Tahrirlash
       </Typography>
-      <WrapperBox>
+      {
+        Status && <WrapperBox>
         <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -319,7 +342,7 @@ export default function AddStudents() {
             >
               Ism
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
+            <CustomizedInputSimple defaultValue={newData.first_name} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -335,7 +358,7 @@ export default function AddStudents() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple defaultValue={newData.passport} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -353,6 +376,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => { reqDataChange("gender", val) }}
+              selectedOptionP={newData.gender}
               selectOptions={jinsList}
             />
           </WrapperInputsCard>
@@ -373,7 +397,7 @@ export default function AddStudents() {
             >
               Familiya
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
+            <CustomizedInputSimple defaultValue={newData.last_name} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -389,7 +413,7 @@ export default function AddStudents() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+            <CustomizedInputSimple defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -424,7 +448,7 @@ export default function AddStudents() {
             >
               Sharifi
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sharifi" />
+            <CustomizedInputSimple defaultValue={newData.middle_name}  callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sharifi" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -440,7 +464,7 @@ export default function AddStudents() {
             >
               Elektron pochta
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
+            <CustomizedInputSimple defaultValue={newData.email}  callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -458,6 +482,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("citizenship", val)}
+              selectedOptionP={newData.citizenship}
               selectOptions={citizenshipList}
             />
           </WrapperInputsCard>
@@ -480,6 +505,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("country", val)}
+              selectedOptionP={newData.country}
               selectOptions={countryList}
             />
           </WrapperInputsCardTwo>
@@ -499,6 +525,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("nationality", val)}
+              selectedOptionP={newData.nationality}
               selectOptions={nationalityList}
             />
           </WrapperInputsCardTwo>
@@ -524,6 +551,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("specialty", val)}
+              selectedOptionP={newData.specialty}
               selectOptions={departmentList}
             />
           </WrapperInputsCardTwo>
@@ -541,7 +569,7 @@ export default function AddStudents() {
             >
               JSHSHR
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
+            <CustomizedInputSimple defaultValue={newData.jshshr}  callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
           </WrapperInputsCardTwo>
         </BoxHeader>
 
@@ -577,6 +605,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => {reqDataChange("region", val); setRegionId(val)}}
+              selectedOptionP={newData.region}
               selectOptions={regionList}
             />
           </WrapperInputsCardTwo>
@@ -596,6 +625,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("district", val)}
+              selectedOptionP={newData.district}
+
               selectOptions={districtList}
             />
           </WrapperInputsCardTwo>
@@ -616,7 +647,7 @@ export default function AddStudents() {
             >
               Manzil
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
+            <CustomizedInputSimple defaultValue={newData.address} callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
           </div>
         </BoxHeader>
 
@@ -633,7 +664,7 @@ export default function AddStudents() {
           }}
         >
           Vaqtinchalik yashash manzili
-        </Typography>''
+        </Typography>
 
         <BoxHeader>
           <WrapperInputsCardTwo>
@@ -652,6 +683,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => {reqDataChange("region2", val); setRegionId1(val)}}
+              selectedOptionP={newData.region2}
+
               selectOptions={regionList1}
             />
           </WrapperInputsCardTwo>
@@ -671,6 +704,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("district2", val)}
+              selectedOptionP={newData.district2}
+
               selectOptions={districtList1}
             />
           </WrapperInputsCardTwo>
@@ -691,7 +726,7 @@ export default function AddStudents() {
             >
               Manzil
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
+            <CustomizedInputSimple defaultValue={newData.address2} callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
         </BoxHeader>
 
@@ -727,6 +762,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("academic_group", val)}
+              selectedOptionP={newData.academic_group}
+
               selectOptions={academicGroupList}
             />
           </WrapperInputsCardTwo>
@@ -746,6 +783,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("form_of_payment", val)}
+              selectedOptionP={newData.form_of_payment}
+
               selectOptions={ContractList}
             />
           </WrapperInputsCardTwo>
@@ -766,7 +805,7 @@ export default function AddStudents() {
             >
               O'qishga kirgan yili
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("year_of_admission", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple defaultValue={newData.year_of_admission}  callback_func={(val) => { reqDataChange("year_of_admission", val) }} placeholder="" type={"number"}/>
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -782,7 +821,7 @@ export default function AddStudents() {
             >
               Kurs raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("course_number", val) }}  type="number"/>
+            <CustomizedInputSimple defaultValue={newData.course_number}  callback_func={(val) => { reqDataChange("course_number", val) }}  type="number"/>
           </WrapperInputsCardTwo>
         </BoxHeader>
 
@@ -801,7 +840,7 @@ export default function AddStudents() {
             >
               GPA
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("gpa", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple defaultValue={newData.gpa} callback_func={(val) => { reqDataChange("gpa", val) }} placeholder="" type={"number"}/>
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -819,6 +858,7 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("study_type", val)}
+              selectedOptionP={newData.study_type}
               selectOptions={StudyTypeList}
             />
           </WrapperInputsCardTwo>
@@ -839,7 +879,7 @@ export default function AddStudents() {
             >
               StudentID
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple defaultValue={newData.student_id} callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"}/>
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -857,6 +897,8 @@ export default function AddStudents() {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("lang", val)}
+              selectedOptionP={newData.lang}
+
               selectOptions={LangList}
             />
           </WrapperInputsCardTwo>
@@ -916,13 +958,14 @@ export default function AddStudents() {
             <Button
               sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
               variant="contained"
-              onClick={createEmployes}
+              onClick={EditStudent}
             >
               Saqlash
             </Button>
           </WrapperButtons>
         </WrapperInputsCardTwo>
       </WrapperBox>
+      }
       <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
         <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
           {alertMessage}

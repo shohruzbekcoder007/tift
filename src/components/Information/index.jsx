@@ -72,7 +72,7 @@ export default function Information() {
       console.log(error)
     })
 
-    
+
 
     getStudentInformation(student_region, (response) => {
       setChangedRegionId(response.data[0]?.id)
@@ -164,7 +164,7 @@ export default function Information() {
           </HeaderWrapperTop>
           <Hr />
           <HeaderWrapperBottom>
-          <WrapperBody>
+            <WrapperBody>
               <HeaderWrapperH4>Passport seriya:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.passport}</HeaderWrapperP>
             </WrapperBody>
@@ -192,7 +192,14 @@ export default function Information() {
               <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
-           
+            <WrapperBodyContract>
+              <Button
+                sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+              >
+                O'qish joyidan ma'lumotnoma
+              </Button>
+            </WrapperBodyContract>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
@@ -229,34 +236,34 @@ export default function Information() {
             <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBodyContract>
-              {
-                StudentContract.length > 0 ? StudentContract.map((elem, index) => {
-                  return (
-                    <>
-                      {
-                        elem.type == 'two' ?
-                          elem.file ? <a href={host + elem?.file} target='_blank'>
-                            <Button
-                              sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                              variant="contained"
-                            >
-                              Ikki Tomonlama Shartomani yuklab olish
-                            </Button>
-                          </a>
-                            : <Button
-                              sx={{
-                                width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
-                                "&:hover": {
-                                  backgroundColor: "text.secondary",
-                                },
-                                cursor: 'no-drop'
-                              }}
-                              variant="contained"
-                            >
-                              Ikki Tomonlama Shartomani yuklab olish
-                            </Button>
-                          :
-                          elem.file ? <a href={host + elem?.file} target='_blank'>
+            {
+              StudentContract.length > 0 ? StudentContract.map((elem, index) => {
+                return (
+                  <>
+                    {
+                      elem.type == 'two' ?
+                        elem.file ? <a href={host + elem?.file} target='_blank'>
+                          <Button
+                            sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                            variant="contained"
+                          >
+                            Ikki Tomonlama Shartomani yuklab olish
+                          </Button>
+                        </a>
+                          : <Button
+                            sx={{
+                              width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
+                              "&:hover": {
+                                backgroundColor: "text.secondary",
+                              },
+                              cursor: 'no-drop'
+                            }}
+                            variant="contained"
+                          >
+                            Ikki Tomonlama Shartomani yuklab olish
+                          </Button>
+                        :
+                        elem.file ? <a href={host + elem?.file} target='_blank'>
                           <Button
                             sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
@@ -276,14 +283,14 @@ export default function Information() {
                           >
                             Uch Tomonlama Shartomani yuklab olish
                           </Button>
-                      }
-                    </>
-                  )
-                })
-                  :
-                  <></>
-              }
-            </WrapperBodyContract>
+                    }
+                  </>
+                )
+              })
+                :
+                <></>
+            }
+          </WrapperBodyContract>
         </HeaderWrapper>
       </InfoBody>
 

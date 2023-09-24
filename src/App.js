@@ -142,6 +142,9 @@ import TeacherStatistic from './components/TeacherStatistic'
 import Quiz from './components/Quiz'
 import TeacherJournal from './components/TeacherJournal/index'
 import QuizWrapper from './components/QuizWrapper'
+import AddStudents from './components/AdminList/Students/AddStudent'
+import EditEmployeess from './components/AdminList/Students/EditEmployees'
+import EditStudents from './components/AdminList/Students/EditStudents'
 
 function App() {
 
@@ -296,6 +299,20 @@ function App() {
                       <Route path='sciences' element={<PlanSciences />} />
                     </Route>
                   </Route>
+                  <Route path="reference" element={<Reference />} />
+                  <Route path="employees" element={<StudentSciences />} >
+                    <Route index element={<Employees />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='add' element={<AddEmployees />} />
+                  </Route>
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<Students />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
@@ -382,14 +399,14 @@ function App() {
                     <Route index element={<Employees />} />
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
-                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='edit' element={<EditEmployeess />} />
                     <Route path='add' element={<AddEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
                     <Route path='information' element={<InformationStudent />} />
-                    <Route path='add' element={<EditEmployees />} />
-                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
                   </Route>
                   <Route path="directions" element={<StudentSciences />} >
                     <Route index element={<Directions />} />

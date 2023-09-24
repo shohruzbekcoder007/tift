@@ -46,7 +46,7 @@ const Semester = ({ title, data }) => {
             >
                { title }
             </Typography>
-            <ClassScheduleTableWrapper>
+            <ClassScheduleTableWrapper style={{flexDirection: "column", display: "flex", justifyContent: "space-between", height: "80%"}}>
                 <table>
                     <thead>
                         <tr>
@@ -59,7 +59,11 @@ const Semester = ({ title, data }) => {
                                 iconc={null}
                             />
                             <TableTHHeader
-                                text="Olingan baho"
+                                text="ball"
+                                iconc={null}
+                            />
+                             <TableTHHeader
+                                text="baho"
                                 iconc={null}
                             />
                         </tr>
@@ -72,6 +76,7 @@ const Semester = ({ title, data }) => {
                                     <tr key={index}>
                                         <th>{ elem.science }</th>
                                         <th>{ elem.credit }</th>
+                                        <th>{ elem.grade }</th>
                                         <th>{ elem.gpa }</th>
                                     </tr>
                                 )
@@ -84,6 +89,9 @@ const Semester = ({ title, data }) => {
                     </tbody>
                 </table>
             </ClassScheduleTableWrapper>
+                <div style={{display: "flex", justifyContent: 'end'}}>
+                    <h3>GPA: 0</h3>
+                </div>
         </PersonalPlanPaper>
     )
 }
