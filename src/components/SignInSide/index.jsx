@@ -15,7 +15,7 @@ import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'
 import VideoPlayer from "react-background-video-player";
-import login_pahe_img from '../../imgs/tift.mp4' 
+import login_pahe_img from '../../imgs/tift.gif' 
 // import zIndex from '@mui/material/styles/zIndex';
 
 const LoadingPage = () => {
@@ -36,13 +36,15 @@ const LoadingPage = () => {
             sx={{
                 position: 'absolute',
                 bottom: "10px",
-                right: "10px"
+                right: "10px",
+                float: 'left'
             }}
         >
-            <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            <Typography variant="body2" color="text.secondary" align="center"  sx={{ mt: 5, display: "flex", justifyContent: "center", width: "250px", alignItems: "center", }}>
                 <a href="https://www.ictacademy.uz/" target="_blank">
-                © ICT JOBS
-                </a>{' tomonidan ishlab chiqildi'}
+                  <img style={{width: "60px", height: "60px", margin: "0.5rem 0.5rem 0 0"}} src={require('../../imgs/OWNERS_LOGO.png')} alt="main logo" />
+                </a>
+                <p>{' tomonidan ishlab chiqildi'}</p>
             </Typography>
         </Box>
     );
@@ -129,7 +131,10 @@ export default function SignInSide() {
             t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          position: "relative"
+          position: "relative",
+          '@media screen and (max-width: 456px)': {
+            display: 'none'
+          },
         }}
       >
         <VideoPlayer
@@ -140,7 +145,7 @@ export default function SignInSide() {
         autoPlay={true}
         muted={true}
       />
-        salom
+        
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <Box
@@ -192,7 +197,7 @@ export default function SignInSide() {
         <Typography variant="body2" color="text.secondary" align="center">
               Admin:  (90) 037 68 09 , (90) 037 68 09
           </Typography>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright  />
       </Box>
         </Box>
       </Grid>
