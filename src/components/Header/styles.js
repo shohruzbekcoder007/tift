@@ -18,7 +18,6 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 890px) {
     padding-left: 32px;
   }
-  z-index: 99;
 
 `
 
@@ -71,7 +70,7 @@ export const HeaderAccount = styled.div`
       height: ${props => props.open ? 'auto' : '0'};
       padding: ${props => props.open ? '15px' : '0'};
       transition: all 0.2s ease 0s;
-      overflow: hidden;
+      overflow: ${props => props.open ? 'visible' : 'hidden'};;
     }
     @media (max-width: 350px) {
       flex-wrap: wrap;

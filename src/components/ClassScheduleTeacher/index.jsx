@@ -10,13 +10,14 @@ import interactionPlugin from '@fullcalendar/interaction';
 import uzLocale from '@fullcalendar/core/locales/uz';
 import { getClassSchedule } from './requests';
 import { teacher_schedule } from '../../utils/API_urls';
+import ClassScheduleTable from './ClassScheduleTable';
 
 export default function ClassScheduleTeacher() {
-
   const [ScheduleList, setScheduleList] = useState([]);
   useEffect(() => {
-    getClassSchedule(teacher_schedule, (response) => {
-      setScheduleList(response.data)
+    getClassSchedule(`${teacher_schedule}`, (response) => {
+      // console.log(response.data);
+      setScheduleList(response.data || []) 
     }, (error) => {
       console.log(error)
     })
@@ -32,9 +33,11 @@ export default function ClassScheduleTeacher() {
           borderRadius: "10px"
         }}
       >
+        <ClassScheduleTable table={ScheduleList?.results}/>
+
         {/* <ClassScheduleTable/>  */}
         {/* student table  */}
-        <FullCalendar
+        {/* <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           timeZone='GMT+5'
@@ -72,7 +75,7 @@ export default function ClassScheduleTeacher() {
           dateClick={(e) => console.log(e.dateStr)}
           eventClick={(e) => console.log(e.event.id)}
           locale={uzLocale}
-        />
+        /> */}
       </Paper>
     </ContentWrapper>
   )
