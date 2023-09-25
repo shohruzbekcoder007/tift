@@ -12,22 +12,24 @@ import { useNavigate } from "react-router-dom";
 import { logoutRequest } from './requests';
 import { logout } from '../../utils/API_urls';
 import { setUser } from '../../redux/action/userActions';
+import listLanguage from './language.json'
 
 export default function Profile() {
-
+  
   const navigate = useNavigate();
   
   const dispatch = useDispatch()
+
   const language = useSelector(state => state.language)
   
   const [Lang, setLang] = React.useState(language);
-
-
+  
+  
   const handleChange = (event) => {
     setLang(event.target.value);
     dispatch(setLanguage(event.target.value))
   };
-
+  
   const handleLogOut = (_) => {
     logoutRequest(logout, {
       refresh_token: sessionStorage.getItem('refresh_token')
@@ -42,22 +44,22 @@ export default function Profile() {
       console.log(error)
     })
   }
-
+  
   return (
     <ContentWrapper>
       <div className="">
         <ProfileWrapper>
           <ProfileWrapperTitle>
-            Tilni o'zgartirish
+            {listLanguage.ChangingLang[language]}
           </ProfileWrapperTitle>
 
           <FormControl fullWidth style={{ margin: '1rem 0', backgroundColor: "#F6F6F6", border: '0 0 0 0 ', marginBottom: '2rem' }}>
-            <InputLabel id="demo-simple-select-label">Til</InputLabel>
+            <InputLabel id="demo-simple-select-label">{listLanguage.Lang[language]}</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={Lang}
-              label="Til"
+              label={listLanguage.Lang[language]}
               onChange={handleChange}>
               <MenuItem selected value={"uz"}>O'zbekcha</MenuItem>
               <MenuItem value={"ru"}>Русский</MenuItem>
@@ -66,23 +68,23 @@ export default function Profile() {
           </FormControl>
 
           <ProfileWrapperTitle>
-            Parolni o’zgartirish
+          {listLanguage.ChangingPassword[language]}
           </ProfileWrapperTitle>
           <ProfileWrapperSubtitle>
-            Eski parol
+          {listLanguage.OldPassword[language]}
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Eski parolni kiriting' type='password' />
+          <PasswordInput placeholder={listLanguage.EnterOldPassword[language]} type='password' />
           <ProfileWrapperSubtitle>
-            Yangi parol
+          {listLanguage.NewPassword[language]}
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Yangi parolni kiriting' type='password' />
+          <PasswordInput placeholder={listLanguage.EnterNewPassword[language]} type='password' />
           <ProfileWrapperSubtitle>
-            Yangi parolni tasdiqlash
+          {listLanguage.ConfirmNewPassword[language]}
           </ProfileWrapperSubtitle>
-          <PasswordInput placeholder='Yangi parolni kiriting' type='password' />
+          <PasswordInput placeholder={listLanguage.EnterNewPassword[language]} type='password' />
           <ProfileButtonGroup>
             <ProfileButton>
-              Bekor qilish
+            {listLanguage.Cancel[language]}
             </ProfileButton>
             <Button
               variant="contained"
@@ -96,7 +98,7 @@ export default function Profile() {
                 lineHeight: "17px"
               }}
             >
-              Saqlash
+               {listLanguage.Save[language]}
             </Button>
           </ProfileButtonGroup>
         </ProfileWrapper>
@@ -114,7 +116,7 @@ export default function Profile() {
               </clipPath>
             </defs>
           </svg>
-          <p style={{ color: '#F41B35' }}>Chiqish</p>
+          <p style={{ color: '#F41B35' }}> {listLanguage.Back[language]}</p>
         </ProfileLogOut>
       </div>
     </ContentWrapper>

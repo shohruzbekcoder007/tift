@@ -1,0 +1,57 @@
+{
+    "ChangingLang": {
+        "uz": "Tilni o'zgartirish",
+        "ru": "Изменить язык",
+        "eng": "Change language"
+    },
+    "ChangingPassword": {
+        "uz": "Parolni o'zgartirish",
+        "ru": "Изменить пароль",
+        "eng": "Change password"
+    },
+    "OldPassword": {
+        "uz": "Eski parol",
+        "ru": "Старый пароль",
+        "eng": "Old password"
+    },
+    "NewPassword": {
+        "uz": "Yangi parol",
+        "ru": "Новый пароль",
+        "eng": "New password"
+    },
+    "ConfirmNewPassword": {
+        "uz": "Yangi parolni tasdiqlash",
+        "ru": "Потдвердить новый пароль",
+        "eng": "Confirm new password"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    },
+    "Back": {
+        "uz": "Ortga",
+        "ru": "Выход",
+        "eng": "Back"
+    },
+    "Lang": {
+        "uz": "Til",
+        "ru": "Язык",
+        "eng": "Language"
+    },
+    "EnterOldPassword": {
+        "uz": "Eski parolni kiriting",
+        "ru": "Введите старый пароль",
+        "eng": "Enter old password"
+    },
+    "EnterNewPassword": {
+        "uz": "Yangi parolni kiriting",
+        "ru": "Введите новый пароль",
+        "eng": "Enter new password"
+    }
+}
