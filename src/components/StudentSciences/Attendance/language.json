@@ -1,0 +1,62 @@
+{
+    "Attendance": {
+        "uz": "Davomat",
+        "ru": "Посещаемость",
+        "eng": "Attendance"
+    },
+    "Date": {
+        "uz": "Sana",
+        "ru": "Дата",
+        "eng": "Date"
+    },
+    "Science": {
+        "uz": "Fan",
+        "ru": "Предмет",
+        "eng": "Science"
+    },
+    "Type": {
+        "uz": "Turi",
+        "ru": "Тип",
+        "eng": "Type"
+    },
+    "TopicNumber": {
+        "uz": "Mavzu raqami",
+        "ru": "Номер предмета",
+        "eng": "Topic number"
+    },
+    "NoInformation": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+      },
+    "Topic": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Topic"
+    },
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количетво",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    }
+}

@@ -18,5 +18,45 @@
     "uz": "Reja",
     "ru": "План",
     "eng": "Plan"
-  }
+  },
+  "NoInformation": {
+    "uz": "Ma'lumot yo'q",
+    "ru": "Нет информации",
+    "eng": "No information"
+  },
+  "Tasks": {
+    "uz": "Vazifalar",
+    "ru": "Задания",
+    "eng": "Tasks"
+  },
+  "Materials": {
+    "uz": "Materiallar",
+    "ru": "Материалы",
+    "eng": "Materials"
+  },
+  "Total": {
+    "uz": "Jami",
+    "ru": "Обшее количетво",
+    "eng": "Total"
+},
+"Ta": {
+    "uz": "ta",
+    "ru": "",
+    "eng": ""
+},
+"From": {
+    "uz": "",
+    "ru": "от",
+    "eng": "from"
+},
+"To": {
+    "uz": "dan",
+    "ru": "до",
+    "eng": "to"
+},
+"AreShown": {
+    "uz": "gachasi ko'rsatilmoqda",
+    "ru": "показаны",
+    "eng": "are shown"
+}
 }

@@ -15,6 +15,7 @@ import ListLanguage from './language.json'
 
 export default function StudentSciencesMain() {
 
+  // lang
   const language = useSelector(state => state.language)
   
   const [semesters, setSemesters] = useState([])
@@ -161,7 +162,7 @@ export default function StudentSciencesMain() {
             <tbody>
               {
                 sciences.length === 0 ? <tr>
-                  <th colSpan={5} align='center'>Ma’lumot yo’q</th>
+                  <th colSpan={5} align='center'>{ListLanguage.NoInformation[language]}</th>
                 </tr>:<>
                   {
                     sciences.map((elem, index) => {
@@ -219,7 +220,7 @@ export default function StudentSciencesMain() {
                               </svg>
                               }
                             >
-                              Vazifalar
+                              {ListLanguage.Tasks[language]}
                             </Button>
                             </Link>
                           </th>
@@ -248,7 +249,7 @@ export default function StudentSciencesMain() {
                             </svg>}
                             >
                               
-                              Materiallar
+                              {ListLanguage.Materials[language]}
                             </Button>
                           </Link>
                           </th>
@@ -263,7 +264,7 @@ export default function StudentSciencesMain() {
         </ClassScheduleTableWrapper>
       </BoxBody>
       {/* <BoxFooter>
-        <BoxFooterText>{`Jami ${sciences[0]?.science?.length} ta, 1 dan ${sciences[0]?.science?.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+        <BoxFooterText>{`${ListLanguage.Total[language]} ${sciences[0]?.science?.length} ${ListLanguage.Ta[language]},${ListLanguage.From[language]} 1 ${ListLanguage.To[language]} ${sciences[0]?.science?.length} ${ListLanguage.AreShown[language]}`}</BoxFooterText>
         <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
       </BoxFooter> */}
     </Paper>

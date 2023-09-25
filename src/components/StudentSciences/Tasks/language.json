@@ -1,0 +1,117 @@
+{
+    "Tasks": {
+        "uz": "Vazifalar",
+        "ru": "Задания",
+        "eng": "Tasks"
+    },
+    "AccumulatedBall": {
+        "uz": "To'plangan bal",
+        "ru": "Накопленные баллы",
+        "eng": "Accumulated ball"
+    },
+    "MaxBall": {
+        "uz": "Eng yuqori bal",
+        "ru": "Максимальный бал",
+        "eng": "Max ball"
+    },
+    "Approptiation": {
+        "uz": "O'zlashtirish",
+        "ru": "Успеваемость",
+        "eng": "Appropriation"
+    },
+    "CurrentBall": {
+        "uz": "Hozirgi bahosi",
+        "ru": "УТекущая оценка",
+        "eng": "Current ball"
+    },
+    "Teacher": {
+        "uz": "O'qituvchi",
+        "ru": "Учитель",
+        "eng": "Teacher"
+    },
+    "Task": {
+        "uz": "Topshiriq",
+        "ru": "Задание",
+        "eng": "Task"
+    },
+    "TaskDeadline": {
+        "uz": "Topshiriq muddati",
+        "ru": "Срок выполнения задания",
+        "eng": "Task deadline"
+    },
+    "File": {
+        "uz": "Fayl",
+        "ru": "Файл",
+        "eng": "File"
+    },
+    "NoInformation": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "EvaluateTest": {
+        "uz": "Testni baholash",
+        "ru": "Оценка теста",
+        "eng": "Evaluatuation of the test"
+    },
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количетво",
+        "eng": "Total"
+    },
+    "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+    },
+    "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+    },
+    "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+    },
+    "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+    },
+    "UploadTask": {
+        "uz": "Vazifani yuklash",
+        "ru": "Загружать задание",
+        "eng": "Upload task"
+    },
+    "Add": {
+        "uz": "Qo'shish",
+        "ru": "Добавить",
+        "eng": "Add"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отменить",
+        "eng": "Cancel"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    },
+    "Download": {
+        "uz": "Yuklab olish",
+        "ru": "Скачать",
+        "eng": "Download"
+    },
+    "OutOfDate": {
+        "uz": "Muddati o'tgan",
+        "ru": "Устаревший",
+        "eng": "Out of date"
+    },
+    "UploadFile": {
+        "uz": "Faylni kiriting",
+        "ru": "Загрузите файл",
+        "eng": "Upload the file"
+    }
+}
