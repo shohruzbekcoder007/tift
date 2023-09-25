@@ -11,8 +11,13 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import ServicesTable from '../ServicesTable/ServicesTable'
+import { useMemo } from 'react'
+import { postStudentInformation } from './request'
+import { student_doc } from '../../utils/API_urls'
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
+  const [ListSelect, setListSelect] = React.useState(null);
+  const [JobInput, setJobInput] = React.useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -27,6 +32,29 @@ export default function Student_services() {
   const chagePageHandle = (_, value) => {
     console.log(value)
   }
+
+  const List = useMemo(() => {
+    return [{
+      name: "Ma'lumotnoma",
+      value: "information"
+    },
+    {
+      name: "Chaqiruv xati",
+      value: "invitation"
+    }]
+  }, [])
+
+  const handleClick = (_) => {
+    postStudentInformation(student_doc, {
+      type: ListSelect,
+      job: ListSelect != 'information' ? JobInput : ""
+    }, (response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
   return (
     <ContentWrapper>
       <Paper
@@ -40,7 +68,7 @@ export default function Student_services() {
         <ThesisHeader>
           <PageSelector chageValueFunction={chageRowHadler} />
           <ThesisHeaderRight >
-            <CustomizedInput callback_func={chageSearch} />
+            <CustomizedInput  callback_func={chageSearch} />
             <Button
               variant="contained"
               sx={{
@@ -52,7 +80,7 @@ export default function Student_services() {
                 fontSize: "14px",
                 lineHeight: "17px"
               }}
-              // onClick={handleOpen}
+              onClick={handleOpen}
             >
               Ariza berish
             </Button>
@@ -111,14 +139,12 @@ export default function Student_services() {
             >
               Turi                        </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "O'qish joyidan malumotnoma",
-                value: "O'qish joyidan malumotnoma",
-              }]}
+              chageValueFunction={val => setListSelect(val)}
+              selectOptions={List}
             />
           </ModalSelectWrapper>
-          <ModalSelectWrapper>
+          {
+            ListSelect == 'invitation' && <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -132,14 +158,9 @@ export default function Student_services() {
             >
               Qayerga?
             </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Tanlang",
-                value: "Tanlang",
-              }]}
-            />
+            <CustomizedInputSimple callback_func={(val) => {setJobInput(val)}} placeholder="Kiriting" />
           </ModalSelectWrapper>
+          }
 
           <ModalButtons>
             <Button
@@ -152,6 +173,7 @@ export default function Student_services() {
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
               variant="contained"
+              onClick={handleClick}
             >
               Saqlash
             </Button>

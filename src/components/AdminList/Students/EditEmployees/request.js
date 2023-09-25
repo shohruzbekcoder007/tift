@@ -10,9 +10,19 @@ export const getRegionListRequest = (url, successfulFunction, errorFunction) => 
 }
 
 
-export const createStudent = (url, data, successfulFunction, errorFunction) => {
+export const getOneEmployees = (url, successfulFunction, errorFunction) => {
+  axios.get(url, {
+      headers: headerConfig(),
+  }).then((response) => {
+      successfulFunction(response)
+  }).catch((error) => {
+      errorFunction(error)
+  })
+}
 
-  axios.post(
+export const PatchEmployee = (url, data, successfulFunction, errorFunction) => {
+
+  axios.patch(
       url,
       data,
       {

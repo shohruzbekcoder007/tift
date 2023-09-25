@@ -1,4 +1,4 @@
-// export const host = "https://c68d-178-218-200-199.ngrok-free.app"
+// export const host = "https://ea98-194-93-24-105.ngrok-free.app"
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
@@ -65,6 +65,7 @@ export const my_scince_lessons= "/student/my-scince-lessons/"
 export const studentcontract= "/studentcontract/"
 export const student_test_detail = "student/test-detail/"
 export const student_test_solve = "student/test-solve/"
+export const student_doc = "/documents/student-doc/"
 
 
 // semester 

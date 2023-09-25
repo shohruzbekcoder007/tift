@@ -5,11 +5,16 @@ export const VideoResponsiveBox = styled.div`
     padding: 16px 16px 20px 16px;
     display: inline-block;
     border-radius: 10px;
+    min-height: 293px;
+    width: 113%;
+    max-width: 511px;
 `
 
 export const VideoResponsive = styled.div`
     min-height: 293px;
-    min-width: 511px;
+    width: 100%;
+    max-width: 511px;
+
 `
 
 export const VideoResponsiveFooter = styled.div`
