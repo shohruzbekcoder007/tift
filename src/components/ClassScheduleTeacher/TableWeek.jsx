@@ -1,89 +1,57 @@
 import React from 'react'
-import { TrBox, TrBoxFooter, TrBoxHeader } from './styles'
+import { TrBox, TrBoxActive, TrBoxFooter, TrBoxFooterActive, TrBoxHeader, TrBoxHeaderActive, TrBoxTrBoxActive } from './styles'
 
-export default function TableWeek({ weekNumber }) {
-  return (
-    <>
-        <tr>
-                        {/* <th rowSpan={6}>{weekNumber}</th> */}
-                        <th>9:00 - 10:20</th>
-                        <th>1</th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>    
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                    </tr>
-                    <tr>
-                        <th>9:00 - 10:20</th>
-                        <th>2</th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                    </tr>
-                    <tr>
-                        <th>9:00 - 10:20</th>
-                        <th>3</th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                    </tr>
-                    <tr>
-                        <th>9:00 - 10:20</th>
-                        <th>4</th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                    </tr>
-                    <tr>
-                        <th>9:00 - 10:20</th>
-                        <th>5</th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                    </tr>
-                    <tr>
-                        <th>9:00 - 10:20</th>
-                        <th>6</th>
-                        <th>
-                            <ScheduleTableBox/>
-                            <ScheduleTableBox/>
-                        </th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
-                        <th><ScheduleTableBox/></th>
+export default function TableWeek({ weekNumber, start, end, para, timetable }) {
+    return (
+        <>
+            <tr>
+                {/* <th rowSpan={6}>{weekNumber}</th> */}
+                <th>{para}</th>
+                <th>{start}- {end}</th>
+                {
+                    timetable?.length > 0 && timetable.map(elem => {
+                        return (
+                            <th style={{ padding: " 0 2px" }}><ScheduleTableBox group={elem.groups} status={elem.status} /></th>
+                        )
+                    })
+                }
+                {/* <th><ScheduleTableBox /></th>
+                <th><ScheduleTableBox /></th>
+                <th><ScheduleTableBox /></th>
+                <th><ScheduleTableBox /></th>
+                <th><ScheduleTableBox /></th> */}
+            </tr>
 
-                    </tr>
-                    {/* <tr className='hr-tr'>
+            {/* <tr className='hr-tr'>
                         <th colSpan={9}></th>
                     </tr> */}
-    </>
-  )
+        </>
+    )
 }
 
-const ScheduleTableBox = () => {
-    return (
-        <TrBox>
-            <TrBoxHeader>DT loyihalarini boshqarish</TrBoxHeader>
-            <TrBoxFooter>
-                <span className="group">SPM001</span>
-                <span className="room">E-202</span>
-            </TrBoxFooter>
-        </TrBox>
-    )
+const ScheduleTableBox = ({ group, status }) => {
+    return group.length > 0 && group?.map(elem => {
+        if (elem.status) {
+            return (
+                    <TrBoxActive>
+                        <TrBoxHeaderActive>{elem.science}</TrBoxHeaderActive>
+                        <TrBoxFooterActive>
+                            <span className="group">{elem.group}</span>
+                            <span className="room">{elem.room}</span>
+                        </TrBoxFooterActive>
+                    </TrBoxActive>
+            )
+        } else {
+            return (
+                    <TrBox>
+                        <TrBoxHeader>{elem.science}</TrBoxHeader>
+                        <TrBoxFooter>
+                            <span className="group">{elem.group}</span>
+                            <span className="room">{elem.room}</span>
+                        </TrBoxFooter>
+                    </TrBox>
+            )
+
+        }
+    })
 }

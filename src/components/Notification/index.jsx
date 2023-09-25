@@ -13,7 +13,7 @@ export default function Notification({ open, setCountNote }) {
 
   useEffect(() => {
     getNotification(notifications, (response) => {
-      console.log(response.data , " notes ");
+      console.log(response.data, " notes ");
       setNotes(response.data)
       setCountNote(response.data.length)
 
@@ -24,12 +24,12 @@ export default function Notification({ open, setCountNote }) {
   }, [])
   if (open) {
     return (
-      <NotificationWrapper elevation={6} >
+      <NotificationWrapper  elevation={6} >
         <NotificationWrapperTop>
           Xabarnomalar
         </NotificationWrapperTop>
         {
-          notes.map((elem, index) => {
+          notes.length > 0 ? notes.map((elem, index) => {
             return (
               (getRole(user) === "student") ?
                 <span key={index}>
@@ -53,15 +53,28 @@ export default function Notification({ open, setCountNote }) {
                 </span>
                 :
                 <></>
-                // <Link to={`/student/sciences/tasks`} state={{ data: elem.id }}>
-                //   <span key={index}>
-                //     <p>{elem.science}</p>
-                //     <p>Baholashgacha {elem.deadline.day} kun {elem.deadline.hours} soat qoldi</p>
-                //   </span>
-                // </Link>
+              // <Link to={`/student/sciences/tasks`} state={{ data: elem.id }}>
+              //   <span key={index}>
+              //     <p>{elem.science}</p>
+              //     <p>Baholashgacha {elem.deadline.day} kun {elem.deadline.hours} soat qoldi</p>
+              //   </span>
+              // </Link>
 
             )
           })
+            :
+            <span>
+              <NotificationWrapperBody>
+                <Box sx={{
+                  color: "black",
+                  textAlign: "center",
+                  width: "100%",
+                  fontSize: "13px"
+                }}>
+                  Ma'lumot yo'q
+                </Box>
+              </NotificationWrapperBody>
+            </span>
         }
       </NotificationWrapper>
     )

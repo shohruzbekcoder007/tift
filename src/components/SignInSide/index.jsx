@@ -128,7 +128,7 @@ export default function SignInSide() {
           // backgroundImage: `url(${login_pahe_img})`,
           backgroundRepeat: 'no-repeat',
           backgroundColor: (t) =>
-            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+          t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           position: "relative",
@@ -139,11 +139,10 @@ export default function SignInSide() {
       >
         <VideoPlayer
         className="video"
-        src={
-          login_pahe_img
-        }
+        src={login_pahe_img}
         autoPlay={true}
         muted={true}
+        loop={false}
       />
         
       </Grid>
@@ -195,7 +194,7 @@ export default function SignInSide() {
           Tizimga Kirish
         </Button>
         <Typography variant="body2" color="text.secondary" align="center">
-              Admin:  (90) 037 68 09 , (90) 037 68 09
+              <a href="https://t.me/creditsystembot">Telegram bot</a>
           </Typography>
         <Copyright  />
       </Box>

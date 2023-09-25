@@ -14,13 +14,13 @@ function CalendarDayWeek() {
   const [ScheduleList, setScheduleList] = useState([]);
   useEffect(() => {
     getClassSchedule(`${my_tasschedule}`, (response) => {
-      console.log(response.data);
-      setScheduleList(response.data)
+      // console.log(response.data);
+      setScheduleList(response.data || []) 
     }, (error) => {
       console.log(error)
     })
   }, []);
-
+  
   return (
     <>
       <Paper
@@ -32,7 +32,8 @@ function CalendarDayWeek() {
           // backgroundColor: "transparent"
           // minWidth: "300px"
         }}
-      >
+        >
+        <ClassScheduleTable table={ScheduleList?.results}/>
         {/* <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
@@ -62,7 +63,6 @@ function CalendarDayWeek() {
           eventClick={(e) => console.log(e.event.id)}
           locale={uzLocale}
         /> */}
-        <ClassScheduleTable/>
       </Paper>
     </>
   );

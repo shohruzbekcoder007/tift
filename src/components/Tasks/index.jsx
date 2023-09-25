@@ -14,7 +14,7 @@ import { MuiFileInput } from 'mui-file-input'
 import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
 import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
-import { teacher_tasks } from '../../utils/API_urls'
+import { host, teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
 
 export default function Tasks() {
@@ -403,7 +403,7 @@ export default function Tasks() {
               >
                 Shablon 
               </Typography>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href={host + '/api/v1/documents/teacher-test-template/'} target="_blank" rel="noopener noreferrer">
                 <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"

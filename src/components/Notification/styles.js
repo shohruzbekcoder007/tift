@@ -8,7 +8,12 @@ export const NotificationWrapper = styled(Paper)`
     position: absolute;
     top: 100%;
     right: 20px;
-`
+    @media (max-width: 685px) {
+        left: 0;
+        width: 90%;
+        margin: 0 auto;
+    }
+    `
 
 export const NotificationWrapperTop = styled.div`
     width: 100%;

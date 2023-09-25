@@ -1,4 +1,4 @@
-// export const host = "https://ab4d-92-63-205-160.ngrok-free.app"
+// export const host = "https://ea98-194-93-24-105.ngrok-free.app"
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
