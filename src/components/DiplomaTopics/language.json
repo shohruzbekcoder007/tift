@@ -1,0 +1,52 @@
+{
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшее количетво",
+        "eng": "Total"
+      },
+      "Ta": {
+        "uz": "ta",
+        "ru": "",
+        "eng": ""
+      },
+      "From": {
+        "uz": "",
+        "ru": "от",
+        "eng": "from"
+      },
+      "To": {
+        "uz": "dan",
+        "ru": "до",
+        "eng": "to"
+      },
+      "AreShown": {
+        "uz": "gachasi ko'rsatilmoqda",
+        "ru": "показаны",
+        "eng": "are shown"
+      },
+      "Topic": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Topic"
+      },
+      "Student": {
+        "uz": "Talaba",
+        "ru": "Студент",
+        "eng": "Student"
+      },
+      "Presentation": {
+        "uz": "Taqdimot",
+        "ru": "Презентация",
+        "eng": "Presentation"
+      },
+      "DiplomaWork": {
+        "uz": "Diplom ishi",
+        "ru": "Дипломная работа",
+        "eng": "Diploma work"
+      },
+      "Additional": {
+        "uz": "Qo'shimcha",
+        "ru": "Дополнительно",
+        "eng": "Additional"
+      }
+}

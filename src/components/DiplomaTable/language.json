@@ -43,5 +43,30 @@
   "uz": "Saqlash",
   "ru": "Сохранять",
   "eng": "Save"
+},
+"Total": {
+  "uz": "Jami",
+  "ru": "Обшее количетво",
+  "eng": "Total"
+},
+"Ta": {
+  "uz": "ta",
+  "ru": "",
+  "eng": ""
+},
+"From": {
+  "uz": "",
+  "ru": "от",
+  "eng": "from"
+},
+"To": {
+  "uz": "dan",
+  "ru": "до",
+  "eng": "to"
+},
+"AreShown": {
+  "uz": "gachasi ko'rsatilmoqda",
+  "ru": "показаны",
+  "eng": "are shown"
 }
 }

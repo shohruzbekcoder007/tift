@@ -1,0 +1,177 @@
+{
+  "Year": {
+      "uz": "Yil",
+      "ru": "год",
+      "eng": "Year"
+  },
+  "Degree": {
+    "uz": "Daraja",
+    "ru": "Степень",
+    "eng": "Degree"
+  },
+  "NumberStudents": {
+    "uz": "Talabalar soni  ",
+    "ru": "Количество студентов",
+    "eng": "Number of students"
+  },
+  "Curriculum": {
+    "uz": "O’quv reja",
+    "ru": "Учебный план",
+    "eng": "Curriculum"
+  },
+  "DiplomTopics": {
+    "uz": "Diplom Mavzulari",
+    "ru": "Темы дипломов",
+    "eng": "Diplom Topics"
+  },
+  "Add": {
+    "uz": "Qo'shish",
+    "ru": "добавлять",
+    "eng": "Add"
+  },
+  "Week": {
+    "uz": "Hafta",
+    "ru": "Неделя",
+    "eng": "Week"
+  },
+  "Cancel": {
+    "uz": "Bekor qilish",
+    "ru": "Отмена",
+    "eng": "Cancel"
+  },
+  "Save": {
+    "uz": "Saqlash",
+    "ru": "Сохранять",
+    "eng": "Save"
+  },
+  "Tasks": {
+    "uz": "Vazifalar",
+    "ru": "Задания",
+    "eng": "Tasks"
+  },
+  "EvaluationPeriud": {
+    "uz": "Talabalarga baxo qo'yish muddati:",
+    "ru": "Период оценки студента:",
+    "eng": "Student evaluation period:"
+  },
+  "SubmissionDeadline": {
+    "uz": "Topshirish muddatidan keyin",
+    "ru": "По истечении срока подачи",
+    "eng": "After the submission deadline"
+  },
+  "Day": {
+    "uz": "kun",
+    "ru": "день",
+    "eng": "day"
+  },
+  "Days": {
+    "uz": "kun",
+    "ru": "дней",
+    "eng": "days"
+  },
+  "TaskName": {
+    "uz": "Vazifa nomi",
+    "ru": "Название задачи",
+    "eng": "Task name"
+  },
+  "TaskType": {
+    "uz": "Vazifa turi",
+    "ru": "Тип задачи",
+    "eng": "Task type"
+  },
+  "DeadlineOfAssignment": {
+    "uz": "Vazifani topshirish uchun oxirgi muddati",
+    "ru": "Срок сдачи задания",
+    "eng": "The deadline for submitting the assignment"
+  },
+  "Status": {
+    "uz": "Holat",
+    "ru": "Положение",
+    "eng": "Status"
+  },
+  "NoInfo": {
+    "uz": "Ma'lumot yo'q",
+    "ru": "Нет информации",
+    "eng": "No information"
+  },
+  "Total": {
+    "uz": "Jami",
+    "ru": "Обшее количетво",
+    "eng": "Total"
+  },
+  "Ta": {
+    "uz": "ta",
+    "ru": "",
+    "eng": ""
+  },
+  "From": {
+    "uz": "",
+    "ru": "от",
+    "eng": "from"
+  },
+  "To": {
+    "uz": "dan",
+    "ru": "до",
+    "eng": "to"
+  },
+  "AreShown": {
+    "uz": "gachasi ko'rsatilmoqda",
+    "ru": "показаны",
+    "eng": "are shown"
+  },
+  "Sample": {
+    "uz": "Namuna",
+    "ru": "Шаблон",
+    "eng": "Sample"
+  },
+  "Download": {
+    "uz": "Yuklab olish",
+    "ru": "Скачать",
+    "eng": "Download"
+  },
+  "UploadFile": {
+    "uz": "Fayl yuklash",
+    "ru": "Загружать файл",
+    "eng": "Upload file"
+  },
+  "NumberOfAttempts": {
+    "uz": "Urinishlar soni",
+    "ru": "Количество попыток",
+    "eng": "Number of attempts"
+  },
+  "EnterTheFile": {
+    "uz": "Faylni kiriting",
+    "ru": "Вместите файл",
+    "eng": "Enter the file"
+  },
+  "TimeForTheTest": {
+    "uz": "Test uchun vaqt",
+    "ru": "Время для теста",
+    "eng": "Time for the test"
+  },
+  "MaxBall": {
+    "uz": "Eng yuqori bal",
+    "ru": "Максимальный бал",
+    "eng": "Max ball"
+  },
+  "MethodTakingTask": {
+    "uz": "Vazifa olish usuli",
+    "ru": "Метод принятия задачи",
+    "eng": "Method of taking task"
+  },
+  "Confirmed": {
+    "uz": "Tasdiqlangan",
+    "ru": "Потверждено",
+    "eng": "Confirmed"
+  },
+  "Instruction": {
+    "uz": "Qo'llanma",
+    "ru": "Инструкция",
+    "eng": "Instruction"
+  },
+  "Midterm": {
+    "uz": "Oraliq",
+    "ru": "Промежуточный",
+    "eng": "Midterm"
+  }
+}

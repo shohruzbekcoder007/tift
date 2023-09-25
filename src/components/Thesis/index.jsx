@@ -10,6 +10,8 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import listLanguage from '../DiplomaTable/language.json'
+import { useSelector } from 'react-redux'
+
 export default function Thesis() {
 
     const [open, setOpen] = React.useState(false);
@@ -27,6 +29,9 @@ export default function Thesis() {
     const chagePageHandle = (_, value) => {
         console.log(value)
     }
+
+    // lang
+    const language = useSelector(state => state.language)
 
     return (
         <ContentWrapper>
@@ -66,7 +71,7 @@ export default function Thesis() {
                             </svg>
                             }
                         >
-                            {listLanguage.Add['ru']}
+                            {listLanguage.Add[language]}
                         </Button>
                     </div>
                 </ThesisHeader>
@@ -74,7 +79,7 @@ export default function Thesis() {
                     <DiplomaTable />
                 </ThesisBody>
                 <BoxFooter>
-                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+                    <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]},${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
                     <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
                 </BoxFooter>
             </Paper>
@@ -98,7 +103,7 @@ export default function Thesis() {
                                     color: "#000",
                                 }}
                             >
-                                {listLanguage.Add['ru']}
+                                {listLanguage.Add[language]}
                             </Typography>
                             <span
                                 onClick={handleClose}
@@ -121,7 +126,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.Curriculum['ru']}
+                            {listLanguage.Curriculum[language]}
                         </Typography>
                         <AllSelectFullWidth
                             chageValueFunction={val => console.log(val)}
@@ -143,7 +148,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.Degree['ru']}
+                            {listLanguage.Degree[language]}
 
                         </Typography>
                         <AllSelectFullWidth
@@ -166,7 +171,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.NumberStudents['ru']}
+                            {listLanguage.NumberStudents[language]}
 
                         </Typography>
                         <CustomizedInputSimple callback_func={val => console.log(val)} />
@@ -177,14 +182,14 @@ export default function Thesis() {
                             variant="outlined"
                             onClick={handleClose}
                         >
-                            {listLanguage.Cancel['ru']}
+                            {listLanguage.Cancel[language]}
 
                         </Button>
                         <Button
                             sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
                         >
-                            {listLanguage.Save['ru']}
+                            {listLanguage.Save[language]}
 
                         </Button>
                     </ModalButtons>

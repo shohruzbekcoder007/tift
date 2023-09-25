@@ -9,7 +9,8 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
-import listLanguage from '../DiplomaTable/language.json'
+import { useSelector } from 'react-redux'
+import listLanguage from './language.json'
 import { MuiFileInput } from 'mui-file-input'
 import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
@@ -34,6 +35,8 @@ export default function Tasks() {
   const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
 
+  // lang
+  const language = useSelector(state => state.language)
 
 
   const setFileHandler = (newValue, info) => {
@@ -74,7 +77,7 @@ export default function Tasks() {
         value: 'joriy',
       },
       {
-        name: "ananaviy",
+        name: "Ananaviy",
         value: 'ananaviy',
       },
     ]
@@ -138,7 +141,7 @@ export default function Tasks() {
             lineHeight: 'normal',
           }}
         >
-          Vazifalar - {state.name}
+          {listLanguage.Tasks[language]} - {state.name}
         </Typography>
         <Button
           variant="contained"
@@ -167,7 +170,7 @@ export default function Tasks() {
           </svg>
           }
         >
-          {listLanguage.Add['ru']}
+          {listLanguage.Add[language]}
         </Button>
       </BoxHeader>
       <Paper
@@ -194,7 +197,7 @@ export default function Tasks() {
               width: "100%"
             }}
           >
-            Talabalarga baxo qo'yish muddati: Topshirish muddatidan keyin 2 kun.
+            {listLanguage.EvaluationPeriud[language]} {listLanguage.SubmissionDeadline[language]} {"1" ? '1 ' + listLanguage.Day[language] : listLanguage.Days[language]}.
           </Typography>
         </BoxHeader>
         {/* <ThesisHeader>
@@ -216,7 +219,7 @@ export default function Tasks() {
                     }
                   />
                   <TableTHHeader
-                    text="Vazifa nomi"
+                    text={listLanguage.TaskName[language]}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_78_22504)">
                     <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8"/>
@@ -231,7 +234,7 @@ export default function Tasks() {
                     }
                   />
                   <TableTHHeader
-                    text="Vazifani topshirish uchun oxirgi muddati"
+                    text={listLanguage.DeadlineOfAssignment[language]}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_78_22504)">
                     <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8"/>
@@ -246,7 +249,7 @@ export default function Tasks() {
                     }
                   />
                    <TableTHHeader
-                    text="Status"
+                    text={listLanguage.Status[language]}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_78_22504)">
                     <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8"/>
@@ -272,7 +275,7 @@ export default function Tasks() {
                   })
                   :
                   <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    <th colSpan={12} align='center'>{listLanguage.NoInfo[language]}</th>
                   </tr>
                 }
               </tbody>
@@ -280,7 +283,7 @@ export default function Tasks() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         {/* <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]},${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
         </BoxFooter> */}
       </Paper>
@@ -304,7 +307,7 @@ export default function Tasks() {
                   color: "#000",
                 }}
               >
-                {listLanguage.Add['ru']}
+                {listLanguage.Add[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -327,7 +330,7 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-             Vazifa nomi
+             {listLanguage.TaskName[language]}
             </Typography>
             <CustomizedInputSimple callback_func={val => settitleTasks(val)} />
           </ModalSelectWrapper>
@@ -343,7 +346,7 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-              Vazifani topshirish uchun ohirgi muddati
+              {listLanguage.DeadlineOfAssignment[language]}
             </Typography>
             <DataPicker setFunction={(val) => {setdedlineTasks(val)}}/>
             
@@ -361,7 +364,7 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Vazifa Turi
+                {listLanguage.TaskType[language]}
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => { setTasktype(val); }}
@@ -381,7 +384,7 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Vazifa Olish Usuli
+                {listLanguage.MethodTakingTask[language]} 
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => { setTaskmethod(val); }}
@@ -401,14 +404,14 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Shablon 
+                {listLanguage.Sample[language]} 
               </Typography>
               <a href="#" target="_blank" rel="noopener noreferrer">
                 <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
                 >
-                  Yuklab Olish
+                  {listLanguage.Dowload[language]} 
                 </Button>
               </a>
           </ModalSelectWrapper>:<></>}
@@ -426,10 +429,10 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                File Yuklash
+               {listLanguage.UploadFile[language]} 
               </Typography>
               <MuiFileInput
-                placeholder="Fayl kiriting"
+                placeholder={listLanguage.EnterTheFile[language]}
                 value={file}
                 onChange={setFileHandler}
                 // getInputText={(value) => value ? 'Thanks!' : ''}
@@ -449,7 +452,7 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Urinishlar soni
+                {listLanguage.NumberOfAttempts[language]} 
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { settrycount(val)}} placeholder="" type={'number'} />
             </ModalSelectWrapper>:<></>}
@@ -467,7 +470,7 @@ export default function Tasks() {
                   mb: "10px"
                 }}
               >
-                Test uchun vaqt
+                {listLanguage.TimeForTheTest[language]} 
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { settesttime(val)}} placeholder="" type={'number'} />
             </ModalSelectWrapper>:<></>}
@@ -484,7 +487,7 @@ export default function Tasks() {
                 mb: "10px"
               }}
             >
-              Maks ball
+              {listLanguage.MaxBall[language]}
             </Typography>
             <CustomizedInputSimple callback_func={val => setmaxgradeTasks(val)} />
           </ModalSelectWrapper>}
@@ -494,7 +497,7 @@ export default function Tasks() {
               variant="outlined"
               onClick={handleClose}
             >
-              {listLanguage.Cancel['ru']}
+              {listLanguage.Cancel[language]}
 
             </Button>
             <Button
@@ -503,8 +506,7 @@ export default function Tasks() {
               type='submit'
               onClick={handleSubmit}
             >
-              {listLanguage.Save['ru']}
-
+              {listLanguage.Save[language]}
             </Button>
           </ModalButtons>
         </ModalBox>
@@ -515,6 +517,10 @@ export default function Tasks() {
 
 const ItemTasks = ({elem, index}) => {
   const [deleted, setDeleted] = useState(false)
+
+  // lang
+  const language = useSelector(state => state.language)
+
   return (deleted ? <></> :
     <tr >
       <th>{index + 1}</th>
@@ -542,7 +548,7 @@ const ItemTasks = ({elem, index}) => {
           </svg>
           }
         >
-          Tasdiqlangan
+          {listLanguage.Confirmed[language]}
         </Button>
       </th>
         <th>
@@ -606,8 +612,9 @@ const DeleteUpdate = ({elem, setDeleted}) => {
         console.log(error)
       })
   };
- 
 
+  // lang
+  const language = useSelector(state => state.language)
 
   if(!elem.status){
     return (
@@ -685,7 +692,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                   color: "#000",
                 }}
               >
-                {listLanguage.Add['ru']}
+                {listLanguage.Add[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -708,7 +715,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                 mb: "10px"
               }}
             >
-             Vazifa nomi
+             {listLanguage.TaskName[language]}
             </Typography>
             <CustomizedInputSimple callback_func={val => settitleTasks(val)} />
           </ModalSelectWrapper>
@@ -724,7 +731,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                 mb: "10px"
               }}
             >
-              Vazifani topshirish uchun ohirgi muddati
+              {listLanguage.DeadlineOfAssignment[language]}
             </Typography>
             <DataPicker setFunction={(val) => {setdedlineTasks(val)}}/>
             
@@ -741,7 +748,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                   mb: "10px"
                 }}
               >
-                Qo'llanma
+                {listLanguage.Instruction[language]}
               </Typography>
               <MuiFileInput
                 placeholder="Fayl kiriting"
@@ -763,7 +770,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                 mb: "10px"
               }}
             >
-              Maks ball
+              {listLanguage.MaxBall[language]}
             </Typography>
             <CustomizedInputSimple callback_func={val => setmaxgradeTasks(val)} />
           </ModalSelectWrapper>
@@ -773,7 +780,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
               variant="outlined"
               onClick={handleClose}
             >
-              {listLanguage.Cancel['ru']}
+              {listLanguage.Cancel[language]}
 
             </Button>
             <Button
@@ -782,7 +789,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
               type='submit'
               onClick={(_) => handleSubmit(elem.id)}
             >
-              {listLanguage.Save['ru']}
+              {listLanguage.Save[language]}
 
             </Button>
           </ModalButtons>

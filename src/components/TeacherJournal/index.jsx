@@ -8,6 +8,9 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { createTaskGrade, getTeacherJurnal, getTeacherVedemost } from './requests'
 import { host, teacher_jurnal, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
+// lang
+import { useSelector } from 'react-redux'
+import listLanguage from './language.json'
 
 export default function TeacherJournal() {
   const { state } = useLocation()
@@ -25,6 +28,8 @@ export default function TeacherJournal() {
   const [Status, setStatus] = useState(false);
   
 
+  // Lang
+  const language = useSelector(state => state.language)
   
 
 
@@ -85,7 +90,7 @@ export default function TeacherJournal() {
           mb: "26px"
         }}
       >
-        O'qituvchi Jurnali {state.data}
+        {listLanguage.TeachersJournal[language]} {state.data}
       </Typography>
       <BoxBody>
         <ClassScheduleTableWrapper>
@@ -97,7 +102,7 @@ export default function TeacherJournal() {
                   iconc={null}
                 />
                 <TableTHHeader
-                  text="Studentlar                                "
+                  text="Studentlar"
                   iconc={null}
                 />
                 {
@@ -157,7 +162,7 @@ export default function TeacherJournal() {
                 })
                 :
                   <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    <th colSpan={12} align='center'>{listLanguage.NoInfo[language]}</th>
                   </tr>
               }
               
