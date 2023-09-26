@@ -8,17 +8,29 @@ import { getClassSchedule } from './requests';
 import { useEffect, useState } from 'react';
 import { my_tasschedule } from '../../utils/API_urls';
 import ClassScheduleTable from '../../components/ClassScheduleTeacher/ClassScheduleTable'
+import { useLocation } from 'react-router';
 
 function CalendarDayWeek() {
   const [Semester, setSemester] = useState(2);
   const [ScheduleList, setScheduleList] = useState([]);
+  const {state} = useLocation()
   useEffect(() => {
+    console.log(state?.id);
+    if (state?.id) {
+      getClassSchedule(`${my_tasschedule}?student=${state?.id}`, (response) => {
+        // console.log(response.data);
+        setScheduleList(response.data || []) 
+      }, (error) => {
+        console.log(error)
+      }) 
+    }else {
     getClassSchedule(`${my_tasschedule}`, (response) => {
       // console.log(response.data);
       setScheduleList(response.data || []) 
     }, (error) => {
       console.log(error)
     })
+  }
   }, []);
   
   return (
