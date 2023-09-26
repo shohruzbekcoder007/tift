@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SidebarHeader, SidebarLinkList, SidebarLinkListItem, SidebarLinkListItemImg, SidebarLinkListItemText, SidebarLinksHead, SidebarWrapper } from './styles'
 import logo from './../../imgs/Logo.png'
 import { NavLink } from "react-router-dom"
@@ -14,6 +14,14 @@ export default function Sidebar({ role }) {
   const sidebar = useSelector((state) => state.sidebar);
   const language = useSelector(state => state.language)
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setTitle({
+      text: chageLinks(role).find(elem => elem.type=="text").text,
+      type: "text"
+    }))
+    
+  }, [])
 
   return (
     <SidebarWrapper type={sidebar}>
