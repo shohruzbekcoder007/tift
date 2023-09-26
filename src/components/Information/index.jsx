@@ -10,6 +10,8 @@ import { getStudentInformation, setInformation } from './requests'
 import { host, student_detail, student_district, student_region, studentcontract } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux'
+import listLanguage from './language.json'
 
 
 
@@ -145,6 +147,8 @@ export default function Information() {
     }
   }, [changedRegionId1])
 
+  // lang
+  const language = useSelector(state => state.language)
 
   return (
     <ContentWrapper>
@@ -165,7 +169,7 @@ export default function Information() {
           <Hr />
           <HeaderWrapperBottom>
           <WrapperBody>
-              <HeaderWrapperH4>Passport seriya:</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.Passport[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.passport}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
@@ -173,23 +177,23 @@ export default function Information() {
               <HeaderWrapperP>{infoList.jshshr}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Tug’ilgan sanasi:</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.BirthDate[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.Gender[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "famele" && "Ayol" || ""}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.RatingBook[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.rating_notebook}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Manzil:</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.Address[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
+              <HeaderWrapperH4>{listLanguage.AddressTemporal[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
            
@@ -197,35 +201,35 @@ export default function Information() {
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
           <WrapperBody>
-            <HeaderWrapperH4>Yo’nalish:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Field[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.direction}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>O’qish tili:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.StudyLang[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Degree[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.EducationForm[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Course[language]}: </HeaderWrapperH4>
             <HeaderWrapperP>{infoList.course_number}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Guruh: </HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Group[language]}: </HeaderWrapperH4>
             <HeaderWrapperP>{infoList.academic_group}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Murabbiy:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Coach[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.tutor}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
+            <HeaderWrapperH4>{listLanguage.Scholar[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBodyContract>
@@ -240,7 +244,7 @@ export default function Information() {
                               sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                               variant="contained"
                             >
-                              Ikki Tomonlama Shartomani yuklab olish
+                              {listLanguage.DownloadBilateralAgreement[language]}
                             </Button>
                           </a>
                             : <Button
@@ -253,7 +257,7 @@ export default function Information() {
                               }}
                               variant="contained"
                             >
-                              Ikki Tomonlama Shartomani yuklab olish
+                              {listLanguage.DownloadBilateralAgreement[language]}
                             </Button>
                           :
                           elem.file ? <a href={host + elem?.file} target='_blank'>
@@ -261,7 +265,7 @@ export default function Information() {
                             sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
                           >
-                            Uch Tomonlama Shartomani yuklab olish
+                            {listLanguage.DownloadTripartiteAgreement[language]}
                           </Button>
                         </a>
                           : <Button
@@ -274,7 +278,7 @@ export default function Information() {
                             }}
                             variant="contained"
                           >
-                            Uch Tomonlama Shartomani yuklab olish
+                            {listLanguage.DownloadTripartiteAgreement[language]}
                           </Button>
                       }
                     </>
@@ -307,7 +311,7 @@ export default function Information() {
                   color: "#000",
                 }}
               >
-                Tahrirlash
+                {listLanguage.Edit[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -331,7 +335,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Viloyat*
+                {listLanguage.Region[language]}
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setChangedRegionId(val)}
@@ -351,7 +355,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Shahar*
+                {listLanguage.City[language]}
 
               </Typography>
               <AllSelectFullWidth
@@ -371,7 +375,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Manzil (Lotin xarflarda)*
+                {listLanguage.AddressInLatin[language]}
 
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { setTextInfo(val) }} placeholder="  " />
@@ -392,7 +396,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Viloyat (vaqtingcha)*
+                {listLanguage.TemporalRegion[language]}
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setChangedRegionId1(val)}
@@ -412,7 +416,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Shahar (vaqtingcha)*
+                {listLanguage.TemporalCity[language]}
 
               </Typography>
               <AllSelectFullWidth
@@ -432,7 +436,7 @@ export default function Information() {
                   mb: "10px"
                 }}
               >
-                Manzil (vaqtincha) (lotin xarflarda)*
+                {listLanguage.TemporalAddressInLatin[language]}
 
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { setTextInfo1(val) }} placeholder="  " />
@@ -448,14 +452,14 @@ export default function Information() {
                 onClick={handleClose}
               >
 
-                Bekor qilish
+                {listLanguage.Cancel[language]}
               </Button>
               <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
                 onClick={hangleClick}
               >
-                Saqlash
+                {listLanguage.Save[language]}
 
               </Button>
             </ModalButtonsInfo>

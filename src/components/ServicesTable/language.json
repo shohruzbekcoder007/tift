@@ -1,0 +1,22 @@
+{
+    "Type": {
+        "uz": "Turi",
+        "ru": "Тип",
+        "eng": "Type"
+      },
+      "Where": {
+        "uz": "Qayerga",
+        "ru": "Куда",
+        "eng": "Where"
+      },
+      "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+      },
+      "Status": {
+        "uz": "Holat",
+        "ru": "Положение",
+        "eng": "Status"
+      }
+}

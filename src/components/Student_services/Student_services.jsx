@@ -11,6 +11,9 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import ServicesTable from '../ServicesTable/ServicesTable'
+import { useSelector } from 'react-redux'
+import listLanguage from './language.json'
+
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -27,6 +30,10 @@ export default function Student_services() {
   const chagePageHandle = (_, value) => {
     console.log(value)
   }
+
+  // lang
+  const language = useSelector(state => state.language)
+
   return (
     <ContentWrapper>
       <Paper
@@ -54,7 +61,7 @@ export default function Student_services() {
               }}
               onClick={handleOpen}
             >
-              Ariza berish
+              {listLanguage.Apply[language]}
             </Button>
           </ThesisHeaderRight>
         </ThesisHeader>
@@ -62,7 +69,7 @@ export default function Student_services() {
           <ServicesTable />
         </ThesisBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]}, ${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
           <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
         </BoxFooter>
       </Paper>
@@ -86,7 +93,7 @@ export default function Student_services() {
                   color: "#000",
                 }}
               >
-                Ariza Berish
+                {listLanguage.Application[language]}
               </Typography>
               <span
                 onClick={handleClose}
@@ -109,7 +116,8 @@ export default function Student_services() {
                 mb: "10px"
               }}
             >
-              Turi                        </Typography>
+             {listLanguage.Type[language]}                       
+              </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
               selectOptions={[{
@@ -130,7 +138,7 @@ export default function Student_services() {
                 mb: "10px"
               }}
             >
-              Qayerga?
+              {listLanguage.Where[language]}
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
@@ -147,13 +155,13 @@ export default function Student_services() {
               variant="outlined"
               onClick={handleClose}
             >
-              Bekor qilish
+              {listLanguage.Cancel[language]}
             </Button>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
               variant="contained"
             >
-              Saqlash
+              {listLanguage.Save[language]}
             </Button>
           </ModalButtons>
         </ModalBox>
