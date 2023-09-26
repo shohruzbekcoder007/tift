@@ -145,6 +145,7 @@ import QuizWrapper from './components/QuizWrapper'
 import AddStudents from './components/AdminList/Students/AddStudent'
 import EditEmployeess from './components/AdminList/Students/EditEmployees'
 import EditStudents from './components/AdminList/Students/EditStudents'
+import AddTest from './components/AddTest'
 
 function App() {
 
@@ -304,7 +305,7 @@ function App() {
                     <Route index element={<Employees />} />
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
-                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='edit' element={<EditEmployeess />} />
                     <Route path='add' element={<AddEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
@@ -313,6 +314,7 @@ function App() {
                     <Route path='add' element={<AddStudents />} />
                     <Route path='edit' element={<EditStudents />} />
                   </Route>
+                  <Route path="addtest" element={<AddTest />} />
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
