@@ -17,7 +17,7 @@ import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeac
 import { host, teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
 
-export default function Tasks() {
+export default function AddTest() {
   const { state } = useLocation()
   
   const [open, setOpen] = useState(false);
@@ -52,11 +52,11 @@ export default function Tasks() {
   }
 
   useEffect(() => {
-    getTeacheravTasks(`${teacher_tasks}?patok=${state.data}`, (response) => {
-      settasksList(response.data)
-    }, (error) => {
-        console.log(error)
-    })
+    // getTeacheravTasks(`${teacher_tasks}?patok=${state.data}`, (response) => {
+    //   settasksList(response.data)
+    // }, (error) => {
+    //     console.log(error)
+    // })
   }, [])
 
   const tasktype = useMemo(() => {
@@ -110,7 +110,7 @@ export default function Tasks() {
     formData.append("title", titleTasks);
     formData.append("grade", maxgradeTasks);
     formData.append("deadline", dedlineTasks);
-    formData.append("group", state.data);
+    // formData.append("group", state.data);
     formData.append("type", tasktypeVal);
     formData.append("method", taskmethodVal);
     formData.append("try_count", trycount);
@@ -126,7 +126,7 @@ export default function Tasks() {
 
 
   return (
-    <>
+    <ContentWrapper>
       <BoxHeader>
         <Typography
           variant='h2'
@@ -138,7 +138,7 @@ export default function Tasks() {
             lineHeight: 'normal',
           }}
         >
-          Vazifalar - {state.name}
+          {/* Vazifalar - {state.name} */}
         </Typography>
         <Button
           variant="contained"
@@ -304,7 +304,7 @@ export default function Tasks() {
                   color: "#000",
                 }}
               >
-                {listLanguage.Add['uz']}
+                {listLanguage.Add['ru']}
               </Typography>
               <span
                 onClick={handleClose}
@@ -494,7 +494,7 @@ export default function Tasks() {
               variant="outlined"
               onClick={handleClose}
             >
-              {listLanguage.Cancel['uz']}
+              {listLanguage.Cancel['ru']}
 
             </Button>
             <Button
@@ -503,13 +503,13 @@ export default function Tasks() {
               type='submit'
               onClick={handleSubmit}
             >
-              {listLanguage.Save['uz']}
+              {listLanguage.Save['ru']}
 
             </Button>
           </ModalButtons>
         </ModalBox>
       </Modal>
-    </>
+    </ContentWrapper>
   )
 }
 
@@ -685,7 +685,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                   color: "#000",
                 }}
               >
-                {listLanguage.Add['uz']}
+                {listLanguage.Add['ru']}
               </Typography>
               <span
                 onClick={handleClose}
@@ -773,7 +773,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
               variant="outlined"
               onClick={handleClose}
             >
-              {listLanguage.Cancel['uz']}
+              {listLanguage.Cancel['ru']}
 
             </Button>
             <Button
@@ -782,7 +782,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
               type='submit'
               onClick={(_) => handleSubmit(elem.id)}
             >
-              {listLanguage.Save['uz']}
+              {listLanguage.Save['ru']}
 
             </Button>
           </ModalButtons>

@@ -37,6 +37,7 @@ export const ClassScheduleTableWrapper = styled.div`
 
 export const TrBox = styled.div`
     width: 100%;
+    min-width: 200px;
     height: 80%;
     text-align: left;
     /* border: 0.5px solid ${props => props.theme.color.main_color}; */
@@ -45,10 +46,15 @@ export const TrBox = styled.div`
     background-color: ${props => props.theme.color.frame_color};
     margin: 5px 0;
     cursor: pointer;
+
+    :hover {
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    }
 `
 
 export const TrBoxActive = styled.div`
     width: 100%;
+    min-width: 200px;
     height: 80%;
     text-align: left;
     /* border: 0.5px solid ${props => props.theme.color.main_color}; */
@@ -57,7 +63,9 @@ export const TrBoxActive = styled.div`
     background-color: #24bd70;
     margin: 5px 0;
     cursor: pointer;
-    
+    :hover {
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    }
 `
 
 export const TrBoxHeader = styled.div`

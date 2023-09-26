@@ -29,7 +29,7 @@ export default function TableWeek({ weekNumber, start, end, para, timetable }) {
     )
 }
 
-const ScheduleTableBox = ({ group, status }) => {
+const ScheduleTableBox = ({ group }) => {
     return group.length > 0 && group?.map(elem => {
         if (elem.status) {
             return (
