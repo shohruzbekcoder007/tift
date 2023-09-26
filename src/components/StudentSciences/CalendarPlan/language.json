@@ -1,0 +1,17 @@
+{
+    "NoInformation": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+      },
+    "Topic": {
+        "uz": "Mavzu",
+        "ru": "Тема",
+        "eng": "Topic"
+    },
+    "StudyingTime": {
+        "uz": "Mashg'ulot vaqti",
+        "ru": "Время обучения",
+        "eng": "Studying time"
+    }
+}

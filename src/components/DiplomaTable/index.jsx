@@ -9,6 +9,7 @@ export default function DiplomaTable() {
 
     // lang
     const language = useSelector(state => state.language)
+    
     return (
         <ClassScheduleTableWrapper>
             <table>

@@ -3,8 +3,13 @@ import { ContentWrapper, BoxHeader, ClassScheduleTableWrapper } from '../../glob
 import { Button, Paper, Typography } from '@mui/material'
 import { ReadAgainLeft, ReadAgainReight, ReadAgainReightSumma, ReadAgainWrapper } from './styles'
 import { TableTHHeader } from '../DiplomaTable'
+import { useSelector } from 'react-redux'
+import languageList from './language.json'
+
+
 
 export default function ReadAgain() {
+  const language = useSelector(state => state.language)
 
   const [totalSumma, setTotalSumma] = useState(0)
   const [oneKredit, setOneKredit] = useState(375650)
@@ -20,7 +25,6 @@ export default function ReadAgain() {
   return (
     <ContentWrapper>
       <ReadAgainWrapper>
-        
         <ReadAgainLeft>
           <Paper
             elevation={0}
@@ -35,7 +39,7 @@ export default function ReadAgain() {
                 <thead>
                   <tr>
                     <TableTHHeader
-                      text="Fan"
+                      text={languageList.Science[language]}
                       iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_78_23314)">
                           <path d="M16.0008 0.666667C16.0008 1.03533 15.7021 1.33333 15.3341 1.33333H6.66746C6.29946 1.33333 6.00079 1.03533 6.00079 0.666667C6.00079 0.298 6.29946 0 6.66746 0H15.3341C15.7021 0 16.0008 0.298 16.0008 0.666667ZM13.3341 3.33333H6.66746C6.29946 3.33333 6.00079 3.63133 6.00079 4C6.00079 4.36867 6.29946 4.66667 6.66746 4.66667H13.3341C13.7021 4.66667 14.0008 4.36867 14.0008 4C14.0008 3.63133 13.7021 3.33333 13.3341 3.33333ZM11.3341 6.66667H6.66746C6.29946 6.66667 6.00079 6.96467 6.00079 7.33333C6.00079 7.702 6.29946 8 6.66746 8H11.3341C11.7021 8 12.0008 7.702 12.0008 7.33333C12.0008 6.96467 11.7021 6.66667 11.3341 6.66667ZM9.33412 10H6.66746C6.29946 10 6.00079 10.298 6.00079 10.6667C6.00079 11.0353 6.29946 11.3333 6.66746 11.3333H9.33412C9.70212 11.3333 10.0008 11.0353 10.0008 10.6667C10.0008 10.298 9.70212 10 9.33412 10ZM5.13879 12.862L4.00079 14V0.666667C4.00079 0.298 3.70212 0 3.33412 0C2.96612 0 2.66746 0.298 2.66746 0.666667V14L1.52879 12.8613C1.26812 12.6007 0.846792 12.6007 0.586125 12.8613C0.325458 13.122 0.325458 13.5433 0.586125 13.804L2.39079 15.6087C2.65079 15.8687 2.99212 15.9987 3.33412 15.9987C3.67612 15.9987 4.01679 15.8687 4.27679 15.6087L6.08146 13.804C6.34212 13.5433 6.34212 13.122 6.08146 12.8613C5.82079 12.6007 5.39946 12.6013 5.13879 12.862Z" fill="#B8B8B8" />
@@ -48,7 +52,7 @@ export default function ReadAgain() {
                       </svg>}
                     />
                     <TableTHHeader
-                      text="Kredit"
+                      text={languageList.Credit[language]}
                       iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_78_23319)">
                           <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -77,7 +81,6 @@ export default function ReadAgain() {
             </ClassScheduleTableWrapper>
           </Paper>
         </ReadAgainLeft>
-
         <ReadAgainReight>
           <Paper
             elevation={0}
@@ -95,8 +98,8 @@ export default function ReadAgain() {
                 lineHeight: "150%"
               }}
             >
-              Kontrakt summasi = {'7 091 940'} so’m <br />
-              1 kredit = {oneKredit} so’m
+              {languageList.Amount[language]} = {'7 091 940'} {languageList.Sum[language]} <br />
+              1 {languageList.CreditLowerCase[language]} = {oneKredit} {languageList.Sum[language]}
             </Typography>
             <ReadAgainReightSumma>
               <Typography
@@ -107,7 +110,7 @@ export default function ReadAgain() {
                   lineHeight: "normal"
                 }}
               >
-                Jami:
+                {languageList.Total[language]}:
               </Typography>
               <Typography
                 sx={{
@@ -117,7 +120,7 @@ export default function ReadAgain() {
                   lineHeight: "normal"
                 }}
               >
-                {totalSumma} so'm
+                {totalSumma} {languageList.Sum[language]}
               </Typography>
             </ReadAgainReightSumma>
             {
@@ -137,12 +140,11 @@ export default function ReadAgain() {
                     marginTop: "32px"
                   }}
                 >
-                  To‘lov
+                  {languageList.Payment[language]}
                 </Button> : null
             }
           </Paper>
         </ReadAgainReight>
-
       </ReadAgainWrapper>
     </ContentWrapper>
   )
@@ -151,6 +153,8 @@ export default function ReadAgain() {
 const ReadAgainOneScience = ({ kredit, oneKreditSumma, addFunction, subtractionFunction }) => {
 
   const [addButton, setAddButton] = useState(true)
+
+  const language = useSelector(state => state.language)
 
   return (
     <tr>
@@ -171,7 +175,7 @@ const ReadAgainOneScience = ({ kredit, oneKreditSumma, addFunction, subtractionF
               }}
               onClick={() => { addFunction(oneKreditSumma * 6); setAddButton(false); }}
             >
-              Tanlash
+              {languageList.Choose[language]}
             </Button> :
             <Button
               variant="contained"
@@ -184,7 +188,7 @@ const ReadAgainOneScience = ({ kredit, oneKreditSumma, addFunction, subtractionF
               }}
               onClick={() => { subtractionFunction(oneKreditSumma * 6); setAddButton(true); }}
             >
-              Bekor qilish
+              {languageList.Cancel[language]}
             </Button>
         }
       </th>

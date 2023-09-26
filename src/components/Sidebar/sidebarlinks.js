@@ -299,8 +299,8 @@ export const student_Links = [
     ,
     text: {
       uz: "Qayta o’qish",
-      ru: "Прочитай заново",
-      eng: "Read again"
+      ru: "Учиться заново",
+      eng: "Study again"
     },
     to: "readagain",
     type: "text"
@@ -1701,8 +1701,8 @@ export const admin_links = [
     ,
     text: {
       uz: "Qayta o’qish",
-      ru: "Прочитай заново",
-      eng: "Read again"
+      ru: "Учиться заново",
+      eng: "Study again"
     },
     to: "readagain",
     type: "text"

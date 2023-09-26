@@ -1,0 +1,47 @@
+{
+    "Science": {
+        "uz": "Fan",
+        "ru": "Наука",
+        "eng": "Science"
+    },
+    "Credit": {
+        "uz": "Kredit",
+        "ru": "Кредит",
+        "eng": "Credit"
+    },
+    "CreditLowerCase": {
+        "uz": "kredit",
+        "ru": "кредит",
+        "eng": "credit"
+    },
+    "Choose": {
+        "uz": "Tanlash",
+        "ru": "Выбрать",
+        "eng": "Choose"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отмена",
+        "eng": "Cancel"
+    },
+    "Amount": {
+        "uz": "Kontrakt summasi",
+        "ru": "Обшая сумма контракта",
+        "eng": "Total amount of the contract"
+    },
+    "Total": {
+        "uz": "Jami",
+        "ru": "Обшая сумма",
+        "eng": "Total"
+    },
+    "Sum": {
+        "uz": "so'm",
+        "ru": "сум",
+        "eng": "sum"
+    },
+    "Payment": {
+        "uz": "To'lov",
+        "ru": "Оплата",
+        "eng": "Payment"
+    }
+}
