@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
-export default function AutocompleteJames({selectOptions, chageValueFunction, label}) {
+export default function AutocompleteJames({selectOptions, chageValueFunction, label, width}) {
   return (
     <Autocomplete
       disablePortal
@@ -10,9 +10,10 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, la
       options={selectOptions}
       sx={{
         width: '100%',
-        minWidth: '300px',
+        minWidth: width ?? '300px',
+        // height: '40px',
         backgroundColor: "#F6F6F6",
-        fontSize: '14px',
+        fontSize: '10px',
         fontFamily: 'Inter',
         fontWeight: '500',
         color: '#151515',

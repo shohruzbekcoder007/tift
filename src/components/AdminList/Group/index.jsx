@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -13,7 +13,10 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { IconButton } from '../../Final_Dep/style'
 import { getGroups } from './requests'
-import { academic_group } from '../../../utils/API_urls'
+import { academic_group, academic_group_short, academic_year, directions } from '../../../utils/API_urls'
+import AutocompleteJames from '../../AutocompleteJames'
+import { getDirections } from '../Directions/request'
+import { getAcademecYear } from '../Semestr/requests'
 
 export default function Group() {
   const [open, setOpen] = React.useState(false);
@@ -31,19 +34,79 @@ export default function Group() {
   const [Name, setName] = useState('')
   const [RoomType, setRoomType] = useState('labs')
   const [Count, setCount] = useState('')
+  const [SearchText, setSearchText] = useState('')
+  const [Directions, setDirections] = useState([])
+  const [GroupList, setGroupList] = useState([])
+  const [DirectionID, setDirectionID] = useState('all')
+  const [YearList, setYearList] = useState([])
+  const [AcademekYear, setAcademekYear] = useState('all')
 
   useEffect(() => {
-    getGroups(`${academic_group}`, (response) => {
+    getGroups(`${academic_group}?page_size=${pageSize}&page=${page}&search=${SearchText}&direction=${DirectionID}&year=${AcademekYear}`, (response) => {
       console.log(response.data.results);
       setAcademikGroup(response.data.results)
-      // setPageCount(response.data.page_count)
-      // setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      setAllCount(response.data.count)
     }, (error) => {
       console.log(error)
     })
+  }, [pageSize, page, Status, SearchText, DirectionID,AcademekYear])
+
+  useEffect(() => {
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = [...YearList]
+      
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.season
+        })
+      })
+      mass.unshift({
+        name: "O'quv yili",
+        value: 'all'
+      })
+      setYearList(mass)
+
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
+
+  // useEffect(() => {
+  //   getGroups(`${academic_group_short}?page_size=100000`, (response) => {
+  //     setGroupList(response.data.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }, [])
 
 
-  }, [pageSize, page,Status])
+  useEffect(() => {
+    getDirections(`${directions}?page_size=100`, (response) => {     
+      // setDirections(response.results)
+      const currlist = [...response.results]
+      currlist.unshift({
+        name: 'Hammasi',
+        id: 'all'
+      })
+      setDirections(currlist.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+      
+    }, (error) => {
+      console.log(error);
+    })
+  }, []);
 
   return (
     <ContentWrapper>
@@ -58,10 +121,10 @@ export default function Group() {
        
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+            setPageSize(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => {setSearchText(val) }} />
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -92,31 +155,12 @@ export default function Group() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
+            <AutocompleteJames selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AllSelectFullWidth
-            chageValueFunction={val => console.log(val)}
-            selectOptions={[{
-              name: "Barchasi",
-              value: 12,
-            }]}
-          />
-           <AllSelectFullWidth
-            chageValueFunction={val => console.log(val)}
-            selectOptions={[{
-              name: "Barchasi",
-              value: 12,
-            }]}
-          />
-          </InputsWrapper>
-          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Guruh" />
-          <AllSelectFullWidth
-            chageValueFunction={val => console.log(val)}
-            selectOptions={[{
-              name: "Barchasi",
-              value: 12,
-            }]}
-          />
-          <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Kuratorlik soati" />
+              chageValueFunction={(val) => setAcademekYear(val)}
+              selectOptions={YearList}
+            />
+            </InputsWrapper>
         </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
@@ -300,8 +344,8 @@ export default function Group() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + AcademikGroup.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
      
 

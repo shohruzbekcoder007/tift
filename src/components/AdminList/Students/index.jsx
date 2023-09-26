@@ -48,7 +48,7 @@ export default function Students() {
 
   const DegreeList = useMemo(() => {
     degree.unshift({
-      uz: 'Hammasi',
+      uz: "Ta'lim Darajasi",
       eng: 'all'
     }) 
    return degree.map(elem => {
@@ -61,7 +61,7 @@ export default function Students() {
 
   const StudyTipeList = useMemo(() => {
     study_type.unshift({
-      uz: 'Hammasi',
+      uz: "Ta'lim shakli",
       eng: 'all'
     }) 
    return study_type.map(elem => {
@@ -142,7 +142,7 @@ export default function Students() {
         })
       })
       mass.unshift({
-        name: 'Hammasi',
+        name: "O'quv yili",
         value: 'all'
       })
       setYearList(mass)
@@ -424,7 +424,7 @@ const OneStudent = ({student, setDeleted}) => {
       <th>{student.academic_group != null ? student.academic_group : ""}</th>
       {
        student.degree ? degree.map(elem =>{
-          if (elem.value == student.degree) {
+          if (elem.value?.toLowerCase() == student.degree?.toLowerCase()) {
             return (<th>{elem.uz}</th>)
           }
         })
@@ -432,7 +432,7 @@ const OneStudent = ({student, setDeleted}) => {
       }
       {
        student.study_type ? study_type.map(elem =>{
-          if (elem.value == student.study_type) {
+          if (elem.value?.toLowerCase() == student.study_type?.toLowerCase()) {
             return (<th>{elem.uz}</th>)
           }
         })

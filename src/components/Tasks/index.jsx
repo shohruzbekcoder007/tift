@@ -33,6 +33,7 @@ export default function Tasks() {
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
   const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
+  const [Disabled, setDisabled] = useState(false);
 
 
 
@@ -100,7 +101,7 @@ export default function Tasks() {
   
 
   const handleSubmit = async (event) => {
-
+    setDisabled(true)
     event.preventDefault();
     const formData = new FormData();
     if(file){
@@ -118,8 +119,10 @@ export default function Tasks() {
 
 
     setTeacheravTasksPost(teacher_tasks, formData, (response) => { 
+      setDisabled(false)
       handleClose()
     }, (error) => {
+      setDisabled(false)
       console.log(error)
     })
 };
@@ -502,6 +505,7 @@ export default function Tasks() {
               variant="contained"
               type='submit'
               onClick={handleSubmit}
+              disabled={Disabled}
             >
               {listLanguage.Save['uz']}
 
