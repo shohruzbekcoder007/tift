@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper,ClassScheduleTableWrapper } from '../../global_styles/styles'
-import { Button, Pagination, Paper, Typography } from '@mui/material'
+import { Button, CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -34,6 +34,8 @@ export default function Tasks() {
   const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
   const [Disabled, setDisabled] = useState(false);
+  const [Status, setStatus] = useState(false);
+  const [ModalText, setModalText] = useState(listLanguage.Save['uz']);
 
 
 
@@ -58,7 +60,7 @@ export default function Tasks() {
     }, (error) => {
         console.log(error)
     })
-  }, [])
+  }, [Status])
 
   const tasktype = useMemo(() => {
     return [
@@ -101,8 +103,9 @@ export default function Tasks() {
   
 
   const handleSubmit = async (event) => {
-    setDisabled(true)
     event.preventDefault();
+    setModalText(<CircularProgress color="success" size={25} />)
+    setDisabled(true)
     const formData = new FormData();
     if(file){
       formData.append("source", file);
@@ -120,9 +123,13 @@ export default function Tasks() {
 
     setTeacheravTasksPost(teacher_tasks, formData, (response) => { 
       setDisabled(false)
+      setModalText(listLanguage.Save['uz'])
+      setFile(null)
+      setStatus(!Status)
       handleClose()
     }, (error) => {
       setDisabled(false)
+      setModalText(listLanguage.Save['uz'])
       console.log(error)
     })
 };
@@ -507,7 +514,7 @@ export default function Tasks() {
               onClick={handleSubmit}
               disabled={Disabled}
             >
-              {listLanguage.Save['uz']}
+              {ModalText}
 
             </Button>
           </ModalButtons>
@@ -584,8 +591,6 @@ const DeleteUpdate = ({elem, setDeleted}) => {
   const chagePageHandle = (_, value) => {
     console.log(value)
   }
-
-
 
   const DeleteTasks = (pk) => {
     setTeacherDeleteTasks(`${teacher_tasks}${pk}/`, (response) => {
