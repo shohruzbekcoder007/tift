@@ -8,10 +8,12 @@ import listLanguage from './language.json'
 import { Badge, Button } from '@mui/material'
 import Notification from '../Notification'
 import { getRole } from '../../utils/getRole'
+import { setTitle } from '../../redux/action/titleActions'
 
 export default function Header() {
 
   const navigate = useNavigate();
+  // const dispatch = useDispatch()
 
   const title = useSelector((state) => state.title);
   const user = useSelector((state) => state.user);
@@ -95,7 +97,16 @@ export default function Header() {
               </Badge>
               <Notification open={openNotes} setCountNote={setCountNote} />
             </HeaderAccountItem>
-            <NavLink to="videoguide">
+            <NavLink to="videoguide"
+            onClick={() => {dispatch(setTitle({
+              text: {
+                uz: "Videolar",
+                ru: "Видео",
+                eng: "Videos"
+              },
+              type: "text"
+            })); }}
+            >
               <HeaderAccountItem>
                 <svg width="24" height="16" viewBox="0 0 24 16" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M22.903 2.53749C22.227 2.19949 21.43 2.27049 20.826 2.72549C20.787 2.75449 20.75 2.78749 20.716 2.82149L18.959 4.59449C18.748 2.02949 16.618 0.000488615 14 0.000488615H5C2.243 -0.000511385 0 2.24249 0 4.99949V10.9995C0 13.7565 2.243 15.9995 5 15.9995H14C16.629 15.9995 18.768 13.9525 18.962 11.3725L20.718 13.1265C20.752 13.1595 20.787 13.1895 20.825 13.2185C21.177 13.4825 21.593 13.6165 22.013 13.6165C22.316 13.6165 22.619 13.5475 22.903 13.4055C23.58 13.0675 24 12.3865 24 11.6315V4.31349C24 3.55649 23.58 2.87549 22.903 2.53749ZM14 13.9995H5C3.346 13.9995 2 12.6535 2 10.9995V4.99949C2 3.34549 3.346 1.99949 5 1.99949H14C15.654 1.99949 17 3.34549 17 4.99949V10.9995C17 12.6535 15.654 13.9995 14 13.9995ZM19 8.58249V7.39349L22 4.36549L22.025 11.6035L19 8.58149V8.58249Z" fill="currentcolor" />
@@ -104,7 +115,16 @@ export default function Header() {
             </NavLink>
           </>:<></>
         }
-        <NavLink to={'profile'}>
+        <NavLink to={'profile'}
+        onClick={() => {dispatch(setTitle({
+          text: {
+            uz: "Profil",
+            ru: "Профиль",
+            eng: "Profile"
+          },
+          type: "text"
+        })); }}
+        >
           <HeaderAccountItem>
             <svg width="18" height="24" viewBox="0 0 18 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
               <path d="M9 12C10.1867 12 11.3467 11.6481 12.3334 10.9888C13.3201 10.3295 14.0892 9.39246 14.5433 8.2961C14.9974 7.19975 15.1162 5.99335 14.8847 4.82946C14.6532 3.66558 14.0818 2.59648 13.2426 1.75736C12.4035 0.918247 11.3344 0.346802 10.1705 0.115291C9.00666 -0.11622 7.80026 0.00259972 6.7039 0.456726C5.60754 0.910851 4.67047 1.67989 4.01118 2.66658C3.35189 3.65328 3 4.81331 3 6C3.00159 7.59081 3.63424 9.11602 4.75911 10.2409C5.88399 11.3658 7.40919 11.9984 9 12ZM9 2C9.79113 2 10.5645 2.2346 11.2223 2.67412C11.8801 3.11365 12.3928 3.73836 12.6955 4.46927C12.9983 5.20017 13.0775 6.00444 12.9231 6.78036C12.7688 7.55629 12.3878 8.26902 11.8284 8.82843C11.269 9.38784 10.5563 9.7688 9.78036 9.92314C9.00444 10.0775 8.20017 9.99827 7.46927 9.69552C6.73836 9.39277 6.11365 8.88008 5.67412 8.22228C5.2346 7.56449 5 6.79113 5 6C5 4.93914 5.42143 3.92172 6.17157 3.17158C6.92172 2.42143 7.93913 2 9 2Z" fill="currentcolor" />
