@@ -107,13 +107,13 @@ export default function Users() {
           }} />
           <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
         </BoxHeader>
-        <BoxHeader>
+        {/* <BoxHeader>
           <InputsWrapper>
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"}/>
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Login" />
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="F.I.O" />
           </InputsWrapper>
-        </BoxHeader>
+        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
