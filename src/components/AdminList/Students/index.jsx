@@ -83,7 +83,7 @@ export default function Students() {
     }, error => {
       console.log(error)
     })
-  }, [page, pageSize, searchText,DirectionID,GroupID,AcademekYear, StudyTypeSelect,DegreeSelect])
+  }, [page, pageSize, allCount, searchText,DirectionID,GroupID,AcademekYear, StudyTypeSelect,DegreeSelect])
   // ======
 
   useEffect(() => {
