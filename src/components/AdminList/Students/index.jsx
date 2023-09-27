@@ -49,12 +49,12 @@ export default function Students() {
   const DegreeList = useMemo(() => {
     degree.unshift({
       uz: "Ta'lim Darajasi",
-      eng: 'all'
+      value: 'all'
     }) 
    return degree.map(elem => {
      return {
           name: elem.uz,
-          value: elem.eng
+          value: elem.value
         }
     }) 
   }, [])
@@ -62,12 +62,12 @@ export default function Students() {
   const StudyTipeList = useMemo(() => {
     study_type.unshift({
       uz: "Ta'lim shakli",
-      eng: 'all'
+      value: 'all'
     }) 
    return study_type.map(elem => {
      return {
           name: elem.uz,
-          value: elem.eng
+          value: elem.value
         }
     }) 
   }, [])

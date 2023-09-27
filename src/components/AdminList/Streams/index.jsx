@@ -334,7 +334,7 @@ export default function Streams() {
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
-            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            <AutocompleteJames label={"Yo'nalish"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
             <AllSelectFullWidth
               chageValueFunction={val => setSemesterNumber(val)}
               selectedOptionP={1}
