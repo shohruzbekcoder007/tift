@@ -111,7 +111,6 @@ export default function Streams() {
       }]
   }, [])
 
-
   const Amaliyot = useMemo(() => {
     return [{
       name: "0",
@@ -221,8 +220,8 @@ export default function Streams() {
     if (SemesterSelect && ScienseSelect) {
       getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}&search=${searchText}`, (response) => {
         setStreamsList(response.data.results);
-        setPageCount(response.data.page_count)
-        setAllCount(response.data.count)
+        setPageCount(response.data.page_count);
+        setAllCount(response.data.count);
       }, (error) => {
         console.log(error)
       })
@@ -242,7 +241,7 @@ export default function Streams() {
     }
 
 
-  }, [pageSize, page, SemesterSelect, ScienseSelect, Status, searchText])
+  }, [pageSize, page, allCount, SemesterSelect, ScienseSelect, Status, searchText])
 
 
   useEffect(() => {
@@ -335,7 +334,7 @@ export default function Streams() {
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
             />
-            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            <AutocompleteJames label={"Yo'nalish"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
             <AllSelectFullWidth
               chageValueFunction={val => setSemesterNumber(val)}
               selectedOptionP={1}
@@ -345,7 +344,7 @@ export default function Streams() {
         </BoxHeader>
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+            setAllCount(val)
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />

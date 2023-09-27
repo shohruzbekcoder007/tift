@@ -7,7 +7,7 @@ export default [
     },
     {
         value: "master",
-        uz: "Magistr",
+        uz: "Magister",
         ru: "master ru",
         eng: "master eng"
     }
