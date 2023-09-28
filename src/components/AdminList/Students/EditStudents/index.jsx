@@ -20,6 +20,7 @@ import study_type from '../../../../dictionary/study_type'
 import degree from '../../../../dictionary/degree'
 import language from '../../../../dictionary/language'
 import { PatchEmployee, getOneEmployees } from '../EditEmployees/request'
+import AllSelectFullWidth from '../../../AllSelectFullWidth'
 
 export default function EditStudents() {
 
@@ -74,6 +75,8 @@ export default function EditStudents() {
     lang: null,
     student_id: null
   })
+
+  console.log(newData);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -374,9 +377,9 @@ export default function EditStudents() {
             >
               Jinsi
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => { reqDataChange("gender", val) }}
-              selectedElem={newData.gender}
+              selectedOptionP={newData.gender}
               selectOptions={jinsList}
             />
           </WrapperInputsCard>
@@ -480,9 +483,9 @@ export default function EditStudents() {
             >
               Fuqarolik
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("citizenship", val)}
-              selectedElem={newData.citizenship}
+              selectedOptionP={newData.citizenship}
               selectOptions={citizenshipList}
             />
           </WrapperInputsCard>
@@ -503,9 +506,9 @@ export default function EditStudents() {
             >
               Mamlakat
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("country", val)}
-              selectedElem={newData.country}
+              selectedOptionP={newData.country}
               selectOptions={countryList}
             />
           </WrapperInputsCardTwo>
@@ -523,9 +526,9 @@ export default function EditStudents() {
             >
               Millat
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("nationality", val)}
-              selectedElem={newData.nationality}
+              selectedOptionP={newData.nationality}
               selectOptions={nationalityList}
             />
           </WrapperInputsCardTwo>
@@ -549,9 +552,9 @@ export default function EditStudents() {
             >
               Yo'nalish
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("specialty", val)}
-              selectedElem={newData.specialty}
+              selectedOptionP={newData.specialty}
               selectOptions={departmentList}
             />
           </WrapperInputsCardTwo>
@@ -603,9 +606,9 @@ export default function EditStudents() {
             >
               Viloyat
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => {reqDataChange("region", val); setRegionId(val)}}
-              selectedElem={newData.region}
+              selectedOptionP={newData.region}
               selectOptions={regionList}
             />
           </WrapperInputsCardTwo>
@@ -623,9 +626,9 @@ export default function EditStudents() {
             >
               Shahar, Tuman
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("district", val)}
-              selectedElem={newData.district}
+              selectedOptionP={newData.district}
 
               selectOptions={districtList}
             />
@@ -681,9 +684,9 @@ export default function EditStudents() {
             >
               Viloyat
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => {reqDataChange("region2", val); setRegionId1(val)}}
-              selectedElem={newData.region2}
+              selectedOptionP={newData.region2}
 
               selectOptions={regionList1}
             />
@@ -702,9 +705,9 @@ export default function EditStudents() {
             >
               Shahar, Tuman
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("district2", val)}
-              selectedElem={newData.district2}
+              selectedOptionP={newData.district2}
 
               selectOptions={districtList1}
             />
@@ -760,9 +763,9 @@ export default function EditStudents() {
             >
              Academic group
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("academic_group", val)}
-              selectedElem={newData.academic_group}
+              selectedOptionP={newData.academic_group}
               selectOptions={academicGroupList}
             />
           </WrapperInputsCardTwo>
@@ -780,9 +783,9 @@ export default function EditStudents() {
             >
               To'lov turi
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("form_of_payment", val)}
-              selectedElem={newData.form_of_payment}
+              selectedOptionP={newData.form_of_payment}
 
               selectOptions={ContractList}
             />
@@ -855,9 +858,9 @@ export default function EditStudents() {
             >
               O'qish turi
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("study_type", val)}
-              selectedElem={newData.study_type}
+              selectedOptionP={newData.study_type}
               selectOptions={StudyTypeList}
             />
           </WrapperInputsCardTwo>
@@ -878,7 +881,7 @@ export default function EditStudents() {
             >
               StudentID
             </Typography>
-            <CustomizedInputSimple defaultValue={newData.student_id} callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple defaultValue={newData.student_id} callback_func={(val) => { reqDataChange("student_id", val) }} placeholder=""/>
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -894,9 +897,9 @@ export default function EditStudents() {
             >
               Ta'lim tili
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("lang", val)}
-              selectedElem={newData.lang}
+              selectedOptionP={newData.lang}
 
               selectOptions={LangList}
             />
@@ -939,9 +942,9 @@ export default function EditStudents() {
             >
               Darajasi
             </Typography>
-            <AllSelectFullWidth1
+            <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("degree", val)}
-              selectedElem={newData.degree}
+              selectedOptionP={newData.degree}
               selectOptions={DegreeTypeList}
             />
           </WrapperInputsCardTwo>

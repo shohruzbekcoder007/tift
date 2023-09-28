@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { BoxFooter, BoxFooterText } from '../../global_styles/styles'
-import { Button, Pagination, Paper, Typography } from '@mui/material'
+import { Button, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader, ThesisHeaderRight } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -14,12 +14,33 @@ import ServicesTable from '../ServicesTable/ServicesTable'
 import { useMemo } from 'react'
 import { postStudentInformation } from './request'
 import { student_doc } from '../../utils/API_urls'
+import MuiAlert from '@mui/material/Alert'
+
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
   const [ListSelect, setListSelect] = React.useState(null);
   const [JobInput, setJobInput] = React.useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [changeUser, setChangeUser] = useState(null)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   const chageRowHadler = (val) => {
     console.log(val)
@@ -49,9 +70,21 @@ export default function Student_services() {
       type: ListSelect,
       job: ListSelect != 'information' ? JobInput : ""
     }, (response) => {
-      console.log(response);
+      setOpen(false)
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage("Ariza yuborildi")
     }, (error) => {
       console.log(error);
+
+      let msg = ``
+      if (error.response.data.message) {
+        msg = error.response.data.message
+      }
+      setOpen(false)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage(msg)
     })
   }
 
@@ -180,6 +213,11 @@ export default function Student_services() {
           </ModalButtons>
         </ModalBox>
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
   )
 }

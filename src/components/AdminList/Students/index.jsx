@@ -84,11 +84,12 @@ export default function Students() {
       const currlist = [...response.results]
       currlist.unshift({
         name: 'Hammasi',
-        id: 'all'
+        id: 'all',
+        degree: "hammasi"
       })
       setDirections(currlist.map(elem => {
         return {
-          name: elem.name,
+          name: elem.name  + " (" + elem.degree + ")",
           value: elem.id
         }
       }))
@@ -125,17 +126,16 @@ export default function Students() {
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
       console.log(response.data.results);
-      let mass = [...YearList]
+      let mass = [{
+        name: "O'quv yili",
+        value: 'all'
+      }]
 
       response.data.results.map(item => {
         mass.push({
           name: item.name,
           value: item.season
         })
-      })
-      mass.unshift({
-        name: "O'quv yili",
-        value: 'all'
       })
       setYearList(mass)
 
