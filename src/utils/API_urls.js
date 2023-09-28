@@ -66,6 +66,7 @@ export const studentcontract= "/studentcontract/"
 export const student_test_detail = "student/test-detail/"
 export const student_test_solve = "student/test-solve/"
 export const student_doc = "/documents/student-doc/"
+export const student_documents = "/documents/student-documents/"
 
 
 // semester 

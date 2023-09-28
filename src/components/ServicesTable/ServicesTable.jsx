@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ClassScheduleTableWrapper, TrHeaderBox } from '../../global_styles/styles'
-import Button from '@mui/material/Button'
-import { Link } from 'react-router-dom'
-import listLanguage from '../DiplomaTable/language.json'
+import { getDocumentStudents } from './request';
+import { student_documents } from '../../utils/API_urls';
 export default function ServicesTable() {
+    useEffect(() => {
+        getDocumentStudents(student_documents, (response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        })
+    }, []);
     return (
         <ClassScheduleTableWrapper>
             <table>

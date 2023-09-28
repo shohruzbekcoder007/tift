@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import { HeaderAccount, HeaderAccountItem, HeaderAccountTime, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, TreeDots } from './styles'
+import { HeaderAccount, HeaderAccountItem, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, Indebtedness, NavbarWrapper, NavbarWrapperRight, TreeDots } from './styles'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
 import { useSelector } from "react-redux"
-import listLanguage from './language.json'
 import { Badge, Button } from '@mui/material'
 import Notification from '../Notification'
 import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
+import { getStudentInformation } from '../Information/requests'
+import { student_detail } from '../../utils/API_urls'
 
 export default function Header() {
 
   const navigate = useNavigate();
-  // const dispatch = useDispatch()
 
   const title = useSelector((state) => state.title);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
   const [headerAccount, setHeaderAccount] = useState(false)
   const [openNotes, setOpenNotes] = useState(false)
+  const [InfoList, setInfoList] = useState(false)
 
   const [countNote, setCountNote] = useState(0)
   const handleHeaderAccount = () => {
@@ -27,6 +28,16 @@ export default function Header() {
       return !prev
     })
   }
+
+  useEffect(() => {
+    getStudentInformation(student_detail, (response) => {
+      setInfoList(response.data.result)
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
+
+
 
 
 
@@ -40,12 +51,17 @@ export default function Header() {
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-align-left"><line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line></svg>
         </span>
+        <NavbarWrapper>
         {
           title.type === "text"?
           <HeaderTitle>
             {title.text.uz}
           </HeaderTitle>:<></>
         }
+        {
+          getRole(user) === "student" && <div>{InfoList.direction} <p>({InfoList.academic_group})</p></div>	
+        }
+        </NavbarWrapper>
         {
           title.type === "back_link"?
           <Button
@@ -66,7 +82,7 @@ export default function Header() {
         }
         
       </HeaderTitleHamburger>
-      
+       
       <TreeDots
         onClick={handleHeaderAccount}
       >
@@ -75,6 +91,13 @@ export default function Header() {
         </svg>
       </TreeDots>
       <HeaderAccount open={headerAccount}>
+      {
+          getRole(user) === 'student' && 
+          <NavbarWrapperRight>
+            <h4>Kontrakt: 10mln</h4>
+            <Indebtedness>Qarzdorlik: 3mln</Indebtedness>
+          </NavbarWrapperRight>
+        }
         {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime> */}

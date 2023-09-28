@@ -9,7 +9,7 @@ import { AttendSearchButton } from './styles'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { Link } from 'react-router-dom'
 import { deleteStudent, getUsers } from './request'
-import { academic_group_short, academic_year, directions, users_student } from '../../../utils/API_urls'
+import { academic_group_short, academic_year, directions, host, users_student } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
 import { getAcademicGroup } from '../Streams/request'
@@ -47,10 +47,6 @@ export default function Students() {
 
 
   const DegreeList = useMemo(() => {
-    degree.unshift({
-      uz: "Ta'lim Darajasi",
-      value: 'all'
-    })
     return degree.map(elem => {
       return {
         name: elem.uz,
@@ -60,10 +56,6 @@ export default function Students() {
   }, [])
 
   const StudyTipeList = useMemo(() => {
-    study_type.unshift({
-      uz: "Ta'lim shakli",
-      value: 'all'
-    })
     return study_type.map(elem => {
       return {
         name: elem.uz,
@@ -194,13 +186,14 @@ export default function Students() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
+            <a href={host +  `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}`} target='_blank'>
             <Button
               variant="contained"
               sx={{
-                width: "50px",
+                width: "90px",
                 textTransform: "capitalize",
                 boxShadow: "none",
-                padding: "12px 12px",
+                padding: "12px",
                 borderRadius: "10px",
                 fontWeight: "600",
                 fontSize: "14px",
@@ -212,8 +205,9 @@ export default function Students() {
               </svg>
               }
             >
-              {/* Yuklash */}
+              Excel
             </Button>
+            </a>
             <Link to={'add'}>
               <Button
                 variant="contained"
