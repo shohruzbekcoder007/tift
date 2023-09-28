@@ -1,5 +1,11 @@
 export default [
     {
+        value: 'all',
+        uz: "Ta'lim shakli",
+        ru: "Ta'lim shakli",
+        eng: "Ta'lim shakli",
+      },
+    {
         value: "morning",
         uz: "Kunduzgi",
         ru: "morning ru",
