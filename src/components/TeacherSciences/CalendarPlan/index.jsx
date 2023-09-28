@@ -1,4 +1,4 @@
-import { Button, Modal, Paper, Typography } from '@mui/material'
+import { Button, Modal, Paper, Snackbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -9,6 +9,7 @@ import { lesson_edit, teacher_calendar_delay, teacher_calendar_plan } from '../.
 import { getTeacheravCalendar } from './requests'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { patchTeacheravCalendar } from './request'
+import MuiAlert from '@mui/material/Alert';
 // Lang
 import listLanguage from './language.json'
 import { useSelector } from 'react-redux'
@@ -473,12 +474,30 @@ const StatusLessonAttendece = ({ status, status_day, id }) => {
 
 
 const Fakultets = ({ elem, callback_func, status }) => {
-  const [changed, serChanged] = useState(false)
-  const [alertMessage, setAlertMessage] = useState('')
   const [Name, setName] = useState('')
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false);
+
+  // Alert
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   const handleChangeName = () => {
     patchTeacheravCalendar(`${lesson_edit}?lesson_id=${elem.id}`, {
@@ -486,8 +505,16 @@ const Fakultets = ({ elem, callback_func, status }) => {
     },(response) => {
       callback_func(!status)
       handleClose()
+      // Alert
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage('Saqlandi')
     }, (error) => {
       console.log(error);
+      // Alert
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage('Something went wrong')
     })
   }
 
@@ -602,6 +629,11 @@ const Fakultets = ({ elem, callback_func, status }) => {
         {/* </form> */}
 
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

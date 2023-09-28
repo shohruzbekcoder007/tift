@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper,ClassScheduleTableWrapper } from '../../global_styles/styles'
-import { Button, Pagination, Paper, Typography } from '@mui/material'
+import { Button, Pagination, Paper, Typography, Snackbar } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -17,13 +17,14 @@ import { useLocation } from 'react-router'
 import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
 import { teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
+import MuiAlert from '@mui/material/Alert';
 
 export default function Tasks() {
   const { state } = useLocation()
   
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+ 
   const [file, setFile] = useState(null);
   const [tasksList, settasksList] = useState([]);
   const [titleTasks, settitleTasks] = useState(null);
@@ -34,7 +35,10 @@ export default function Tasks() {
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
   const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
-
+  const handleClose = () => {
+    setFile(null)
+    setOpen(false)
+  };
   // lang
   const language = useSelector(state => state.language)
 
@@ -100,6 +104,26 @@ export default function Tasks() {
     ]
   }, [])
 
+  // Alert
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
   
 
   const handleSubmit = async (event) => {
@@ -122,8 +146,18 @@ export default function Tasks() {
 
     setTeacheravTasksPost(teacher_tasks, formData, (response) => { 
       handleClose()
+      console.log(response)
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage('Saqlandi')
+      setFile(null)
     }, (error) => {
+      let msg = ``
+      msg = error.response.data.message
       console.log(error)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage(msg)
     })
 };
 
@@ -411,7 +445,7 @@ export default function Tasks() {
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
                 >
-                  {listLanguage.Dowload[language]} 
+                  {listLanguage.Download[language]} 
                 </Button>
               </a>
           </ModalSelectWrapper>:<></>}
@@ -511,6 +545,11 @@ export default function Tasks() {
           </ModalButtons>
         </ModalBox>
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
@@ -587,6 +626,8 @@ const DeleteUpdate = ({elem, setDeleted}) => {
     console.log(value)
   }
 
+
+  
 
 
   const DeleteTasks = (pk) => {

@@ -1,0 +1,47 @@
+{
+    "NoInfo": {
+        "uz": "Ma'lumot yo'q",
+        "ru": "Нет информации",
+        "eng": "No information"
+    },
+    "Number": {
+        "uz": "Raqam",
+        "ru": "Номер",
+        "eng": "Number"
+    },
+    "Plan": {
+        "uz": "Reja",
+        "ru": "План",
+        "eng": "Plan"
+    },
+    "AddMaterial": {
+        "uz": "O'quv materialini qo'shish",
+        "ru": "Добавить учебный материал",
+        "eng": "Add educational material"
+    },
+    "Add": {
+        "uz": "Qo'shish",
+        "ru": "Добавить",
+        "eng": "Add"
+    },
+    "File": {
+        "uz": "Fayl",
+        "ru": "Файл",
+        "eng": "File"
+    },
+    "Save": {
+        "uz": "Saqlash",
+        "ru": "Сохранить",
+        "eng": "Save"
+    },
+    "EnterFile": {
+        "uz": "Faylni kiriting",
+        "ru": "Прикрепите файл",
+        "eng": "Enter the file"
+    },
+    "Cancel": {
+        "uz": "Bekor qilish",
+        "ru": "Отменить",
+        "eng": "Cancel"
+    }
+}

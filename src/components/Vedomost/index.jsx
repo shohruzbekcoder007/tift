@@ -1,4 +1,4 @@
-import { Box, Button, Modal, Paper, Typography } from '@mui/material'
+import { Box, Button, Modal, Paper, Typography, Snackbar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
@@ -10,6 +10,8 @@ import { createTaskGrade, getTeacherVedemost } from './requests'
 import { host, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
 import listLanguage from './language.json'
 import { useSelector } from 'react-redux'
+import MuiAlert from '@mui/material/Alert';
+
 
 export default function Vedomost() {
   const { state } = useLocation()
@@ -25,7 +27,26 @@ export default function Vedomost() {
   const handleOpen = () => setOpen(true)
   const [open, setOpen] = useState(false);
   const [Status, setStatus] = useState(false);
-  
+
+  // Alert
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   
 
@@ -62,8 +83,23 @@ export default function Vedomost() {
     createTaskGrade(teacher_submission_grade, formData, (response) => { 
       setStatus(!Status)
       handleClose()
+      // Alert
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage('Saqlandi')
     }, (error) => {
+      let msg = ``
+      if(error.response.data?.message?.[0]) {
+        msg = msg + "  " +  error.response.data.message[0]
+      }
+      if (error.response.data.grade?.[0]) {
+        msg = msg +  "  " + error.response.data.grade?.[0]
+      }
       console.log(error)
+      // Alert
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage(msg)
     })
   }
 
@@ -352,6 +388,11 @@ export default function Vedomost() {
 
           </Modal>
       </BoxBody>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </Paper>
   )
 }

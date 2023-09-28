@@ -1,4 +1,4 @@
-import { Button, Checkbox, Modal, Paper, Typography } from '@mui/material'
+import { Button, Checkbox, Modal, Paper, Typography, Snackbar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
@@ -7,6 +7,7 @@ import { TableTHHeader } from '../../DiplomaTable'
 import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from '../../Vedomost/styles'
 import { getTeacherAttendance, setSetNbStudents } from './requests'
 import { useNavigate } from "react-router-dom"
+import MuiAlert from '@mui/material/Alert';
 // Lang
 import listLanguage from './language.json'
 import { useSelector } from 'react-redux'
@@ -41,6 +42,26 @@ export default function ThematicBlock() {
     }
   }
 
+  // Alert
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
 
   const NbSaveBtn = () => {
     setSetNbStudents(teacher_set_nb_students, {
@@ -48,9 +69,16 @@ export default function ThematicBlock() {
       'students' : studentAttendanceList
     }, (response) => {
       console.log(response);
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage('Saqlandi')
+
       navigate('/teacher/sciences')
     }, (error) => {
       console.log(error)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage('Something went wrong.')
     })
   }
 
@@ -162,6 +190,11 @@ export default function ThematicBlock() {
         </ClassScheduleTableWrapper>
       </BoxBody>
     </Paper>
+    <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

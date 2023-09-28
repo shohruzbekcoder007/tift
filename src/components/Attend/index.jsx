@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
@@ -14,6 +14,8 @@ import { teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_
 import MultiSelect from '../Multisellect'
 import listLanguage from './language.json'
 import { useSelector } from 'react-redux'
+
+import MuiAlert from '@mui/material/Alert';
 
 
 export default function Attend() {
@@ -29,6 +31,12 @@ export default function Attend() {
     const [studentsList, setstudentsList] = useState([])
     const [teacherGetNbList, setteacherGetNbList] = useState([])
     // const [studentList, setstudentList] = useState([])
+    
+    // Alert
+    const [openAlert, setOpenAlert] = useState(false)
+    const [changed, serChanged] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const handleCloseAlert = () => setOpenAlert(false);
 
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
@@ -116,11 +124,33 @@ export default function Attend() {
         }, (response) => {
             console.log(response.data.result);
             handleClose()
+            setOpenAlert(true)
+            serChanged(true)
+            setAlertMessage('Rasmiylashtirildi')
         }, (error) => {
+            let msg =  ``
+            msg = error.response.data.message
             console.log(error)
+            handleClose()
+            setOpenAlert(true)
+            serChanged(false)
+            setAlertMessage(msg)
         })
     }
 
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+      });
+    
+      const anchorOrigin1 = {
+        vertical: 'bottom',
+        horizontal: "right"
+      }
+      
+      const anchorOrigin2 = {
+        vertical: 'bottom',
+        horizontal: "left"
+      }
 
 
     return (
@@ -619,6 +649,11 @@ export default function Attend() {
                     </ModalBox>
                 </Modal>
             </Paper>
+            <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
         </ContentWrapper>
     )
 }
