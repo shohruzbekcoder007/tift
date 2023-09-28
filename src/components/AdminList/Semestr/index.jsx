@@ -493,7 +493,7 @@ export default function Semestr() {
 
 const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
 
-
+  console.log(elem);
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
@@ -721,6 +721,7 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
+              selectedOptionP={elem.season}
               selectOptions={YearList}
             />
 
@@ -744,6 +745,7 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={(val) => setSemesterNum(val)}
+              selectedOptionP={Number(elem?.name?.slice(0,1))}
               selectOptions={Semester}
             />
           </SemesterModalSelectWrapperInfo>

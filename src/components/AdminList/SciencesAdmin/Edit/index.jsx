@@ -160,13 +160,13 @@ export default function Edit() {
       >
         <div style={{display: "flex"}}>
           <HeaderWrapper>
-          <BuildingModalLang>
+          {/* <BuildingModalLang>
             <BuildingModalLangText>RU</BuildingModalLangText>
             <BuildingModalLangText>UZC</BuildingModalLangText>
             <BuildingModalLangText>UZL</BuildingModalLangText>
             <BuildingModalLangText>EN</BuildingModalLangText>
             <BuildingModalLangText>KAR</BuildingModalLangText>
-          </BuildingModalLang>
+          </BuildingModalLang> */}
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"

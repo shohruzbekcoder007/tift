@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
 import { getAdminKafedra, setAdminDeleteScience } from './requests'
 import { kafedra, science } from '../../../utils/API_urls'
+import degree from '../../../dictionary/degree'
+import study_type from '../../../dictionary/study_type'
 
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
@@ -39,37 +41,23 @@ export default function SciencesAdmin() {
   const [page, setPage] = useState(1)
 
   const admindegree = useMemo(() => {
-    return [
-      {
-      name: "Bakalavr",
-      value: 'bachelor',
-      },
-      {
-        name: "Magister",
-        value: 'master',
-      },
-  ]
+    return degree.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
   },[])
 
 
 
   const adminstudytype = useMemo(() => {
-    return [{
-      name: "morning",
-      value: 'morning',
-    },
-    {
-      name: "evening",
-      value: 'evening',
-    },
-    {
-      name: "external",
-      value: 'external',
-    },
-    {
-      name: "remote",
-      value: 'remote',
-    }]
+    return study_type.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
   },[])
 
   useEffect(() => {
@@ -164,10 +152,12 @@ export default function SciencesAdmin() {
             />
             <AllSelectFullWidth
               chageValueFunction={val => setdegreechoes(val)}
+              selectedOptionP={admindegree[0].value}
               selectOptions={admindegree}
             />
             <AllSelectFullWidth
               chageValueFunction={val => setstudytypechoes(val)}
+              selectedOptionP={adminstudytype[0].value}
               selectOptions={adminstudytype}
             />
           </InputsWrapper>

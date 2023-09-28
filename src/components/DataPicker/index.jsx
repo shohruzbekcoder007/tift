@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 
 export default function DataPicker({ setFunction }) {
+  console.log("sdasda", setFunction);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} sx={{width: "100%"}}>
       <DemoContainer components={['DatePicker']} sx={{width: "100%", minWidth: "300px", '&.MuiInputBase-root': {width: "100%"}}}>

@@ -84,11 +84,12 @@ export default function Students() {
       const currlist = [...response.results]
       currlist.unshift({
         name: 'Hammasi',
-        id: 'all'
+        id: 'all',
+        degree: "hammasi"
       })
       setDirections(currlist.map(elem => {
         return {
-          name: elem.name,
+          name: elem.name  + " (" + elem.degree + ")",
           value: elem.id
         }
       }))
