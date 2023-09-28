@@ -125,17 +125,16 @@ export default function Students() {
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
       console.log(response.data.results);
-      let mass = [...YearList]
+      let mass = [{
+        name: "O'quv yili",
+        value: 'all'
+      }]
 
       response.data.results.map(item => {
         mass.push({
           name: item.name,
           value: item.season
         })
-      })
-      mass.unshift({
-        name: "O'quv yili",
-        value: 'all'
       })
       setYearList(mass)
 

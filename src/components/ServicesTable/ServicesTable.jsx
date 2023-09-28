@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { ClassScheduleTableWrapper, TrHeaderBox } from '../../global_styles/styles'
-import { getDocumentStudents } from './request';
 import { student_documents } from '../../utils/API_urls';
+import { getDocumentStudents } from './request';
 export default function ServicesTable() {
     useEffect(() => {
         getDocumentStudents(student_documents, (response) => {
