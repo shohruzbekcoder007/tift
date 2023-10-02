@@ -358,6 +358,8 @@ function App() {
 
 
                 <Route path="admin" element={<MainAdmin />}>
+                <Route path="addtest" element={<AddTest />} />
+
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />

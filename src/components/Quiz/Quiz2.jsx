@@ -10,8 +10,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getQuizs, postQuiz } from './requests';
 import { student_test_detail, student_test_solve } from '../../utils/API_urls';
 import MyTimer from './MyTimer';
-import { Alert } from '@mui/material';
+import { Alert, Snackbar } from '@mui/material';
 import { QuizBack } from '../QuizWrapper/styles';
+import MuiAlert from '@mui/material/Alert';
 
 const styles = theme => ({
   root: {
@@ -50,6 +51,25 @@ function PaperSheet(props) {
   const [finishedTest, setFinishedTest] = useState(false)
   const [graduate, setGraduate] = useState(0)
   const [nextTime, setNextTime] = useState(true)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
 
   useEffect(() => {
     getQuizs(`${student_test_detail}${testId}`, response => {
@@ -62,6 +82,14 @@ function PaperSheet(props) {
       setTryCount(response.try_count)
     }, error => {
       console.log(error)
+      let msg = ``
+      if (error.response.data.message) {
+        msg = msg + " " + error.response.data.message
+      }
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage(msg)
+
     })
   }, [nextTime])
 
@@ -241,6 +269,11 @@ function PaperSheet(props) {
           </div>
         </>}
       </Paper>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
