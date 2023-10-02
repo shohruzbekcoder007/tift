@@ -57,7 +57,7 @@ export default function AddTest() {
       console.log(response);
     setGroupList(response.data.results.map(elem => {
       return {
-        name: elem.name,
+        name: elem.name + " (" + elem.science_name + ")",
         value: elem.id
       }
     }))
