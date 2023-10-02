@@ -38,7 +38,6 @@ const MultipleSelectChip = ({chageValueFunction, selectOptions}) => {
   const formik = useFormik({
     initialValues: savedTask,
     onSubmit: (values) => {
-      console.log("values", values);
       chageValueFunction(values)
     }
   });
@@ -50,7 +49,6 @@ const MultipleSelectChip = ({chageValueFunction, selectOptions}) => {
         multiple
         value={formik.values.assignTo}
         onChange={(e) => {
-          console.log("set ", e.target.value);
           formik.setFieldValue("assignTo", e.target.value);
           chageValueFunction(e.target.value)
         }}

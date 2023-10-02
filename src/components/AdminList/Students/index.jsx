@@ -117,7 +117,6 @@ export default function Students() {
           value: elem.id
         }
       }))
-
     }, (error) => {
       console.log(error);
     })

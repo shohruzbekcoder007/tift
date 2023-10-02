@@ -29,9 +29,9 @@ export default function Tasks() {
   const [dedlineTasks, setdedlineTasks] = useState(null);
   const [maxgradeTasks, setmaxgradeTasks] = useState(null);
 
-  const [tasktypeVal, setTasktype] = useState('oraliq')
+  // const [tasktypeVal, setTasktype] = useState('oraliq')
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
-  const [trycount, settrycount] = useState(null);
+  // const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
   const [Disabled, setDisabled] = useState(false);
   const [Status, setStatus] = useState(false);
@@ -115,9 +115,9 @@ export default function Tasks() {
     formData.append("grade", maxgradeTasks);
     formData.append("deadline", dedlineTasks);
     formData.append("group", state.data);
-    formData.append("type", tasktypeVal);
+    // formData.append("type", tasktypeVal);
     formData.append("method", taskmethodVal);
-    formData.append("try_count", trycount);
+    // formData.append("try_count", trycount);
     formData.append("time", testtime);
 
 
@@ -359,7 +359,7 @@ export default function Tasks() {
             
           </ModalSelectWrapper>
             
-          <ModalSelectWrapper>
+          {/* <ModalSelectWrapper>
             <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -377,7 +377,7 @@ export default function Tasks() {
                 chageValueFunction={val => { setTasktype(val); }}
                 selectOptions={tasktype}
               />
-          </ModalSelectWrapper>
+          </ModalSelectWrapper> */}
 
           <ModalSelectWrapper>
             <Typography
@@ -447,7 +447,7 @@ export default function Tasks() {
               />
             </ModalSelectWrapper>:<></>}
 
-            {taskmethodVal == "test"?<ModalSelectWrapper>
+            {/* {taskmethodVal == "test"?<ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -462,7 +462,7 @@ export default function Tasks() {
                 Urinishlar soni
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { settrycount(val)}} placeholder="" type={'number'} />
-            </ModalSelectWrapper>:<></>}
+            </ModalSelectWrapper>:<></>} */}
 
             
             {taskmethodVal == "test"?<ModalSelectWrapper>
@@ -482,7 +482,7 @@ export default function Tasks() {
               <CustomizedInputSimple callback_func={(val) => { settesttime(val)}} placeholder="" type={'number'} />
             </ModalSelectWrapper>:<></>}
                 
-          {(tasktypeVal == 'yakuniy' || tasktypeVal == 'oraliq')?<></>:<ModalSelectWrapper>
+         <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -497,7 +497,7 @@ export default function Tasks() {
               Maks ball
             </Typography>
             <CustomizedInputSimple callback_func={val => setmaxgradeTasks(val)} />
-          </ModalSelectWrapper>}
+          </ModalSelectWrapper>
           <ModalButtons>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}

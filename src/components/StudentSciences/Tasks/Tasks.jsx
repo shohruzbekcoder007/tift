@@ -174,6 +174,7 @@ export default function Tasks() {
               <tbody>
                 {
                   myPatokList.length > 0 ? myPatokList.map((elem, index) => {
+                    console.log(elem)
                     return (
                       <tr key={index}>
                         <th>{elem.teacher}</th>
