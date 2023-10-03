@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper, ClassScheduleTableWrapper } from '../../global_styles/styles'
-import { Button, CircularProgress, Pagination, Paper, Typography } from '@mui/material'
+import { Button, CircularProgress, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -18,7 +18,8 @@ import { academic_group_short, host, patokadmin, teacher_tasks } from '../../uti
 import AllSelect from '../AllSelect'
 import MultipleSelectChip from '../Multisellect'
 import { getAcademicGroup } from '../AdminList/Streams/request'
-
+import { AttendSearchButton } from '../Attend/styles'
+import MuiAlert from '@mui/material/Alert';
 export default function AddTest() {
 
   const [open, setOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function AddTest() {
   const [titleTasks, settitleTasks] = useState(null);
   const [dedlineTasks, setdedlineTasks] = useState(null);
   const [maxgradeTasks, setmaxgradeTasks] = useState(null);
+  const [SearchText, setSearchText] = useState(null);
 
   const [tasktypeVal, setTasktype] = useState('oraliq')
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
@@ -38,32 +40,57 @@ export default function AddTest() {
   const [GroupList, setGroupList] = useState([]);
   const [Disabled, setDisabled] = useState(false);
   const [ModalText, setModalText] = useState(listLanguage.Save['uz']);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   const handleMultiSelectChange = (values) => {
     let nimadir = values.map(element => element.value)
-    
-    setSelectedValues(nimadir)
-};
 
-  const setFileHandler = (newValue,   ) => {
+    setSelectedValues(nimadir)
+  };
+
+  const setFileHandler = (newValue,) => {
     setFile(newValue)
   }
 
-
+  useEffect(() => {
+    getTeacheravTasks(`${teacher_tasks}?search=${SearchText}`, (response) => {
+      console.log(response);
+      settasksList(response.data)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [SearchText])
 
 
   useEffect(() => {
     getAcademicGroup(`${patokadmin}?page_size=1000&parent=true`, (response) => {
       console.log(response);
-    setGroupList(response.data.results.map(elem => {
-      return {
-        name: elem.name + " (" + elem.science_name + ")",
-        value: elem.id
-      }
-    }))
-  }, (error) => {
-    console.log(error);
-  })
+      setGroupList(response.data.results.map(elem => {
+        return {
+          name: elem.name + " (" + elem.science_name + ")",
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error);
+    })
   }, [])
 
   const tasktype = useMemo(() => {
@@ -104,13 +131,8 @@ export default function AddTest() {
     ]
   }, [])
 
-  useEffect(() => {
-    getTeacheravTasks(`${teacher_tasks}`, (response) => {
-      settasksList(response.data)
-    }, (error) => {
-        console.log(error)
-    })
-  }, [])
+
+
 
   const handleSubmit = async (event) => {
     setModalText(<CircularProgress color="success" size={25} />)
@@ -124,7 +146,7 @@ export default function AddTest() {
 
     formData.append("group", selectedValues);
 
-    
+
     formData.append("title", titleTasks);
     formData.append("grade", maxgradeTasks);
     formData.append("deadline", dedlineTasks);
@@ -138,11 +160,23 @@ export default function AddTest() {
     setTeacheravTasksPost(teacher_tasks, formData, (response) => {
       setModalText(listLanguage.Save['uz'])
       setDisabled(false)
+      setFile(null)
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage("Qo'shildi")
       handleClose()
     }, (error) => {
-      setModalText(listLanguage.Save['uz'])
-      setDisabled(false)
       console.log(error)
+      let msg = ``
+      if (error.response.data.message) {
+        msg += " " + error.response.data.message
+      }
+
+      setOpenAlert(true)
+      setModalText(listLanguage.Save['uz'])
+      setAlertMessage(msg)
+      setDisabled(false)
+      serChanged(false)
     })
   };
 
@@ -162,35 +196,7 @@ export default function AddTest() {
         >
           {/* Vazifalar - {state.name} */}
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            textTransform: "capitalize",
-            boxShadow: "none",
-            padding: "12px 70px",
-            borderRadius: "10px",
-            fontWeight: "600",
-            fontSize: "14px",
-            lineHeight: "17px",
-            '@media screen and (max-width: 400px)': {
-              margin: "20px 0 0 0"
-            },
-          }}
-          onClick={handleOpen}
-          startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_160_5797)">
-              <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_160_5797">
-                <rect width="20" height="20" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-          }
-        >
-          {listLanguage.Add['uz']}
-        </Button>
+
       </BoxHeader>
       <Paper
         elevation={0}
@@ -200,6 +206,41 @@ export default function AddTest() {
           borderRadius: "10px"
         }}
       >
+        <BoxHeader>
+          <div></div>
+          <AttendSearchButton>
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "12px 70px",
+                borderRadius: "10px",
+                fontWeight: "600",
+                fontSize: "14px",
+                lineHeight: "17px",
+                '@media screen and (max-width: 400px)': {
+                  margin: "20px 0 0 0"
+                },
+              }}
+              onClick={handleOpen}
+              startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_160_5797)">
+                  <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_160_5797">
+                    <rect width="20" height="20" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+              }
+            >
+              {listLanguage.Add['uz']}
+            </Button>
+          </AttendSearchButton>
+        </BoxHeader>
         <BoxHeader>
           <Typography
             variant='h2'
@@ -297,7 +338,7 @@ export default function AddTest() {
                     </svg>
                     }
                   />
-                   <TableTHHeader
+                  <TableTHHeader
                     text="Guruh"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_22504)">
@@ -574,15 +615,20 @@ export default function AddTest() {
               type='submit'
               onClick={handleSubmit}
               disabled={Disabled}
-              
+
             >
-               {ModalText}
+              {ModalText}
               {/* {listLanguage.Save['uz']} */}
 
             </Button>
           </ModalButtons>
         </ModalBox>
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
   )
 }
@@ -599,29 +645,29 @@ const ItemTasks = ({ elem, index }) => {
       <th>{elem.group_name}</th>
       <th>
         <a href={host + elem.source}>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: "10px",
-            textTransform: "capitalize",
-            boxShadow: "none",
-            padding: "6px 12px",
-            marginRight: "20px"
-          }}
-          startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clipPath="url(#clip0_78_22535)">
-              <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_78_22535">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-          }
-        >
-          Yuklash
-        </Button>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "10px",
+              textTransform: "capitalize",
+              boxShadow: "none",
+              padding: "6px 12px",
+              marginRight: "20px"
+            }}
+            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_78_22535)">
+                <path d="M10.8653 5.52533L11.8013 6.47533L7.93933 10.28C7.68133 10.538 7.342 10.6667 7.00133 10.6667C6.66067 10.6667 6.318 10.5367 6.05733 10.2767L4.20267 8.47933L5.13133 7.52133L6.99333 9.326L10.8653 5.52533ZM16 8C16 12.4113 12.4113 16 8 16C3.58867 16 0 12.4113 0 8C0 3.58867 3.58867 0 8 0C12.4113 0 16 3.58867 16 8ZM14.6667 8C14.6667 4.324 11.676 1.33333 8 1.33333C4.324 1.33333 1.33333 4.324 1.33333 8C1.33333 11.676 4.324 14.6667 8 14.6667C11.676 14.6667 14.6667 11.676 14.6667 8Z" fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_78_22535">
+                  <rect width="16" height="16" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+            }
+          >
+            Yuklash
+          </Button>
         </a>
       </th>
       {/* <th>

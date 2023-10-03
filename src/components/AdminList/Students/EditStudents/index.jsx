@@ -76,7 +76,14 @@ export default function EditStudents() {
     student_id: null
   })
 
-  console.log(newData);
+useEffect(() => {
+  let status = localStorage.getItem('status')
+  console.log(status);
+  if (status == "true") {
+      localStorage.setItem('status', false)
+      // window.location.reload();
+  }
+}, []);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -177,6 +184,9 @@ export default function EditStudents() {
     }, (error) => {
       console.log(error)
     })
+  }, [])
+
+  useEffect(() => {
     getRegionListRequest(`${district}?page_size=500`, (response) => {
       reqDataChange("district", response.data[0]?.id)
       reqDataChange("district2", response.data[0]?.id)
@@ -195,6 +205,9 @@ export default function EditStudents() {
     }, (error) => {
       console.log(error)
     })
+  }, []);
+
+  useEffect(() => {
     getRegionListRequest(`${directions}?page_size=500`, (response) => {
       console.log(response);
       setDepartmentList(response.data.results.map(elem => {
@@ -206,6 +219,9 @@ export default function EditStudents() {
     }, (error) => {
       console.log(error)
     })
+  }, []);
+
+  useEffect(() => {
     getRegionListRequest(`${country}`, (response) => {
       reqDataChange("country", response.data[0]?.id)
       setCountryList(response.data.map(elem => {
@@ -217,19 +233,9 @@ export default function EditStudents() {
     }, (error) => {
       console.log(error)
     })
+  }, []);
 
-    getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
-      reqDataChange("academic_group", response.data[0]?.id)
-      setacademicGroupList(response.data.map(elem => {
-        return {
-          value: elem.id,
-          name: elem.name
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
-  }, [])
+
 
   useEffect(() => {
     if(regionId){
@@ -264,7 +270,19 @@ export default function EditStudents() {
   },[regionId1])
 
   
-
+  useEffect(() => {
+    getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
+      reqDataChange("academic_group", response.data[0]?.id)
+      setacademicGroupList(response.data.map(elem => {
+        return {
+          value: elem.id,
+          name: elem.name
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
 
 // admin/employees
   const EditStudent = () => {
@@ -301,7 +319,6 @@ export default function EditStudents() {
 
   useEffect(() => {
     getOneEmployees(`${users_student}${state?.StudentID}/`, response => {
-      console.log("response", response);
       const updatedData = {
         ...newData,
         ...response.data,
@@ -310,7 +327,6 @@ export default function EditStudents() {
       updatedData.avatar = null
       setNewData(updatedData);
       setStatus(true)
-      console.log(updatedData);
     }, error => {
       console.log(error)
     })
