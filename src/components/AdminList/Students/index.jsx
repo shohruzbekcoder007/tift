@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -37,13 +37,15 @@ export default function Students() {
   const [deleted, setDeleted] = useState(true)
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState('all')
+  const [AcademekYear, setAcademekYear] = useState('2022')
   const [DegreeSelect, setDegreeSelect] = useState('all')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('all')
   const [DirectionID, setDirectionID] = useState('all')
   const [GroupID, setGroupID] = useState('all')
   const [YearList, setYearList] = useState([])
-
+  const [YearStatus, setYearStatus] = useState(true)
+  const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
+localStorage.setItem('status', true)
 
 
   const DegreeList = useMemo(() => {
@@ -72,7 +74,9 @@ export default function Students() {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
+      setYearStatus(false)
     }, error => {
+      setModalText("Ma'lumot yo'q")
       console.log(error)
     })
   }, [page, pageSize, allCount, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect])
@@ -240,11 +244,12 @@ export default function Students() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
-            <AutocompleteJames selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
+              selectedOptionP={YearList?.[YearList.length - 1]?.value}
               selectOptions={YearList}
             />
+            <AutocompleteJames selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AutocompleteJames selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
@@ -400,7 +405,7 @@ export default function Students() {
                   })
                     :
                     <tr>
-                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                      <th colSpan={12} align='center'>{ModalText}</th>
                     </tr>
                 }
               </tbody>

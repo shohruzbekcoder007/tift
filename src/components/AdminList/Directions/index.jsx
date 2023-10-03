@@ -540,6 +540,7 @@ export default function Directions() {
                 selectOptions={Faculty}
               />
             </ModalSelectWrapper>
+
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -553,7 +554,7 @@ export default function Directions() {
                 }}
               >
                Nomi                     </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="yo'nalish nomi" value={DirectionName} />
+              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="yo'nalish nomi" defaultValue={DirectionName} />
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -598,6 +599,7 @@ export default function Directions() {
               ]}
               />
             </ModalSelectWrapper>
+
             <ModalButtons>
               <Button
                 sx={{ width: "50%", textTransform: "none" }}
@@ -620,3 +622,12 @@ export default function Directions() {
     </>
   )
 }
+
+
+// const ItemTasks = ({ elem, index }) => {
+//   return (
+//     <>
+//     </>
+//   )
+// }
+
