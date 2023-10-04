@@ -256,8 +256,8 @@ export default function Students() {
               selectedOptionP={YearList?.[YearList.length - 1]?.value}
               selectOptions={YearList}
             />
-            <AutocompleteJames selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
-            <AutocompleteJames selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
+            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
               selectedOptionP={DegreeList[0].value}

@@ -76,14 +76,6 @@ export default function EditStudents() {
     student_id: null
   })
 
-useEffect(() => {
-  let status = localStorage.getItem('status')
-  console.log(status);
-  if (status == "true") {
-      localStorage.setItem('status', false)
-      // window.location.reload();
-  }
-}, []);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -272,13 +264,13 @@ useEffect(() => {
   
   useEffect(() => {
     getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
-      reqDataChange("academic_group", response.data[0]?.id)
       setacademicGroupList(response.data.map(elem => {
         return {
           value: elem.id,
           name: elem.name
         }
       }))
+      console.log('sssadsa');
     }, (error) => {
       console.log(error)
     })
