@@ -151,7 +151,7 @@ export default function Directions() {
           </AttendSearchButton>
         </BoxHeader>
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <InputsWrapper>
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
             <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Nomi" />
@@ -171,7 +171,7 @@ export default function Directions() {
               }]}
             />
           </InputsWrapper>
-        </BoxHeader>
+        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -539,7 +539,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
 
             <AllSelectFullWidth
               chageValueFunction={val => console.log(val)}
-              selectedOptionP={Faculty?.[index]?.value}
+              selectedOptionP={elem.faculty}
               selectOptions={Faculty}
             />
           </ModalSelectWrapper>

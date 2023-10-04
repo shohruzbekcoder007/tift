@@ -221,7 +221,7 @@ export default function Group() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
-            <AutocompleteJames selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'200px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
               selectOptions={YearList}
