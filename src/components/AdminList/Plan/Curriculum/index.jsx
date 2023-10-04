@@ -78,7 +78,7 @@ export default function Curriculum() {
       response.map(item => {
         list.push({
           value: item.id,
-          name: item.name
+          name: item.name + " (" + item.degree + ")"
         })
         setDirection(response[0].id)
       })

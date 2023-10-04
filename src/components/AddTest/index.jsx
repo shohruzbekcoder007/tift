@@ -14,12 +14,13 @@ import { MuiFileInput } from 'mui-file-input'
 import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
 import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
-import { academic_group_short, host, patokadmin, teacher_tasks } from '../../utils/API_urls'
+import { academic_group_short, host, patokadmin, science_short, teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
 import MultipleSelectChip from '../Multisellect'
-import { getAcademicGroup } from '../AdminList/Streams/request'
+import { getAcademicGroup, getSciense } from '../AdminList/Streams/request'
 import { AttendSearchButton } from '../Attend/styles'
 import MuiAlert from '@mui/material/Alert';
+import AutocompleteJames from '../AutocompleteJames'
 export default function AddTest() {
 
   const [open, setOpen] = useState(false);
@@ -31,10 +32,12 @@ export default function AddTest() {
   const [dedlineTasks, setdedlineTasks] = useState(null);
   const [maxgradeTasks, setmaxgradeTasks] = useState(null);
   const [SearchText, setSearchText] = useState(null);
+  const [ScineseList, setScineseList] = useState([]);
 
   const [tasktypeVal, setTasktype] = useState('oraliq')
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
   const [trycount, settrycount] = useState(null);
+  const [ScienseSelect, setScienseSelect] = useState(null);
   const [testtime, settesttime] = useState(null);
   const [selectedValues, setSelectedValues] = useState([]);
   const [GroupList, setGroupList] = useState([]);
@@ -78,20 +81,39 @@ export default function AddTest() {
     })
   }, [SearchText])
 
+  
+useEffect(() => {
+  //?semester=${SemesterNumber}
+  getSciense(`${science_short}?page_size=2000`, (response) => {
+    setScienseSelect(' ')
+    setScineseList(response.data.map(elem => {
+      return {
+        name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
+        value: elem.name
+      }
+    }))
+  }, (error) => {
+    console.log(error)
+  })
+}, []);
 
   useEffect(() => {
-    getAcademicGroup(`${patokadmin}?page_size=1000&parent=true`, (response) => {
-      console.log(response);
-      setGroupList(response.data.results.map(elem => {
-        return {
-          name: elem.name + " (" + elem.science_name + ")",
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error);
-    })
-  }, [])
+    if (ScienseSelect) {
+      getAcademicGroup(`${patokadmin}?page_size=1000&parent=true&search=${ScienseSelect}`, (response) => {
+        console.log(response);
+        setGroupList(response.data.results.map(elem => {
+          return {
+            name: elem.name + " (" + elem.science_name + ")",
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error);
+      })
+    }
+  }, [ScienseSelect])
+
+
 
   const tasktype = useMemo(() => {
     return [
@@ -408,6 +430,30 @@ export default function AddTest() {
               </span>
             </ModalHeader>
           </div>
+          <ModalSelectWrapper>
+          {/* <AutocompleteJames label={"Fanlar"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            <AllSelectFullWidth
+              chageValueFunction={val => setSemesterNumber(val)}
+              selectedOptionP={1}
+              selectOptions={SemesterNum}
+            /> */}
+          </ModalSelectWrapper>
+          <ModalSelectWrapper>
+          <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Fanlar
+            </Typography>
+            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+          </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
