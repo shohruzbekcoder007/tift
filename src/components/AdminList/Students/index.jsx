@@ -81,7 +81,7 @@ export default function Students() {
           value: item.season
         })
       })
-      setAcademekYear(mass[mass.length-1].value)
+      setAcademekYear(mass[1].value)
       setYearList(mass)
 
     }, (error) => {
@@ -253,7 +253,7 @@ export default function Students() {
           <InputsWrapper>
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
-              selectedOptionP={YearList?.[YearList.length - 1]?.value}
+              selectedOptionP={YearList?.[1]?.value}
               selectOptions={YearList}
             />
             <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
