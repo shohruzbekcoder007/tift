@@ -37,7 +37,7 @@ export default function Students() {
   const [deleted, setDeleted] = useState(true)
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState('2022')
+  const [AcademekYear, setAcademekYear] = useState(0)
   const [DegreeSelect, setDegreeSelect] = useState('all')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('all')
   const [DirectionID, setDirectionID] = useState('all')
@@ -45,7 +45,7 @@ export default function Students() {
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
-localStorage.setItem('status', true)
+  localStorage.setItem('status', true)
 
 
   const DegreeList = useMemo(() => {
@@ -67,22 +67,48 @@ localStorage.setItem('status', true)
   }, [])
 
 
-
   useEffect(() => {
-    getUsers(`${users_student}?page_size=${pageSize}&search=${searchText}&page=${page}&direction=${DirectionID}&academic_group=${GroupID}&year=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
-      console.log(response.data)
-      setStudents(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-      setYearStatus(false)
-    }, error => {
-      setModalText("Ma'lumot yo'q")
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = [{
+        name: "O'quv yili",
+        value: 'all'
+      }]
+
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.season
+        })
+      })
+      setAcademekYear(mass[mass.length-1].value)
+      setYearList(mass)
+
+    }, (error) => {
       console.log(error)
     })
-  }, [page, pageSize, allCount, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect])
+  }, []);
+
+  useEffect(() => {
+    if(AcademekYear != 0){
+      setStudents([])
+      getUsers(`${users_student}?page_size=${pageSize}&search=${searchText}&page=${page}&direction=${DirectionID}&academic_group=${GroupID}&year=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
+        console.log(response.data)
+        setStudents(response.data.results)
+        setAllCount(response.data.count)
+        setPageCount(response.data.page_count)
+        if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
+        setYearStatus(false)
+      }, error => {
+        setModalText("Ma'lumot yo'q")
+        console.log(error)
+      })
+    }
+  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect])
   // ======
 
   useEffect(() => {
+    
     getDirections(`${directions}?page_size=100`, (response) => {
       // setDirections(response.results)
       const currlist = [...response.results]
@@ -104,48 +130,29 @@ localStorage.setItem('status', true)
   }, []);
 
   useEffect(() => {
-    getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
-      // setDirections(response.results)
-      const currlist = [...response.data]
-      currlist.unshift({
-        name: 'Guruhsiz talabalar',
-        id: 'none'
+    if(AcademekYear != 0)
+      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
+        // setDirections(response.results)
+        const currlist = [...response.data]
+        currlist.unshift({
+          name: 'Guruhsiz talabalar',
+          id: 'none'
+        })
+        currlist.unshift({
+          name: 'Hammasi',
+          id: 'all'
+        })
+        setGroupList(currlist.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error);
       })
-      currlist.unshift({
-        name: 'Hammasi',
-        id: 'all'
-      })
-      setGroupList(currlist.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error);
-    })
   }, [DirectionID, AcademekYear]);
 
-  useEffect(() => {
-    getAcademecYear(academic_year, (response) => {
-      console.log(response.data.results);
-      let mass = [{
-        name: "O'quv yili",
-        value: 'all'
-      }]
-
-      response.data.results.map(item => {
-        mass.push({
-          name: item.name,
-          value: item.season
-        })
-      })
-      setYearList(mass)
-
-    }, (error) => {
-      console.log(error)
-    })
-  }, []);
 
   return (
     <>

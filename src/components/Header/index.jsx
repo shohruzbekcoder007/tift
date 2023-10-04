@@ -94,8 +94,8 @@ export default function Header() {
       {
           getRole(user) === 'student' && 
           <NavbarWrapperRight>
-            <h4>Kontrakt: 10mln</h4>
-            <Indebtedness>Qarzdorlik: 3mln</Indebtedness>
+            <h4>Kontrakt: 10 000 000 so'm    </h4>
+            <Indebtedness>Qarzdorlik: 3 257 000 so'm </Indebtedness>
           </NavbarWrapperRight>
         }
         {/* <HeaderAccountTime>
