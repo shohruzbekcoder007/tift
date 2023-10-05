@@ -47,7 +47,7 @@ marquee {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 99999999999;
+  z-index: 999;
   font-size: 18px;
   font-weight: 500;
   background-color: #F6F6F6;
