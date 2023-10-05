@@ -10,6 +10,7 @@ export const SidebarWrapper = styled.div`
     z-index: 100;
     background-color: #fff;
     border-right: 1px solid ${props => props.theme.color.stroke_color};
+    padding-top: 1rem;
     @media (max-width: 890px) {
         transition: .5s;
         width: 0;

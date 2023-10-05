@@ -1,8 +1,19 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
-export default function AutocompleteJames({selectOptions, chageValueFunction, label, width}) {
+export default function AutocompleteJames({selectOptions, chageValueFunction, callback_func, label, width}) {
+  // const [searchTerm, setSearchTerm] = useState('')
+
+  // useEffect(() => {
+  //     const delayDebounceFn = setTimeout(() => {
+  //       callback_func(searchTerm)
+  //     }, 1000)
+  
+  //     return () => clearTimeout(delayDebounceFn)
+  //   }, [searchTerm])
   return (
     <Autocomplete
       disablePortal
@@ -47,6 +58,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, la
         </li>
       }}
       onChange={(_, newValue) => {
+        // setSearchTerm(newValue?.value)
         chageValueFunction(newValue?.value)
       }}
     />
