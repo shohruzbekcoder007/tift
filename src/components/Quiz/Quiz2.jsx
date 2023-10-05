@@ -196,6 +196,7 @@ function PaperSheet(props) {
               >
                 <p>Test yakunlandi.</p>
                 <p>Sizning balingiz: {graduate}</p>
+                <h3>Qayta urinib koring sizda hali yana {tryCount} ta urinish mavjud</h3>
               </Alert>
             </> : null
           }
