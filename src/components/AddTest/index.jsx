@@ -46,6 +46,7 @@ export default function AddTest() {
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [SearchScience, setSearchScience] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -452,7 +453,8 @@ useEffect(() => {
             >
               Fanlar
             </Typography>
-            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            {/* callback_func={val => setSearchScience(val)} */}
+            <AutocompleteJames selectOptions={ScineseList}  chageValueFunction={val => setScienseSelect(val)} />
           </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography

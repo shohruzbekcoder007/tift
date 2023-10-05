@@ -166,7 +166,9 @@ function App() {
 
   return (
     <MuiTheme theme={muiTheme}>
+      
       <ThemeProvider theme={defaultTheme}>
+
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />

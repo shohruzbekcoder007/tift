@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
+import { CircularProgress, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -42,6 +42,7 @@ export default function Users() {
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [Loader, setLoader] = useState(<CircularProgress color="success" size={25} />)
 
   const handleCloseAlert = () => setOpenAlert(false);
 
@@ -81,13 +82,16 @@ export default function Users() {
   }
 
   useEffect(() => {
+    setAlUsers([])
     getUsersList(`${getAllUser}?page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
       setAllCount(response.data.count)
       setPage(response.data.page)
       setPageCount(response.data.page_count)
       setAlUsers(response.data.results)
+      if (response.data.results?.length == 0) setLoader("Ma'lumot yo'q")
     }, (error) => {
       console.log(error)
+      setLoader("Ma'lumot yo'q")
     })
   }, [pageSize, page, searchText])
 
@@ -183,7 +187,7 @@ export default function Users() {
               </thead>
               <tbody>
                 {
-                  allUsers.map((elem, index) => {
+                 allUsers.length > 0 ? allUsers.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.id}</th>
@@ -221,6 +225,10 @@ export default function Users() {
                       </tr>
                     )
                   })
+                  : 
+                  <tr>
+                    <th colSpan={12} align='center'>{Loader}</th>
+                  </tr>
                 }
               </tbody>
             </table>

@@ -10,10 +10,6 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../.
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
-import { InputsWrapper } from '../../CourseManagement/styles'
-import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
-import { Link } from 'react-router-dom'
-import { IconButton } from '../../Final_Dep/style'
 import { AddDirection, DeleteDirection, getDirections, getFakulty } from './request'
 import { directions, facultyshortlist } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
@@ -258,7 +254,7 @@ export default function Directions() {
                 {
                   Directions.length > 0 ? Directions.map((elem, index) => {
                     return (
-                      <ItemDirections key={index} elem={elem} index={index} DirectionName={DirectionName} DirectionCode={DirectionCode} Faculty={Faculty} />
+                      <ItemDirections key={index} elem={elem} index={index} DirectionName={DirectionName} DirectionCode={DirectionCode} Faculty={Faculty}/>
                     )
                   })
                     :
