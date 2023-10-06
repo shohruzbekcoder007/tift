@@ -56,6 +56,45 @@ function PaperSheet(props) {
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
 
+
+
+
+  const confirmExit = (e) => {
+    // Display a confirmation message
+    e.preventDefault();
+    e.returnValue = ''; // Some browsers require a non-empty string
+
+    const confirmationMessage = 'Iltimos testni yeching sahifadan chiqmang';
+
+    // You can customize the confirmation message
+    // For example, you can include details or warnings
+    // const confirmationMessage = 'You have unsaved changes. Do you really want to leave?';
+
+    // Display the confirmation message
+    return confirmationMessage;
+  };
+
+  // Attach the event listener when the component mounts
+  React.useEffect(() => {
+    window.addEventListener('beforeunload', confirmExit);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', confirmExit);
+    };
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
