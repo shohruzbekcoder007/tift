@@ -21,6 +21,40 @@ export default function StudentSciencesMain() {
   const [sciences, setSciences] = useState([])
   const [semester, setSemester] = useState(0)
 
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const getSemesters = (response) => {
     const semester_firstly = response.data.map(element => {
       return {
