@@ -27,14 +27,14 @@ export default function AlertDialog({open_alert, callback1, callback2, alertText
           {alertText}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            O'chirilgan ma'lumotlar qayta tiklanmaydi
+          <DialogContentText sx={{color: 'red'}} id="alert-dialog-description">
+            O'chirilgan ma'lumotlar qayta tiklanmaydi !
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={callback2}>O'tkazish</Button>
+          <Button onClick={callback2}>Yo'q</Button>
           <Button onClick={handleClickClose} autoFocus>
-            Roziman
+            Ha
           </Button>
         </DialogActions>
       </Dialog>

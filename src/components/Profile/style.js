@@ -5,7 +5,10 @@ export const ProfileWrapper = styled.div`
   height: auto;
   border-radius: 10px;
   background-color: #FFF;
-  padding: 32px 20px;
+  padding: 32px 20px; 
+  @media (max-width: 456px) {
+    width: 113%;
+  }
 `
 
 export const ProfileWrapperTitle = styled.h4`
@@ -72,7 +75,7 @@ export const ProfileButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 576px){ 
-    // width
+    width: 40%
   }
 `
 
@@ -80,6 +83,7 @@ export const ProfileButton = styled.button`
 export const ProfileLogOut = styled.button`
   display: flex;
   place-items:center;
+  width: 113%;
   max-width: 454px;
   height: auto;
   border-radius: 10px;
@@ -87,7 +91,6 @@ export const ProfileLogOut = styled.button`
   padding: 20px;
   margin: 1rem 0;
   cursor: pointer;
-  width: 100%;
   outline: none;
   border: none;
 `

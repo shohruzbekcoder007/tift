@@ -46,7 +46,7 @@ const Semester = ({ title, data }) => {
             >
                { title }
             </Typography>
-            <ClassScheduleTableWrapper>
+            <ClassScheduleTableWrapper style={{flexDirection: "column", display: "flex", justifyContent: "space-between", height: "80%"}}>
                 <table>
                     <thead>
                         <tr>
@@ -59,7 +59,11 @@ const Semester = ({ title, data }) => {
                                 iconc={null}
                             />
                             <TableTHHeader
-                                text="Olingan baho"
+                                text="ball"
+                                iconc={null}
+                            />
+                             <TableTHHeader
+                                text="baho"
                                 iconc={null}
                             />
                         </tr>
@@ -67,19 +71,27 @@ const Semester = ({ title, data }) => {
                     <tbody>
                         
                         {
-                            data.map((elem, index) => {
+                          data?.length > 0 ? data.map((elem, index) => {
                                 return (
                                     <tr key={index}>
                                         <th>{ elem.science }</th>
                                         <th>{ elem.credit }</th>
+                                        <th>{ elem.grade }</th>
                                         <th>{ elem.gpa }</th>
                                     </tr>
                                 )
                             })
+                            : 
+                            <tr>
+                                <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </ClassScheduleTableWrapper>
+                <div style={{display: "flex", justifyContent: 'end'}}>
+                    <h3>GPA: 0</h3>
+                </div>
         </PersonalPlanPaper>
     )
 }

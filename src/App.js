@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { ThemeProvider } from 'styled-components'
 import defaultTheme from './theme/defaultTheme'
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Router } from "react-router-dom"
 import Main from './components/Main'
 import TeacherDashboard from './components/TeacherDashboard'
 import VideoGuide from './components/VideoGuide'
@@ -138,7 +138,14 @@ import AddEmployees from './components/AdminList/Employees/AddEmployees'
 import ScheduleStudy from './components/AdminList/ScheduleStudy'
 import ScheduleStudyTwo from './components/AdminList/ScheduleStudyTwo'
 import Schedule from './components/AdminList/Streams/Schedule'
-
+import TeacherStatistic from './components/TeacherStatistic'
+import Quiz from './components/Quiz'
+import TeacherJournal from './components/TeacherJournal/index'
+import QuizWrapper from './components/QuizWrapper'
+import AddStudents from './components/AdminList/Students/AddStudent'
+import EditEmployeess from './components/AdminList/Students/EditEmployees'
+import EditStudents from './components/AdminList/Students/EditStudents'
+import AddTest from './components/AddTest'
 
 function App() {
 
@@ -159,14 +166,17 @@ function App() {
 
   return (
     <MuiTheme theme={muiTheme}>
+      
       <ThemeProvider theme={defaultTheme}>
+
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
                 <Route path="teacher" element={<Main user={user} />}>
-                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard" element={<TeacherStatistic />} />
+                  <Route path="news" element={<TeacherDashboard />} />
                   <Route path="nb" element={<Attend />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
@@ -178,6 +188,7 @@ function App() {
                     </Route>
                     <Route path="vedomost" element={<Vedomost />} />
                     <Route path="tasks" element={<TasksTeacher />} />
+                    <Route path="journal" element={<TeacherJournal />} />
                   </Route>
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="diploma" element={<Thesis />} />
@@ -217,6 +228,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
                 </Route>
+                <Route path="quiz" element={<QuizWrapper/>}/>
 
                 <Route path="dekan" element={<MainDekan />}>
                   <Route path="profile" element={<Profile />} />
@@ -278,7 +290,34 @@ function App() {
                 <Route path="department" element={<MainDepartment />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                  </Route>
+                  <Route path='schedule' element={<ScheduleStudy />} />
+                  <Route path="plan" element={<StudentSciences />} >
+                    <Route index element={<Plan />} />
+                    <Route path="curriculum" element={<Outlet />} >
+                      <Route index element={<Curriculum />} />
+                      <Route path='sciences' element={<PlanSciences />} />
+                    </Route>
+                  </Route>
+                  <Route path="reference" element={<Reference />} />
+                  <Route path="employees" element={<StudentSciences />} >
+                    <Route index element={<Employees />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployeess />} />
+                    <Route path='add' element={<AddEmployees />} />
+                  </Route>
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<Students />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route>
+                  <Route path="addtest" element={<AddTest />} />
+                  {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
                   <Route path="sciences" element={<TeacherSciences />}>
@@ -309,17 +348,20 @@ function App() {
                   <Route path="final" element={<StudentSciences />} >
                     <Route index element={<Final_Dep />} />
                     <Route path='questions' element={<Questions />} />
-                  </Route>
+                  </Route> */}
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
                 <Route path="lawyer" element={<MainLawyer />}>
                   <Route path="dashboard" element={<LawyerDashboard />} />
                   <Route path="students" element={<LawyerAllStudents />} />
+                  <Route path="profile" element={<Profile />} />
                 </Route>
 
 
                 <Route path="admin" element={<MainAdmin />}>
+                <Route path="addtest" element={<AddTest />} />
+
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -363,14 +405,14 @@ function App() {
                     <Route index element={<Employees />} />
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
-                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='edit' element={<EditEmployeess />} />
                     <Route path='add' element={<AddEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
                     <Route path='information' element={<InformationStudent />} />
-                    <Route path='add' element={<EditEmployees />} />
-                    <Route path='edit' element={<EditEmployees />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
                   </Route>
                   <Route path="directions" element={<StudentSciences />} >
                     <Route index element={<Directions />} />

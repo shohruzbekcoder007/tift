@@ -10,6 +10,7 @@ export const SidebarWrapper = styled.div`
     z-index: 100;
     background-color: #fff;
     border-right: 1px solid ${props => props.theme.color.stroke_color};
+    padding-top: 1rem;
     @media (max-width: 890px) {
         transition: .5s;
         width: 0;
@@ -90,7 +91,7 @@ export const SidebarLinksHead = styled.li`
     /* color: #000; */
     font-size: 14px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
     margin-bottom: 10px;
     color: ${props => props.theme.color.main_color};

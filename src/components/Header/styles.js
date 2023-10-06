@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const HeaderWrapper = styled.div`
+margin: 1rem 0 0 0;
   height: 96px;
   width: 100%;
   background-color: #fff;
@@ -18,7 +19,6 @@ export const HeaderWrapper = styled.div`
   @media (max-width: 890px) {
     padding-left: 32px;
   }
-  z-index: 99;
 
 `
 
@@ -33,6 +33,45 @@ export const HeaderTitleHamburger = styled.div`
       display: inline-block;
     }
   }
+  `
+
+export const NavbarWrapper = styled.div`
+  display: grid;
+  gap: 15px;
+  div {
+    display: flex;
+    font-weight: bold;
+    p {
+    color:  ${props => props.theme.color.main_color};
+    margin: 0 0.5rem;
+  }
+  }
+  @media (max-width: 576px) {
+    gap: 5px;
+    div {
+      display: block;
+      font-weight: 500;
+      font-size: 13px;
+      p {
+        margin: 0;
+      }
+    }
+  }
+  
+`
+export const NavbarWrapperRight = styled.div`
+  display: grid;
+  gap: 15px;
+  @media (max-width: 576px) {
+    gap: 10px;
+    font-weight: 500;
+    font-size: 13px;
+  }
+`
+
+export const Indebtedness = styled.p`
+  color: red;
+  font-weight: 500;
 `
 
 export const HeaderTitle = styled.h1`
@@ -71,9 +110,9 @@ export const HeaderAccount = styled.div`
       height: ${props => props.open ? 'auto' : '0'};
       padding: ${props => props.open ? '15px' : '0'};
       transition: all 0.2s ease 0s;
-      overflow: hidden;
+      overflow: ${props => props.open ? 'visible' : 'hidden'};;
     }
-    @media (max-width: 350px) {
+  @media (max-width: 350px) {
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -91,7 +130,7 @@ export const HeaderAccountTime = styled.p`
   @media (max-width: 350px) {
       width: 100%;
       text-align: center;
-    }
+  }
 `
 
 export const HeaderAccountItem = styled.div`

@@ -5,7 +5,7 @@ import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton } from './styles'
+import { AttendSearchButton, ModalBody, ModalBoxTeacher } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
@@ -14,15 +14,20 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { IconButton } from '../../Final_Dep/style'
 import { Link } from 'react-router-dom'
-import { academic_group_short, my_semesters, parentpatoklist, patokadmin, science_short } from '../../../utils/API_urls'
-import { getAcademicGroup, getSciense, getSemesters, getStreams, postPatoks } from './request'
+import { academic_group_short, allusers, my_semesters, parentpatoklist, patok_teacher, patokadmin, science_short } from '../../../utils/API_urls'
+import { getAcademicGroup, getChangeTeacher, getSciense, getSemesters, getStreams, getTeachers, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
+import AutocompleteJames from '../../AutocompleteJames'
 
 export default function Streams() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [PatokID, setPatokID] = React.useState(null);
+  const handleOpen = (id) => {
+    setPatokID(id)
+    setOpen(true);
+  }
   const handleClose = () => setOpen(false);
 
 
@@ -41,19 +46,70 @@ export default function Streams() {
 
   const [ScienseSelect, setScienseSelect] = useState(null);
   const [SemesterSelect, setSemesterSelect] = useState(null);
+  const [SemesterNumber, setSemesterNumber] = useState(1);
   const [LangSelect, setLangSelect] = useState('uz');
+  const [searchText, setSearchText] = useState('')
   const [RoomType, setRoomType] = useState('lecture');
-  const [GroupSelect, setGroupSelect] = useState(null);
+  const [GroupSelect, setGroupSelect] = useState([]);
   const [AmaliyotSelect, setAmaliyotSelect] = useState(0);
   const [LabaratoriyaSelect, setLabaratoriyaSelect] = useState(0);
-  const [ParentNaameSelect, setParentNaameSelect] = useState(0);
+  const [ParentNaameSelect, setParentNaameSelect] = useState(NaN);
   const [Status, setStatus] = useState(false);
   const [ScienceType, setScienceType] = useState();
+  const [TeachersList, setTeachersList] = useState([]);
+  const [TeachersListSelect, setTeachersListSelect] = useState(null);
 
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
+
+  const setGroups = (val) => {
+    let nimadir = val.map(element => element.value)
+    setGroupSelect(nimadir)
+  }
+
+  // const setTeacher = (val) => {
+  //   let nimadir = val.map(element => element.value)
+  //   setTeachersListSelect(nimadir)
+  // }
+
+
+  const SemesterNum = useMemo(() => {
+    return [
+      {
+        name: "1",
+        value: 1,
+      },
+      {
+        name: "2",
+        value: 2,
+      },
+      {
+        name: "3",
+        value: 3,
+      },
+      {
+        name: "4",
+        value: 4,
+      },
+      {
+        name: "5",
+        value: 5,
+      },
+      {
+        name: "6",
+        value: 6,
+      },
+      {
+        name: "7",
+        value: 7,
+      },
+      {
+        name: "8",
+        value: 8,
+      }]
+  }, [])
 
   const Amaliyot = useMemo(() => {
     return [{
@@ -145,51 +201,51 @@ export default function Streams() {
     }, (error) => {
       console.log(error)
     })
-
-    getSciense(`${science_short}`, (response) => {
-      console.log(response.data);
+    // ?semester${SemesterSelect}
+    getSciense(`${science_short}?semester=${SemesterNumber}`, (response) => {
+      // console.log(response.data)
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
         return {
-          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester)",
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
           value: elem.id
         }
       }))
     }, (error) => {
       console.log(error)
     })
-  }, [])
+  }, [SemesterSelect, SemesterNumber])
 
   useEffect(() => {
     if (SemesterSelect && ScienseSelect) {
-      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+      getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}&search=${searchText}`, (response) => {
         setStreamsList(response.data.results);
-        setPageCount(response.data.page_count)
-        setAllCount(response.data.count)
+        setPageCount(response.data.page_count);
+        setAllCount(response.data.count);
       }, (error) => {
         console.log(error)
       })
 
-      getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
-        setParentNaameSelect(response.data[0].id)
-        setParentStreams(response.data.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
-          }
-        }));
-      }, (error) => {
-        console.log(error)
-      })
+      // kodi type error bor 
+      // getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
+      //   setParentNaameSelect(response.data[0].id)
+      //   setParentStreams(response.data.map(elem => {
+      //     return {
+      //       name: elem.name,
+      //       value: elem.id
+      //     }
+      //   }));
+      // }, (error) => {
+      //   console.log(error)
+      // })
     }
-    
 
-  }, [pageSize, page, SemesterSelect, ScienseSelect, Status])
+
+  }, [pageSize, page, allCount, SemesterSelect, ScienseSelect, Status, searchText])
 
 
   useEffect(() => {
     getAcademicGroup(`${academic_group_short}`, (response) => {
-      setGroupSelect(response?.data[0]?.id)
       setAcademicGroupList(response.data.map(elem => {
         return {
           name: elem.name,
@@ -199,25 +255,51 @@ export default function Streams() {
     }, (error) => {
       console.log(error)
     })
+    getTeachers(`${allusers}?role__name=teacher&page_size=1000`, (response) => {
+      setTeachersList(response.data.results.map(elem => {
+        return {
+          name: elem.full_name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
   }, []);
 
   const handleClick = (_) => {
-    postPatoks(patokadmin, {
-      // name: ScienseSelect,
+    console.log(TeachersListSelect);
+    let PatokList = {
       lang: LangSelect,
       semester: SemesterSelect,
       science: ScienseSelect,
       practical: AmaliyotSelect,
       labs: LabaratoriyaSelect,
       academic_group: GroupSelect,
-      parent: ParentNaameSelect,
       science_type: RoomType
-    }, (response) => {
+    }
+    if (ParentNaameSelect) {
+      PatokList.parent = ParentNaameSelect
+    }
+    postPatoks(patokadmin, PatokList, (response) => {
       console.log(response);
       setStatus(!Status)
       handleClose2()
     }, (error) => {
       console.log(error)
+    })
+  }
+
+  const handleChangeTeacher = (_) => {
+    console.log(TeachersListSelect);
+
+    getChangeTeacher(`${patok_teacher}?patok_id=${PatokID}`, {
+      teacher: TeachersListSelect
+    }, (response) => {
+      setStatus(!Status)
+      handleClose()
+    }, (error) => {
+      console.log(error);
     })
   }
 
@@ -249,21 +331,23 @@ export default function Streams() {
               }]}
             /> */}
             <AllSelectFullWidth
-              chageValueFunction={val => setScienseSelect(val)}
-              selectOptions={ScineseList}
-            />
-            <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
+            />
+            <AutocompleteJames width={'200px'} label={"Fanlar"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            <AllSelectFullWidth
+              chageValueFunction={val => setSemesterNumber(val)}
+              selectedOptionP={1}
+              selectOptions={SemesterNum}
             />
           </InputsWrapper>
         </BoxHeader>
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-            console.log(val)
+            setAllCount(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             <Button
               variant="contained"
               onClick={handleOpen2}
@@ -387,7 +471,22 @@ export default function Streams() {
                     }
                   />
                   <TableTHHeader
-                    text={'Ota potok'}
+                    text={'Asosiy potok'}
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+                  <TableTHHeader
+                    text={"O'qituvchi"}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -414,6 +513,35 @@ export default function Streams() {
                         <th>{elem.lang}</th>
                         <th>{elem.students_count}</th>
                         <th>{elem.parent_name}</th>
+                        <th>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <p>{elem.teacher}</p>
+                            <Button
+                              variant="contained"
+                              sx={{
+                                borderRadius: "10px",
+                                textTransform: "capitalize",
+                                boxShadow: "none",
+                                padding: "6px",
+                                marginRight: "20px",
+                              }}
+                              onClick={(_) => {handleOpen(elem.id)}}
+                              startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g clipPath="url(#clip0_1148_17994)">
+                                  <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
+                                  <path d="M15.3333 5.986C15.1565 5.986 14.987 6.05624 14.8619 6.18126C14.7369 6.30629 14.6667 6.47586 14.6667 6.65267V10H12C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12V14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H9.36133C9.53815 1.33333 9.70771 1.2631 9.83274 1.13807C9.95776 1.01305 10.028 0.843478 10.028 0.666667C10.028 0.489856 9.95776 0.320286 9.83274 0.195262C9.70771 0.0702379 9.53815 0 9.36133 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H10.8953C11.3333 16.0013 11.7671 15.9156 12.1718 15.7481C12.5764 15.5806 12.9438 15.3345 13.2527 15.024L15.0233 13.252C15.3338 12.9432 15.58 12.576 15.7477 12.1715C15.9153 11.767 16.0011 11.3332 16 10.8953V6.65267C16 6.47586 15.9298 6.30629 15.8047 6.18126C15.6797 6.05624 15.5101 5.986 15.3333 5.986ZM12.31 14.0813C12.042 14.3487 11.7031 14.5337 11.3333 14.6147V12C11.3333 11.8232 11.4036 11.6536 11.5286 11.5286C11.6536 11.4036 11.8232 11.3333 12 11.3333H14.6167C14.5342 11.7023 14.3493 12.0406 14.0833 12.3093L12.31 14.0813Z" fill="white" />
+                                </g>
+                                <defs>
+                                  <clipPath id="clip0_1148_17994">
+                                    <rect width="16" height="16" fill="white" />
+                                  </clipPath>
+                                </defs>
+                              </svg>
+                              }
+                            >
+                            </Button>
+                          </div>
+                        </th>
                         <th>
                           <Link to={'schedule'} state={elem}>
                             <Button
@@ -553,11 +681,7 @@ export default function Streams() {
                 }}
               >
                 Fan                         </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setScienseSelect(val)}
-                selectOptions={ScineseList}
-              />
-
+              <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
             </ModalSelectWrapper>
 
             <ModalSelectWrapper>
@@ -579,27 +703,27 @@ export default function Streams() {
               />
             </ModalSelectWrapper>
 
-                {
-                  RoomType !== 'lecture' ?  <ModalSelectWrapper>
-                  <Typography
-                    id="keep-mounted-modal-title"
-                    variant="h6"
-                    component="h4"
-                    sx={{
-                      fontSize: "16px",
-                      fontWeight: 600,
-                      color: "#000",
-                      mb: "10px"
-                    }}
-                  >
-                    Ota patok                        </Typography>
-                  <AllSelectFullWidth
-                    chageValueFunction={(val) => setParentNaameSelect(val)}
-                    selectOptions={ParentStreams}
-                  />
-                </ModalSelectWrapper>
+            {
+              RoomType !== 'lecture' ? <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Asosiy patok                        </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={(val) => setParentNaameSelect(val)}
+                  selectOptions={ParentStreams}
+                />
+              </ModalSelectWrapper>
                 : <></>
-                }
+            }
 
             <ModalSelectWrapper>
               <Typography
@@ -638,58 +762,60 @@ export default function Streams() {
                 chageValueFunction={val => console.log(val)}
                 selectOptions={AcademicGroupList}
               /> */}
+
               <MultipleSelectChip
-                chageValueFunction={val => setGroupSelect(val)}
+                chageValueFunction={setGroups}
                 selectOptions={AcademicGroupList} />
             </ModalSelectWrapper>
 
 
 
+
             {
               RoomType == 'lecture' ? <>
-              <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Разделение потока на практику                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setAmaliyotSelect(val)}
-                selectOptions={Amaliyot}
-              />
-            </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Amaliyot guruhga ajratish                        </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => setAmaliyotSelect(val)}
+                    selectOptions={Amaliyot}
+                  />
+                </ModalSelectWrapper>
 
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Разделение потока на лаборатории                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setLabaratoriyaSelect(val)}
-                selectOptions={Labaratoriya}
-              />
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Labaratoriya guruhga ajratish                          </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => setLabaratoriyaSelect(val)}
+                    selectOptions={Labaratoriya}
+                  />
 
 
-            </ModalSelectWrapper>
+                </ModalSelectWrapper>
               </>
-            :
-            <> </>  
-          }
+                :
+                <> </>
+            }
 
             <ModalButtons>
               <Button
@@ -708,6 +834,81 @@ export default function Streams() {
               </Button>
             </ModalButtons>
           </ModalBox>
+        </Modal>
+
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          {/* <form> */}
+          <ModalBoxTeacher>
+            <div style={{ marginBottom: '20px' }}>
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000",
+                  }}
+                >
+                  Tahrirlash
+                </Typography>
+                <span
+                  onClick={handleClose}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+              </ModalHeader>
+            </div>
+            <ModalSelectWrapper>
+              <ModalBody>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                O'qituvchilar
+              </Typography>
+            <AutocompleteJames selectOptions={TeachersList} chageValueFunction={val => setTeachersListSelect(val)} />
+
+              </ModalBody>
+                
+              {/* <CustomizedInputSimple callback_func={(val) => { setName(val) }} defaultValue={elem.lesson} placeholder="Kiriting" /> */}
+            </ModalSelectWrapper>
+            <ModalButtons>
+              <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                variant="outlined"
+                onClick={handleClose}
+              >
+                Bekor qilish
+              </Button>
+              <Button
+                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+                type="submit"
+              onClick={handleChangeTeacher}
+              >
+                Saqlash
+              </Button>
+            </ModalButtons>
+          </ModalBoxTeacher>
+          {/* </form> */}
+
         </Modal>
       </Paper>
     </>

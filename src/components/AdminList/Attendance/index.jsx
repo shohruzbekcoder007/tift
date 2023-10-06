@@ -11,8 +11,9 @@ import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import listLanguage from './language.json'
 import { changeNbPetition, getSemesters, getTeacherGroups, getTeachersList, setNbPetition } from './requests'
-import { allusers, semester, teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
+import { allusers, my_semesters, semester, teacher_change_nb, teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
+import MultipleSelectChip from '../../Multisellect'
 
 
 export default function Attend() {
@@ -39,7 +40,8 @@ export default function Attend() {
     const [selectedValues, setSelectedValues] = useState([]);
     
     const handleMultiSelectChange = (values) => {
-        setSelectedValues(values)
+        let nimadir = values.map(element => element.value)
+        setSelectedValues(nimadir)
     };
 
     const Para = useMemo(() => {
@@ -67,13 +69,21 @@ export default function Attend() {
             {
                 name: "6",
                 value: 6,
+            }, 
+            {
+                name: "7",
+                value: 7,
+            },
+            {
+                name: "8",
+                value: 8,
             }
             ]
       }, [])
 
     useEffect(() => {
-        getSemesters(`${semester}`, (response) => {
-            setSemesterID(response.data.results[0].id);
+        getSemesters(`${my_semesters}`, (response) => {
+            setSemesterID(response.data?.[0]?.id);
         }, (error) => {
             console.log(error)
         })
@@ -82,9 +92,8 @@ export default function Attend() {
     useEffect(() => {
         if (SemesterID) {
             getTeachersList(`${allusers}?role__name=teacher`, (response) => {
-                console.log(response.data);
                 setTeachersList(response.data.results)
-                setTeachersList(response.data.results.map(elem => {
+                setTeachersList(response.data?.results?.map(elem => {
                     return {
                       name: elem.full_name,
                       value: elem.id
@@ -114,7 +123,7 @@ export default function Attend() {
             getTeacherGroups(`${teacher_units}?groups=${lessonIdList}`, (response) => {
                 console.log(response.data);
                 setlessonIdStudentList(response.data[0]?.id)
-                setLessonList(response.data.map(elem => {
+                setLessonList(response?.data?.map(elem => {
                     return {
                       name: elem.name,
                       value: elem.id
@@ -130,7 +139,7 @@ export default function Attend() {
         if(lessonIdStudentList){
             getTeacherGroups(`${teacher_group}${lessonIdStudentList}/`, (response) => {
                 console.log(response.data);
-                setstudentsList(response.data.nb_to_lesson.map(elem => {
+                setstudentsList(response.data?.nb_to_lesson?.map(elem => {
                     return {
                       label: elem.full_name,
                       value: elem.student_id
@@ -176,7 +185,7 @@ export default function Attend() {
         setTeacherID(id)
         getTeacherGroups(`${teacher_groups}?teacher=${id}&semester=${SemesterID}`, (response) => {
             setLessonIdList(response.data[0]?.id)
-            setgroupList(response.data.map(elem => {
+            setgroupList(response?.data?.map(elem => {
                 return {
                   name: elem.name,
                   value: elem.id
@@ -351,7 +360,7 @@ export default function Attend() {
                                                 <th style={{ width: "100px" }}>{ elem.created_at }</th>
                                                 <th>{ elem.para }</th>
                                                 <th>{ elem.lesson }</th>
-                                                <th>{ elem.student.map((element, index) => {
+                                                <th>{ elem?.student?.map((element, index) => {
                                                    return (<p key = {index}>{element.full_name}</p>) 
                                                 }) }</th>
                                                 <th style={{ width: "400px", display: "flex", justifyContent: "center", gap: "10px" }}>
@@ -653,10 +662,9 @@ export default function Attend() {
                                 chageValueFunction={val => console.log(val)}
                                 selectOptions={studentsList}
                             /> */}
-                            <MultiSelect
-                                options={studentsList}
-                                selectedValues={selectedValues}
-                                onChange={handleMultiSelectChange}
+                            <MultipleSelectChip
+                                selectOptions={studentsList}
+                                chageValueFunction={handleMultiSelectChange}
                             />
                         </ModalSelectWrapper>
                         <ModalButtons>

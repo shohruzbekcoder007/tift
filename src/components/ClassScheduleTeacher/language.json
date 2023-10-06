@@ -5,7 +5,7 @@
     "eng": "Week"
   },
   "Couple": {
-    "uz": "Juftlik",
+    "uz": "Para",
     "ru": "Пара",
     "eng": "Couple"
   },
@@ -38,5 +38,10 @@
     "uz": "shanba",
     "ru": "суббота",
     "eng": "saturday"
+  },
+  "sunday": {
+    "uz": "Yakshanba",
+    "ru": "Воскресенье",
+    "eng": "sunday"
   }
 }

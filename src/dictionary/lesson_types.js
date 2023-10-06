@@ -1,19 +1,19 @@
 export default [
     {
         value: 'full',
-        uz: "full",
+        uz: "To'liq",
         ru: "full ru",
         eng: "full eng"
     },
     {
         value: 'odd',
-        uz: "odd",
+        uz: "Yuqori",
         ru: "odd ru",
         eng: "odd eng"
     },
     {
         value: 'even',
-        uz: "even",
+        uz: "Quyi",
         ru: "even ru",
         eng: "even eng"
     }

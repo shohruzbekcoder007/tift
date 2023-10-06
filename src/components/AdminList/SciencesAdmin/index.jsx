@@ -16,6 +16,8 @@ import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
 import { getAdminKafedra, setAdminDeleteScience } from './requests'
 import { kafedra, science } from '../../../utils/API_urls'
+import degree from '../../../dictionary/degree'
+import study_type from '../../../dictionary/study_type'
 
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
@@ -31,6 +33,7 @@ export default function SciencesAdmin() {
   const [scienceAdmin, setscienceAdmin] = useState([]);
 
   const [deletedElem, setDeleted] = useState(false)
+  const [searchText, setsearchText] = useState('')
 
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
@@ -38,37 +41,23 @@ export default function SciencesAdmin() {
   const [page, setPage] = useState(1)
 
   const admindegree = useMemo(() => {
-    return [
-      {
-      name: "Bakalavr",
-      value: 'bachelor',
-      },
-      {
-        name: "Magister",
-        value: 'master',
-      },
-  ]
+    return degree.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
   },[])
 
 
 
   const adminstudytype = useMemo(() => {
-    return [{
-      name: "morning",
-      value: 'morning',
-    },
-    {
-      name: "evening",
-      value: 'evening',
-    },
-    {
-      name: "external",
-      value: 'external',
-    },
-    {
-      name: "remote",
-      value: 'remote',
-    }]
+    return study_type.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
   },[])
 
   useEffect(() => {
@@ -86,14 +75,14 @@ export default function SciencesAdmin() {
 
 
   useEffect(() => {
-    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}`, (response) => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)
     }, (error) => {
         console.log(error)
     })
-  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem])
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem,pageSize ,page, searchText])
 
 
 
@@ -123,7 +112,7 @@ export default function SciencesAdmin() {
               setPageSize(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
             <Link to={'add'}>
               <Button
                 variant="contained"
@@ -163,10 +152,12 @@ export default function SciencesAdmin() {
             />
             <AllSelectFullWidth
               chageValueFunction={val => setdegreechoes(val)}
+              selectedOptionP={admindegree[0].value}
               selectOptions={admindegree}
             />
             <AllSelectFullWidth
               chageValueFunction={val => setstudytypechoes(val)}
+              selectedOptionP={adminstudytype[0].value}
               selectOptions={adminstudytype}
             />
           </InputsWrapper>

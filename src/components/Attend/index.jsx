@@ -12,7 +12,8 @@ import AllSelectFullWidth from '../AllSelectFullWidth'
 import listLanguage from './language.json'
 import { getTeacherGroups, setNbPetition } from './requests'
 import { teacher_get_nb, teacher_group, teacher_groups, teacher_set_nb, teacher_units } from '../../utils/API_urls'
-import MultiSelect from '../Multisellect'
+import MultipleSelectChip from '../Multisellect'
+
 
 
 export default function Attend() {
@@ -38,7 +39,8 @@ export default function Attend() {
     const [selectedValues, setSelectedValues] = useState([]);
 
     const handleMultiSelectChange = (values) => {
-        setSelectedValues(values)
+        let nimadir = values.map(element => element.value)
+        setSelectedValues(nimadir)
     };
 
     useEffect(() => {
@@ -565,6 +567,13 @@ export default function Attend() {
                                     {
                                         name: "6",
                                         value: 6,
+                                    },
+                                    {
+                                        name: "7",
+                                        value: 7,
+                                    },  {
+                                        name: "8",
+                                        value: 8,
                                     }
                                 ]}
                             />
@@ -588,11 +597,14 @@ export default function Attend() {
                                 chageValueFunction={val => console.log(val)}
                                 selectOptions={studentsList}
                             /> */}
-                            <MultiSelect
+                            {/* <MultiSelect
                                 selectOptions={studentsList}
                                 selectedValues={selectedValues}
                                 chageValueFunction={handleMultiSelectChange}
-                            />
+                            /> */}
+                            <MultipleSelectChip
+                                chageValueFunction={handleMultiSelectChange}
+                                selectOptions={studentsList} />
                         </ModalSelectWrapper>
                         <ModalButtons>
                             <Button
