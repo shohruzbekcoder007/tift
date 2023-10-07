@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
 import { getAdminKafedra, setAdminDeleteScience } from './requests'
 import { kafedra, science } from '../../../utils/API_urls'
@@ -39,6 +39,9 @@ export default function SciencesAdmin() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
+
+  const {state} = useLocation()
+  console.log(state);
 
   const admindegree = useMemo(() => {
     return degree.map(elem => {
@@ -75,7 +78,7 @@ export default function SciencesAdmin() {
 
 
   useEffect(() => {
-    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}`, (response) => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}&direction=${state.id}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)
