@@ -46,32 +46,31 @@ export default function Directions() {
   };
 
   
+  // useEffect(() => {
+  //   getAcademecYear(academic_year, (response) => {
+  //     console.log(response.data.results);
+  //     let mass = [{
+  //       name: "O'quv yili",
+  //       value: 'all'
+  //     }]
+
+  //     response.data.results.map(item => {
+  //       mass.push({
+  //         name: item.name,
+  //         value: item.season
+  //       })
+  //     })
+  //     setAcademekYear(mass[1].value)
+  //     setYearList(mass)
+
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }, []);
+
+
   useEffect(() => {
-    getAcademecYear(academic_year, (response) => {
-      console.log(response.data.results);
-      let mass = [{
-        name: "O'quv yili",
-        value: 'all'
-      }]
-
-      response.data.results.map(item => {
-        mass.push({
-          name: item.name,
-          value: item.season
-        })
-      })
-      setAcademekYear(mass[1].value)
-      setYearList(mass)
-
-    }, (error) => {
-      console.log(error)
-    })
-  }, []);
-
-
-  useEffect(() => {
-    setDirections([])
-    getDirections(`${directions}?page_size=${pageSize}&page=${page}&year=${AcademekYear}`, (response) => {
+    getDirections(`${directions}?page_size=${pageSize}&page=${page}`, (response) => {
       setDirections(response.results)
       setPageCount(response.page_count)
       setPage(response.page)
@@ -80,7 +79,7 @@ export default function Directions() {
       console.log(error)
     })
 
-  }, [Status, pageSize, page,AcademekYear])
+  }, [Status, pageSize, page])
 
 
 
@@ -147,7 +146,7 @@ export default function Directions() {
           </AttendSearchButton>
         </BoxHeader>
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <InputsWrapper>
           <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
@@ -155,7 +154,7 @@ export default function Directions() {
               selectOptions={YearList}
             />
           </InputsWrapper>
-        </BoxHeader>
+        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -293,7 +292,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
         <th>{elem.degree}</th>
         <th>{elem.faculty}</th>
         <th>
-          <Link to={'sciences'}>
+          <Link to={'sciences'} state={{id: elem.id}}>
             <Button
               variant="contained"
               sx={{
