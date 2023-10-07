@@ -146,12 +146,13 @@ import AddStudents from './components/AdminList/Students/AddStudent'
 import EditEmployeess from './components/AdminList/Students/EditEmployees'
 import EditStudents from './components/AdminList/Students/EditStudents'
 import AddTest from './components/AddTest'
+import ScienceDirection from './components/AdminList/ScienceDirection'
 
 function App() {
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
-  
+
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
   }
@@ -166,7 +167,7 @@ function App() {
 
   return (
     <MuiTheme theme={muiTheme}>
-      
+
       <ThemeProvider theme={defaultTheme}>
 
         <BrowserRouter>
@@ -228,7 +229,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
                 </Route>
-                <Route path="quiz" element={<QuizWrapper/>}/>
+                <Route path="quiz" element={<QuizWrapper />} />
 
                 <Route path="dekan" element={<MainDekan />}>
                   <Route path="profile" element={<Profile />} />
@@ -360,8 +361,7 @@ function App() {
 
 
                 <Route path="admin" element={<MainAdmin />}>
-                <Route path="addtest" element={<AddTest />} />
-
+                  <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
@@ -423,7 +423,8 @@ function App() {
                   <Route path='contractprices' element={<Contractprices />} />
 
                   <Route path="sciences" element={<StudentSciences />} >
-                    <Route index element={<SciencesAdmin />} />
+                    <Route index element={<ScienceDirection />} />
+                    <Route path='sciences' element={<SciencesAdmin />} />
                     <Route path='add' element={<Add />} />
                     <Route path='edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />

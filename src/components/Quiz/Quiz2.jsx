@@ -54,6 +54,8 @@ function PaperSheet(props) {
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [ErrorMessage, setErrorMessage] = useState('')
+
   const handleCloseAlert = () => setOpenAlert(false);
 
 
@@ -125,6 +127,7 @@ function PaperSheet(props) {
       if (error.response.data.message) {
         msg = msg + " " + error.response.data.message
       }
+      setErrorMessage(msg)
       setOpenAlert(true)
       serChanged(false)
       setAlertMessage(msg)
@@ -206,8 +209,11 @@ function PaperSheet(props) {
         </QuizBack>
         {tryCount == 0 ? <>
           <Alert variant="outlined" severity="error">
-            Urinishlar soni tugagan!!!
+            <p> Urinishlar soni tugagan!!!</p>
+            {ErrorMessage}
           </Alert>
+          {/* <Alert variant="outlined" severity="error">
+          </Alert> */}
         </> : <>
           {(testTime != 0) ? <MyTimer testTime={testTime * 60} finishFunction={revealCorrect} /> : <></>}
           <Typography component="h3" variant="headline" sx={{ my: 1 }}>Qolgan urinishlar soni: {tryCount}</Typography>
