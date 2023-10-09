@@ -98,10 +98,8 @@ import Sections from './components/AdminList/Sections'
 import Faculties from './components/AdminList/Faculties'
 import Kafedra from './components/AdminList/Faculties/Kafedra'
 import Employees from './components/AdminList/Employees'
-import ApplicationsReport from './components/ApplicationsReport'
 import Career from './components/AdminList/Employees/Career'
 import Show from './components/AdminList/Employees/Show'
-import EditEmployees from './components/AdminList/Students/AddStudent'
 import Students from './components/AdminList/Students'
 import InformationStudent from './components/AdminList/Students/Information'
 import Directions from './components/AdminList/Directions'
@@ -123,7 +121,6 @@ import Roles from './components/AdminList/Roles'
 import Server from './components/AdminList/Server'
 import CalendarPlanTeacher from './components/CourseManagement/CalendarPlanTeacher'
 import Vedomost from './components/Vedomost'
-import VedomostKafedra from './components/VedomostKafedra'
 import CalendarPlanStudent from "./components/CalendarPlanStudent"
 import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
@@ -147,7 +144,7 @@ import EditEmployeess from './components/AdminList/Students/EditEmployees'
 import EditStudents from './components/AdminList/Students/EditStudents'
 import AddTest from './components/AddTest'
 import ScienceDirection from './components/AdminList/ScienceDirection'
-
+import SciencePlan from './components/AdminList/SciencePlan'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -423,8 +420,9 @@ function App() {
                   <Route path='contractprices' element={<Contractprices />} />
 
                   <Route path="sciences" element={<StudentSciences />} >
-                    <Route index element={<ScienceDirection />} />
-                    <Route path='sciences' element={<SciencesAdmin />} />
+                  <Route index element={<SciencePlan />} />
+                    <Route path='ScienceDirection' element={<ScienceDirection />} />
+                    <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
                     <Route path='add' element={<Add />} />
                     <Route path='edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />

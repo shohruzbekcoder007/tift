@@ -96,7 +96,7 @@ export default function Curriculum() {
       value: 'bachelor',
       },
       {
-        name: "Magister",
+        name: "Magistr",
         value: 'master',
       },
   ]

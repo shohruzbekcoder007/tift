@@ -207,7 +207,7 @@ export const student_Links = [
       </defs>
     </svg>,
     text: {
-      uz: "Invidual shaxsiy reja",
+      uz: "Individual shaxsiy reja",
       ru: "Индивидуальный персональный план",
       eng: "Individual personal plan"
     },

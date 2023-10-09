@@ -11,6 +11,26 @@ export const getAdminKafedra = (url, successfulFunction, errorFunction) => {
 }
 
 
+
+export const setAdminUploadScience = (url, successfulFunction, errorFunction) => {
+    
+    axios.post(
+        url,
+        {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              },
+        }
+    ).then((response) => {
+        successfulFunction(response)
+    })
+    .catch((error) => {
+        errorFunction(error)
+    });
+}
+
+
+
 export const setAdminDeleteScience = (url, successfulFunction, errorFunction) => {
     
     axios.delete(

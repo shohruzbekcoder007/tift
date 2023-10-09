@@ -14,7 +14,7 @@ import { AddDirection, DeleteDirection, getDirections, getFakulty } from './requ
 import { academic_year, directions, facultyshortlist } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { getAcademecYear } from '../Semestr/requests'
 import { InputsWrapper } from '../../CourseManagement/styles'
 
@@ -22,6 +22,7 @@ export default function Directions() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
 
   const [Directions, setDirections] = useState([])
   const [Faculty, setFaculty] = useState([])
@@ -37,6 +38,7 @@ export default function Directions() {
   const [DirectionCode, setDirectionCode] = useState('')
   const [Degree, setDegree] = useState('bachelor')
   const [ChangeFakulty, setChangeFakulty] = useState('')
+  const [SearchText, setSearchText] = useState('')
 
 
   const [selectedValues, setSelectedValues] = useState([]);
@@ -70,16 +72,14 @@ export default function Directions() {
 
 
   useEffect(() => {
-    getDirections(`${directions}?page_size=${pageSize}&page=${page}`, (response) => {
+    setDirections([])
+    getDirections(`${directions}?page_size=${1000}&search=${SearchText}`, (response) => {
       setDirections(response.results)
-      setPageCount(response.page_count)
-      setPage(response.page)
-      setAllCount(response.count)
     }, (error) => {
       console.log(error)
     })
 
-  }, [Status, pageSize, page])
+  }, [Status,SearchText])
 
 
 
@@ -116,7 +116,7 @@ export default function Directions() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             {/* <Button
               variant="contained"
               onClick={handleOpen}
@@ -253,10 +253,10 @@ export default function Directions() {
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
-        <BoxFooter>
+        {/* <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Directions.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
-        </BoxFooter>
+        </BoxFooter> */}
 
       </Paper>
     </>
@@ -283,6 +283,9 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
     })
   }
 
+  const {state} = useLocation()
+  console.log(state);
+
   return (
     <>
       <tr>
@@ -292,7 +295,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
         <th>{elem.degree}</th>
         <th>{elem.faculty}</th>
         <th>
-          <Link to={'sciences'} state={{id: elem.id}}>
+          <Link to={'sciences'} state={{id: elem.id, season: state}}>
             <Button
               variant="contained"
               sx={{
