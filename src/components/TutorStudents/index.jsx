@@ -163,11 +163,14 @@ export default function TutorStudents() {
                                 Dars jadvali
                               </IconButton>
                             </Link>
-                            {/* <Link to="">
+                            <Link to="Information"  state={{ id: elem.id }}>
                               <IconButton >
-                                Посмотреть
+                                Profil
                               </IconButton>
-                            </Link> */}
+                            </Link>
+
+                          </Box>
+                          <Box>
                             <Link to="individual-pysical" state={{ id: elem.id }}>
                               <IconButton>
                                 <svg width="16" height="16" viewBox="0 0 16 16" style={{ margin: "0 10px" }} fill="none" xmlns="http://www.w3.org/2000/svg">
