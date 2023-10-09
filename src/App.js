@@ -146,6 +146,7 @@ import AddTest from './components/AddTest'
 import ScienceDirection from './components/AdminList/ScienceDirection'
 import SciencePlan from './components/AdminList/SciencePlan'
 import TutorSeePersonalPlan from './components/TutorSeePersonalPlan'
+import TutorSeeInformation from './components/TutorSeeInformation'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -281,6 +282,8 @@ function App() {
                       <Route index element={<TutorStudents />} />
                       <Route path='individual-pysical' element={<TutorSeePersonalPlan />} />
                       <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
+                      <Route path="information" element={<TutorSeeInformation />} />
+
                     </Route>
                   </Route>
                   <Route path="profile" element={<Profile />} />
