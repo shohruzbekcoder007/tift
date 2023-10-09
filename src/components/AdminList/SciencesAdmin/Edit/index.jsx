@@ -99,7 +99,7 @@ export default function Edit() {
       value: 'bachelor',
       },
       {
-        name: "Magister",
+        name: "Magistr",
         value: 'master',
       },
   ]

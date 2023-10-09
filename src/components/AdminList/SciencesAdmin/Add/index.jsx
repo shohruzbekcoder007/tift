@@ -94,7 +94,7 @@ export default function Add() {
         value: 'bachelor',
       },
       {
-        name: "Magister",
+        name: "Magistr",
         value: 'master',
       },
     ]

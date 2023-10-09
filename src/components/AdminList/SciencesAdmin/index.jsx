@@ -18,6 +18,7 @@ import { getAdminKafedra, setAdminDeleteScience } from './requests'
 import { kafedra, science } from '../../../utils/API_urls'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
+import { MuiFileInput } from 'mui-file-input'
 
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ export default function SciencesAdmin() {
   const [degreechoes, setdegreechoes] = useState([]);
   const [studytypechoes, setstudytypechoes] = useState([]);
   const [scienceAdmin, setscienceAdmin] = useState([]);
+  const [file, setFile] = useState(null);
 
   const [deletedElem, setDeleted] = useState(false)
   const [searchText, setsearchText] = useState('')
@@ -40,8 +42,10 @@ export default function SciencesAdmin() {
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
 
-  const {state} = useLocation()
-  console.log(state);
+  const setFileHandler = (newValue, info) => {
+    setFile(newValue)
+  }
+  const { state } = useLocation()
 
   const admindegree = useMemo(() => {
     return degree.map(elem => {
@@ -50,7 +54,7 @@ export default function SciencesAdmin() {
         value: elem.value
       }
     })
-  },[])
+  }, [])
 
 
 
@@ -61,20 +65,20 @@ export default function SciencesAdmin() {
         value: elem.value
       }
     })
-  },[])
-
-  useEffect(() => {
-    getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
-      setadminkafedra(response.data.results.map( elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-        console.log(error)
-    })
   }, [])
+
+  // useEffect(() => {
+  //   getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
+  //     setadminkafedra(response.data.results.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }, [])
 
 
   useEffect(() => {
@@ -83,19 +87,23 @@ export default function SciencesAdmin() {
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
-  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem,pageSize ,page, searchText])
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem, pageSize, page, searchText])
 
 
 
   const DeleteScience = (pk) => {
     setAdminDeleteScience(`${science}${pk}`, (response) => {
-      if(response.status)
+      if (response.status)
         setDeleted(prev => !prev)
     }, (error) => {
       console.log(error)
     })
+  }
+
+  const handleClick = (_) => {
+
   }
 
   return (
@@ -109,12 +117,32 @@ export default function SciencesAdmin() {
 
         }}
       >
-       
+
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
-              setPageSize(val)
+            setPageSize(val)
           }} />
           <AttendSearchButton>
+            <Button
+              variant="contained"
+              onClick={handleOpen2}
+              sx={{
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "12px 40px",
+                borderRadius: "10px",
+                fontWeight: "600",
+                fontSize: "14px",
+                lineHeight: "17px"
+              }}
+              startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+              </svg>
+              }
+            >
+              Excel Yuklash
+            </Button>
             <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
             <Link to={'add'}>
               <Button
@@ -149,10 +177,10 @@ export default function SciencesAdmin() {
 
         <BoxHeader>
           <InputsWrapper>
-          <AllSelectFullWidth
+            {/* <AllSelectFullWidth
               chageValueFunction={val => setkafedrachoes(val)}
               selectOptions={adminkafedra}
-            />
+            /> */}
             <AllSelectFullWidth
               chageValueFunction={val => setdegreechoes(val)}
               selectedOptionP={admindegree[0].value}
@@ -228,7 +256,7 @@ export default function SciencesAdmin() {
                     </svg>
                     }
                   />
-                   <TableTHHeader
+                  <TableTHHeader
                     text="Yo'nalish"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
@@ -311,7 +339,7 @@ export default function SciencesAdmin() {
               </thead>
               <tbody>
                 {
-                 scienceAdmin.length> 0 ? scienceAdmin.map((elem, index) => {
+                  scienceAdmin.length > 0 ? scienceAdmin.map((elem, index) => {
                     return (
                       <tr key={index}>
                         <th>{elem.id}</th>
@@ -367,7 +395,7 @@ export default function SciencesAdmin() {
                               </IconButton>
                             </div>
                           </Link>
-                          <Link to={'edit'} state={{data:elem.id}}>
+                          <Link to={'edit'} state={{ data: elem.id }}>
                             <Button
                               variant="contained"
                               sx={{
@@ -406,7 +434,7 @@ export default function SciencesAdmin() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={(_) => {DeleteScience(elem.id)}}
+                            onClick={(_) => { DeleteScience(elem.id) }}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -428,18 +456,18 @@ export default function SciencesAdmin() {
                       </tr>
                     )
                   })
-                  : 
-                  <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
-                  </tr>
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-            <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + scienceAdmin.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-            <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + scienceAdmin.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
 
         <Modal
@@ -590,7 +618,7 @@ export default function SciencesAdmin() {
                   color: "#000"
                 }}
               >
-                Tahrirlash                            </Typography>
+                Excel Yuklash                            </Typography>
               <span
                 onClick={handleClose2}
               >
@@ -599,13 +627,13 @@ export default function SciencesAdmin() {
                 </svg>
               </span>
             </ModalHeader>
-            <BuildingModalLang>
+            {/* <BuildingModalLang>
               <BuildingModalLangText>RU</BuildingModalLangText>
               <BuildingModalLangText>UZC</BuildingModalLangText>
               <BuildingModalLangText>UZL</BuildingModalLangText>
               <BuildingModalLangText>EN</BuildingModalLangText>
               <BuildingModalLangText>KAR</BuildingModalLangText>
-            </BuildingModalLang>
+            </BuildingModalLang> */}
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -618,63 +646,35 @@ export default function SciencesAdmin() {
                   m: "20px 0 10px 0"
                 }}
               >
-                Yo’nalish:                         </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Mobil tizimlari" />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Telefon raqam:                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="+998 91 234 56 78" />
-
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Email                        </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="someobe@somewhere.com" />
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Universitet                            </Typography>
+                                     </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "ТToshkent Axborot Texnologiyalari",
-                  value: 12,
-                }]}
+                chageValueFunction={val => setstudytypechoes(val)}
+                selectedOptionP={adminstudytype[0].value}
+                selectOptions={adminstudytype}
               />
             </ModalSelectWrapper>
+            <ModalSelectWrapper>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              File Yuklash
+            </Typography>
+            <MuiFileInput
+              placeholder="Fayl kiriting"
+              value={file}
+              onChange={setFileHandler}
+              // getInputText={(value) => value ? 'Thanks!' : ''}
+              fullWidth
+            />
+          </ModalSelectWrapper>
             <ModalButtons>
               <Button
                 sx={{ width: "50%", textTransform: "none" }}
@@ -686,13 +686,14 @@ export default function SciencesAdmin() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleClick}
               >
                 Saqlash
               </Button>
             </ModalButtons>
           </ModalBox>
         </Modal>
-        </Paper>
+      </Paper>
     </>
   )
 }
