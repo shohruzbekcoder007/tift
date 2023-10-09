@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { CircularProgress, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -14,11 +14,26 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { BuildingModalLang, BuildingModalLangText } from '../Building/styles'
 import { Link, useLocation } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
-import { getAdminKafedra, setAdminDeleteScience } from './requests'
-import { kafedra, science } from '../../../utils/API_urls'
+import { getAdminKafedra, setAdminDeleteScience, setAdminUploadScience } from './requests'
+import { additional_ie_science, kafedra, science } from '../../../utils/API_urls'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import { MuiFileInput } from 'mui-file-input'
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const anchorOrigin1 = {
+  vertical: 'bottom',
+  horizontal: "right"
+}
+
+const anchorOrigin2 = {
+  vertical: 'bottom',
+  horizontal: "left"
+}
 
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
@@ -33,14 +48,18 @@ export default function SciencesAdmin() {
   const [studytypechoes, setstudytypechoes] = useState([]);
   const [scienceAdmin, setscienceAdmin] = useState([]);
   const [file, setFile] = useState(null);
+  const [ModalText, setModalText] = useState('Saqlash');
 
   const [deletedElem, setDeleted] = useState(false)
   const [searchText, setsearchText] = useState('')
-
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
+  const handleCloseAlert = () => setOpenAlert(false);
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
@@ -57,6 +76,8 @@ export default function SciencesAdmin() {
   }, [])
 
 
+  
+
 
   const adminstudytype = useMemo(() => {
     return study_type.map(elem => {
@@ -67,18 +88,13 @@ export default function SciencesAdmin() {
     })
   }, [])
 
-  // useEffect(() => {
-  //   getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
-  //     setadminkafedra(response.data.results.map(elem => {
-  //       return {
-  //         name: elem.name,
-  //         value: elem.id
-  //       }
-  //     }))
-  //   }, (error) => {
-  //     console.log(error)
-  //   })
-  // }, [])
+  useEffect(() => {
+    if (!open2) {
+      setFile(null)
+      setModalText("Saqlash")
+    }
+  }, [open2])
+
 
 
   useEffect(() => {
@@ -103,7 +119,31 @@ export default function SciencesAdmin() {
   }
 
   const handleClick = (_) => {
-
+    setModalText(<CircularProgress color="inherit" size={25} />)
+    setAdminUploadScience(additional_ie_science, {
+      academic_year: state.season,
+      excel_file: file,
+      direction: state.id,
+      study_type: studytypechoes
+    }, (res) => {
+      setModalText('Saqlash')
+      setAlertMessage("Yuklandi")
+      serChanged(true)
+      setOpenAlert(true)
+      handleClose2()
+      console.log(res); 
+    }, (error) => {
+      let msg = ``
+      console.log(error);
+      if (error.response.data.error) {
+        msg = msg + " " + error.response.data.error
+      }
+      setModalText('Saqlash')
+      setAlertMessage(msg)
+      serChanged(false)
+      setOpenAlert(true)
+      console.log(error);
+    })
   }
 
   return (
@@ -688,11 +728,17 @@ export default function SciencesAdmin() {
                 variant="contained"
                 onClick={handleClick}
               >
-                Saqlash
+                {ModalText}
               </Button>
             </ModalButtons>
           </ModalBox>
         </Modal>
+
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
       </Paper>
     </>
   )
