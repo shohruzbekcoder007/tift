@@ -237,21 +237,21 @@ function PaperSheet(props) {
           }
 
           <hr style={{ marginBottom: "20px" }} />
-          <Typography variant="headline" component="h3">
-            {current + 1} / {quiz.length} | {quiz[current]?.question}
+          <Typography variant="headline" sx={{display: 'flex'}}>
+            <h3>{current + 1} / {quiz.length} | </h3>
+            <h3 dangerouslySetInnerHTML={{__html: quiz[current]?.question }}></h3>
           </Typography>
 
           {quiz[current]?.answers.map((opt, index) => {
             return (
-              <div key={index} style={{ marginTop: "5px" }}
-              >
+              <div key={index} style={{ marginTop: "5px" }}>
                 <Radio
                   checked={answers.find(elem => elem.question_id == quiz[current].id)?.aswer_id == opt.id}
                   onChange={handleChange}
                   value={opt.id}
                   name={`${quiz[current].id}`}
                 />
-                {opt.answer}
+                <span dangerouslySetInnerHTML={{__html: opt.answer}}></span>
               </div>
             )
           })}

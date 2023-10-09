@@ -12,13 +12,15 @@ export const getAdminKafedra = (url, successfulFunction, errorFunction) => {
 
 
 
-export const setAdminUploadScience = (url, successfulFunction, errorFunction) => {
+export const setAdminUploadScience = (url,data, successfulFunction, errorFunction) => {
     
     axios.post(
         url,
+        data,
         {
             headers: {
                 Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                "Content-Type": "multipart/form-data",
               },
         }
     ).then((response) => {
