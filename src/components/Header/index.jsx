@@ -14,7 +14,6 @@ import { student_detail } from '../../utils/API_urls'
 export default function Header() {
 
   const navigate = useNavigate();
-
   const title = useSelector((state) => state.title);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
@@ -30,7 +29,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    getStudentInformation(student_detail, (response) => {
+    getRole(user) === "student" && getStudentInformation(student_detail, (response) => {
       setInfoList(response.data.result)
     }, (error) => {
       console.log(error)
