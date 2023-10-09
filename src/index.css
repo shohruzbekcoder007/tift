@@ -45,8 +45,6 @@ h1,h2,h3,h4,h5,h6,p{
 marquee {
   color: #039E51;;
   position: fixed;
-  top: 0;
-  right: 0;
   z-index: 999;
   font-size: 18px;
   font-weight: 500;

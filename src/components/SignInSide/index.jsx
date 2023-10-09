@@ -15,7 +15,7 @@ import { getRole, getToken } from './requests'
 import { setUser } from '../../redux/action/userActions'
 import { getRole as getRoleUser } from '../../utils/getRole'
 import VideoPlayer from "react-background-video-player";
-import login_pahe_img from '../../imgs/tift.gif'
+import login_pahe_img from '../../imgs/astift.gif'
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material';
 // import zIndex from '@mui/material/styles/zIndex';
 
