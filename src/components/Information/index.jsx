@@ -213,7 +213,7 @@ export default function Information() {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magistr' || ''}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>

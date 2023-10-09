@@ -97,8 +97,9 @@ export default function Header() {
           {
             getRole(user) === 'student' &&
             <NavbarWrapperRight>
-              <h4>Kontrakt: {InfoList.direction_contract} so'm    </h4>
-              <Indebtedness>Qarzdorlik: {InfoList.debt} so'm </Indebtedness>
+              {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
+              <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+              <Indebtedness>Qarzdorlik: {InfoList.debt?.toLocaleString().replace(/,/g, ' ')} so'm </Indebtedness>
             </NavbarWrapperRight>
           }
           {/* <HeaderAccountTime>

@@ -91,6 +91,24 @@ export default function Tasks() {
             <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
           </StudentTasksBox>
         </BoxHeader>
+        <BoxHeader>
+        <Typography
+          variant='h2'
+          sx={{
+            color: 'yellow',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '150%',
+            padding: "10px",
+            alignItem: "center",
+            bgcolor: "#24bd70",
+            borderRadius: "10px",
+          }}
+        >
+          Oraliq va Yakuniy vazifalarda 3 va undan yuqori baho olsangiz fandan o'tasiz
+        </Typography>
+        </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
