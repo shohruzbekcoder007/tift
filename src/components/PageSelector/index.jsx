@@ -63,6 +63,7 @@ export default function PageSelector({chageValueFunction}) {
                     <MenuItem value={25}>25</MenuItem>
                     <MenuItem value={50}>50</MenuItem>
                     <MenuItem value={100}>100</MenuItem>
+                    <MenuItem value={500}>500</MenuItem>
                 </Select>
                 <SelectorText>{listLanguage.Row[language]}</SelectorText>
             </FormControl>

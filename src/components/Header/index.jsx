@@ -100,7 +100,7 @@ export default function Header() {
             <NavbarWrapperRight>
               {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
               <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-              <Indebtedness>Qarzdorlik: {InfoList.debt?.toLocaleString().replace(/,/g, ' ')} so'm </Indebtedness>
+              <Indebtedness>Qarzdorlik: {Number(InfoList.debt?.toLocaleString().replace(/,/g, ' '))} so'm </Indebtedness>
             </NavbarWrapperRight>
           }
           {/* <HeaderAccountTime>

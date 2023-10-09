@@ -4,6 +4,8 @@ import CalendarDayWeek from '../CalendarDayWeek'
 import { useLocation } from 'react-router'
 
 export default function TutorSeeSchedule() {
+    const {state} = useLocation()
+
     return (
         <Paper
             elevation={0}
@@ -13,7 +15,7 @@ export default function TutorSeeSchedule() {
                 borderRadius: "10px"
             }}
         >
-            <CalendarDayWeek />
+            <CalendarDayWeek  id={state?.id}/>
         </Paper>
     )
 }
