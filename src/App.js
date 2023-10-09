@@ -145,6 +145,7 @@ import EditStudents from './components/AdminList/Students/EditStudents'
 import AddTest from './components/AddTest'
 import ScienceDirection from './components/AdminList/ScienceDirection'
 import SciencePlan from './components/AdminList/SciencePlan'
+import TutorSeePersonalPlan from './components/TutorSeePersonalPlan'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -278,7 +279,7 @@ function App() {
                     <Route index element={<TutorGroups />} />
                     <Route path='students' >
                       <Route index element={<TutorStudents />} />
-                      <Route path='individual-pysical' element={<IndividualPysical />} />
+                      <Route path='individual-pysical' element={<TutorSeePersonalPlan />} />
                       <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
                     </Route>
                   </Route>
