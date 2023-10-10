@@ -178,7 +178,7 @@ export default function Information() {
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
-              <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "famele" && "Ayol" || ""}</HeaderWrapperP>
+              <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "female" && "Ayol" || ""}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>Reyting daftarcha:</HeaderWrapperH4>
