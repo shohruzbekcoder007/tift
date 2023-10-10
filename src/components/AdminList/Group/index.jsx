@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { IconButton } from '../../Final_Dep/style'
-import { addGroup, getGroups, getTeachers } from './requests'
+import { addGroup, getGroups, getTeachers, patchGroup } from './requests'
 import { academic_group, academic_group_short, academic_year, allusers, bot_para, directions, room_create_list } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
@@ -50,6 +50,7 @@ export default function Group() {
   const [GroupInput, setGroupInput] = useState('');
 
   useEffect(() => {
+    setAcademikGroup([])
     getGroups(`${academic_group}?page_size=${pageSize}&page=${page}&search=${SearchText}&direction=${DirectionID}&year=${AcademekYear}`, (response) => {
       console.log(response.data.results);
       setAcademikGroup(response.data.results)
@@ -343,7 +344,7 @@ export default function Group() {
                 {
                   AcademikGroup.length > 0 ? AcademikGroup.map((elem, index) => {
                     return (
-                       <SimpleGroups key={index} index={index} elem={elem} Teachers={TeacherList} para={ParaList} room={RoomList} direction={Directions} lang={LangList} callback_func={(val) => setStatus(val)} Group={AcademikGroup} YearList={YearList}/>
+                       <SimpleGroups key={index} index={index} elem={elem} Status={Status} Teachers={TeacherList} para={ParaList} room={RoomList} direction={Directions} lang={LangList} callback_func={(val) => setStatus(val)} Group={AcademikGroup} YearList={YearList}/>
                     )
                   })
                     :
@@ -558,29 +559,22 @@ export default function Group() {
 
 
 
-const SimpleGroups = ({ elem, callback_func, Status, index, Semester, YearList, Teachers,lang,para,room,direction }) => {
+const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers,lang,para,room,direction }) => {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-  const [GroupInput, setGroupInput] = useState('');
-  const [TeacherSelect, setTeacherSelect] = useState(null)
-  const [LangSelect, setLangSelect] = useState(null);
-  const [YearSelect, setYearSelect] = useState(null);
-  const [DirectionSelect, setDirectionSelect] = useState('all')
-  const [RoomSelect, setRoomSelect] = useState(null)
-  const [ParaSelect, setParaSelect] = useState(null);
+  const [GroupInput, setGroupInput] = useState(elem.name ?? "");
+  const [TeacherSelect, setTeacherSelect] = useState(elem.teacher ?? "")
+  const [LangSelect, setLangSelect] = useState(elem.lang ?? "");
+  const [YearSelect, setYearSelect] = useState(elem.year ?? "");
+  const [DirectionSelect, setDirectionSelect] = useState(elem.direction ?? "")
+  const [RoomSelect, setRoomSelect] = useState(elem.room ?? "")
+  const [ParaSelect, setParaSelect] = useState(elem.para ?? "");
 
-  // useEffect(()=> {
-  //   getGroups(`${academic_group}${elem.id}`, (response) => {
-  //     console.log(response.data.results);
-  //   }, (error) => {
-  //     console.log(error)
-  //   })
-  // },[])
 
   const handleClick2 = (_) => {
       console.log('sss');
-      addGroup(academic_group, {
+      patchGroup(`${academic_group}${elem.id}/`, {
         name: GroupInput,
         lang: LangSelect,
         teacher: TeacherSelect,
