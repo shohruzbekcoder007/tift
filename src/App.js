@@ -283,7 +283,6 @@ function App() {
                       <Route path='individual-pysical' element={<TutorSeePersonalPlan />} />
                       <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
                       <Route path="information" element={<TutorSeeInformation />} />
-
                     </Route>
                   </Route>
                   <Route path="profile" element={<Profile />} />
@@ -427,8 +426,8 @@ function App() {
                   <Route index element={<SciencePlan />} />
                     <Route path='ScienceDirection' element={<ScienceDirection />} />
                     <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
-                    <Route path='add' element={<Add />} />
-                    <Route path='edit' element={<Edit />} />
+                    <Route path='ScienceDirection/sciences/add' element={<Add />} />
+                    <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
                   </Route>
 
