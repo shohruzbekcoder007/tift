@@ -14,8 +14,8 @@ import { InputsWrapper } from '../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { IconButton } from '../Final_Dep/style'
 import { useLocation } from 'react-router-dom'
-import { getStudents } from './request'
-import { Students } from '../../utils/API_urls'
+import { getStudents, getStudentsExcel } from './request'
+import { Students, host } from '../../utils/API_urls'
 import { Link } from 'react-router-dom'
 
 export default function TutorStudents() {
@@ -30,6 +30,7 @@ export default function TutorStudents() {
   const [StudentList, setStudentList] = useState([])
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
+  const [Url, setUrl] = useState(null)
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
@@ -43,6 +44,14 @@ export default function TutorStudents() {
     })
   }, [pageSize, page])
 
+  useEffect(() => {
+    getStudentsExcel(`/additional/ie/group/?group=${state}`, (response) => {
+      console.log(response.url);
+      setUrl(response.url)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [pageSize, page])
 
   return (
     <>
@@ -59,6 +68,28 @@ export default function TutorStudents() {
             console.log(val)
           }} />
           <AttendSearchButton>
+          <a href={Url} >
+            <Button
+              variant="contained"
+              sx={{
+                width: "90px",
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "12px",
+                borderRadius: "10px",
+                fontWeight: "600",
+                fontSize: "14px",
+                lineHeight: "17px"
+              }}
+              startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+              </svg>
+              }
+            >
+              Excel
+            </Button>
+            </a>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -76,6 +107,19 @@ export default function TutorStudents() {
             <table>
               <thead>
                 <tr>
+                <TableTHHeader
+                    text="#No"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23314)">
+                        <path d="M16.0008 0.666667C16.0008 1.03533 15.7021 1.33333 15.3341 1.33333H6.66746C6.29946 1.33333 6.00079 1.03533 6.00079 0.666667C6.00079 0.298 6.29946 0 6.66746 0H15.3341C15.7021 0 16.0008 0.298 16.0008 0.666667ZM13.3341 3.33333H6.66746C6.29946 3.33333 6.00079 3.63133 6.00079 4C6.00079 4.36867 6.29946 4.66667 6.66746 4.66667H13.3341C13.7021 4.66667 14.0008 4.36867 14.0008 4C14.0008 3.63133 13.7021 3.33333 13.3341 3.33333ZM11.3341 6.66667H6.66746C6.29946 6.66667 6.00079 6.96467 6.00079 7.33333C6.00079 7.702 6.29946 8 6.66746 8H11.3341C11.7021 8 12.0008 7.702 12.0008 7.33333C12.0008 6.96467 11.7021 6.66667 11.3341 6.66667ZM9.33412 10H6.66746C6.29946 10 6.00079 10.298 6.00079 10.6667C6.00079 11.0353 6.29946 11.3333 6.66746 11.3333H9.33412C9.70212 11.3333 10.0008 11.0353 10.0008 10.6667C10.0008 10.298 9.70212 10 9.33412 10ZM5.13879 12.862L4.00079 14V0.666667C4.00079 0.298 3.70212 0 3.33412 0C2.96612 0 2.66746 0.298 2.66746 0.666667V14L1.52879 12.8613C1.26812 12.6007 0.846792 12.6007 0.586125 12.8613C0.325458 13.122 0.325458 13.5433 0.586125 13.804L2.39079 15.6087C2.65079 15.8687 2.99212 15.9987 3.33412 15.9987C3.67612 15.9987 4.01679 15.8687 4.27679 15.6087L6.08146 13.804C6.34212 13.5433 6.34212 13.122 6.08146 12.8613C5.82079 12.6007 5.39946 12.6013 5.13879 12.862Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23314">
+                          <rect width="16" height="16" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>}
+                  />
                   <TableTHHeader
                     text="ID"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,10 +185,11 @@ export default function TutorStudents() {
                   StudentList?.length > 0 ? StudentList.map((elem, index) => {
                     return (
                       <tr key={index}>
+                        <th>{index + 1}</th>
                         <th>{elem.id}</th>
                         <th>
                           {
-                            elem.avatar ? <img style={{ width: "70px", height: "70px", objectFit: "cover", borderRadius: '5px', cursor: "pointer" }} src={elem.avatar} /> : <svg style={{ cursor: "pointer" }} width="70" height="70" viewBox="0 0 61 62" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+                            elem.avatar ? <img style={{ width: "70px", height: "70px", objectFit: "cover", borderRadius: '5px', cursor: "pointer" }} src={elem.avatar} /> : <svg style={{ cursor: "pointer" }} width="60" height="60" viewBox="0 0 61 62" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
                               <rect x="0.5" y="1" width="60" height="60" rx="10" fill="url(#pattern0)" stroke="#EEEEEE" />
                               <defs>
                                 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -157,9 +202,9 @@ export default function TutorStudents() {
                         </th>
                         <th >{elem.full_name}</th>
                         <th>
-                          <Box>
+                          <div style={{display: 'flex'}}>
                             <Link to="tutor-see-schedule" state={{ id: elem.id }}>
-                              <IconButton >
+                              <IconButton>
                                 Dars jadvali
                               </IconButton>
                             </Link>
@@ -168,25 +213,13 @@ export default function TutorStudents() {
                                 Profil
                               </IconButton>
                             </Link>
-
-                          </Box>
-                          <Box>
                             <Link to="individual-pysical" state={{ id: elem.id }}>
                               <IconButton>
-                                <svg width="16" height="16" viewBox="0 0 16 16" style={{ margin: "0 10px" }} fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <g clipPath="url(#clip0_78_25185)">
-                                    <path d="M13.3 3.69068L10.9773 1.36668C10.5449 0.932107 10.0306 0.587569 9.46413 0.352988C8.89771 0.118407 8.2904 -0.00156258 7.67732 1.53658e-05H4.66732C3.78359 0.00107394 2.93636 0.352603 2.31146 0.977495C1.68657 1.60239 1.33504 2.44962 1.33398 3.33335V12.6667C1.33504 13.5504 1.68657 14.3976 2.31146 15.0225C2.93636 15.6474 3.78359 15.999 4.66732 16H11.334C12.2177 15.999 13.0649 15.6474 13.6898 15.0225C14.3147 14.3976 14.6663 13.5504 14.6673 12.6667V6.99002C14.669 6.37696 14.549 5.76968 14.3143 5.20333C14.0796 4.63699 13.7348 4.12284 13.3 3.69068ZM12.3573 4.63335C12.5609 4.84278 12.736 5.07814 12.878 5.33335H10.0007C9.82384 5.33335 9.65427 5.26311 9.52925 5.13809C9.40422 5.01306 9.33398 4.84349 9.33398 4.66668V1.78935C9.58927 1.9313 9.82484 2.10612 10.0347 2.30935L12.3573 4.63335ZM13.334 12.6667C13.334 13.1971 13.1233 13.7058 12.7482 14.0809C12.3731 14.456 11.8644 14.6667 11.334 14.6667H4.66732C4.13688 14.6667 3.62818 14.456 3.2531 14.0809C2.87803 13.7058 2.66732 13.1971 2.66732 12.6667V3.33335C2.66732 2.80292 2.87803 2.29421 3.2531 1.91914C3.62818 1.54406 4.13688 1.33335 4.66732 1.33335H7.67732C7.78665 1.33335 7.89265 1.35468 8.00065 1.36468V4.66668C8.00065 5.19711 8.21136 5.70582 8.58644 6.0809C8.96151 6.45597 9.47022 6.66668 10.0007 6.66668H13.3027C13.3127 6.77468 13.334 6.88002 13.334 6.99002V12.6667Z" fill="black" />
-                                  </g>
-                                  <defs>
-                                    <clipPath id="clip0_78_25185">
-                                      <rect width="16" height="16" fill="white" />
-                                    </clipPath>
-                                  </defs>
-                                </svg>
                                 Individual shaxsiy reja
                               </IconButton>
                             </Link>
-                          </Box>
+                          </div>
+   
                         </th>
                       </tr>
                     )
