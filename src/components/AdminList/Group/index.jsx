@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -20,6 +20,20 @@ import { getAcademecYear } from '../Semestr/requests'
 import { getRooms } from '../Building/Room/requests'
 import { getPara } from '../Streams/Schedule/request'
 import language from '../../../dictionary/language'
+import MuiAlert from '@mui/material/Alert';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const anchorOrigin1 = {
+  vertical: 'bottom',
+  horizontal: "right"
+}
+
+const anchorOrigin2 = {
+  vertical: 'bottom',
+  horizontal: "left"
+}
 
 export default function Group() {
   const [open, setOpen] = useState(false);
@@ -48,6 +62,10 @@ export default function Group() {
   const [LangSelect, setLangSelect] = useState(null);
   const [YearSelect, setYearSelect] = useState(null);
   const [GroupInput, setGroupInput] = useState('');
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
   useEffect(() => {
     setAcademikGroup([])
@@ -154,20 +172,49 @@ export default function Group() {
   }, [])
 
   const handleClick = (_) => {
-    console.log('sss');
-    addGroup(academic_group, {
-      name: GroupInput,
-      lang: LangSelect,
-      teacher: TeacherSelect,
-      para: ParaSelect,
-      room: RoomSelect,
-      direction: DirectionSelect,
-      year: YearSelect
-    }, (response) => {
+    let obj = {}
+    if (GroupInput) {
+      obj.name = GroupInput
+     }
+     if (LangSelect) {
+      obj.lang = LangSelect
+     }
+     if (TeacherSelect) {
+      obj.teacher = TeacherSelect
+     }
+     if (DirectionSelect) {
+      obj.direction = DirectionSelect
+     }
+     if (YearSelect) {
+      obj.year = YearSelect
+     }
+    if (ParaSelect) {
+     obj.para = ParaSelect
+    }
+    if (RoomSelect) {
+      obj.room = RoomSelect
+    }
+    addGroup(academic_group,obj, (response) => {
+      setAlertMessage("Qo'shildi")
+      setOpenAlert(true)
       setStatus(!Status)
+      serChanged(true)
       handleClose()
     }, (error) => {
       console.log(error);
+      let msg = ``
+      if (error.response.data.name) {
+        msg += 'name ' + error.response.data.name
+      }
+      if (error.response.data.year) {
+        msg += '  year ' + error.response.data.year
+      }
+      if (error.response.data.direction) {
+        msg += 'direction ' + error.response.data.direction
+      }
+      setAlertMessage(msg)
+      serChanged(false)
+      setOpenAlert(true) 
     })
   }
 
@@ -553,6 +600,11 @@ export default function Group() {
         </Modal>
 
       </Paper>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
   )
 }
@@ -563,29 +615,55 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers,lang,par
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-  const [GroupInput, setGroupInput] = useState(elem.name ?? "");
-  const [TeacherSelect, setTeacherSelect] = useState(elem.teacher ?? "")
-  const [LangSelect, setLangSelect] = useState(elem.lang ?? "");
-  const [YearSelect, setYearSelect] = useState(elem.year ?? "");
-  const [DirectionSelect, setDirectionSelect] = useState(elem.direction ?? "")
-  const [RoomSelect, setRoomSelect] = useState(elem.room ?? "")
-  const [ParaSelect, setParaSelect] = useState(elem.para ?? "");
-
+  const [GroupInput, setGroupInput] = useState(elem.name ?? null);
+  const [TeacherSelect, setTeacherSelect] = useState(elem.teacher ?? null)
+  const [LangSelect, setLangSelect] = useState(elem.lang ?? null);
+  const [YearSelect, setYearSelect] = useState(elem.year ?? null);
+  const [DirectionSelect, setDirectionSelect] = useState(elem.direction ?? null)
+  const [RoomSelect, setRoomSelect] = useState(elem.room ?? null)
+  const [ParaSelect, setParaSelect] = useState(elem.para ?? null);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
   const handleClick2 = (_) => {
-      console.log('sss');
-      patchGroup(`${academic_group}${elem.id}/`, {
-        name: GroupInput,
-        lang: LangSelect,
-        teacher: TeacherSelect,
-        para: ParaSelect,
-        room: RoomSelect,
-        direction: DirectionSelect,
-        year: YearSelect
-      }, (response) => {
+    let obj = {}
+    if (GroupInput) {
+      obj.name = GroupInput
+     }
+     if (LangSelect) {
+      obj.lang = LangSelect
+     }
+     if (TeacherSelect) {
+      obj.teacher = TeacherSelect
+     }
+     if (DirectionSelect) {
+      obj.direction = DirectionSelect
+     }
+     if (YearSelect) {
+      obj.year = YearSelect
+     }
+    if (ParaSelect) {
+     obj.para = ParaSelect
+    }
+    if (RoomSelect) {
+      obj.room = RoomSelect
+    }
+
+      patchGroup(`${academic_group}${elem.id}/`, obj, (response) => {
         callback_func(!Status)
         handleClose2()
       }, (error) => {
+        console.log(error);
+        let msg = ``
+        if (error.response.data.direction) {
+          msg += 'direction ' + error.response.data.direction
+        }
+        console.log(msg);
+        setAlertMessage(msg)
+        serChanged(false)
+        setOpenAlert(true) 
         console.log(error);
       })
   }
@@ -855,6 +933,11 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers,lang,par
             </ModalButtons>
           </ModalBox>
         </Modal>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   )
 }
