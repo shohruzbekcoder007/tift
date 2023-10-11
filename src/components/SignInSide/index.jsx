@@ -179,7 +179,7 @@ export default function SignInSide() {
               fullWidth
               id="username"
               // label="User name"
-              placeholder='Username'
+              placeholder='Login'
               name="username"
               autoComplete="username"
               autoFocus

@@ -64,7 +64,7 @@ export default function PlanSciences() {
       console.log(response);
       response.data.map(elem => {
         list.push({
-          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree +  " " + elem.academic_year + ")",
           value: elem.id
         })
         setSciencesID(response.data[0].id)
