@@ -588,12 +588,12 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
         </IconButton>
       </div>
       </Link> */}
-        <IconButton style={{ margin: '15px 0 0 0' }}>
+        {/* <IconButton style={{ margin: '15px 0 0 0' }}>
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M18.3307 9.99984C18.3307 14.5998 14.5974 18.3332 9.9974 18.3332C5.3974 18.3332 1.66406 14.5998 1.66406 9.99984C1.66406 5.39984 5.3974 1.6665 9.9974 1.6665C14.5974 1.6665 18.3307 5.39984 18.3307 9.99984Z" stroke="#252525" strokeWidth="1.5" stroke-linecap="round" strokeLinejoin="round" />
             <path d="M13.0953 12.65L10.512 11.1083C10.062 10.8416 9.69531 10.2 9.69531 9.67497V6.2583" stroke="#252525" strokeWidth="1.5" stroke-linecap="round" strokeLinejoin="round" />
           </svg>
-        </IconButton>
+        </IconButton> */}
         <Button
           variant="contained"
           sx={{

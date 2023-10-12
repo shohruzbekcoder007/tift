@@ -31,6 +31,9 @@ export default function AddEmployees() {
   const [regionId1, setRegionId1] = useState(null)
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
+  const [NameStatus, setNameStatus] = useState(false)
+  const [LastNameStatus, setLastNameStatus] = useState(false)
+  const [PhoneStatus, setPhoneStatus] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
 
@@ -234,11 +237,16 @@ export default function AddEmployees() {
       console.log(error)
       let msg = ``
       if (error.response.data.first_name) {
-        msg = msg + " " + error.response.data.first_name
+        msg = msg + " Ism " + error.response.data.first_name
+        setNameStatus(true)
       } if (error.response.data.last_name) {
-        msg = msg + " " + error.response.data.last_name
+        setLastNameStatus(true)
+
+        msg = msg + " Familiya " + error.response.data.last_name
       } if (error.response.data.phone_number) {
-        msg = msg + " " + error.response.data.phone_number
+        setPhoneStatus(true)
+
+        msg = msg + " telefon raqam " + error.response.data.phone_number
       }if (error.response.data.detail) {
         msg = msg + " Bunday foydalanuvchi mavjud"
       }
@@ -275,7 +283,7 @@ export default function AddEmployees() {
             >
               Ism
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
+            <CustomizedInputSimple error={NameStatus} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -291,7 +299,7 @@ export default function AddEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple  callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -329,7 +337,7 @@ export default function AddEmployees() {
             >
               Familiya
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
+            <CustomizedInputSimple error={LastNameStatus} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -345,7 +353,7 @@ export default function AddEmployees() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography

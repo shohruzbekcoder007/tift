@@ -182,7 +182,7 @@ export default function SignInSide() {
               fullWidth
               id="username"
               // label="User name"
-              placeholder='Login'
+              placeholder='login'
               name="username"
               autoComplete="username"
               autoFocus
@@ -214,7 +214,7 @@ export default function SignInSide() {
                 </InputAdornment>
               }
               name="password"
-              placeholder='Password'
+              placeholder='password'
               margin="normal"
               required
               fullWidth
