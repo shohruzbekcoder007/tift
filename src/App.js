@@ -288,6 +288,19 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
+                <Route path="hr" element={<MainTutor />}>
+                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="employees" element={<StudentSciences />} >
+                    <Route index element={<Employees />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployeess />} />
+                    <Route path='add' element={<AddEmployees />} />
+                  </Route>
+                </Route>
+
                 <Route path="department" element={<MainDepartment />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />

@@ -121,7 +121,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
         }}
       >
         {
-          oneday?.group?.map((element, indx) => {
+          oneday?.group?.[0] != null && oneday?.group?.map((element, indx) => {
             return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
           })
         }
@@ -177,6 +177,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
                   group: val
                 }
               })}
+
               selectOptions={groups}
             />
           </ModalSelectWrapper>

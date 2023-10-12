@@ -43,20 +43,20 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default memo(function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type }) {
+export default memo(function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type, helperText="", error=false }) {
 
     const [value, setValue] = useState(defaultValue)
 
     return (
         <div style={{ position: "relative" }}>
             <CssTextField
-                // error
+                error={error}
                 label={label}
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={value}
                 type={type}
-                // helperText="Incorrect entry."
+                helperText={helperText}
                 onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}
                 placeholder={placeholder}
             />
