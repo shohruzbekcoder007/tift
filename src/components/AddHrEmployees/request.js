@@ -1,4 +1,4 @@
-import axios, { headerConfig } from '../../../utils/baseUrl'
+import axios, { headerConfig } from '../../utils/baseUrl'
 
 export const getEmployes = (url, successfulFunction, errorFunction) => {
     axios.get(url, {

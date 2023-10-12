@@ -30,7 +30,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    getStudentInformation(student_detail, (response) => {
+    getRole(user) === "student" && getStudentInformation(student_detail, (response) => {
       setInfoList(response.data.result)
     }, (error) => {
       console.log(error)
@@ -96,13 +96,21 @@ export default function Header() {
         </TreeDots>
         <HeaderAccount open={headerAccount}>
           {
-            getRole(user) === 'student' &&
-            <NavbarWrapperRight>
-              {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
-              <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-              <Indebtedness>Qarzdorlik: {InfoList.debt?.toLocaleString().replace(/,/g, ' ')} so'm </Indebtedness>
-            </NavbarWrapperRight>
-          }
+            getRole(user) === 'student' && <>
+            {
+              InfoList.form_of_payment == 'contract' ?
+              <NavbarWrapperRight>
+                {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
+                <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+                <Indebtedness>Qarzdorlik: {InfoList.debt >= 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + "so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+              </NavbarWrapperRight>
+              :
+              <NavbarWrapperRight>
+                <h4 style={{color: "rgb(3, 158, 81)"}}>DAVLAT GRANTI</h4>
+              </NavbarWrapperRight>
+            }
+            </>
+          } 
           {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime> */}
