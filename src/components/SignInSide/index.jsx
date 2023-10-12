@@ -18,6 +18,7 @@ import VideoPlayer from "react-background-video-player";
 import login_pahe_img from '../../imgs/astift.gif'
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material';
 // import zIndex from '@mui/material/styles/zIndex';
+import { AES, enc } from 'crypto-js';
 
 const LoadingPage = () => {
   return (
@@ -75,7 +76,9 @@ export default function SignInSide() {
   };
 
   const successfulFunctionGetToken = (response) => {
-    sessionStorage.setItem('access_token', response.data.access)
+
+    const sec_token = AES.encrypt(response.data.access, '@q1y1npar0l@').toString()
+    sessionStorage.setItem('access_token', sec_token)
     setHaveatoken(true)
     getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
   }
