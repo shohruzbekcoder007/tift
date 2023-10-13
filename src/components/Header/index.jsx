@@ -14,7 +14,6 @@ import { student_detail } from '../../utils/API_urls'
 export default function Header() {
 
   const navigate = useNavigate();
-
   const title = useSelector((state) => state.title);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
