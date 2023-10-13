@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { IconButton } from '../../Final_Dep/style'
-import { addGroup, getGroups, getTeachers } from './requests'
+import { addGroup, getGroups, getTeachers, patchGroup } from './requests'
 import { academic_group, academic_group_short, academic_year, allusers, bot_para, directions, room_create_list } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
@@ -20,6 +20,20 @@ import { getAcademecYear } from '../Semestr/requests'
 import { getRooms } from '../Building/Room/requests'
 import { getPara } from '../Streams/Schedule/request'
 import language from '../../../dictionary/language'
+import MuiAlert from '@mui/material/Alert';
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const anchorOrigin1 = {
+  vertical: 'bottom',
+  horizontal: "right"
+}
+
+const anchorOrigin2 = {
+  vertical: 'bottom',
+  horizontal: "left"
+}
 
 export default function Group() {
   const [open, setOpen] = useState(false);
@@ -48,8 +62,13 @@ export default function Group() {
   const [LangSelect, setLangSelect] = useState(null);
   const [YearSelect, setYearSelect] = useState(null);
   const [GroupInput, setGroupInput] = useState('');
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
   useEffect(() => {
+    setAcademikGroup([])
     getGroups(`${academic_group}?page_size=${pageSize}&page=${page}&search=${SearchText}&direction=${DirectionID}&year=${AcademekYear}`, (response) => {
       console.log(response.data.results);
       setAcademikGroup(response.data.results)
@@ -153,20 +172,49 @@ export default function Group() {
   }, [])
 
   const handleClick = (_) => {
-    console.log('sss');
-    addGroup(academic_group, {
-      name: GroupInput,
-      lang: LangSelect,
-      teacher: TeacherSelect,
-      para: ParaSelect,
-      room: RoomSelect,
-      direction: DirectionSelect,
-      year: YearSelect
-    }, (response) => {
+    let obj = {}
+    if (GroupInput) {
+      obj.name = GroupInput
+     }
+     if (LangSelect) {
+      obj.lang = LangSelect
+     }
+     if (TeacherSelect) {
+      obj.teacher = TeacherSelect
+     }
+     if (DirectionSelect) {
+      obj.direction = DirectionSelect
+     }
+     if (YearSelect) {
+      obj.year = YearSelect
+     }
+    if (ParaSelect) {
+     obj.para = ParaSelect
+    }
+    if (RoomSelect) {
+      obj.room = RoomSelect
+    }
+    addGroup(academic_group,obj, (response) => {
+      setAlertMessage("Qo'shildi")
+      setOpenAlert(true)
       setStatus(!Status)
+      serChanged(true)
       handleClose()
     }, (error) => {
       console.log(error);
+      let msg = ``
+      if (error.response.data.name) {
+        msg += 'name ' + error.response.data.name
+      }
+      if (error.response.data.year) {
+        msg += '  year ' + error.response.data.year
+      }
+      if (error.response.data.direction) {
+        msg += 'direction ' + error.response.data.direction
+      }
+      setAlertMessage(msg)
+      serChanged(false)
+      setOpenAlert(true) 
     })
   }
 
@@ -262,6 +310,21 @@ export default function Group() {
                     }
                   />
                   <TableTHHeader
+                    text="Talabalar"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+                  <TableTHHeader
                     text={'Yo’nalish'}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
@@ -328,7 +391,7 @@ export default function Group() {
                 {
                   AcademikGroup.length > 0 ? AcademikGroup.map((elem, index) => {
                     return (
-                       <SimpleGroups key={index} elem={elem} Teachers={TeacherList} para={ParaList} room={RoomList} direction={Directions} lang={LangList} callback_func={(val) => setStatus(val)} Group={AcademikGroup} YearList={YearList}/>
+                       <SimpleGroups key={index} index={index} elem={elem} Status={Status} Teachers={TeacherList} para={ParaList} room={RoomList} direction={Directions} lang={LangList} callback_func={(val) => setStatus(val)} Group={AcademikGroup} YearList={YearList}/>
                     )
                   })
                     :
@@ -537,35 +600,82 @@ export default function Group() {
         </Modal>
 
       </Paper>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
   )
 }
 
 
 
-const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,para,room,direction }) => {
+const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers,lang,para,room,direction }) => {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-  const [GroupInput, setGroupInput] = useState('');
-  const [TeacherSelect, setTeacherSelect] = useState(null)
-  const [LangSelect, setLangSelect] = useState(null);
-  const [YearSelect, setYearSelect] = useState(null);
-  const [DirectionSelect, setDirectionSelect] = useState('all')
-  const [RoomSelect, setRoomSelect] = useState(null)
-  const [ParaSelect, setParaSelect] = useState(null);
+  const [GroupInput, setGroupInput] = useState(elem.name ?? null);
+  const [TeacherSelect, setTeacherSelect] = useState(elem.teacher ?? null)
+  const [LangSelect, setLangSelect] = useState(elem.lang ?? null);
+  const [YearSelect, setYearSelect] = useState(elem.year ?? null);
+  const [DirectionSelect, setDirectionSelect] = useState(elem.direction ?? null)
+  const [RoomSelect, setRoomSelect] = useState(elem.room ?? null)
+  const [ParaSelect, setParaSelect] = useState(elem.para ?? null);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
   const handleClick2 = (_) => {
+    let obj = {}
+    if (GroupInput) {
+      obj.name = GroupInput
+     }
+     if (LangSelect) {
+      obj.lang = LangSelect
+     }
+     if (TeacherSelect) {
+      obj.teacher = TeacherSelect
+     }
+     if (DirectionSelect) {
+      obj.direction = DirectionSelect
+     }
+     if (YearSelect) {
+      obj.year = YearSelect
+     }
+    if (ParaSelect) {
+     obj.para = ParaSelect
+    }
+    if (RoomSelect) {
+      obj.room = RoomSelect
+    }
 
+      patchGroup(`${academic_group}${elem.id}/`, obj, (response) => {
+        callback_func(!Status)
+        handleClose2()
+      }, (error) => {
+        console.log(error);
+        let msg = ``
+        if (error.response.data.direction) {
+          msg += 'direction ' + error.response.data.direction
+        }
+        console.log(msg);
+        setAlertMessage(msg)
+        serChanged(false)
+        setOpenAlert(true) 
+        console.log(error);
+      })
   }
   return (
     <>
       <tr>
         <th>{elem.id}</th>
         <th>{elem.name}</th>
-        <th>{elem.direction}</th>
-        <th>{elem.room}</th>
-        <th>{elem.teacher}</th>
+        <th>{elem.student_count}</th>
+        <th>{elem.direction_name ?? ""}</th>
+        <th>{elem.room_name ?? ""}</th>
+        <th>{elem.teacher_name ?? ""}</th>
         <th>{elem.year}</th>
         <th>
           <div style={{ width: "100%", textAlign: 'center' }}>
@@ -674,7 +784,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
                 Guruh
               </Typography>
 
-              <CustomizedInputSimple defaultValue={GroupInput} callback_func={(val) => { setGroupInput(val) }} placeholder="" />
+              <CustomizedInputSimple defaultValue={elem.name} callback_func={(val) => { setGroupInput(val) }} placeholder="" />
 
             </ModalSelectWrapper>
             <ModalSelectWrapper>
@@ -693,7 +803,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setTeacherSelect(val)}
-                selectedOptionP={Teachers?.[0]?.value}
+                selectedOptionP={elem.teacher}
                 selectOptions={Teachers}
               />
 
@@ -713,7 +823,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
                 Til                            </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setLangSelect(val)}
-                selectedOptionP={lang?.[0]?.value}
+                selectedOptionP={elem.lang}
                 selectOptions={lang}
               />
 
@@ -734,7 +844,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
                 Para                          </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setParaSelect(val)}
-                selectedOptionP={para?.[0]?.value}
+                selectedOptionP={elem.para}
                 selectOptions={para}
               />
 
@@ -755,6 +865,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
                 Xona                        </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setRoomSelect(val)}
+                selectedOptionP={elem.room}
                 selectOptions={room}
               />
 
@@ -775,6 +886,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
                 Yo’nalish:                        </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setDirectionSelect(val)}
+                selectedOptionP={elem.direction}
                 selectOptions={direction}
               />
 
@@ -796,6 +908,7 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setYearSelect(val)}
+                selectedOptionP={elem.year}
                 selectOptions={YearList}
               />
 
@@ -820,6 +933,11 @@ const SimpleGroups = ({ elem, callback_func, Semester, YearList, Teachers,lang,p
             </ModalButtons>
           </ModalBox>
         </Modal>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </>
   )
 }

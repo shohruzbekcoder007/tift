@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
@@ -58,6 +58,7 @@ export default function Streams() {
   const [ScienceType, setScienceType] = useState();
   const [TeachersList, setTeachersList] = useState([]);
   const [TeachersListSelect, setTeachersListSelect] = useState(null);
+  const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
 
 
   const setFileHandler = (newValue, info) => {
@@ -207,7 +208,7 @@ export default function Streams() {
       setScienseSelect(response?.data[0]?.id)
       setScineseList(response.data.map(elem => {
         return {
-          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + " " + elem.academic_year + ")",
           value: elem.id
         }
       }))
@@ -217,12 +218,16 @@ export default function Streams() {
   }, [SemesterSelect, SemesterNumber])
 
   useEffect(() => {
+    setStreamsList([])
+    setModalText(<CircularProgress color="success" size={25} />)
     if (SemesterSelect && ScienseSelect) {
       getStreams(`${patokadmin}?page_size=${pageSize}&page=${page}&semester=${SemesterSelect}&science=${ScienseSelect}&search=${searchText}`, (response) => {
         setStreamsList(response.data.results);
         setPageCount(response.data.page_count);
         setAllCount(response.data.count);
+        if(response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       }, (error) => {
+        setModalText("Ma'lumot yo'q")
         console.log(error)
       })
 
@@ -623,7 +628,7 @@ export default function Streams() {
                   })
                     :
                     <tr>
-                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                      <th colSpan={12} align='center'>{ModalText}</th>
                     </tr>
                 }
                 {/* <tr>

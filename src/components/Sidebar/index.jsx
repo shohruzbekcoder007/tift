@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
 import { setTitle } from '../../redux/action/titleActions'
-import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links, admin_links, lawyer_Links } from './sidebarlinks'
+import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links, admin_links, lawyer_Links, hr_Links } from './sidebarlinks'
 
 
 export default function Sidebar({ role }) {
@@ -64,6 +64,7 @@ const chageLinks = (role) => {
   if(role==="dekan") return dekan_Links
   if(role==="admin") return admin_links
   if(role==="lawyer") return lawyer_Links
+  if(role==="hr") return hr_Links
   return []
 }
 

@@ -145,6 +145,10 @@ import EditStudents from './components/AdminList/Students/EditStudents'
 import AddTest from './components/AddTest'
 import ScienceDirection from './components/AdminList/ScienceDirection'
 import SciencePlan from './components/AdminList/SciencePlan'
+import TutorSeePersonalPlan from './components/TutorSeePersonalPlan'
+import TutorSeeInformation from './components/TutorSeeInformation'
+import MainHr from './components/MainHr'
+import AddHrEmployees from './components/AddHrEmployees'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -278,11 +282,25 @@ function App() {
                     <Route index element={<TutorGroups />} />
                     <Route path='students' >
                       <Route index element={<TutorStudents />} />
-                      <Route path='individual-pysical' element={<IndividualPysical />} />
+                      <Route path='individual-pysical' element={<TutorSeePersonalPlan />} />
                       <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
+                      <Route path="information" element={<TutorSeeInformation />} />
                     </Route>
                   </Route>
                   <Route path="profile" element={<Profile />} />
+                </Route>
+
+                <Route path="hr" element={<MainHr />}>
+                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="employees" element={<StudentSciences />} >
+                    <Route index element={<Employees />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployeess />} />
+                    <Route path='add' element={<AddHrEmployees />} />
+                  </Route>
                 </Route>
 
                 <Route path="department" element={<MainDepartment />}>
@@ -423,8 +441,8 @@ function App() {
                   <Route index element={<SciencePlan />} />
                     <Route path='ScienceDirection' element={<ScienceDirection />} />
                     <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
-                    <Route path='add' element={<Add />} />
-                    <Route path='edit' element={<Edit />} />
+                    <Route path='ScienceDirection/sciences/add' element={<Add />} />
+                    <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
                   </Route>
 

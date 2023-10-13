@@ -1,22 +1,22 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { BoxHeader } from '../../../../global_styles/styles'
+import { BoxHeader } from '../../global_styles/styles'
 import { Button, Snackbar, Typography } from '@mui/material'
-import CustomizedInputSimple from '../../../CustomizedInputSimple'
-import AllSelectFullWidth from '../../../AllSelectFullWidth'
+import CustomizedInputSimple from '../CustomizedInputSimple'
+import AllSelectFullWidth from '../AllSelectFullWidth'
 import { WrapperBox, WrapperButtons, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
 import { MuiFileInput } from 'mui-file-input'
-import jins from '../../../../dictionary/jins'
-import citizenship from '../../../../dictionary/citizenship'
-import nationality from '../../../../dictionary/nationality'
-import academic_title from '../../../../dictionary/academic_title'
-import academic_degree from '../../../../dictionary/academic_degree'
-import { createEmployee, getRegionListRequest, getRoleList } from '../request'
-import { country, district, employee, kafedra, region, role } from '../../../../utils/API_urls'
-import BasicDatePicker from '../../../BasicDatePicker'
+import jins from '../../dictionary/jins'
+import citizenship from '../../dictionary/citizenship'
+import nationality from '../../dictionary/nationality'
+import academic_title from '../../dictionary/academic_title'
+import academic_degree from '../../dictionary/academic_degree'
+import { createEmployee, getRegionListRequest, getRoleList } from './request'
+import { country, district, employee, kafedra, region, role } from '../../utils/API_urls'
+import BasicDatePicker from '../BasicDatePicker'
 import { useNavigate } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 
-export default function AddEmployees() {
+export default function AddHrEmployees() {
 
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ export default function AddEmployees() {
   const [LastNameStatus, setLastNameStatus] = useState(false)
   const [PhoneStatus, setPhoneStatus] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [addRoleList, setaddRoleList] = useState([])
   const handleCloseAlert = () => setOpenAlert(false);
 
   const [newData, setNewData] = useState({
@@ -63,17 +64,18 @@ export default function AddEmployees() {
     phone_number: null,
     avatar: null,
     academic_title: null,
+    role: null
   })
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  
+
   const anchorOrigin1 = {
     vertical: 'bottom',
     horizontal: "right"
   }
-  
+
   const anchorOrigin2 = {
     vertical: 'bottom',
     horizontal: "left"
@@ -98,7 +100,7 @@ export default function AddEmployees() {
     })
   }, [])
 
-  
+
 
   const citizenshipList = useMemo(() => {
     reqDataChange("citizenship", citizenship[0].value)
@@ -135,6 +137,18 @@ export default function AddEmployees() {
   }, [])
 
   useEffect(() => {
+    getRoleList(`${role}`, (response) => {
+      console.log(response);
+      reqDataChange("role", response.data[0]?.id)
+      setaddRoleList(response.data.map(elem => {
+        return {
+          value: elem.id,
+          name: elem.name
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
     getRegionListRequest(`${region}?page_size=500`, (response) => {
       reqDataChange("region", response.data[0]?.id)
       reqDataChange("region2", response.data[0]?.id)
@@ -197,7 +211,7 @@ export default function AddEmployees() {
   }, [])
 
   useEffect(() => {
-    if(regionId){
+    if (regionId) {
       getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
         reqDataChange("district", response.data[0]?.id)
         setDistrictList(response.data.map(elem => {
@@ -210,10 +224,10 @@ export default function AddEmployees() {
         console.log(error)
       })
     }
-  },[regionId])
+  }, [regionId])
 
   useEffect(() => {
-    if(regionId1){
+    if (regionId1) {
       getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
         reqDataChange("district2", response.data[0]?.id)
         setDistrictList1(response.data.map(elem => {
@@ -226,8 +240,8 @@ export default function AddEmployees() {
         console.log(error)
       })
     }
-  },[regionId1])
-// admin/employees
+  }, [regionId1])
+  // admin/employees
   const createEmployes = () => {
     // console.log(newData)
     createEmployee(employee, newData, response => {
@@ -245,12 +259,13 @@ export default function AddEmployees() {
         setLastNameStatus(true)
 
         msg = msg + " Familiya " + error.response.data.last_name
-      } if (error.response.data.phone_number) {
-        setPhoneStatus(true)
-
-        msg = msg + " telefon raqam " + error.response.data.phone_number
-      }if (error.response.data.detail) {
+      }  if (error.response.data.detail) {
         msg = msg + " Bunday foydalanuvchi mavjud"
+      }
+
+      if (error.response.data.passport) {
+        setPhoneStatus(true)
+        msg = msg + " passport " + error.response.data.passport
       }
       setAlertMessage(msg)
     })
@@ -283,6 +298,27 @@ export default function AddEmployees() {
                 mb: "10px"
               }}
             >
+              Rolni tanlang
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => { reqDataChange("role", val) }}
+              selectOptions={addRoleList}
+            />
+          </WrapperInputsCard>
+        </BoxHeader>
+        <BoxHeader>
+          <WrapperInputsCard>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
               Ism
             </Typography>
             <CustomizedInputSimple error={NameStatus} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
@@ -301,7 +337,7 @@ export default function AddEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple  callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple  error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -355,7 +391,7 @@ export default function AddEmployees() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -371,7 +407,7 @@ export default function AddEmployees() {
             >
               Tug’ilgan kuni
             </Typography>
-            <BasicDatePicker setFunction={(val) => {reqDataChange("birthday", val)}} label="Tug’ilgan kuni"/>
+            <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
           </WrapperInputsCard>
         </BoxHeader>
 
@@ -542,7 +578,7 @@ export default function AddEmployees() {
               Viloyat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => {reqDataChange("region", val); setRegionId(val)}}
+              chageValueFunction={val => { reqDataChange("region", val); setRegionId(val) }}
               selectOptions={regionList}
             />
           </WrapperInputsCardTwo>
@@ -617,7 +653,7 @@ export default function AddEmployees() {
               Viloyat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => {reqDataChange("region2", val); setRegionId1(val)}}
+              chageValueFunction={val => { reqDataChange("region2", val); setRegionId1(val) }}
               selectOptions={regionList1}
             />
           </WrapperInputsCardTwo>
@@ -732,7 +768,7 @@ export default function AddEmployees() {
             >
               Specialty Employee
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("specialty_employee", val) }} placeholder=""/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("specialty_employee", val) }} placeholder="" />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -748,7 +784,7 @@ export default function AddEmployees() {
             >
               Experience
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("experience", val) }} placeholder="Ish tajribasi(yil)" type="number"/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("experience", val) }} placeholder="Ish tajribasi(yil)" type="number" />
           </WrapperInputsCardTwo>
         </BoxHeader>
 
@@ -788,7 +824,7 @@ export default function AddEmployees() {
             >
               Ish boshlangan vaqti
             </Typography>
-            <BasicDatePicker setFunction={(val) => {reqDataChange("start_work", val)}} label="Ish boshlangan vaqti"/>
+            <BasicDatePicker setFunction={(val) => { reqDataChange("start_work", val) }} label="Ish boshlangan vaqti" />
           </WrapperInputsCardTwo>
         </BoxHeader>
         <WrapperInputsCardTwo>

@@ -6,13 +6,14 @@ import Typography from '@mui/material/Typography';
 import LiveHelp from '@mui/icons-material/LiveHelp';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { getQuizs, postQuiz } from './requests';
 import { student_test_detail, student_test_solve } from '../../utils/API_urls';
 import MyTimer from './MyTimer';
-import { Alert, Snackbar } from '@mui/material';
+import { Alert, Modal, Snackbar } from '@mui/material';
 import { QuizBack } from '../QuizWrapper/styles';
 import MuiAlert from '@mui/material/Alert';
+import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles';
 
 const styles = theme => ({
   root: {
@@ -36,6 +37,10 @@ const styles = theme => ({
 });
 
 function PaperSheet(props) {
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const location = useLocation();
   const testId = location.state?.testId;
@@ -158,7 +163,7 @@ function PaperSheet(props) {
     })
     postQuiz(student_test_solve, my_answers, response => {
       console.log(response)
-      setFinishedTest(true)
+      setOpen(true)
       setTestTime(0)
       setGraduate(response.grade)
     }, error => {
@@ -168,7 +173,7 @@ function PaperSheet(props) {
 
   return (
     <>
-      {/* <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+    {/* <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
         <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
           {alertMessage}
         </Alert>
@@ -213,7 +218,7 @@ function PaperSheet(props) {
             </Button>
             <span className={props.classes.questionMeta}> {quizText}</span><br />
           </Typography>
-          {
+          {/* {
             finishedTest ? <>
               <Alert
                 action={
@@ -234,7 +239,7 @@ function PaperSheet(props) {
                 <h3>Qayta urinib koring sizda hali yana {tryCount} ta urinish mavjud</h3>
               </Alert>
             </> : null
-          }
+          } */}
 
           <hr style={{ marginBottom: "20px" }} />
           <Typography variant="headline" sx={{display: 'flex'}}>
@@ -304,6 +309,55 @@ function PaperSheet(props) {
             } */}
           </div>
         </>}
+
+
+
+
+
+
+
+        <Modal
+          keepMounted
+          open={open}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <ModalBox>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000"
+                }}
+              >
+                     Test yakunlandi.                       </Typography>
+
+            </ModalHeader>
+            <Alert
+                variant="outlined"
+                severity="warning"
+                sx={{ mt: 2 }}
+              >
+                <h3>Sizning balingiz: {graduate}</h3>
+                <h4>Qayta urinib koring sizda hali yana {tryCount} ta urinish mavjud</h4>
+              </Alert>
+            <ModalButtons>
+              <Button
+                sx={{ width: "100%", textTransform: "none", margin: '1rem 0' }}
+                variant="contained"
+                onClick={(_) => {navigate(-1)}}
+              >
+                Ortga qaytish
+              </Button>
+
+            </ModalButtons>
+          </ModalBox>
+        </Modal>
+
       </Paper>
 
     </>
