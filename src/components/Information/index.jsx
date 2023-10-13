@@ -235,6 +235,10 @@ export default function Information() {
             <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>O'qish turi:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.form_of_payment}</HeaderWrapperP>
+          </WrapperBody>
           <WrapperBodyContract>
             {
               StudentContract.length > 0 ? StudentContract.map((elem, index) => {
