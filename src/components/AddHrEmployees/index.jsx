@@ -265,7 +265,6 @@ export default function AddHrEmployees() {
 
       if (error.response.data.passport) {
         setPhoneStatus(true)
-
         msg = msg + " passport " + error.response.data.passport
       }
       setAlertMessage(msg)
@@ -338,7 +337,7 @@ export default function AddHrEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple  error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -392,7 +391,7 @@ export default function AddHrEmployees() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
