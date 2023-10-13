@@ -16,6 +16,7 @@ export const host = "https://api.tift.uz"
 // export const host = "https://jaloliddin1006.jprq.live"
 // export const host = "https://jaloliddin1006.jprq.live"
 
+
 export default "/token/"
 export const user_me = "/users/me/"
 
