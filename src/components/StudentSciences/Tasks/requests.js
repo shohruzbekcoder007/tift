@@ -1,5 +1,5 @@
 import axios, { headerConfig } from '../../../utils/baseUrl'
-
+import { AES, enc } from 'crypto-js';
 
 export const getMyPatok = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
@@ -12,12 +12,14 @@ export const getMyPatok = (url, successfulFunction, errorFunction) => {
 }
 
 export const createTaskSubmission = (url, data, successfulFunction, errorFunction) => {
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.post(
         url,
         data,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }
@@ -32,12 +34,14 @@ export const createTaskSubmission = (url, data, successfulFunction, errorFunctio
 
 
 export const PutTaskSubmission = (url, data, successfulFunction, errorFunction) => {
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.patch(
         url,
         data,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }
