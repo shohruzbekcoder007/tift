@@ -45,14 +45,14 @@ export const deleteEmployee = (url, successfulFunction, errorFunction) => {
 }
 
 export const createEmployee = (url, data, successfulFunction, errorFunction) => {
-    // const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
-    // const decrypted = bytes.toString(enc.Utf8);
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.post(
         url,
         data,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }
