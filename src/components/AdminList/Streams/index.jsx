@@ -14,11 +14,12 @@ import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { IconButton } from '../../Final_Dep/style'
 import { Link } from 'react-router-dom'
-import { academic_group_short, allusers, my_semesters, parentpatoklist, patok_teacher, patokadmin, science_short } from '../../../utils/API_urls'
+import { academic_group_short, academic_year, allusers, my_semesters, parentpatoklist, patok_teacher, patokadmin, science_short } from '../../../utils/API_urls'
 import { getAcademicGroup, getChangeTeacher, getSciense, getSemesters, getStreams, getTeachers, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
 import AutocompleteJames from '../../AutocompleteJames'
+import { getAcademecYear } from '../Semestr/requests'
 
 export default function Streams() {
   const [open, setOpen] = React.useState(false);
@@ -59,6 +60,8 @@ export default function Streams() {
   const [TeachersList, setTeachersList] = useState([]);
   const [TeachersListSelect, setTeachersListSelect] = useState(null);
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
+  const [YearList, setYearList] = useState([])
+  const [AcademekYear, setAcademekYear] = useState(0)
 
 
   const setFileHandler = (newValue, info) => {
@@ -74,7 +77,24 @@ export default function Streams() {
   //   let nimadir = val.map(element => element.value)
   //   setTeachersListSelect(nimadir)
   // }
+  useEffect(() => {
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = []
 
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.season
+        })
+      })
+      setAcademekYear(mass[0].value)
+      setYearList(mass)
+
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
 
   const SemesterNum = useMemo(() => {
     return [
@@ -188,34 +208,38 @@ export default function Streams() {
     ]
   }, [])
 
-
+useEffect(() => {
+  getSemesters(`${my_semesters}`, (response) => {
+    setSemesterSelect(response?.data[0]?.id)
+    setSemesterList(response.data.map(elem => {
+      return {
+        name: elem.parent + " " + elem.name,
+        value: elem.id
+      }
+    }))
+  }, (error) => {
+    console.log(error)
+  })
+},[])
 
   useEffect(() => {
-    getSemesters(`${my_semesters}`, (response) => {
-      setSemesterSelect(response?.data[0]?.id)
-      setSemesterList(response.data.map(elem => {
-        return {
-          name: elem.parent + " " + elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    
     // ?semester${SemesterSelect}
-    getSciense(`${science_short}?semester=${SemesterNumber}`, (response) => {
-      // console.log(response.data)
-      setScienseSelect(response?.data[0]?.id)
-      setScineseList(response.data.map(elem => {
-        return {
-          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + " " + elem.academic_year + ")",
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
-  }, [SemesterSelect, SemesterNumber])
+    if (AcademekYear) {
+      getSciense(`${science_short}?semester=${SemesterNumber}&academic_year=${AcademekYear}`, (response) => {
+        // console.log(response.data)
+        setScienseSelect(response?.data[0]?.id)
+        setScineseList(response.data.map(elem => {
+          return {
+            name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + " " + elem.academic_year + ")",
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [SemesterSelect, SemesterNumber,AcademekYear])
 
   useEffect(() => {
     setStreamsList([])
@@ -225,7 +249,7 @@ export default function Streams() {
         setStreamsList(response.data.results);
         setPageCount(response.data.page_count);
         setAllCount(response.data.count);
-        if(response.data.results.length == 0) setModalText("Ma'lumot yo'q")
+        if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       }, (error) => {
         setModalText("Ma'lumot yo'q")
         console.log(error)
@@ -281,7 +305,8 @@ export default function Streams() {
       practical: AmaliyotSelect,
       labs: LabaratoriyaSelect,
       academic_group: GroupSelect,
-      science_type: RoomType
+      science_type: RoomType,
+      academic_year: AcademekYear
     }
     if (ParentNaameSelect) {
       PatokList.parent = ParentNaameSelect
@@ -530,7 +555,7 @@ export default function Streams() {
                                 padding: "6px",
                                 marginRight: "20px",
                               }}
-                              onClick={(_) => {handleOpen(elem.id)}}
+                              onClick={(_) => { handleOpen(elem.id) }}
                               startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_1148_17994)">
                                   <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
@@ -673,6 +698,25 @@ export default function Streams() {
                 </svg>
               </span>
             </ModalHeader>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                O'quv yili                         </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={(val) => setAcademekYear(val)}
+                selectedOptionP={YearList?.[0]?.value}
+                selectOptions={YearList}
+              />
+            </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -875,23 +919,23 @@ export default function Streams() {
             </div>
             <ModalSelectWrapper>
               <ModalBody>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                O'qituvchilar
-              </Typography>
-            <AutocompleteJames selectOptions={TeachersList} chageValueFunction={val => setTeachersListSelect(val)} />
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  O'qituvchilar
+                </Typography>
+                <AutocompleteJames selectOptions={TeachersList} chageValueFunction={val => setTeachersListSelect(val)} />
 
               </ModalBody>
-                
+
               {/* <CustomizedInputSimple callback_func={(val) => { setName(val) }} defaultValue={elem.lesson} placeholder="Kiriting" /> */}
             </ModalSelectWrapper>
             <ModalButtons>
@@ -906,7 +950,7 @@ export default function Streams() {
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
                 type="submit"
-              onClick={handleChangeTeacher}
+                onClick={handleChangeTeacher}
               >
                 Saqlash
               </Button>
