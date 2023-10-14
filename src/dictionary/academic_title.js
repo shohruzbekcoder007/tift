@@ -19,13 +19,13 @@ export default [
     },
     {
         value: "senior_lecturer",
-        uz: "katta ilmiy xodim",
+        uz: "katta o'qtuvchi",
         ru: "katta ilmiy xodim ru",
         eng: "katta ilmiy xodim eng"
     },
     {
         value: "professor",
-        uz: "professor",
+        uz: "professor (katta ilmiy xodim)",
         ru: "professor ru",
         eng: "professor eng"
     },

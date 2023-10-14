@@ -541,7 +541,7 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-              JSHSHR
+              JSHSHIR
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
           </WrapperInputsCardTwo>
@@ -725,7 +725,7 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-              Academic Degree
+              Ilmiy daraja
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("academic_degree", val)}
@@ -744,7 +744,8 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-              Academic Title
+            Akademik unvon
+
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("academic_title", val)}
@@ -766,7 +767,7 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-              Specialty Employee
+              Mutaxassisligi
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("specialty_employee", val) }} placeholder="" />
           </WrapperInputsCardTwo>
@@ -782,7 +783,7 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-              Experience
+               Tajriba
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("experience", val) }} placeholder="Ish tajribasi(yil)" type="number" />
           </WrapperInputsCardTwo>
