@@ -17,26 +17,33 @@ export default function Add() {
   const [adminData, setadminData] = useState({
     name: null,
     semester: null,
-    lecture: null,
+    lecture: 0,
     practice: 0,
     lab: 0,
-    credit: null,
+    credit: 0,
     code: null,
     kafedra: null,
     degree: null,
     study_type: null,
-
+    independently: 0
   })
+
+
+
+ const [CreditCost, setCreditCost] = useState(0);
 
   const reqDataChange = (keyname, value) => {
     setadminData(prev => {
+      prev.credit = Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently))/ 30)
       prev[keyname] = value
       return prev;
     })
+    setCreditCost(Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently))/ 30))
   }
 
 
   const createscienceF = () => {
+    console.log(adminData)
     createscience(science, adminData, (response) => {
       if (response.status == 201) {
         navigate(`/admin/sciences`)
@@ -87,7 +94,7 @@ export default function Add() {
         value: 'bachelor',
       },
       {
-        name: "Magister",
+        name: "Magistr",
         value: 'master',
       },
     ]
@@ -96,13 +103,13 @@ export default function Add() {
   const Selection = useMemo(() => {
     return [
       {
-        name: "Selection",
-        value: 'selection',
-      },
-      {
         name: "Required",
         value: 'required',
       },
+      {
+        name: "Selection",
+        value: 'selection',
+      }
     ]
   }, [])
 
@@ -249,7 +256,7 @@ export default function Add() {
                     m: "20px 0 10px 0"
                   }}
                 >
-                  Mustaqil ravishda
+                  Mustaqil ta'lim
                 </Typography>
                 <CustomizedInputSimple callback_func={(val) => { reqDataChange('independently', val) }} placeholder="" type={'number'} />
               </ModalSelectWrapper>
@@ -267,7 +274,9 @@ export default function Add() {
                 >
                   Kredit
                 </Typography>
-                <CustomizedInputSimple callback_func={(val) => { reqDataChange('credit', val) }} placeholder="" type={'number'} />
+                {CreditCost}
+                {/* {adminData.credit} */}
+                {/* <CustomizedInputSimple callback_func={(val) => { reqDataChange('credit', val) }} placeholder="" type={'number'} /> */}
               </ModalSelectWrapper>
               <ModalSelectWrapper>
                 <Typography
@@ -283,6 +292,7 @@ export default function Add() {
                 >
                   Kod
                 </Typography>
+                
                 <CustomizedInputSimple callback_func={(val) => { reqDataChange('code', val) }} placeholder="" />
               </ModalSelectWrapper>
               <ModalSelectWrapper>

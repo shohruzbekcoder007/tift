@@ -1,25 +1,38 @@
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import uzLocale from '@fullcalendar/core/locales/uz';
+// import FullCalendar from '@fullcalendar/react';
+// import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import interactionPlugin from '@fullcalendar/interaction';
+// import uzLocale from '@fullcalendar/core/locales/uz';
 import { Paper } from '@mui/material';
 import { getClassSchedule } from './requests';
 import { useEffect, useState } from 'react';
 import { my_tasschedule } from '../../utils/API_urls';
+import ClassScheduleTable from '../../components/ClassScheduleTeacher/ClassScheduleTable'
+import { useLocation } from 'react-router';
 
-function CalendarDayWeek() {
+function CalendarDayWeek(id) {
   const [Semester, setSemester] = useState(2);
   const [ScheduleList, setScheduleList] = useState([]);
+  const {state} = useLocation()
   useEffect(() => {
-    getClassSchedule(`${my_tasschedule}?semester=${Semester}`, (response) => {
-      console.log(response.data);
-      setScheduleList(response.data)
+    console.log(state?.id);
+    if (state?.id || id) {
+      getClassSchedule(`${my_tasschedule}?student=${state?.id || id}`, (response) => {
+        // console.log(response.data);
+        setScheduleList(response.data || []) 
+      }, (error) => {
+        console.log(error)
+      }) 
+    }else {
+    getClassSchedule(`${my_tasschedule}`, (response) => {
+      // console.log(response.data);
+      setScheduleList(response.data || []) 
     }, (error) => {
       console.log(error)
     })
+  }
   }, []);
-
+  
   return (
     <>
       <Paper
@@ -31,8 +44,9 @@ function CalendarDayWeek() {
           // backgroundColor: "transparent"
           // minWidth: "300px"
         }}
-      >
-        <FullCalendar
+        >
+        <ClassScheduleTable table={ScheduleList?.results}/>
+        {/* <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="timeGridWeek"
           timeZone='GMT+5'
@@ -60,7 +74,7 @@ function CalendarDayWeek() {
           dateClick={(e) => console.log(e.dateStr)}
           eventClick={(e) => console.log(e.event.id)}
           locale={uzLocale}
-        />
+        /> */}
       </Paper>
     </>
   );

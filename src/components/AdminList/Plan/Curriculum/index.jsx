@@ -17,6 +17,7 @@ import { IconButton } from '../../../Final_Dep/style'
 import { Directions, academic_plan } from '../../../../utils/API_urls'
 import { addAcademic_Plan, deletAcademic_Plan, editAcademic_Plan, getAcademic_Plan } from './request'
 import { getDirections } from '../../Directions/request'
+import AlertDialog from '../../../AlertDialog'
 
 export default function Curriculum() {
   const [open, setOpen] = useState(false);
@@ -40,27 +41,44 @@ export default function Curriculum() {
 
   const [Semester, setSemester] = useState(1)
   const [Direction, setDirection] = useState(null)
+  const [DirectionID, setDirectionID] = useState(null)
   const [Degree, setDegree] = useState('bachelor')
   const [StudyType, setStudyType] = useState('morning')
 
+  const [alert, setAlert] = useState(false)
+  const [DeletedID, setDeletedID] = useState(null)
+
+  const openAlert = (id) => {
+    setDeletedID(id) 
+    setAlert(true)
+   }
 
   useEffect(() => {
-    getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}`, response => {
-      console.log(response.data.results);
-      setPlans(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-    }, error => {
-      console.log(error)
-    })
+    if (DirectionID) {
+      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}&direction=${DirectionID}`, response => {
+        console.log(response.data.results);
+        setPlans(response.data.results)
+        setAllCount(response.data.count)
+        setPageCount(response.data.page_count)
+      }, error => {
+        console.log(error)
+      })
+    }
+  }, [page, pageSize, searchText, deleted,DirectionID])
 
+
+  
+
+
+  useEffect(() => {
     getDirections(Directions, (response) => {
       console.log(response);
+      setDirectionID(response[0].id)
       let list = []
       response.map(item => {
         list.push({
           value: item.id,
-          name: item.name
+          name: item.name + " (" + item.degree + ")"
         })
         setDirection(response[0].id)
       })
@@ -68,7 +86,7 @@ export default function Curriculum() {
     }, (error) => {
       console.log(error)
     })
-  }, [page, pageSize, searchText, deleted])
+  }, []);
 
   
   const admindegree = useMemo(() => {
@@ -78,7 +96,7 @@ export default function Curriculum() {
       value: 'bachelor',
       },
       {
-        name: "Magister",
+        name: "Magistr",
         value: 'master',
       },
   ]
@@ -154,8 +172,8 @@ export default function Curriculum() {
     })
   }
 
-  const handleDelete = (id) => {
-    deletAcademic_Plan(`${academic_plan}${id}/`, response => {
+  const handleDelete = (_) => {
+    deletAcademic_Plan(`${academic_plan}${DeletedID}/`, response => {
       setDeleted(!deleted)
     }, error => {
       console.log(error)
@@ -185,10 +203,15 @@ export default function Curriculum() {
         }}
       >
         <BoxHeader>
+      
           <PageSelector chageValueFunction={(val) => {
             console.log(val)
           }} />
           <AttendSearchButton>
+          <AllSelectFullWidth
+                chageValueFunction={val => setDirectionID(val)}
+                selectOptions={DirectionsList}
+              />
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -363,7 +386,7 @@ export default function Curriculum() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={(_) => handleDelete(elem.id)}
+                            onClick={(_) => openAlert(elem.id)}
                             startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1221_31960)">
                                 <path d="M14.5026 2.66667H12.4359C12.2812 1.91428 11.8718 1.23823 11.2768 0.752479C10.6817 0.266727 9.93741 0.000969683 9.16927 0L7.83594 0C7.0678 0.000969683 6.32348 0.266727 5.72844 0.752479C5.13339 1.23823 4.724 1.91428 4.56927 2.66667H2.5026C2.32579 2.66667 2.15622 2.7369 2.0312 2.86193C1.90618 2.98695 1.83594 3.15652 1.83594 3.33333C1.83594 3.51014 1.90618 3.67971 2.0312 3.80474C2.15622 3.92976 2.32579 4 2.5026 4H3.16927V12.6667C3.17033 13.5504 3.52186 14.3976 4.14675 15.0225C4.77164 15.6474 5.61887 15.9989 6.5026 16H10.5026C11.3863 15.9989 12.2336 15.6474 12.8585 15.0225C13.4833 14.3976 13.8349 13.5504 13.8359 12.6667V4H14.5026C14.6794 4 14.849 3.92976 14.974 3.80474C15.099 3.67971 15.1693 3.51014 15.1693 3.33333C15.1693 3.15652 15.099 2.98695 14.974 2.86193C14.849 2.7369 14.6794 2.66667 14.5026 2.66667ZM7.83594 1.33333H9.16927C9.58279 1.33384 9.98602 1.46225 10.3237 1.70096C10.6613 1.93967 10.9169 2.27699 11.0553 2.66667H5.94994C6.08833 2.27699 6.34387 1.93967 6.68153 1.70096C7.01919 1.46225 7.42242 1.33384 7.83594 1.33333ZM12.5026 12.6667C12.5026 13.1971 12.2919 13.7058 11.9168 14.0809C11.5417 14.456 11.033 14.6667 10.5026 14.6667H6.5026C5.97217 14.6667 5.46346 14.456 5.08839 14.0809C4.71332 13.7058 4.5026 13.1971 4.5026 12.6667V4H12.5026V12.6667Z" fill="white" />
@@ -379,6 +402,14 @@ export default function Curriculum() {
                           >
                           </Button>
                         </th>
+                        <AlertDialog
+                          open_alert={alert}
+                          callback1={(_) => {
+                            handleDelete()
+                          }}
+                          callback2={() => { setAlert(false) }}
+                          alertText={"Ushbu O'quv rejani haqiqatdan ham o'chirmoqchimisiz?"}
+                        />
                       </tr>
                     )
                   })

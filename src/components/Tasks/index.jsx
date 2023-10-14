@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper,ClassScheduleTableWrapper } from '../../global_styles/styles'
-import { Button, Pagination, Paper, Typography, Snackbar } from '@mui/material'
+import { Button, CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -15,7 +15,7 @@ import { MuiFileInput } from 'mui-file-input'
 import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
 import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
-import { teacher_tasks } from '../../utils/API_urls'
+import { host, teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
 import MuiAlert from '@mui/material/Alert';
 
@@ -31,9 +31,9 @@ export default function Tasks() {
   const [dedlineTasks, setdedlineTasks] = useState(null);
   const [maxgradeTasks, setmaxgradeTasks] = useState(null);
 
-  const [tasktypeVal, setTasktype] = useState('oraliq')
+  // const [tasktypeVal, setTasktype] = useState('oraliq')
   const [taskmethodVal, setTaskmethod] = useState('oddiy')
-  const [trycount, settrycount] = useState(null);
+  // const [trycount, settrycount] = useState(null);
   const [testtime, settesttime] = useState(null);
   const handleClose = () => {
     setFile(null)
@@ -41,6 +41,9 @@ export default function Tasks() {
   };
   // lang
   const language = useSelector(state => state.language)
+  const [Disabled, setDisabled] = useState(false);
+  const [Status, setStatus] = useState(false);
+  const [ModalText, setModalText] = useState(listLanguage.Save['uz']);
 
 
   const setFileHandler = (newValue, info) => {
@@ -64,7 +67,7 @@ export default function Tasks() {
     }, (error) => {
         console.log(error)
     })
-  }, [])
+  }, [Status])
 
   const tasktype = useMemo(() => {
     return [
@@ -127,8 +130,9 @@ export default function Tasks() {
   
 
   const handleSubmit = async (event) => {
-
     event.preventDefault();
+    setModalText(<CircularProgress color="success" size={25} />)
+    setDisabled(true)
     const formData = new FormData();
     if(file){
       formData.append("source", file);
@@ -138,13 +142,17 @@ export default function Tasks() {
     formData.append("grade", maxgradeTasks);
     formData.append("deadline", dedlineTasks);
     formData.append("group", state.data);
-    formData.append("type", tasktypeVal);
+    // formData.append("type", tasktypeVal);
     formData.append("method", taskmethodVal);
-    formData.append("try_count", trycount);
+    // formData.append("try_count", trycount);
     formData.append("time", testtime);
 
 
     setTeacheravTasksPost(teacher_tasks, formData, (response) => { 
+      setDisabled(false)
+      setModalText(listLanguage.Save['uz'])
+      setFile(null)
+      setStatus(!Status)
       handleClose()
       console.log(response)
       setOpenAlert(true)
@@ -154,6 +162,8 @@ export default function Tasks() {
     }, (error) => {
       let msg = ``
       msg = error.response.data.message
+      setDisabled(false)
+      setModalText(listLanguage.Save['uz'])
       console.log(error)
       setOpenAlert(true)
       serChanged(false)
@@ -386,7 +396,7 @@ export default function Tasks() {
             
           </ModalSelectWrapper>
             
-          <ModalSelectWrapper>
+          {/* <ModalSelectWrapper>
             <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -404,7 +414,7 @@ export default function Tasks() {
                 chageValueFunction={val => { setTasktype(val); }}
                 selectOptions={tasktype}
               />
-          </ModalSelectWrapper>
+          </ModalSelectWrapper> */}
 
           <ModalSelectWrapper>
             <Typography
@@ -440,7 +450,7 @@ export default function Tasks() {
               >
                 {listLanguage.Sample[language]} 
               </Typography>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a href={host + '/api/v1/documents/teacher-test-template/'} target="_blank" rel="noopener noreferrer">
                 <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
@@ -474,7 +484,7 @@ export default function Tasks() {
               />
             </ModalSelectWrapper>:<></>}
 
-            {taskmethodVal == "test"?<ModalSelectWrapper>
+            {/* {taskmethodVal == "test"?<ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -489,7 +499,7 @@ export default function Tasks() {
                 {listLanguage.NumberOfAttempts[language]} 
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { settrycount(val)}} placeholder="" type={'number'} />
-            </ModalSelectWrapper>:<></>}
+            </ModalSelectWrapper>:<></>} */}
 
             
             {taskmethodVal == "test"?<ModalSelectWrapper>
@@ -509,7 +519,7 @@ export default function Tasks() {
               <CustomizedInputSimple callback_func={(val) => { settesttime(val)}} placeholder="" type={'number'} />
             </ModalSelectWrapper>:<></>}
                 
-          {(tasktypeVal == 'yakuniy' || tasktypeVal == 'oraliq')?<></>:<ModalSelectWrapper>
+         <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -524,7 +534,7 @@ export default function Tasks() {
               {listLanguage.MaxBall[language]}
             </Typography>
             <CustomizedInputSimple callback_func={val => setmaxgradeTasks(val)} />
-          </ModalSelectWrapper>}
+          </ModalSelectWrapper>
           <ModalButtons>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
@@ -532,13 +542,13 @@ export default function Tasks() {
               onClick={handleClose}
             >
               {listLanguage.Cancel[language]}
-
             </Button>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
               variant="contained"
               type='submit'
               onClick={handleSubmit}
+              disabled={Disabled}
             >
               {listLanguage.Save[language]}
             </Button>
@@ -625,10 +635,6 @@ const DeleteUpdate = ({elem, setDeleted}) => {
   const chagePageHandle = (_, value) => {
     console.log(value)
   }
-
-
-  
-
 
   const DeleteTasks = (pk) => {
     setTeacherDeleteTasks(`${teacher_tasks}${pk}/`, (response) => {
@@ -734,6 +740,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
                 }}
               >
                 {listLanguage.Add[language]}
+
               </Typography>
               <span
                 onClick={handleClose}
@@ -823,6 +830,7 @@ const DeleteUpdate = ({elem, setDeleted}) => {
             >
               {listLanguage.Cancel[language]}
 
+
             </Button>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
@@ -831,7 +839,6 @@ const DeleteUpdate = ({elem, setDeleted}) => {
               onClick={(_) => handleSubmit(elem.id)}
             >
               {listLanguage.Save[language]}
-
             </Button>
           </ModalButtons>
         </ModalBox>

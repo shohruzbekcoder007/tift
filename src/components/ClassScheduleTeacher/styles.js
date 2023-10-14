@@ -37,12 +37,48 @@ export const ClassScheduleTableWrapper = styled.div`
 
 export const TrBox = styled.div`
     width: 100%;
+    min-width: 200px;
+    height: 80%;
     text-align: left;
+    /* border: 0.5px solid ${props => props.theme.color.main_color}; */
+    border-radius: 5px;
+    padding: 1rem 0.5rem;
+    background-color: ${props => props.theme.color.frame_color};
+    margin: 5px 0;
+    cursor: pointer;
+
+    :hover {
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    }
+`
+
+export const TrBoxActive = styled.div`
+    width: 100%;
+    min-width: 200px;
+    height: 80%;
+    text-align: left;
+    /* border: 0.5px solid ${props => props.theme.color.main_color}; */
+    border-radius: 5px;
+    padding: 1rem 0.5rem;
+    background-color: #24bd70;
+    margin: 5px 0;
+    cursor: pointer;
+    :hover {
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    }
 `
 
 export const TrBoxHeader = styled.div`
     padding-bottom: 8px;
+    font-size: 11px;
 `
+
+export const TrBoxHeaderActive = styled.div`
+    padding-bottom: 8px;
+    /* font-size: 11px; */
+    color: white;
+`
+
 
 export const TrBoxFooter = styled.div`
     span.group {
@@ -54,11 +90,39 @@ export const TrBoxFooter = styled.div`
         font-size: 12px;
         line-height: 170%;
         padding: 2px 4px;
+        
     }
     span.room {
         display: inline-block;
         color: #039E51;
         font-size: 12px;
         line-height: 170%;
+        width: 100%;
+        text-align: end;
+        margin: 0.5rem 0 0 0;
+
     }
+`
+
+
+export const TrBoxFooterActive = styled.div`
+    span.group {
+        display: inline-block;
+        margin-right: 3px;
+        border-radius: 4px;
+        border: 1px solid white;
+        color: yellow;
+        font-size: 12px;
+        line-height: 170%;
+        padding: 2px 4px;
+    }
+    span.room {
+        display: inline-block;
+        color: white;
+        font-size: 12px;
+        line-height: 170%;
+        width: 100%;
+        text-align: end;
+        margin: 0.5rem 0 0 0;
+}
 `

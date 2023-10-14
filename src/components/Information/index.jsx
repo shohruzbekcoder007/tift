@@ -74,7 +74,7 @@ export default function Information() {
       console.log(error)
     })
 
-    
+
 
     getStudentInformation(student_region, (response) => {
       setChangedRegionId(response.data[0]?.id)
@@ -155,7 +155,7 @@ export default function Information() {
       <InfoBody>
         <HeaderWrapper>
           <HeaderWrapperTop>
-            <img src={`${host}${infoList.avatar}`} alt="UserImage" />
+            <img src={`${host}${infoList.avatar}`} alt="Photo" />
             <HeaderWrapperTopDiv>
               <HeaderWrapperH4>{infoList.full_name}</HeaderWrapperH4>
               {/* Xayrulla o’g’li */}
@@ -168,8 +168,8 @@ export default function Information() {
           </HeaderWrapperTop>
           <Hr />
           <HeaderWrapperBottom>
-          <WrapperBody>
-              <HeaderWrapperH4>{listLanguage.Passport[language]}:</HeaderWrapperH4>
+            <WrapperBody>
+              <HeaderWrapperH4>Passport seriya:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.passport}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
@@ -181,8 +181,8 @@ export default function Information() {
               <HeaderWrapperP>{infoList.birthday}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
-              <HeaderWrapperH4>{listLanguage.Gender[language]}:</HeaderWrapperH4>
-              <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "famele" && "Ayol" || ""}</HeaderWrapperP>
+              <HeaderWrapperH4>Jinsi:</HeaderWrapperH4>
+              <HeaderWrapperP>{infoList.gender == "male" && "Erkak" || infoList.gender == "female" && "Ayol" || ""}</HeaderWrapperP>
             </WrapperBody>
             <WrapperBody>
               <HeaderWrapperH4>{listLanguage.RatingBook[language]}:</HeaderWrapperH4>
@@ -196,7 +196,14 @@ export default function Information() {
               <HeaderWrapperH4>{listLanguage.AddressTemporal[language]}:</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
-           
+            <WrapperBodyContract>
+              <Button
+                sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                variant="contained"
+              >
+                O'qish joyidan ma'lumotnoma
+              </Button>
+            </WrapperBodyContract>
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
@@ -209,8 +216,8 @@ export default function Information() {
             <HeaderWrapperP>{infoList.lang}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
-            <HeaderWrapperH4>{listLanguage.Degree[language]}:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magister' || ''}</HeaderWrapperP>
+            <HeaderWrapperH4>Darajasi:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.degree === 'bachelor' && 'Bakalavr' || infoList.degree === 'master' && 'Magistr' || ''}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>{listLanguage.EducationForm[language]}:</HeaderWrapperH4>
@@ -232,35 +239,39 @@ export default function Information() {
             <HeaderWrapperH4>{listLanguage.Scholar[language]}:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
           </WrapperBody>
+          <WrapperBody>
+            <HeaderWrapperH4>O'qish turi:</HeaderWrapperH4>
+            <HeaderWrapperP>{infoList.form_of_payment}</HeaderWrapperP>
+          </WrapperBody>
           <WrapperBodyContract>
-              {
-                StudentContract.length > 0 ? StudentContract.map((elem, index) => {
-                  return (
-                    <>
-                      {
-                        elem.type == 'two' ?
-                          elem.file ? <a href={host + elem?.file} target='_blank'>
-                            <Button
-                              sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                              variant="contained"
-                            >
-                              {listLanguage.DownloadBilateralAgreement[language]}
-                            </Button>
-                          </a>
-                            : <Button
-                              sx={{
-                                width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
-                                "&:hover": {
-                                  backgroundColor: "text.secondary",
-                                },
-                                cursor: 'no-drop'
-                              }}
-                              variant="contained"
-                            >
-                              {listLanguage.DownloadBilateralAgreement[language]}
-                            </Button>
-                          :
-                          elem.file ? <a href={host + elem?.file} target='_blank'>
+            {
+              StudentContract.length > 0 ? StudentContract.map((elem, index) => {
+                return (
+                  <>
+                    {
+                      elem.type == 'two' ?
+                        elem.file ? <a href={host + elem?.file} target='_blank'>
+                          <Button
+                            sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                            variant="contained"
+                          >
+                            Ikki Tomonlama Shartomani yuklab olish
+                          </Button>
+                        </a>
+                          : <Button
+                            sx={{
+                              width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", backgroundColor: "text.secondary",
+                              "&:hover": {
+                                backgroundColor: "text.secondary",
+                              },
+                              cursor: 'no-drop'
+                            }}
+                            variant="contained"
+                          >
+                            Ikki Tomonlama Shartomani yuklab olish
+                          </Button>
+                        :
+                        elem.file ? <a href={host + elem?.file} target='_blank'>
                           <Button
                             sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
@@ -280,14 +291,14 @@ export default function Information() {
                           >
                             {listLanguage.DownloadTripartiteAgreement[language]}
                           </Button>
-                      }
-                    </>
-                  )
-                })
-                  :
-                  <></>
-              }
-            </WrapperBodyContract>
+                    }
+                  </>
+                )
+              })
+                :
+                <></>
+            }
+          </WrapperBodyContract>
         </HeaderWrapper>
       </InfoBody>
 

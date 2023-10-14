@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxHeader } from '../../../../global_styles/styles'
-import { Button, Typography } from '@mui/material'
+import { Button, Snackbar, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { WrapperBox, WrapperButtons, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
@@ -10,10 +10,11 @@ import citizenship from '../../../../dictionary/citizenship'
 import nationality from '../../../../dictionary/nationality'
 import academic_title from '../../../../dictionary/academic_title'
 import academic_degree from '../../../../dictionary/academic_degree'
-import { createEmployee, getRegionListRequest } from '../request'
-import { country, district, employee, kafedra, region } from '../../../../utils/API_urls'
+import { createEmployee, getRegionListRequest, getRoleList } from '../request'
+import { country, district, employee, kafedra, region, role } from '../../../../utils/API_urls'
 import BasicDatePicker from '../../../BasicDatePicker'
 import { useNavigate } from 'react-router-dom';
+import MuiAlert from '@mui/material/Alert';
 
 export default function AddEmployees() {
 
@@ -28,6 +29,14 @@ export default function AddEmployees() {
   const [countryList, setCountryList] = useState([])
   const [regionId, setRegionId] = useState(null)
   const [regionId1, setRegionId1] = useState(null)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [NameStatus, setNameStatus] = useState(false)
+  const [LastNameStatus, setLastNameStatus] = useState(false)
+  const [PhoneStatus, setPhoneStatus] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
   const [newData, setNewData] = useState({
     citizenship: null,
     nationality: null,
@@ -54,8 +63,21 @@ export default function AddEmployees() {
     phone_number: null,
     avatar: null,
     academic_title: null,
-    role: 4,
   })
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   const reqDataChange = (keyname, value) => {
     setNewData(prev => {
@@ -75,6 +97,8 @@ export default function AddEmployees() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
+  
 
   const citizenshipList = useMemo(() => {
     reqDataChange("citizenship", citizenship[0].value)
@@ -203,13 +227,32 @@ export default function AddEmployees() {
       })
     }
   },[regionId1])
-
+// admin/employees
   const createEmployes = () => {
     // console.log(newData)
     createEmployee(employee, newData, response => {
+      navigate(-1)
       console.log(response)
     }, error => {
+      serChanged(false)
+      setOpenAlert(true)
       console.log(error)
+      let msg = ``
+      if (error.response.data.first_name) {
+        msg = msg + " Ism " + error.response.data.first_name
+        setNameStatus(true)
+      } if (error.response.data.last_name) {
+        setLastNameStatus(true)
+
+        msg = msg + " Familiya " + error.response.data.last_name
+      } if (error.response.data.phone_number) {
+        setPhoneStatus(true)
+
+        msg = msg + " telefon raqam " + error.response.data.phone_number
+      }if (error.response.data.detail) {
+        msg = msg + " Bunday foydalanuvchi mavjud"
+      }
+      setAlertMessage(msg)
     })
   }
 
@@ -242,7 +285,7 @@ export default function AddEmployees() {
             >
               Ism
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
+            <CustomizedInputSimple error={NameStatus} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -258,7 +301,7 @@ export default function AddEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple  callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -296,7 +339,7 @@ export default function AddEmployees() {
             >
               Familiya
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
+            <CustomizedInputSimple error={LastNameStatus} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -312,7 +355,7 @@ export default function AddEmployees() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="08-02-1984" />
+            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -328,7 +371,7 @@ export default function AddEmployees() {
             >
               Tug’ilgan kuni
             </Typography>
-            <BasicDatePicker setFunction={(val) => {reqDataChange("birthday", val)}} label="Ish boshlangan vaqti"/>
+            <BasicDatePicker setFunction={(val) => {reqDataChange("birthday", val)}} label="Tug’ilgan kuni"/>
           </WrapperInputsCard>
         </BoxHeader>
 
@@ -347,7 +390,7 @@ export default function AddEmployees() {
             >
               Sharifi
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sultonbayevich" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sharifi" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -363,7 +406,7 @@ export default function AddEmployees() {
             >
               Elektron pochta
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="d.yaxshibayev@tuit.ux" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -767,6 +810,11 @@ export default function AddEmployees() {
           </WrapperButtons>
         </WrapperInputsCardTwo>
       </WrapperBox>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

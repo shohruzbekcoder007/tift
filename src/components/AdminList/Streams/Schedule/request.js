@@ -30,6 +30,16 @@ export const getScheduleGroup = (url, successfulFunction, errorFunction) => {
     })
 }
 
+export const deletScheduleGroup = (url, successfulFunction, errorFunction) => {
+    axios.delete(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
+
 
 export const patchScheduleGroup = (url, data, successfulFunction, errorFunction) => {
     axios.patch(url, data, {

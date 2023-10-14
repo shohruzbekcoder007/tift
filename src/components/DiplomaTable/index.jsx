@@ -118,6 +118,7 @@ export default function DiplomaTable() {
                                 </Button>
                             </Link>
                         </th>
+                        <th colSpan={12} align='center'>Ma'lumot yo'q</th>
                     </tr>
                 </tbody>
             </table>

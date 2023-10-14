@@ -40,23 +40,24 @@ export default function Room() {
   const roomtype = useMemo(() => {
     return [
     {
-      name: "Labs",
+      name: "labs",
       value: "labs",
     },
     {
-      name: 'Practical',
+      name: 'practical',
       value: 'practical',
     },
     {
-      name: "Lecture",
+      name: "lecture",
       value: 'lecture',
     },
     {
-      name: "Computer",
+      name: "computer",
       value: 'computer',
     }]
   },[])
 
+  
 
   useEffect(() => {
     getRooms(`${room_create_list}?page_size=${pageSize}&page=${page}&building=${state}`, (response) => {
@@ -517,6 +518,7 @@ const SimpleRoom = ({ elem, callback_func, status, roomtype }) => {
               Turi                            </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => setRoomType(val)}
+              selectedOptionP={elem.type}
               selectOptions={roomtype}
             />
           </ModalSelectWrapper>

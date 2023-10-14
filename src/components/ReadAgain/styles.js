@@ -13,7 +13,8 @@ export const ReadAgainWrapper = styled.div`
 `
 
 export const ReadAgainLeft = styled.div`
-    width: 730px;
+    width: 100%;
+    max-width: 730px;
 `
 
 export const ReadAgainReight = styled.div`

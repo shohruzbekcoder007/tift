@@ -70,12 +70,15 @@ export default function ReadAgain() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  </tr>
+                  {/* <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
                   <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
                   <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
                   <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
                   <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
-                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
-                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} />
+                  <ReadAgainOneScience kredit={6} oneKreditSumma={oneKredit} addFunction={(val) => { summaTotal(val) }} subtractionFunction={(val) => { subtractionTotal(val) }} /> */}
                 </tbody>
               </table>
             </ClassScheduleTableWrapper>

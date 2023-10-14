@@ -5,7 +5,7 @@ import { Pagination } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
 import { StudentAIButton, StudentTasksBox } from './styles'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { host, my_patok, my_task_put, my_task_submission } from '../../../utils/API_urls'
 import { createTaskSubmission, getMyPatok, PutTaskSubmission } from './requests'
 import { dateFormatter } from '../../../utils/dateFormatter'
@@ -98,6 +98,24 @@ export default function Tasks() {
             <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
           </StudentTasksBox>
         </BoxHeader>
+        <BoxHeader>
+        <Typography
+          variant='h2'
+          sx={{
+            color: 'yellow',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: '600',
+            lineHeight: '150%',
+            padding: "10px",
+            alignItem: "center",
+            bgcolor: "#24bd70",
+            borderRadius: "10px",
+          }}
+        >
+          Oraliq va Yakuniy vazifalarda 3 va undan yuqori baho olsangiz fandan o'tasiz
+        </Typography>
+        </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -181,37 +199,39 @@ export default function Tasks() {
               <tbody>
                 {
                   myPatokList.length > 0 ? myPatokList.map((elem, index) => {
+                    console.log(elem)
                     return (
                       <tr key={index}>
                         <th>{elem.teacher}</th>
                         <th>
                           {elem.title}
                           {
-                            elem.method === 'test'?
+                            (elem.method === 'test' || elem.method === 'oddiy')?
                             <>
                             </>:
+                            
                             <>
                               <a href={host + elem.source} target="_blank" >
                                 <StudentAIButton>
 
-                                  <div style={{ width: "40px" }}>
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                      <g clipPath="url(#clip0_78_19705)">
-                                        <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="#6A6A6A" />
-                                        <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="#6A6A6A" />
-                                      </g>
-                                      <defs>
-                                        <clipPath id="clip0_78_19705">
-                                          <rect width="16" height="16" fill="white" />
-                                        </clipPath>
-                                      </defs>
-                                    </svg>
-                                  </div>
+                                    <div style={{ width: "40px" }}>
+                                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clipPath="url(#clip0_78_19705)">
+                                          <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="#6A6A6A" />
+                                          <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="#6A6A6A" />
+                                        </g>
+                                        <defs>
+                                          <clipPath id="clip0_78_19705">
+                                            <rect width="16" height="16" fill="white" />
+                                          </clipPath>
+                                        </defs>
+                                      </svg>
+                                    </div>
 
-                                  {elem.title}
-                                </StudentAIButton>
-                              </a>
-                            </>
+                                    {elem.title}
+                                  </StudentAIButton>
+                                </a>
+                              </>
                           }
                         </th>
                         <th>{elem.deadline}</th>
@@ -240,30 +260,33 @@ export default function Tasks() {
                         <th>
                           {
                             elem.method === 'oddiy' ?
-                            <></>:
-                            <>
-                              {
-                                elem.method === 'test'?
-                                <>
-                                  <Button
-                                    variant="contained"
-                                    sx={{
-                                      borderRadius: "10px",
-                                      textTransform: "capitalize",
-                                      boxShadow: "none",
-                                      gap: '8px',
-                                    }}
-                                  >
-                                    {listLanguage.EvaluateTest[language]}
-                                  </Button>
-                                </>:
-                                <>
-                                  <StatusTask callBackFunc={(val) => setStatus(val)} status={Status} type={elem.submisson.status} data={elem.submisson} id={elem.id} />
-                                  <AddButtonSubmission callBackFunc={(val) => setStatus(val)} status={Status} data={elem.submisson} id={elem.submisson.id} />
-                                </>
-                              }
-                            </>
-                        
+                              <></> :
+                              <>
+                                {
+                                  elem.method === 'test' ?
+                                    <>
+                                      <Link to="/quiz" state={{testId: elem.id}}>
+                                        <Button
+                                          variant="contained"
+                                          sx={{
+                                            borderRadius: "10px",
+                                            textTransform: "capitalize",
+                                            boxShadow: "none",
+                                            gap: '8px',
+                                          }}
+                                        >
+                                          Testni boshlash
+                                        </Button>
+                                      </Link>
+
+                                    </> :
+                                    <>
+                                      <StatusTask callBackFunc={(val) => setStatus(val)} status={Status} type={elem.submisson.status} data={elem.submisson} id={elem.id} />
+                                      <AddButtonSubmission callBackFunc={(val) => setStatus(val)} status={Status} data={elem.submisson} id={elem.submisson.id} />
+                                    </>
+                                }
+                              </>
+
                           }
                         </th>
                       </tr>
@@ -502,7 +525,7 @@ const StatusTask = ({ type, data, id, callBackFunc, status }) => {
   }
 }
 
-const AddButtonSubmission = ({ data, id, callBackFunc , status}) => {
+const AddButtonSubmission = ({ data, id, callBackFunc, status }) => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
@@ -657,18 +680,18 @@ const AddButtonSubmission = ({ data, id, callBackFunc , status}) => {
                   variant="contained"
                   type="submit"
                 >
-                   {Save}
+                  {Save}
                 </Button>
               </ModalButtons>
             </ModalBox>
           </form>
 
         </Modal>
-        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        {/* <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
           <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
             {alertMessage}
           </Alert>
-        </Snackbar>
+        </Snackbar> */}
       </>
 
 

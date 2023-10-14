@@ -1,4 +1,5 @@
 import axios, { headerConfig } from '../../../utils/baseUrl'
+import { AES, enc } from 'crypto-js';
 
 export const getDirections = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
@@ -23,13 +24,14 @@ export const getFakulty = (url, successfulFunction, errorFunction) => {
 
 
 export const AddDirection = (url, data, successfulFunction, errorFunction) => {
-
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
   axios.post(
       url,
       data,
       {
           headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              Authorization: `Bearer ${decrypted}`,
             },
       }
   ).then((response) => {
@@ -41,12 +43,13 @@ export const AddDirection = (url, data, successfulFunction, errorFunction) => {
 }
 
 export const DeleteDirection = (url, successfulFunction, errorFunction) => {
-  console.log(url);
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+    const decrypted = bytes.toString(enc.Utf8);
   axios.delete(
       url,
       {
           headers: {
-              Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+              Authorization: `Bearer ${decrypted}`,
             },
       }
   ).then((response) => {

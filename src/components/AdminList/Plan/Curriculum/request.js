@@ -1,4 +1,5 @@
 import axios, { headerConfig } from '../../../../utils/baseUrl'
+import { AES, enc } from 'crypto-js';
 
 export const getAcademic_Plan = (url, successfulFunction, errorFunction) => {
     axios.get(url, {
@@ -21,13 +22,14 @@ export const getAcademic_Plan = (url, successfulFunction, errorFunction) => {
 // }
 
 export const editAcademic_Plan = (url, data, successfulFunction, errorFunction) => {
-
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.patch(
         url,
         data,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }
@@ -41,12 +43,13 @@ export const editAcademic_Plan = (url, data, successfulFunction, errorFunction) 
 
 
 export const deletAcademic_Plan = (url, successfulFunction, errorFunction) => {
-
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.delete(
         url,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }
@@ -59,13 +62,14 @@ export const deletAcademic_Plan = (url, successfulFunction, errorFunction) => {
 }
 
 export const addAcademic_Plan = (url, data, successfulFunction, errorFunction) => {
-
+    const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
     axios.post(
         url,
         data,
         {
             headers: {
-                Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+                Authorization: `Bearer ${decrypted}`,
                 "Content-Type": "multipart/form-data",
               },
         }

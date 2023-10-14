@@ -15,12 +15,45 @@ import ListLanguage from './language.json'
 
 export default function StudentSciencesMain() {
 
-  // lang
   const language = useSelector(state => state.language)
-  
+
   const [semesters, setSemesters] = useState([])
   const [sciences, setSciences] = useState([])
   const [semester, setSemester] = useState(0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const getSemesters = (response) => {
     const semester_firstly = response.data.map(element => {
@@ -33,7 +66,7 @@ export default function StudentSciencesMain() {
     setSemesters(semester_firstly)
   }
 
-  const getSemestersEror = (error) => {console.log(error)}
+  const getSemestersEror = (error) => { console.log(error) }
 
   const getSciensesArrayF = (response) => {
     console.log(response.data.science);
@@ -53,7 +86,7 @@ export default function StudentSciencesMain() {
   }, [])
 
   useEffect(() => {
-    if(semester !== 0){
+    if (semester !== 0) {
       getSciensesArray(semester)
     }
   }, [semester])
@@ -98,7 +131,7 @@ export default function StudentSciencesMain() {
                   </svg>}
                 />
                 <TableTHHeader
-                  text={ListLanguage.Teacher[language]}
+                  text={ListLanguage.Teacher[language] + "                                    "}
                   iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clipPath="url(#clip0_78_23319)">
                       <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -162,8 +195,8 @@ export default function StudentSciencesMain() {
             <tbody>
               {
                 sciences.length === 0 ? <tr>
-                  <th colSpan={5} align='center'>{ListLanguage.NoInformation[language]}</th>
-                </tr>:<>
+                  <th colSpan={5} align='center'>Ma’lumot yo’q</th>
+                </tr> : <>
                   {
                     sciences.map((elem, index) => {
                       return (
@@ -171,16 +204,16 @@ export default function StudentSciencesMain() {
                           <th>{elem.name}</th>
                           <th>
                             {
-                              elem.groups?.length === 0?<></>:
-                              elem.groups.map((elem, index) => {
-                                return <p key={"t"+index}><span>{elem.name}</span>-<span>{elem.teacher}</span><br/></p>
-                              })
+                              elem.groups?.length === 0 ? <></> :
+                                elem.groups.map((elem, index) => {
+                                  return <p key={"t" + index}><span>{elem.name}</span>-<span>{elem.teacher}</span><br /></p>
+                                })
                             }
                           </th>
                           <th align='center'>
-                            <Link 
+                            <Link
                               to="attendance"
-                              state={{data: elem.id}}
+                              state={{ data: elem.id }}
                             >
                               <Button
                                 variant="contained"
@@ -197,61 +230,61 @@ export default function StudentSciencesMain() {
                             </Link>
                           </th>
                           <th>
-                            <Link to='tasks' state={{data: elem.groups[0].id}}>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              sx={{
-                                borderRadius: "10px",
-                                boxShadow: "none",
-                                padding: "8px 35px",
-                                minWidth: "auto",
-                                textTransform: "none"
-                              }}
-                              startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clipPath="url(#clip0_78_19382)">
-                                  <path d="M12.6667 0H3.33333C1.49533 0 0 1.49533 0 3.33333V12.6667C0 14.5047 1.49533 16 3.33333 16H11.0973C11.9553 16 12.762 15.666 13.3687 15.0593L15.0593 13.3687C15.6573 12.7713 16 11.9427 16 11.0973V3.33333C16 1.49533 14.5047 0 12.6667 0ZM1.33333 12.6667V3.33333C1.33333 2.23067 2.23067 1.33333 3.33333 1.33333H12.6667C13.7693 1.33333 14.6667 2.23067 14.6667 3.33333V10H12C10.8973 10 10 10.8973 10 12V14.6667H3.33333C2.23067 14.6667 1.33333 13.7693 1.33333 12.6667ZM12.426 14.1167C12.1273 14.4153 11.746 14.6 11.3333 14.6513V12C11.3333 11.632 11.6327 11.3333 12 11.3333H14.6507C14.598 11.7433 14.41 12.132 14.116 12.426L12.426 14.1167ZM3.33333 4.33333C3.33333 3.78133 3.78133 3.33333 4.33333 3.33333C4.88533 3.33333 5.33333 3.78133 5.33333 4.33333C5.33333 4.88533 4.88533 5.33333 4.33333 5.33333C3.78133 5.33333 3.33333 4.88533 3.33333 4.33333ZM5.33333 8C5.33333 8.552 4.88533 9 4.33333 9C3.78133 9 3.33333 8.552 3.33333 8C3.33333 7.448 3.78133 7 4.33333 7C4.88533 7 5.33333 7.448 5.33333 8ZM5.33333 11.6667C5.33333 12.2187 4.88533 12.6667 4.33333 12.6667C3.78133 12.6667 3.33333 12.2187 3.33333 11.6667C3.33333 11.1147 3.78133 10.6667 4.33333 10.6667C4.88533 10.6667 5.33333 11.1147 5.33333 11.6667Z" fill="#1A1818" />
-                                </g>
-                                <defs>
-                                  <clipPath id="clip0_78_19382">
-                                    <rect width="16" height="16" fill="white" />
-                                  </clipPath>
-                                </defs>
-                              </svg>
-                              }
-                            >
-                              {ListLanguage.Tasks[language]}
-                            </Button>
+                            <Link to='tasks' state={{ data: elem.groups[0].id }}>
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                sx={{
+                                  borderRadius: "10px",
+                                  boxShadow: "none",
+                                  padding: "8px 35px",
+                                  minWidth: "auto",
+                                  textTransform: "none"
+                                }}
+                                startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clipPath="url(#clip0_78_19382)">
+                                    <path d="M12.6667 0H3.33333C1.49533 0 0 1.49533 0 3.33333V12.6667C0 14.5047 1.49533 16 3.33333 16H11.0973C11.9553 16 12.762 15.666 13.3687 15.0593L15.0593 13.3687C15.6573 12.7713 16 11.9427 16 11.0973V3.33333C16 1.49533 14.5047 0 12.6667 0ZM1.33333 12.6667V3.33333C1.33333 2.23067 2.23067 1.33333 3.33333 1.33333H12.6667C13.7693 1.33333 14.6667 2.23067 14.6667 3.33333V10H12C10.8973 10 10 10.8973 10 12V14.6667H3.33333C2.23067 14.6667 1.33333 13.7693 1.33333 12.6667ZM12.426 14.1167C12.1273 14.4153 11.746 14.6 11.3333 14.6513V12C11.3333 11.632 11.6327 11.3333 12 11.3333H14.6507C14.598 11.7433 14.41 12.132 14.116 12.426L12.426 14.1167ZM3.33333 4.33333C3.33333 3.78133 3.78133 3.33333 4.33333 3.33333C4.88533 3.33333 5.33333 3.78133 5.33333 4.33333C5.33333 4.88533 4.88533 5.33333 4.33333 5.33333C3.78133 5.33333 3.33333 4.88533 3.33333 4.33333ZM5.33333 8C5.33333 8.552 4.88533 9 4.33333 9C3.78133 9 3.33333 8.552 3.33333 8C3.33333 7.448 3.78133 7 4.33333 7C4.88533 7 5.33333 7.448 5.33333 8ZM5.33333 11.6667C5.33333 12.2187 4.88533 12.6667 4.33333 12.6667C3.78133 12.6667 3.33333 12.2187 3.33333 11.6667C3.33333 11.1147 3.78133 10.6667 4.33333 10.6667C4.88533 10.6667 5.33333 11.1147 5.33333 11.6667Z" fill="#1A1818" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_78_19382">
+                                      <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>
+                                }
+                              >
+                                Vazifalar
+                              </Button>
                             </Link>
                           </th>
                           <th>
-                          <Link to='calendarplan' state={{data:elem.id}}>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              sx={{
-                                borderRadius: "10px",
-                                boxShadow: "none",
-                                padding: "10px",
-                                minWidth: "auto",
-                                textTransform: "none"
-                                
-                              }}
-                              startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g clipPath="url(#clip0_78_19382)">
-                                <path d="M12.6667 0H3.33333C1.49533 0 0 1.49533 0 3.33333V12.6667C0 14.5047 1.49533 16 3.33333 16H11.0973C11.9553 16 12.762 15.666 13.3687 15.0593L15.0593 13.3687C15.6573 12.7713 16 11.9427 16 11.0973V3.33333C16 1.49533 14.5047 0 12.6667 0ZM1.33333 12.6667V3.33333C1.33333 2.23067 2.23067 1.33333 3.33333 1.33333H12.6667C13.7693 1.33333 14.6667 2.23067 14.6667 3.33333V10H12C10.8973 10 10 10.8973 10 12V14.6667H3.33333C2.23067 14.6667 1.33333 13.7693 1.33333 12.6667ZM12.426 14.1167C12.1273 14.4153 11.746 14.6 11.3333 14.6513V12C11.3333 11.632 11.6327 11.3333 12 11.3333H14.6507C14.598 11.7433 14.41 12.132 14.116 12.426L12.426 14.1167ZM3.33333 4.33333C3.33333 3.78133 3.78133 3.33333 4.33333 3.33333C4.88533 3.33333 5.33333 3.78133 5.33333 4.33333C5.33333 4.88533 4.88533 5.33333 4.33333 5.33333C3.78133 5.33333 3.33333 4.88533 3.33333 4.33333ZM5.33333 8C5.33333 8.552 4.88533 9 4.33333 9C3.78133 9 3.33333 8.552 3.33333 8C3.33333 7.448 3.78133 7 4.33333 7C4.88533 7 5.33333 7.448 5.33333 8ZM5.33333 11.6667C5.33333 12.2187 4.88533 12.6667 4.33333 12.6667C3.78133 12.6667 3.33333 12.2187 3.33333 11.6667C3.33333 11.1147 3.78133 10.6667 4.33333 10.6667C4.88533 10.6667 5.33333 11.1147 5.33333 11.6667Z" fill="#1A1818" />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_78_19382">
-                                  <rect width="16" height="16" fill="white" />
-                                </clipPath>
-                              </defs>
-                            </svg>}
-                            >
-                              
-                              {ListLanguage.Materials[language]}
-                            </Button>
-                          </Link>
+                            <Link to='calendarplan' state={{ data: elem.groups[0].id }}>
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                sx={{
+                                  borderRadius: "10px",
+                                  boxShadow: "none",
+                                  padding: "10px",
+                                  minWidth: "auto",
+                                  textTransform: "none"
+
+                                }}
+                                startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <g clipPath="url(#clip0_78_19382)">
+                                    <path d="M12.6667 0H3.33333C1.49533 0 0 1.49533 0 3.33333V12.6667C0 14.5047 1.49533 16 3.33333 16H11.0973C11.9553 16 12.762 15.666 13.3687 15.0593L15.0593 13.3687C15.6573 12.7713 16 11.9427 16 11.0973V3.33333C16 1.49533 14.5047 0 12.6667 0ZM1.33333 12.6667V3.33333C1.33333 2.23067 2.23067 1.33333 3.33333 1.33333H12.6667C13.7693 1.33333 14.6667 2.23067 14.6667 3.33333V10H12C10.8973 10 10 10.8973 10 12V14.6667H3.33333C2.23067 14.6667 1.33333 13.7693 1.33333 12.6667ZM12.426 14.1167C12.1273 14.4153 11.746 14.6 11.3333 14.6513V12C11.3333 11.632 11.6327 11.3333 12 11.3333H14.6507C14.598 11.7433 14.41 12.132 14.116 12.426L12.426 14.1167ZM3.33333 4.33333C3.33333 3.78133 3.78133 3.33333 4.33333 3.33333C4.88533 3.33333 5.33333 3.78133 5.33333 4.33333C5.33333 4.88533 4.88533 5.33333 4.33333 5.33333C3.78133 5.33333 3.33333 4.88533 3.33333 4.33333ZM5.33333 8C5.33333 8.552 4.88533 9 4.33333 9C3.78133 9 3.33333 8.552 3.33333 8C3.33333 7.448 3.78133 7 4.33333 7C4.88533 7 5.33333 7.448 5.33333 8ZM5.33333 11.6667C5.33333 12.2187 4.88533 12.6667 4.33333 12.6667C3.78133 12.6667 3.33333 12.2187 3.33333 11.6667C3.33333 11.1147 3.78133 10.6667 4.33333 10.6667C4.88533 10.6667 5.33333 11.1147 5.33333 11.6667Z" fill="#1A1818" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_78_19382">
+                                      <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>}
+                              >
+
+                                Materiallar
+                              </Button>
+                            </Link>
                           </th>
                         </tr>
                       )
@@ -264,7 +297,7 @@ export default function StudentSciencesMain() {
         </ClassScheduleTableWrapper>
       </BoxBody>
       {/* <BoxFooter>
-        <BoxFooterText>{`${ListLanguage.Total[language]} ${sciences[0]?.science?.length} ${ListLanguage.Ta[language]},${ListLanguage.From[language]} 1 ${ListLanguage.To[language]} ${sciences[0]?.science?.length} ${ListLanguage.AreShown[language]}`}</BoxFooterText>
+        <BoxFooterText>{`Jami ${sciences[0]?.science?.length} ta, 1 dan ${sciences[0]?.science?.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
         <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
       </BoxFooter> */}
     </Paper>

@@ -8,11 +8,11 @@ import { TextField } from '@mui/material';
 export default function DataPicker({ setFunction }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} sx={{width: "100%"}}>
-      <DemoContainer components={['DatePicker']} sx={{width: "300px", '&.MuiInputBase-root': {width: "100%"}}}>
+      <DemoContainer components={['DatePicker']} sx={{width: "100%", minWidth: "300px", '&.MuiInputBase-root': {width: "100%"}}}>
         <DatePicker 
           sx={{width: "100%"}} 
           views={["day","month", "year"]}
-          label={'Date'}
+          label={'Sana'}
           renderInput={(params) => <TextField {...params} />}
           mask="__-__-____"
           format="DD/MM/YYYY"

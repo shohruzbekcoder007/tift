@@ -11,6 +11,7 @@ import { host, teacher_jurnal, teacher_submission_grade, teacher_vedemost } from
 // lang
 import { useSelector } from 'react-redux'
 import listLanguage from './language.json'
+import { red } from '@mui/material/colors'
 
 export default function TeacherJournal() {
   const { state } = useLocation()
@@ -36,7 +37,7 @@ export default function TeacherJournal() {
 
   useEffect(() => {
     
-    getTeacherJurnal(`${teacher_jurnal}${state.data}`, (response) => {
+    getTeacherJurnal(`${teacher_jurnal}${state.data}/`, (response) => {
         console.log(response);
         settasksName(response.data.name)
         settasksTasks(response.data.tasks)
@@ -133,7 +134,24 @@ export default function TeacherJournal() {
                               <th style={{ width: "200px" }} key={index}>
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       <div style={{width: "60px"}}>
-                                      <Button
+                                        {
+                                          element.submission?.grade == '1.00' ?  <Button
+                                          sx={
+                                            {
+                                              width: '36px',
+                                              height: '36px',
+                                              padding: '8px 18px',
+                                              borderRadius: '10px',
+                                              border: "1px solid #EEE",
+                                              background:' var(--secondary-color, #F6F6F6)',
+                                            } 
+                                          }   
+                                        // onClick={(_) => {{openModalBoxGrade(element)}}}
+                                        >
+                                          {element.submission?.grade}
+                                        </Button>
+                                        :
+                                        <Button
                                         sx={
                                           {
                                             width: '36px',
@@ -142,12 +160,15 @@ export default function TeacherJournal() {
                                             borderRadius: '10px',
                                             border: "1px solid #EEE",
                                             background:' var(--secondary-color, #F6F6F6)',
-                                          }
+                                            color: "red"
+                                          } 
                                         }   
                                       // onClick={(_) => {{openModalBoxGrade(element)}}}
                                       >
                                         {element.submission?.grade}
                                       </Button>
+                                        }
+                                    
                                       </div>
                                     </TeacherSciencesButtonBox>
 

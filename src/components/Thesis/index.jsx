@@ -78,10 +78,10 @@ export default function Thesis() {
                 <ThesisBody>
                     <DiplomaTable />
                 </ThesisBody>
-                <BoxFooter>
-                    <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]},${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
+                {/* <BoxFooter>
+                    <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
                     <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
-                </BoxFooter>
+                </BoxFooter> */}
             </Paper>
             <Modal
                 keepMounted

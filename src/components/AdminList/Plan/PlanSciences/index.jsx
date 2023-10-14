@@ -5,13 +5,15 @@ import PageSelector from '../../../PageSelector'
 import CustomizedInput from '../../../CustomizedInput'
 import { TableTHHeader } from '../../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton, SemesterModalBoxInfo, SemesterModalSelectWrapperInfo } from './styles'
+import { AttendSearchButton, ModalBody, ModalBoxScience, SemesterModalBoxInfo, SemesterModalSelectWrapperInfo } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { academic_plan_science, science } from '../../../../utils/API_urls'
 import { useLocation } from 'react-router'
 import { addAcademic_Science, deleteAcademic_Science, editAcademic_Science, getAcademic_Science, getAcademic_ShortScience } from './request'
+import AutocompleteJames from '../../../AutocompleteJames'
+import AlertDialog from '../../../AlertDialog'
 
 export default function PlanSciences() {
   const [open, setOpen] = React.useState(false);
@@ -38,6 +40,14 @@ export default function PlanSciences() {
   const [SciencesID, setSciencesID] = useState(null)
   const [deleted, setDeleted] = useState(true)
   const [academic_sciencesID, setacademic_sciencesID] = useState(null)
+  
+  const [alert, setAlert] = useState(false)
+  const [DeletedID, setDeletedID] = useState(null)
+  const openAlert = (id) => {
+    setDeletedID(id)
+    setAlert(true) 
+    
+    }
 
   useEffect(() => {
     getAcademic_Science(`${academic_plan_science}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_plan=${state}`, response => {
@@ -52,10 +62,10 @@ export default function PlanSciences() {
     getAcademic_ShortScience(`${science}short/`, response => {
       let list = []
       console.log(response);
-      response.data.map(item => {
+      response.data.map(elem => {
         list.push({
-          value: item.id,
-          name: item.name + " (" + item.direction + " " + item.semester + "-semester)"
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree +  " " + elem.academic_year + ")",
+          value: elem.id
         })
         setSciencesID(response.data[0].id)
       })
@@ -94,8 +104,8 @@ export default function PlanSciences() {
     })
   }
 
-  const handleDelete = (id) => {
-    deleteAcademic_Science(`${academic_plan_science}${id}`, response => {
+  const handleDelete = (_) => {
+    deleteAcademic_Science(`${academic_plan_science}${DeletedID}`, response => {
       setDeleted(!deleted)
     }, error => {
       console.log(error)
@@ -259,7 +269,7 @@ export default function PlanSciences() {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={(_) => handleDelete(elem.id)}
+                            onClick={(_) => openAlert(elem.id)}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -277,6 +287,14 @@ export default function PlanSciences() {
                           >
                           </Button>
                         </th>
+                        <AlertDialog
+                          open_alert={alert}
+                          callback1={(_) => {
+                            handleDelete()
+                          }}
+                          callback2={() => { setAlert(false) }}
+                          alertText={"Ushbu Fanni haqiqatdan ham o'chirmoqchimisiz?"}
+                        />
                       </tr>
                     )
                   })
@@ -300,7 +318,7 @@ export default function PlanSciences() {
           aria-labelledby="keep-mounted-modal-title"
           aria-describedby="keep-mounted-modal-description"
         >
-          <ModalBox>
+          <ModalBoxScience>
             <ModalHeader>
               <Typography
                 id="keep-mounted-modal-title"
@@ -322,6 +340,7 @@ export default function PlanSciences() {
               </span>
             </ModalHeader>
 
+            <ModalBody>
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -336,12 +355,10 @@ export default function PlanSciences() {
               >
                Fan                </Typography>
                
-               <AllSelectFullWidth
-                chageValueFunction={val => setSciencesID(val)}
-                selectOptions={SciencesList}
-              />
+              <AutocompleteJames selectOptions={SciencesList} chageValueFunction={val => setSciencesID(val)}/>
 
             </ModalSelectWrapper>
+
             <ModalButtons>
               <Button
                 sx={{ width: "50%", textTransform: "none" }}
@@ -358,7 +375,8 @@ export default function PlanSciences() {
                 Saqlash
               </Button>
             </ModalButtons>
-          </ModalBox>
+            </ModalBody>
+          </ModalBoxScience>
         </Modal>
 
         <Modal

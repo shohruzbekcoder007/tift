@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { BoxFooter, BoxFooterText } from '../../global_styles/styles'
-import { Button, Pagination, Paper, Typography } from '@mui/material'
+import { Button, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader, ThesisHeaderRight } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
@@ -13,11 +13,36 @@ import CustomizedInputSimple from '../CustomizedInputSimple'
 import ServicesTable from '../ServicesTable/ServicesTable'
 import { useSelector } from 'react-redux'
 import listLanguage from './language.json'
+import { useMemo } from 'react'
+import { postStudentInformation } from './request'
+import { student_doc } from '../../utils/API_urls'
+import MuiAlert from '@mui/material/Alert'
 
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
+  const [ListSelect, setListSelect] = React.useState(null);
+  const [JobInput, setJobInput] = React.useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [changeUser, setChangeUser] = useState(null)
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
 
   const chageRowHadler = (val) => {
     console.log(val)
@@ -33,6 +58,39 @@ export default function Student_services() {
 
   // lang
   const language = useSelector(state => state.language)
+  const List = useMemo(() => {
+    return [{
+      name: "Ma'lumotnoma",
+      value: "information"
+    },
+    {
+      name: "Chaqiruv xati",
+      value: "invitation"
+    }]
+  }, [])
+
+  const handleClick = (_) => {
+    postStudentInformation(student_doc, {
+      type: ListSelect,
+      job: ListSelect != 'information' ? JobInput : ""
+    }, (response) => {
+      setOpen(false)
+      setOpenAlert(true)
+      serChanged(true)
+      setAlertMessage("Ariza yuborildi")
+    }, (error) => {
+      console.log(error);
+
+      let msg = ``
+      if (error.response.data.message) {
+        msg = error.response.data.message
+      }
+      setOpen(false)
+      setOpenAlert(true)
+      serChanged(false)
+      setAlertMessage(msg)
+    })
+  }
 
   return (
     <ContentWrapper>
@@ -47,7 +105,7 @@ export default function Student_services() {
         <ThesisHeader>
           <PageSelector chageValueFunction={chageRowHadler} />
           <ThesisHeaderRight >
-            <CustomizedInput callback_func={chageSearch} />
+            <CustomizedInput  callback_func={chageSearch} />
             <Button
               variant="contained"
               sx={{
@@ -68,10 +126,7 @@ export default function Student_services() {
         <ThesisBody>
           <ServicesTable />
         </ThesisBody>
-        <BoxFooter>
-          <BoxFooterText>{`${listLanguage.Total[language]} 3 ${listLanguage.Ta[language]}, ${listLanguage.From[language]} 1 ${listLanguage.To[language]} 3 ${listLanguage.AreShown[language]}`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
-        </BoxFooter>
+
       </Paper>
       <Modal
         keepMounted
@@ -119,14 +174,12 @@ export default function Student_services() {
              {listLanguage.Type[language]}                       
               </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "O'qish joyidan malumotnoma",
-                value: "O'qish joyidan malumotnoma",
-              }]}
+              chageValueFunction={val => setListSelect(val)}
+              selectOptions={List}
             />
           </ModalSelectWrapper>
-          <ModalSelectWrapper>
+          {
+            ListSelect == 'invitation' && <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -140,14 +193,9 @@ export default function Student_services() {
             >
               {listLanguage.Where[language]}
             </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Tanlang",
-                value: "Tanlang",
-              }]}
-            />
+            <CustomizedInputSimple callback_func={(val) => {setJobInput(val)}} placeholder="Kiriting" />
           </ModalSelectWrapper>
+          }
 
           <ModalButtons>
             <Button
@@ -160,12 +208,18 @@ export default function Student_services() {
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
               variant="contained"
+              onClick={handleClick}
             >
               {listLanguage.Save[language]}
             </Button>
           </ModalButtons>
         </ModalBox>
       </Modal>
+      <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
     </ContentWrapper>
   )
 }
