@@ -89,6 +89,8 @@ export const Decan_students = '/decan/students/'
 // kafedra 
 export const syllabus_request_id = '/department/syllabus/status'
 
+// accountant
+ export const accountant_students = '/additional/accounting/students/'
 
 //tutor
 export const Groups = 'tutor/GroupList/'

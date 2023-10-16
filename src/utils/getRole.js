@@ -24,6 +24,9 @@ export const getRole = (user) => {
     if (user?.role[0] === "hr") {
       return 'hr'
     }
+    if (user?.role[0] === "accountant") {
+      return 'accountant'
+    }
   } else {
     return ''
   }

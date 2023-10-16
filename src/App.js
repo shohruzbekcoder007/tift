@@ -149,6 +149,8 @@ import TutorSeePersonalPlan from './components/TutorSeePersonalPlan'
 import TutorSeeInformation from './components/TutorSeeInformation'
 import MainHr from './components/MainHr'
 import AddHrEmployees from './components/AddHrEmployees'
+import MainAccountant from './components/MainAccountant'
+import StudentsAccountant from './components/StudentsAccountant'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -300,6 +302,18 @@ function App() {
                     <Route path='show' element={<Show />} />
                     <Route path='edit' element={<EditEmployeess />} />
                     <Route path='add' element={<AddHrEmployees />} />
+                  </Route>
+                </Route>
+
+                <Route path="accountant" element={<MainAccountant />}>
+                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<StudentsAccountant />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
                   </Route>
                 </Route>
 
