@@ -54,7 +54,7 @@ export default function Notification({ open, setCountNote }) {
                 :
                 <>
                 <span key={index}>
-                  <Link to={`/student/sciences/tasks`} state={{ data: elem.patok }}>
+                  <Link to={`/teacher/sciences/tasks`} state={{ data: elem.patok }}>
                       {
                         elem.deadline_status ?  <NotificationWrapperBody>
                         <div>

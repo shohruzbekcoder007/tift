@@ -60,7 +60,7 @@ export default function Tasks() {
     }, (error) => {
         console.log(error)
     })
-  }, [Status])
+  }, [Status,state])
 
   const tasktype = useMemo(() => {
     return [
@@ -148,7 +148,7 @@ export default function Tasks() {
             lineHeight: 'normal',
           }}
         >
-          Vazifalar - {state.name}
+          Vazifalar - {state.name ?? tasksList?.[0]?.group_name}
         </Typography>
         <Button
           variant="contained"
