@@ -216,8 +216,8 @@ export default function AddStudents() {
       reqDataChange("academic_group", response.data[0]?.id)
       setacademicGroupList(response.data.map(elem => {
         return {
-          value: elem.id,
-          name: elem.name
+          name: elem.name + " (" + elem.student_count + ")",
+          value: elem.id
         }
       }))
     }, (error) => {

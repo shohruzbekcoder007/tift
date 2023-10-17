@@ -11,6 +11,16 @@ export const getRegionListRequest = (url, successfulFunction, errorFunction) => 
   })
 }
 
+export const getOneStudentData = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then((response) => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+  }
+
 
 export const createStudent = (url, data, successfulFunction, errorFunction) => {
     const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');

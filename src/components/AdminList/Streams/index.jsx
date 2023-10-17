@@ -277,7 +277,7 @@ useEffect(() => {
     getAcademicGroup(`${academic_group_short}`, (response) => {
       setAcademicGroupList(response.data.map(elem => {
         return {
-          name: elem.name,
+          name: elem.name + " (" + elem.student_count + ")",
           value: elem.id
         }
       }))

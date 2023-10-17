@@ -3,14 +3,14 @@ import { BoxHeader } from '../../../../global_styles/styles'
 import { Button, Snackbar, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
-import { WrapperBox, WrapperButtons, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
+import { WrapperBox, WrapperButtons, WrapperImgCard, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
 import { MuiFileInput } from 'mui-file-input'
 import jins from '../../../../dictionary/jins'
 import citizenship from '../../../../dictionary/citizenship'
 import nationality from '../../../../dictionary/nationality'
 import academic_title from '../../../../dictionary/academic_title'
-import { createStudent, getRegionListRequest } from './request'
-import { academic_group_short, country, directions, district, employee, region, users_student } from '../../../../utils/API_urls'
+import { createStudent, getOneStudentData, getRegionListRequest } from './request'
+import { academic_group_short, additional_ie_oneid, country, directions, district, employee, region, users_student } from '../../../../utils/API_urls'
 import BasicDatePicker from '../../../BasicDatePicker'
 import { useNavigate } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
@@ -19,6 +19,9 @@ import contract_type from '../../../../dictionary/contract_type'
 import study_type from '../../../../dictionary/study_type'
 import degree from '../../../../dictionary/degree'
 import language from '../../../../dictionary/language'
+import { Box } from '@mui/system'
+import { InputsWrapper } from '../../../CourseManagement/styles'
+import axios from 'axios'
 
 export default function AddStudents() {
 
@@ -37,7 +40,15 @@ export default function AddStudents() {
   const [changed, serChanged] = useState(false)
   const [academicGroupList, setacademicGroupList] = useState([])
   const [alertMessage, setAlertMessage] = useState('')
+  const [PassportStudent, setPassportStudent] = useState('')
+  const [BirthdayStudent, setBirthdayStudent] = useState(null)
+
+  const [StudentInfo, setStudentInfo] = useState(null)
+
+
+
   const handleCloseAlert = () => setOpenAlert(false);
+
 
   const [newData, setNewData] = useState({
     citizenship: null,
@@ -75,12 +86,12 @@ export default function AddStudents() {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  
+
   const anchorOrigin1 = {
     vertical: 'bottom',
     horizontal: "right"
   }
-  
+
   const anchorOrigin2 = {
     vertical: 'bottom',
     horizontal: "left"
@@ -216,8 +227,8 @@ export default function AddStudents() {
       reqDataChange("academic_group", response.data[0]?.id)
       setacademicGroupList(response.data.map(elem => {
         return {
-          value: elem.id,
-          name: elem.name
+          name: elem.name + " (" + elem.student_count + ")",
+          value: elem.id
         }
       }))
     }, (error) => {
@@ -226,7 +237,7 @@ export default function AddStudents() {
   }, [])
 
   useEffect(() => {
-    if(regionId){
+    if (regionId) {
       getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
         reqDataChange("district", response.data[0]?.id)
         setDistrictList(response.data.map(elem => {
@@ -239,10 +250,10 @@ export default function AddStudents() {
         console.log(error)
       })
     }
-  },[regionId])
+  }, [regionId])
 
   useEffect(() => {
-    if(regionId1){
+    if (regionId1) {
       getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
         reqDataChange("district2", response.data[0]?.id)
         setDistrictList1(response.data.map(elem => {
@@ -255,8 +266,21 @@ export default function AddStudents() {
         console.log(error)
       })
     }
-  },[regionId1])
-// admin/employees
+  }, [regionId1])
+
+
+
+  const GetStudent = (_) => {
+    getOneStudentData(`${additional_ie_oneid}?passport=${PassportStudent}&birthday=${BirthdayStudent}`, (response) => {
+      console.log(response.data);
+      
+      setStudentInfo(response.data)
+    }, (error) => {
+      console.log(error)
+    })
+  }
+
+  // admin/employees
   const createEmployes = () => {
     // console.log(newData)
     createStudent(users_student, newData, response => {
@@ -273,7 +297,7 @@ export default function AddStudents() {
         msg = msg + " " + error.response.data.last_name
       } if (error.response.data.phone_number) {
         msg = msg + " " + error.response.data.phone_number
-      }if (error.response.data.detail) {
+      } if (error.response.data.detail) {
         msg = msg + " Bunday foydalanuvchi mavjud"
       }
       if (error.response.data.gpa) {
@@ -281,15 +305,23 @@ export default function AddStudents() {
       }
       if (error.response.data.jshshr) {
         msg = msg + error.response.data.jshshr
-      }if (error.response.data.lang) {
+      } if (error.response.data.lang) {
         msg = msg + error.response.data.lang
-      }if (error.response.data.student_id) {
+      } if (error.response.data.student_id) {
         msg = msg + error.response.data.student_id
       }
       setAlertMessage(msg)
     })
   }
 
+  const WritePassport = (val) => {
+    reqDataChange("passport", val)
+    setPassportStudent(val.toUpperCase());
+  }
+  const handleDate = (val) => {
+    reqDataChange("birthday", val)
+    setBirthdayStudent(val);
+  }
 
   return (
     <div>
@@ -304,6 +336,79 @@ export default function AddStudents() {
         Qo'shish
       </Typography>
       <WrapperBox>
+        <BoxHeader>
+
+          <div style={{ width: "70%", gap: "20px", display: "grid" }}>
+            <div>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Pasport
+              </Typography>
+              <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
+            </div>
+            <div>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "0"
+                }}
+              >
+                Tug’ilgan kuni
+              </Typography>
+              <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
+            </div>
+            <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
+              <Button
+                variant="contained"
+                onClick={GetStudent}
+                sx={{
+                  width: "90px",
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "17px"
+                }}
+                startIcon={null}
+              >
+                Yuklash
+              </Button>
+            </BoxHeader>
+          </div>
+            <div>
+            {
+            StudentInfo ? 
+              <WrapperImgCard>
+                <img src={StudentInfo.photo} alt="" />
+              </WrapperImgCard>
+              : 
+                <WrapperImgCard>
+                  <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
+                </WrapperImgCard>
+             
+          }
+            </div>
+        </BoxHeader>
+        <BoxHeader>
+          <WrapperInputsCard></WrapperInputsCard>
+
+        </BoxHeader>
         <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -405,7 +510,7 @@ export default function AddStudents() {
             >
               Tug’ilgan kuni
             </Typography>
-            <BasicDatePicker setFunction={(val) => {reqDataChange("birthday", val)}} label="Tug’ilgan kuni"/>
+            <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
           </WrapperInputsCard>
         </BoxHeader>
 
@@ -576,7 +681,7 @@ export default function AddStudents() {
               Viloyat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => {reqDataChange("region", val); setRegionId(val)}}
+              chageValueFunction={val => { reqDataChange("region", val); setRegionId(val) }}
               selectOptions={regionList}
             />
           </WrapperInputsCardTwo>
@@ -651,7 +756,7 @@ export default function AddStudents() {
               Viloyat
             </Typography>
             <AllSelectFullWidth
-              chageValueFunction={val => {reqDataChange("region2", val); setRegionId1(val)}}
+              chageValueFunction={val => { reqDataChange("region2", val); setRegionId1(val) }}
               selectOptions={regionList1}
             />
           </WrapperInputsCardTwo>
@@ -723,7 +828,7 @@ export default function AddStudents() {
                 mb: "10px"
               }}
             >
-             Academic group
+              Academic group
             </Typography>
             <AllSelectFullWidth
               chageValueFunction={val => reqDataChange("academic_group", val)}
@@ -766,7 +871,7 @@ export default function AddStudents() {
             >
               O'qishga kirgan yili
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("year_of_admission", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("year_of_admission", val) }} placeholder="" type={"number"} />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -782,7 +887,7 @@ export default function AddStudents() {
             >
               Kurs raqami
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("course_number", val) }}  type="number"/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("course_number", val) }} type="number" />
           </WrapperInputsCardTwo>
         </BoxHeader>
 
@@ -801,7 +906,7 @@ export default function AddStudents() {
             >
               GPA
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("gpa", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("gpa", val) }} placeholder="" type={"number"} />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
@@ -839,7 +944,7 @@ export default function AddStudents() {
             >
               StudentID
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"}/>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"} />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography

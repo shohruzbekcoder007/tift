@@ -136,16 +136,25 @@ export default function Students() {
         const currlist = [...response.data]
         currlist.unshift({
           name: 'Guruhsiz talabalar',
-          id: 'none'
+          id: 'none',
+          student_count: ""
         })
         currlist.unshift({
           name: 'Hammasi',
-          id: 'all'
+          id: 'all',
+          student_count: ""
         })
         setGroupList(currlist.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
+          if (!elem.student_count == "") {
+            return {
+              name: elem.name + " (" + elem.student_count + ")",
+              value: elem.id
+            }
+          }else {
+            return {
+              name: elem.name,
+              value: elem.id
+            }
           }
         }))
       }, (error) => {

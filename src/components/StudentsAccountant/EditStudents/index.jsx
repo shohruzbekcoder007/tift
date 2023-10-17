@@ -266,8 +266,8 @@ export default function EditStudents() {
     getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
       setacademicGroupList(response.data.map(elem => {
         return {
-          value: elem.id,
-          name: elem.name
+          name: elem.name + " (" + elem.student_count + ")",
+          value: elem.id
         }
       }))
       console.log('sssadsa');

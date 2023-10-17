@@ -27,6 +27,17 @@ export const WrapperInputsCard = styled.div`
   width: 31%;
 `
 
+export const WrapperImgCard = styled.div`
+  width: 31%;
+  img {
+    width: 230px;
+    height: 243px;
+    border-radius: 10px;
+    object-fit: contain;
+    /* border: 1px solid gray; */
+  }
+`
+
 export const WrapperInputsCardTwo = styled.div`
   width: 48%;
 `

@@ -119,6 +119,7 @@ export const news = "/news/"
 export const academic_group = "/academic_group/"
 export const academic_group_short = "/academic_group/short/"
 export const additional_ie_science = "/additional/ie/science/"
+export const additional_ie_oneid = "/additional/integration/oneid/"
 
 export const building = "/building/"
 export const room_create_list = "/room_create_list/"
