@@ -47,7 +47,6 @@ export default function Building() {
 
   useEffect(() => {
     getBuildings(`${building}?page_size=${pageSize}&page=${page}`, (response) => {
-      console.log(response.data.results);
       setBuildings(response.data.results)
       setPageCount(response.data.page_count)
       setAllCount(response.data.count)

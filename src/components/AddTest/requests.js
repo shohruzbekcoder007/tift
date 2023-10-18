@@ -25,7 +25,6 @@ export const setTeacheravTasksPost = (url, data, successfulFunction, errorFuncti
               },
         }
     ).then((response) => {
-        console.log(response)
         successfulFunction(response)
     })
     .catch((error) => {
@@ -47,7 +46,6 @@ export const setTeacheravTasksPut = (url, data, successfulFunction, errorFunctio
               },
         }
     ).then((response) => {
-        console.log(response)
         successfulFunction(response)
     })
     .catch((error) => {

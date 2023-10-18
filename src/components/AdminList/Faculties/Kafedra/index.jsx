@@ -42,7 +42,6 @@ export default function Kafedra() {
       name: name,
       department_user: department
     }, (response) => {
-      // console.log(response)
       setNewUser(response)
       handleClose()
     }, (error) => {console.log(error)})
@@ -283,7 +282,6 @@ export default function Kafedra() {
 
 const OneDepartment = ({ elem, departmentHeads }) => {
 
-  console.log(elem)
   const [open2, setOpen2] = useState(false)
   const [alert, setAlert] = useState(false)
   const [name, setName] = useState(elem.name)
@@ -300,7 +298,6 @@ const OneDepartment = ({ elem, departmentHeads }) => {
       department_user: department,
       name: name
     }, (response) => {
-      console.log(response.data)
       setDpt(response.data)
       handleClose2()
     }, (error) => {

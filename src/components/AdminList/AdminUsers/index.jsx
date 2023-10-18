@@ -23,11 +23,6 @@ export default function AdminUsers() {
   const [allCount, setAllCount] = useState(0)
   const [searchText, setSearchText] = useState(0)
 
-  // allusers
-  useEffect(() => {
-    console.log("")
-  }, [])
-
   return (
     <>
       <Paper

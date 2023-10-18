@@ -138,7 +138,6 @@ export default function AddHrEmployees() {
 
   useEffect(() => {
     getRoleList(`${role}`, (response) => {
-      console.log(response);
       reqDataChange("role", response.data[0]?.id)
       setaddRoleList(response.data.map(elem => {
         return {
@@ -243,7 +242,6 @@ export default function AddHrEmployees() {
   }, [regionId1])
   // admin/employees
   const createEmployes = () => {
-    // console.log(newData)
     createEmployee(employee, newData, response => {
       navigate(-1)
       console.log(response)

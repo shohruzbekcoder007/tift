@@ -33,7 +33,6 @@ export default function Dayoff() {
   //?page_size=${pageSize}&page=${page}
   useEffect(() => {
     getHolidays(`${holidays_create_list}?page_size=${pageSize}&page=${page}`, (response) => {
-      console.log(response);
       setHolidays(response.results)
       setPageCount(response.page_count)
       setAllCount(response.count)

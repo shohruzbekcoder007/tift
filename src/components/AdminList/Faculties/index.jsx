@@ -397,7 +397,6 @@ const SimpleFaculty = ({ elem, facultytype, dekanList }) => {
 
   const updateDataRequest = () => {
     fakultyUpdate(`${fakulty}${elem.id}/`,updateData, (response) => {
-      console.log(response)
       handleClose2()
     }, (error) => {
       console.log(error)

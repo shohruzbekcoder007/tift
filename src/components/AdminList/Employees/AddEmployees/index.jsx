@@ -229,10 +229,8 @@ export default function AddEmployees() {
   },[regionId1])
 // admin/employees
   const createEmployes = () => {
-    // console.log(newData)
     createEmployee(employee, newData, response => {
       navigate(-1)
-      console.log(response)
     }, error => {
       serChanged(false)
       setOpenAlert(true)

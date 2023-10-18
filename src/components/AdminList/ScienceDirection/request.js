@@ -41,7 +41,6 @@ export const AddDirection = (url, data, successfulFunction, errorFunction) => {
 }
 
 export const DeleteDirection = (url, successfulFunction, errorFunction) => {
-  console.log(url);
   axios.delete(
       url,
       {

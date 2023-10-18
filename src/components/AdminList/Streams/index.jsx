@@ -274,16 +274,21 @@ useEffect(() => {
 
 
   useEffect(() => {
-    getAcademicGroup(`${academic_group_short}`, (response) => {
-      setAcademicGroupList(response.data.map(elem => {
-        return {
-          name: elem.name + " (" + elem.student_count + ")",
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    if (AcademekYear) {
+      getAcademicGroup(`${academic_group_short}?year=${AcademekYear}`, (response) => {
+        setAcademicGroupList(response.data.map(elem => {
+          return {
+            name: elem.name + " (" + elem.student_count + ")",
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [AcademekYear]);
+
+  useEffect(() => {
     getTeachers(`${allusers}?role__name=teacher&page_size=1000`, (response) => {
       setTeachersList(response.data.results.map(elem => {
         return {
@@ -294,7 +299,7 @@ useEffect(() => {
     }, (error) => {
       console.log(error)
     })
-  }, []);
+  },[])
 
   const handleClick = (_) => {
     console.log(TeachersListSelect);

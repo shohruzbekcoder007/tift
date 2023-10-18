@@ -70,7 +70,6 @@ export default function Group() {
   useEffect(() => {
     setAcademikGroup([])
     getGroups(`${academic_group}?page_size=${pageSize}&page=${page}&search=${SearchText}&direction=${DirectionID}&year=${AcademekYear}`, (response) => {
-      console.log(response.data.results);
       setAcademikGroup(response.data.results)
       setPageCount(response.data.page_count)
       setAllCount(response.data.count)
@@ -83,7 +82,6 @@ export default function Group() {
 
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
-      console.log(response.data.results);
       let mass = [...YearList]
 
       response.data.results.map(item => {
@@ -128,7 +126,6 @@ export default function Group() {
     })
 
     getTeachers(`${allusers}?role__name=tutor&page_size=1000`, (response) => {
-      console.log(response);
       setTeacherSelect(response?.data?.results[0]?.id)
       setTeacherList(response?.data?.results?.map(elem => {
         return {

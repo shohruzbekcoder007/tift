@@ -75,7 +75,6 @@ export default function AddTest() {
 
   useEffect(() => {
     getTeacheravTasks(`${teacher_tasks}?search=${SearchText}`, (response) => {
-      console.log(response);
       settasksList(response.data)
     }, (error) => {
       console.log(error)
@@ -101,7 +100,6 @@ useEffect(() => {
   useEffect(() => {
     if (ScienseSelect) {
       getAcademicGroup(`${patokadmin}?page_size=1000&parent=true&search=${ScienseSelect}`, (response) => {
-        console.log(response);
         setGroupList(response.data.results.map(elem => {
           return {
             name: elem.name + " (" + elem.science_name + ")",
@@ -165,7 +163,6 @@ useEffect(() => {
     if (file) {
       formData.append("source", file);
     }
-    console.log(selectedValues);
 
     formData.append("group", selectedValues);
 

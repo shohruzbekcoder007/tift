@@ -28,14 +28,14 @@ export default function AddStudents() {
   const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
-  const [regionList, setRegionList] = useState([])
-  const [regionList1, setRegionList1] = useState([])
-  const [districtList, setDistrictList] = useState([])
-  const [districtList1, setDistrictList1] = useState([])
+  // const [regionList, setRegionList] = useState([])
+  // const [regionList1, setRegionList1] = useState([])
+  // const [districtList, setDistrictList] = useState([])
+  // const [districtList1, setDistrictList1] = useState([])
   const [departmentList, setDepartmentList] = useState([])
-  const [countryList, setCountryList] = useState([])
-  const [regionId, setRegionId] = useState(null)
-  const [regionId1, setRegionId1] = useState(null)
+  // const [countryList, setCountryList] = useState([])
+  // const [regionId, setRegionId] = useState(null)
+  // const [regionId1, setRegionId1] = useState(null)
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [academicGroupList, setacademicGroupList] = useState([])
@@ -44,8 +44,6 @@ export default function AddStudents() {
   const [BirthdayStudent, setBirthdayStudent] = useState(null)
 
   const [StudentInfo, setStudentInfo] = useState(null)
-
-
 
   const handleCloseAlert = () => setOpenAlert(false);
 
@@ -105,16 +103,17 @@ export default function AddStudents() {
   }
 
   const setFileHandler = (newValue, info) => {
+    console.log(newValue);
     reqDataChange("avatar", newValue)
     setFile(newValue)
   }
 
-  const jinsList = useMemo(() => {
-    reqDataChange("gender", jins[0].value)
-    return jins.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
+  // const jinsList = useMemo(() => {
+  //   reqDataChange("gender", jins[0].value)
+  //   return jins.map(elem => {
+  //     return { value: elem.value, name: elem.uz }
+  //   })
+  // }, [])
 
   const StudyTypeList = useMemo(() => {
     reqDataChange("study_type", study_type[0].value)
@@ -144,12 +143,12 @@ export default function AddStudents() {
     })
   }, [])
 
-  const nationalityList = useMemo(() => {
-    reqDataChange("nationality", nationality[0].value)
-    return nationality.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
+  // const nationalityList = useMemo(() => {
+  //   reqDataChange("nationality", nationality[0].value)
+  //   return nationality.map(elem => {
+  //     return { value: elem.value, name: elem.uz }
+  //   })
+  // }, [])
 
   const ContractList = useMemo(() => {
     reqDataChange("contract_type", contract_type[0].value)
@@ -162,44 +161,44 @@ export default function AddStudents() {
   }, [])
 
   useEffect(() => {
-    getRegionListRequest(`${region}?page_size=500`, (response) => {
-      reqDataChange("region", response.data[0]?.id)
-      reqDataChange("region2", response.data[0]?.id)
-      setRegionList(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setRegionList1(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setRegionId(response.data[0]?.id)
-      setRegionId1(response.data[0]?.id)
-    }, (error) => {
-      console.log(error)
-    })
-    getRegionListRequest(`${district}?page_size=500`, (response) => {
-      reqDataChange("district", response.data[0]?.id)
-      reqDataChange("district2", response.data[0]?.id)
-      setDistrictList(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setDistrictList1(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    // getRegionListRequest(`${region}?page_size=500`, (response) => {
+    //   reqDataChange("region", response.data[0]?.id)
+    //   reqDataChange("region2", response.data[0]?.id)
+    //   setRegionList(response.data.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    //   setRegionList1(response.data.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    //   setRegionId(response.data[0]?.id)
+    //   setRegionId1(response.data[0]?.id)
+    // }, (error) => {
+    //   console.log(error)
+    // })
+    // getRegionListRequest(`${district}?page_size=500`, (response) => {
+    //   reqDataChange("district", response.data[0]?.id)
+    //   reqDataChange("district2", response.data[0]?.id)
+    //   setDistrictList(response.data.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    //   setDistrictList1(response.data.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
     getRegionListRequest(`${directions}?page_size=500`, (response) => {
       console.log(response);
       setDepartmentList(response.data.results.map(elem => {
@@ -211,17 +210,17 @@ export default function AddStudents() {
     }, (error) => {
       console.log(error)
     })
-    getRegionListRequest(`${country}`, (response) => {
-      reqDataChange("country", response.data[0]?.id)
-      setCountryList(response.data.map(elem => {
-        return {
-          value: elem.id,
-          name: elem.name
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    // getRegionListRequest(`${country}`, (response) => {
+    //   reqDataChange("country", response.data[0]?.id)
+    //   setCountryList(response.data.map(elem => {
+    //     return {
+    //       value: elem.id,
+    //       name: elem.name
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
 
     getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
       reqDataChange("academic_group", response.data[0]?.id)
@@ -236,47 +235,71 @@ export default function AddStudents() {
     })
   }, [])
 
-  useEffect(() => {
-    if (regionId) {
-      getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
-        reqDataChange("district", response.data[0]?.id)
-        setDistrictList(response.data.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
-          }
-        }))
-      }, (error) => {
-        console.log(error)
-      })
-    }
-  }, [regionId])
+  // useEffect(() => {
+  //   if (regionId) {
+  //     getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
+  //       reqDataChange("district", response.data[0]?.id)
+  //       setDistrictList(response.data.map(elem => {
+  //         return {
+  //           name: elem.name,
+  //           value: elem.id
+  //         }
+  //       }))
+  //     }, (error) => {
+  //       console.log(error)
+  //     })
+  //   }
+  // }, [regionId])
 
-  useEffect(() => {
-    if (regionId1) {
-      getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
-        reqDataChange("district2", response.data[0]?.id)
-        setDistrictList1(response.data.map(elem => {
-          return {
-            name: elem.name,
-            value: elem.id
-          }
-        }))
-      }, (error) => {
-        console.log(error)
-      })
-    }
-  }, [regionId1])
+  // useEffect(() => {
+  //   if (regionId1) {
+  //     getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
+  //       reqDataChange("district2", response.data[0]?.id)
+  //       setDistrictList1(response.data.map(elem => {
+  //         return {
+  //           name: elem.name,
+  //           value: elem.id
+  //         }
+  //       }))
+  //     }, (error) => {
+  //       console.log(error)
+  //     })
+  //   }
+  // }, [regionId1])
 
 
 
   const GetStudent = (_) => {
     getOneStudentData(`${additional_ie_oneid}?passport=${PassportStudent}&birthday=${BirthdayStudent}`, (response) => {
-      console.log(response.data);
-      
+      let student = response.data
+      reqDataChange("first_name", student.namelatin)
+      reqDataChange("passport", student.document)
+      reqDataChange("last_name", student.surnamelatin)
+      if (student.sex == '1') {
+        reqDataChange("gender", 'male')
+      } else {
+        reqDataChange("gender", 'female')
+      }
+      reqDataChange("birthday", student.birth_date)
+      reqDataChange("middle_name", student.patronymlatin)
+      reqDataChange("citizenship", student.citizenship)
+      reqDataChange("country", student.birthcountry)
+      reqDataChange("nationality", student.nationality)
+      reqDataChange("jshshr", student.pinpp)
+      reqDataChange("district", student.birthplace)
+      reqDataChange("address", student.docgiveplace)
       setStudentInfo(response.data)
     }, (error) => {
+      serChanged(false)
+      setOpenAlert(true)
       console.log(error)
+      let msg = ``
+      console.log(error)
+      if (error.response.data.message) {
+        msg = msg + " " + error.response.data.message
+      }
+      setAlertMessage(msg)
+
     })
   }
 
@@ -391,25 +414,25 @@ export default function AddStudents() {
               </Button>
             </BoxHeader>
           </div>
-            <div>
+          <div>
             {
-            StudentInfo ? 
-              <WrapperImgCard>
-                <img src={StudentInfo.photo} alt="" />
-              </WrapperImgCard>
-              : 
+              StudentInfo ?
+                <WrapperImgCard>
+                  <img src={StudentInfo.photo} alt="" />
+                </WrapperImgCard>
+                :
                 <WrapperImgCard>
                   <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
                 </WrapperImgCard>
-             
-          }
-            </div>
+
+            }
+          </div>
         </BoxHeader>
         <BoxHeader>
           <WrapperInputsCard></WrapperInputsCard>
 
         </BoxHeader>
-        <BoxHeader>
+        {/* <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -461,10 +484,10 @@ export default function AddStudents() {
               selectOptions={jinsList}
             />
           </WrapperInputsCard>
-        </BoxHeader>
+        </BoxHeader> */}
 
         <BoxHeader>
-          <WrapperInputsCard>
+          {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -479,8 +502,8 @@ export default function AddStudents() {
               Familiya
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
+          </WrapperInputsCard> */}
+          {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -495,8 +518,8 @@ export default function AddStudents() {
               Telefon raqami
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
+          </WrapperInputsCard> */}
+          {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -511,10 +534,10 @@ export default function AddStudents() {
               Tug’ilgan kuni
             </Typography>
             <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
-          </WrapperInputsCard>
+          </WrapperInputsCard> */}
         </BoxHeader>
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -566,9 +589,9 @@ export default function AddStudents() {
               selectOptions={citizenshipList}
             />
           </WrapperInputsCard>
-        </BoxHeader>
+        </BoxHeader> */}
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
@@ -608,11 +631,26 @@ export default function AddStudents() {
             />
           </WrapperInputsCardTwo>
           <WrapperInputsCard>
-
           </WrapperInputsCard>
-        </BoxHeader>
+        </BoxHeader> */}
 
         <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Telefon raqami
+            </Typography>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+          </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
@@ -632,7 +670,8 @@ export default function AddStudents() {
               selectOptions={departmentList}
             />
           </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
+
+          {/* <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -647,10 +686,10 @@ export default function AddStudents() {
               JSHSHR
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
-          </WrapperInputsCardTwo>
+          </WrapperInputsCardTwo> */}
         </BoxHeader>
 
-        <Typography
+        {/* <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -704,9 +743,9 @@ export default function AddStudents() {
               selectOptions={districtList}
             />
           </WrapperInputsCardTwo>
-        </BoxHeader>
+        </BoxHeader> */}
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <div style={{ width: '100%' }}>
             <Typography
               id="keep-mounted-modal-title"
@@ -723,9 +762,9 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader>
+        </BoxHeader> */}
 
-        <Typography
+        {/* <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -738,7 +777,7 @@ export default function AddStudents() {
           }}
         >
           Vaqtinchalik yashash manzili
-        </Typography>''
+        </Typography>
 
         <BoxHeader>
           <WrapperInputsCardTwo>
@@ -779,8 +818,8 @@ export default function AddStudents() {
               selectOptions={districtList1}
             />
           </WrapperInputsCardTwo>
-        </BoxHeader>
-
+        </BoxHeader> */}
+{/* 
         <BoxHeader>
           <div style={{ width: '100%' }}>
             <Typography
@@ -798,7 +837,7 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader>
+        </BoxHeader> */}
 
         <Typography
           id="keep-mounted-modal-title"
@@ -944,7 +983,7 @@ export default function AddStudents() {
             >
               StudentID
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" type={"number"} />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder=""  />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography

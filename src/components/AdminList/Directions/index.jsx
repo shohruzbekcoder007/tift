@@ -89,7 +89,6 @@ export default function Directions() {
       name: DirectionName,
       code: DirectionCode,
     }, (response) => {
-      console.log(response.data.result);
       setDirectionName('')
       setDirectionCode('')
       setStatus(!Status)
@@ -411,9 +410,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
 
   }
   const DeleteClick = (id) => {
-    console.log(id);
     DeleteDirection(`${directions}${id}`, (response) => {
-      console.log(response);
       // setStatus(!Status)
       // handleClose()
     }, (error) => {

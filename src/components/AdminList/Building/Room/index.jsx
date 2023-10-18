@@ -61,7 +61,6 @@ export default function Room() {
 
   useEffect(() => {
     getRooms(`${room_create_list}?page_size=${pageSize}&page=${page}&building=${state}`, (response) => {
-      console.log(response.data.results);
       setRooms(response.data.results)
       setPageCount(response.data.page_count)
       setAllCount(response.data.count)
