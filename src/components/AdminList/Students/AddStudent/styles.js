@@ -26,6 +26,23 @@ export const WrapperSelect = styled.div`
 export const WrapperInputsCard = styled.div`
   width: 31%;
 `
+export const StudentInfoCard = styled.div`
+  width: 31%;
+  div {
+    display: flex;
+    margin: 1rem 0;
+    align-items: center;
+  }
+  h3 {
+    font-size: 15px;
+  }
+  b {
+    font-weight: 700;
+    font-size: 13px;
+    margin: 0 0.5rem;
+    color: ${props => props.theme.color.main_color};  
+  }
+`
 
 export const WrapperImgCard = styled.div`
   width: 31%;

@@ -3,7 +3,7 @@ import { BoxHeader } from '../../../../global_styles/styles'
 import { Button, Snackbar, Typography } from '@mui/material'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
-import { WrapperBox, WrapperButtons, WrapperImgCard, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
+import { StudentInfoCard, WrapperBox, WrapperButtons, WrapperImgCard, WrapperInputsCard, WrapperInputsCardTwo } from './styles'
 import { MuiFileInput } from 'mui-file-input'
 import jins from '../../../../dictionary/jins'
 import citizenship from '../../../../dictionary/citizenship'
@@ -428,10 +428,54 @@ export default function AddStudents() {
             }
           </div>
         </BoxHeader>
-        <BoxHeader>
-          <WrapperInputsCard></WrapperInputsCard>
-
-        </BoxHeader>
+          {
+            StudentInfo ?  <BoxHeader>
+            <StudentInfoCard>
+              <div>
+                <h3>Ism: </h3>
+                <b >{StudentInfo.namelatin}</b>
+              </div>
+              <div>
+                <h3>Fuqorolik: </h3>
+                <b >{StudentInfo.citizenship}</b>
+              </div>
+              <div>
+                <h3>JSHSHIR: </h3>
+                <b >{StudentInfo.pinpp}</b>
+              </div>
+            </StudentInfoCard>
+            <StudentInfoCard>
+              <div>
+                <h3>Familiya: </h3>
+                <b>{StudentInfo.surnamelatin}</b>
+              </div>
+              <div>
+                <h3>Mamlakat: </h3>
+                <b>{StudentInfo.birthcountry}</b>
+              </div>
+              <div>
+                <h3>Shahar, Tuman: </h3>
+                <b>{StudentInfo.birthplace}</b>
+              </div>
+            </StudentInfoCard>
+            <StudentInfoCard>
+  
+              <div>
+                <h3>Otasining ismi: </h3>
+                <b >{StudentInfo.patronymlatin}</b>
+              </div>
+              <div>
+                <h3>Millat: </h3>
+                <b >{StudentInfo.nationality}</b>
+              </div>
+              <div>
+                <h3>Manzil: </h3>
+                <b >{StudentInfo.docgiveplace}</b>
+              </div>
+            </StudentInfoCard>
+          </BoxHeader>
+          :""
+          }
         {/* <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -486,8 +530,8 @@ export default function AddStudents() {
           </WrapperInputsCard>
         </BoxHeader> */}
 
-        <BoxHeader>
-          {/* <WrapperInputsCard>
+        {/* <BoxHeader> */}
+        {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -503,7 +547,7 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
           </WrapperInputsCard> */}
-          {/* <WrapperInputsCard>
+        {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -519,7 +563,7 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
           </WrapperInputsCard> */}
-          {/* <WrapperInputsCard>
+        {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -535,7 +579,7 @@ export default function AddStudents() {
             </Typography>
             <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
           </WrapperInputsCard> */}
-        </BoxHeader>
+        {/* </BoxHeader> */}
 
         {/* <BoxHeader>
           <WrapperInputsCard>
@@ -819,7 +863,7 @@ export default function AddStudents() {
             />
           </WrapperInputsCardTwo>
         </BoxHeader> */}
-{/* 
+        {/* 
         <BoxHeader>
           <div style={{ width: '100%' }}>
             <Typography
@@ -983,7 +1027,7 @@ export default function AddStudents() {
             >
               StudentID
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder=""  />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("student_id", val) }} placeholder="" />
           </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
