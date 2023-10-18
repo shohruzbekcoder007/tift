@@ -437,6 +437,12 @@ function App() {
                     <Route path='edit' element={<EditEmployeess />} />
                     <Route path='add' element={<AddEmployees />} />
                   </Route>
+                  <Route path="students-contract" element={<StudentSciences />} >
+                    <Route index element={<StudentsAccountant />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
                     <Route path='information' element={<InformationStudent />} />
