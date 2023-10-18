@@ -251,6 +251,7 @@ export default function ServicesTable() {
                   <th>{elem.call_id}</th>
                   <th>{elem.type}</th>
                   <th>{elem.date}</th>
+                  <th>false</th>
                   <th>
                     <a href={`${elem.file}`} target='_blank'>
                       <Button
@@ -275,7 +276,6 @@ export default function ServicesTable() {
                       </Button>
                     </a>
                   </th>
-                  <th>false</th>
                 </tr>
               )
             })
