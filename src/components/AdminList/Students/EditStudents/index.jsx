@@ -98,17 +98,17 @@ export default function EditStudents() {
     })
   }
 
-  const setFileHandler = (newValue, info) => {
-    reqDataChange("avatar", newValue)
-    setFile(newValue)
-  }
+  // const setFileHandler = (newValue, info) => {
+  //   reqDataChange("avatar", newValue)
+  //   setFile(newValue)
+  // }
 
-  const jinsList = useMemo(() => {
-    reqDataChange("gender", jins[0].value)
-    return jins.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
+  // const jinsList = useMemo(() => {
+  //   reqDataChange("gender", jins[0].value)
+  //   return jins.map(elem => {
+  //     return { value: elem.value, name: elem.uz }
+  //   })
+  // }, [])
 
   const StudyTypeList = useMemo(() => {
     reqDataChange("study_type", study_type[0].value)
@@ -131,19 +131,19 @@ export default function EditStudents() {
     })
   }, [])
 
-  const citizenshipList = useMemo(() => {
-    reqDataChange("citizenship", citizenship[0].value)
-    return citizenship.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
+  // const citizenshipList = useMemo(() => {
+  //   reqDataChange("citizenship", citizenship[0].value)
+  //   return citizenship.map(elem => {
+  //     return { value: elem.value, name: elem.uz }
+  //   })
+  // }, [])
 
-  const nationalityList = useMemo(() => {
-    reqDataChange("nationality", nationality[0].value)
-    return nationality.map(elem => {
-      return { value: elem.value, name: elem.uz }
-    })
-  }, [])
+  // const nationalityList = useMemo(() => {
+  //   reqDataChange("nationality", nationality[0].value)
+  //   return nationality.map(elem => {
+  //     return { value: elem.value, name: elem.uz }
+  //   })
+  // }, [])
 
   const ContractList = useMemo(() => {
     reqDataChange("contract_type", contract_type[0].value)
@@ -155,49 +155,49 @@ export default function EditStudents() {
     })
   }, [])
 
-  useEffect(() => {
-    getRegionListRequest(`${region}?page_size=500`, (response) => {
-      reqDataChange("region", response.data[0]?.id)
-      reqDataChange("region2", response.data[0]?.id)
-      setRegionList(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setRegionList1(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setRegionId(response.data[0]?.id)
-      setRegionId1(response.data[0]?.id)
-    }, (error) => {
-      console.log(error)
-    })
-  }, [])
+  // useEffect(() => {
+  //   getRegionListRequest(`${region}?page_size=500`, (response) => {
+  //     reqDataChange("region", response.data[0]?.id)
+  //     reqDataChange("region2", response.data[0]?.id)
+  //     setRegionList(response.data.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //     setRegionList1(response.data.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //     setRegionId(response.data[0]?.id)
+  //     setRegionId1(response.data[0]?.id)
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }, [])
 
-  useEffect(() => {
-    getRegionListRequest(`${district}?page_size=500`, (response) => {
-      reqDataChange("district", response.data[0]?.id)
-      reqDataChange("district2", response.data[0]?.id)
-      setDistrictList(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-      setDistrictList1(response.data.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
-  }, []);
+  // useEffect(() => {
+  //   getRegionListRequest(`${district}?page_size=500`, (response) => {
+  //     reqDataChange("district", response.data[0]?.id)
+  //     reqDataChange("district2", response.data[0]?.id)
+  //     setDistrictList(response.data.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //     setDistrictList1(response.data.map(elem => {
+  //       return {
+  //         name: elem.name,
+  //         value: elem.id
+  //       }
+  //     }))
+  //   }, (error) => {
+  //     console.log(error)
+  //   })
+  // }, []);
 
   useEffect(() => {
     getRegionListRequest(`${directions}?page_size=500`, (response) => {
@@ -338,7 +338,7 @@ export default function EditStudents() {
       </Typography>
       {
         Status && <WrapperBox>
-        <BoxHeader>
+        {/* <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -391,10 +391,10 @@ export default function EditStudents() {
               selectOptions={jinsList}
             />
           </WrapperInputsCard>
-        </BoxHeader>
+        </BoxHeader> */}
 
         <BoxHeader>
-          <WrapperInputsCard>
+          {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -409,8 +409,8 @@ export default function EditStudents() {
               Familiya
             </Typography>
             <CustomizedInputSimple defaultValue={newData.last_name} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
+          </WrapperInputsCard> */}
+          <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -424,9 +424,29 @@ export default function EditStudents() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
+            <CustomizedInputSimple type={'number'} defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Yo'nalish
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => reqDataChange("specialty", val)}
+              selectedOptionP={newData.specialty}
+              selectOptions={departmentList}
+            />
+          </WrapperInputsCardTwo>
+          {/* <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -441,10 +461,10 @@ export default function EditStudents() {
               Tug’ilgan kuni
             </Typography>
             <BasicDatePicker setFunction={(val) => {reqDataChange("birthday", val)}} label="Tug’ilgan kuni"/>
-          </WrapperInputsCard>
+          </WrapperInputsCard> */}
         </BoxHeader>
 
-        <BoxHeader>
+        {/* <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -543,30 +563,11 @@ export default function EditStudents() {
           <WrapperInputsCard>
 
           </WrapperInputsCard>
-        </BoxHeader>
+        </BoxHeader> */}
 
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Yo'nalish
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("specialty", val)}
-              selectedOptionP={newData.specialty}
-              selectOptions={departmentList}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
+        {/* <BoxHeader> */}
+       
+          {/* <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -581,10 +582,10 @@ export default function EditStudents() {
               JSHSHR
             </Typography>
             <CustomizedInputSimple defaultValue={newData.jshshr}  callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
-          </WrapperInputsCardTwo>
-        </BoxHeader>
+          </WrapperInputsCardTwo> */}
+        {/* </BoxHeader> */}
 
-        <Typography
+        {/* <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -739,9 +740,9 @@ export default function EditStudents() {
             </Typography>
             <CustomizedInputSimple defaultValue={newData.address2} callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader>
+        </BoxHeader> */}
 
-        <Typography
+        {/* <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -754,7 +755,7 @@ export default function EditStudents() {
           }}
         >
           Qo'shimcha Ma'lumotlar
-        </Typography>
+        </Typography> */}
 
         <BoxHeader>
           <WrapperInputsCardTwo>
@@ -915,7 +916,7 @@ export default function EditStudents() {
         </BoxHeader>
 
         <BoxHeader>
-          <WrapperInputsCardTwo>
+          {/* <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -935,7 +936,7 @@ export default function EditStudents() {
               onChange={setFileHandler}
               fullWidth
             />
-          </WrapperInputsCardTwo>
+          </WrapperInputsCardTwo> */}
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"

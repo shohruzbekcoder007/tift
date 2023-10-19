@@ -211,8 +211,8 @@ export const OneEmployee = ({ elem, setDeleted }) => {
       <th>{elem.id}</th>
       <th>
         {
-        elem.avatar?
-          <img src={`${elem.avatar}`} alt="employer avatar" width="80px" height="80px"/>:
+        elem.image_url ?
+          <img src={`${elem.image_url}`} alt="employer avatar" width="80px" height="80px"/>:
           <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="1" y="1" width="36" height="36" rx="10" fill="white" stroke="#C5C5C5" strokeWidth="1.5" />
             <circle cx="19" cy="13" r="7" fill="#C5C5C5" />

@@ -282,12 +282,14 @@ export default function AddStudents() {
       }
       reqDataChange("birthday", student.birth_date)
       reqDataChange("middle_name", student.patronymlatin)
-      reqDataChange("citizenship", student.citizenship)
-      reqDataChange("country", student.birthcountry)
-      reqDataChange("nationality", student.nationality)
+      reqDataChange("citizenship_oneid", student.citizenship)
+      reqDataChange("docdatebegin", student.docdatebegin)
+      reqDataChange("docdateend", student.docdateend)
+      reqDataChange("nationality_oneid", student.nationality)
       reqDataChange("jshshr", student.pinpp)
-      reqDataChange("district", student.birthplace)
-      reqDataChange("address", student.docgiveplace)
+      reqDataChange("birthplace", student.birthplace)
+      reqDataChange("image_url", student.photo)
+      reqDataChange("address", student.birthcountry + " " + student.citizenship + " " + student.nationality + " " + student.docgiveplace)
       setStudentInfo(response.data)
     }, (error) => {
       serChanged(false)
@@ -360,7 +362,6 @@ export default function AddStudents() {
       </Typography>
       <WrapperBox>
         <BoxHeader>
-
           <div style={{ width: "70%", gap: "20px", display: "grid" }}>
             <div>
               <Typography
@@ -714,23 +715,6 @@ export default function AddStudents() {
               selectOptions={departmentList}
             />
           </WrapperInputsCardTwo>
-
-          {/* <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              JSHSHR
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
-          </WrapperInputsCardTwo> */}
         </BoxHeader>
 
         {/* <Typography
@@ -1051,7 +1035,7 @@ export default function AddStudents() {
         </BoxHeader>
 
         <BoxHeader>
-          <WrapperInputsCardTwo>
+          {/* <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -1071,7 +1055,7 @@ export default function AddStudents() {
               onChange={setFileHandler}
               fullWidth
             />
-          </WrapperInputsCardTwo>
+          </WrapperInputsCardTwo> */}
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"

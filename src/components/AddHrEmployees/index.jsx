@@ -11,10 +11,12 @@ import nationality from '../../dictionary/nationality'
 import academic_title from '../../dictionary/academic_title'
 import academic_degree from '../../dictionary/academic_degree'
 import { createEmployee, getRegionListRequest, getRoleList } from './request'
-import { country, district, employee, kafedra, region, role } from '../../utils/API_urls'
+import { additional_ie_oneid, country, district, employee, kafedra, region, role } from '../../utils/API_urls'
 import BasicDatePicker from '../BasicDatePicker'
 import { useNavigate } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
+import { StudentInfoCard, WrapperImgCard } from '../AdminList/Students/AddStudent/styles'
+import { getOneStudentData } from '../AdminList/Students/AddStudent/request'
 
 export default function AddHrEmployees() {
 
@@ -37,6 +39,10 @@ export default function AddHrEmployees() {
   const [alertMessage, setAlertMessage] = useState('')
   const [addRoleList, setaddRoleList] = useState([])
   const handleCloseAlert = () => setOpenAlert(false);
+  const [PassportStudent, setPassportStudent] = useState('')
+  const [BirthdayStudent, setBirthdayStudent] = useState(null)
+
+  const [StudentInfo, setStudentInfo] = useState(null)
 
   const [newData, setNewData] = useState({
     citizenship: null,
@@ -66,6 +72,7 @@ export default function AddHrEmployees() {
     academic_title: null,
     role: null
   })
+
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -257,7 +264,7 @@ export default function AddHrEmployees() {
         setLastNameStatus(true)
 
         msg = msg + " Familiya " + error.response.data.last_name
-      }  if (error.response.data.detail) {
+      } if (error.response.data.detail) {
         msg = msg + " Bunday foydalanuvchi mavjud"
       }
 
@@ -268,6 +275,51 @@ export default function AddHrEmployees() {
       setAlertMessage(msg)
     })
   }
+
+  const WritePassport = (val) => {
+    reqDataChange("passport", val)
+    setPassportStudent(val.toUpperCase());
+  }
+  const handleDate = (val) => {
+    reqDataChange("birthday", val)
+    setBirthdayStudent(val);
+  }
+
+  const GetEmployee = (_) => {
+    getOneStudentData(`${additional_ie_oneid}?passport=${PassportStudent}&birthday=${BirthdayStudent}`, (response) => {
+      let student = response.data
+      reqDataChange("first_name", student.namelatin)
+      reqDataChange("passport", student.document)
+      reqDataChange("last_name", student.surnamelatin)
+      if (student.sex == '1') {
+        reqDataChange("gender", 'male')
+      } else {
+        reqDataChange("gender", 'female')
+      }
+      reqDataChange("middle_name", student.patronymlatin)
+      reqDataChange("citizenship_oneid", student.citizenship)
+      reqDataChange("docdatebegin", student.docdatebegin)
+      reqDataChange("docdateend", student.docdateend)
+      reqDataChange("nationality_oneid", student.nationality)
+      reqDataChange("jshshr", student.pinpp)
+      reqDataChange("birthplace", student.birthplace)
+      reqDataChange("image_url", student.photo)
+      reqDataChange("address", student.birthcountry + " " + student.citizenship + " " + student.nationality + " " + student.docgiveplace)
+      setStudentInfo(response.data)
+    }, (error) => {
+      serChanged(false)
+      setOpenAlert(true)
+      console.log(error)
+      let msg = ``
+      console.log(error)
+      if (error.response.data.message) {
+        msg = msg + " " + error.response.data.message
+      }
+      setAlertMessage(msg)
+
+    })
+  }
+
 
 
   return (
@@ -283,6 +335,129 @@ export default function AddHrEmployees() {
         Qo'shish
       </Typography>
       <WrapperBox>
+
+
+
+        <BoxHeader>
+          <div style={{ width: "70%", gap: "20px", display: "grid" }}>
+            <div>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Pasport
+              </Typography>
+              <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
+            </div>
+            <div>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "0"
+                }}
+              >
+                Tug’ilgan kuni
+              </Typography>
+              <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
+            </div>
+            <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
+              <Button
+                variant="contained"
+                onClick={GetEmployee}
+                sx={{
+                  width: "90px",
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "17px"
+                }}
+                startIcon={null}
+              >
+                Yuklash
+              </Button>
+            </BoxHeader>
+          </div>
+          <div>
+            {
+              StudentInfo ?
+                <WrapperImgCard>
+                  <img src={StudentInfo.photo} alt="" />
+                </WrapperImgCard>
+                :
+                <WrapperImgCard>
+                  <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
+                </WrapperImgCard>
+
+            }
+          </div>
+        </BoxHeader>
+
+        <BoxHeader>
+          {
+            StudentInfo ? <BoxHeader>
+              <StudentInfoCard>
+                <div>
+                  <h3>Ism: </h3>
+                  <b >{StudentInfo.namelatin}</b>
+                </div>
+                <div>
+                  <h3>Fuqorolik: </h3>
+                  <b >{StudentInfo.citizenship}</b>
+                </div>
+                <div>
+                  <h3>JSHSHIR: </h3>
+                  <b >{StudentInfo.pinpp}</b>
+                </div>
+              </StudentInfoCard>
+              <StudentInfoCard>
+                <div>
+                  <h3>Familiya: </h3>
+                  <b>{StudentInfo.surnamelatin}</b>
+                </div>
+                <div>
+                  <h3>Mamlakat: </h3>
+                  <b>{StudentInfo.birthcountry}</b>
+                </div>
+                <div>
+                  <h3>Shahar, Tuman: </h3>
+                  <b>{StudentInfo.birthplace}</b>
+                </div>
+              </StudentInfoCard>
+              <StudentInfoCard>
+
+                <div>
+                  <h3>Sharif: </h3>
+                  <b >{StudentInfo.patronymlatin}</b>
+                </div>
+                <div>
+                  <h3>Millat: </h3>
+                  <b >{StudentInfo.nationality}</b>
+                </div>
+                <div>
+                  <h3>Manzil: </h3>
+                  <b >{StudentInfo.docgiveplace}</b>
+                </div>
+              </StudentInfoCard>
+            </BoxHeader>
+              : ""
+          }
+        </BoxHeader>
+
         <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -304,6 +479,45 @@ export default function AddHrEmployees() {
             />
           </WrapperInputsCard>
         </BoxHeader>
+        
+        <BoxHeader>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Telefon raqami
+            </Typography>
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+          </WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Kafedra
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => reqDataChange("kafedra", val)}
+              selectOptions={departmentList}
+            />
+          </WrapperInputsCardTwo>
+        </BoxHeader>
+{/* 
         <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -335,7 +549,7 @@ export default function AddHrEmployees() {
             >
               Pasport
             </Typography>
-            <CustomizedInputSimple  error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -693,7 +907,7 @@ export default function AddHrEmployees() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader>
+        </BoxHeader> */}
 
         <Typography
           id="keep-mounted-modal-title"
@@ -742,7 +956,7 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-            Akademik unvon
+              Akademik unvon
 
             </Typography>
             <AllSelectFullWidth
@@ -781,14 +995,14 @@ export default function AddHrEmployees() {
                 mb: "10px"
               }}
             >
-               Tajriba
+              Tajriba
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("experience", val) }} placeholder="Ish tajribasi(yil)" type="number" />
           </WrapperInputsCardTwo>
         </BoxHeader>
 
         <BoxHeader>
-          <WrapperInputsCardTwo>
+          {/* <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -808,7 +1022,7 @@ export default function AddHrEmployees() {
               onChange={setFileHandler}
               fullWidth
             />
-          </WrapperInputsCardTwo>
+          </WrapperInputsCardTwo> */}
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
