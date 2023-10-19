@@ -223,7 +223,7 @@ export default function Student_services() {
                   <th>{elem.date}</th>
                   <th>false</th>
                   <th>
-                    <a href={`${elem.file}`} target='_blank'>
+                    <a href={`${elem.file}`} >
                       <Button
                         variant="contained"
                         sx={{

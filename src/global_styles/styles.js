@@ -133,6 +133,10 @@ export const ModalBox = styled.div`
     padding: 32px 20px;
     max-height: 100%;
     overflow-y: auto;
+
+    @media (max-width: 576px) {
+        width: 350px;
+    }
 `
 
 export const ModalSelectWrapper = styled.div`
