@@ -338,7 +338,7 @@ function App() {
                     <Route path='career' element={<Career />} />
                     <Route path='show' element={<Show />} />
                     <Route path='edit' element={<EditEmployeess />} />
-                    <Route path='add' element={<AddEmployees />} />
+                    <Route path='add' element={<AddHrEmployees />} />
                   </Route>
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<Students />} />
