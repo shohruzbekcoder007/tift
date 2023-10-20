@@ -262,6 +262,9 @@ function PaperSheet(props) {
           })}
           <div className={props.classes.footer}>
             {/* {komentni uchirmang} */}
+            {
+            current == quiz.length-1 ? 
+            <>
             <Button
               variant="contained"
               color='secondary'
@@ -284,6 +287,12 @@ function PaperSheet(props) {
             </Button>
             <Button onClick={revealCorrect} variant="contained" color="primary" sx={{ padding: '14px' }}>
               Yakunlash va natijani ko'rish
+            </Button>
+            </>
+            : ""
+          }
+          <Button  variant="contained" color="primary" sx={{ padding: '14px', opacity: 0 }}>
+              {/* Yakunlash va natijani ko'rish */}
             </Button>
             {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="contained" color="primary" style={{ float: "right" }} sx={{ padding: '14px' }}>
               Keyingi
