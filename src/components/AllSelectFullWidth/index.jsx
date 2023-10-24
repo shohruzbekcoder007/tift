@@ -9,9 +9,9 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
     const [age, setAge] = React.useState(selectedOption?.value || selectOptions[0]?.value || 0);
     
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setAge(event.target.value );
         chageValueFunction(event.target.value)
-        console.log(selectedOptionP === event.target.value);
+        console.log(selectedOptionP == event.target.value);
     };
 
   useEffect(() => {

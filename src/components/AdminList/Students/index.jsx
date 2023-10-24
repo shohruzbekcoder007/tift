@@ -9,7 +9,7 @@ import { AttendSearchButton } from './styles'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { Link } from 'react-router-dom'
 import { deleteStudent, getUsers } from './request'
-import { academic_group_short, academic_year, directions, host, users_student } from '../../../utils/API_urls'
+import { academic_group_short, academic_year, additional_student, directions, host, users_student } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
 import { getAcademicGroup } from '../Streams/request'
@@ -38,10 +38,10 @@ export default function Students() {
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
   const [AcademekYear, setAcademekYear] = useState(0)
-  const [DegreeSelect, setDegreeSelect] = useState('all')
-  const [StudyTypeSelect, setStudyTypeSelect] = useState('all')
+  const [DegreeSelect, setDegreeSelect] = useState('')
+  const [StudyTypeSelect, setStudyTypeSelect] = useState('')
   const [DirectionID, setDirectionID] = useState('all')
-  const [GroupID, setGroupID] = useState('all')
+  const [GroupID, setGroupID] = useState('')
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
@@ -49,6 +49,7 @@ export default function Students() {
 
 
   const DegreeList = useMemo(() => {
+    degree[0].value = '&'
     return degree.map(elem => {
       return {
         name: elem.uz,
@@ -58,6 +59,7 @@ export default function Students() {
   }, [])
 
   const StudyTipeList = useMemo(() => {
+    study_type[0].value = '&'
     return study_type.map(elem => {
       return {
         name: elem.uz,
@@ -72,7 +74,7 @@ export default function Students() {
       console.log(response.data.results);
       let mass = [{
         name: "O'quv yili",
-        value: 'all'
+        value: '&',
       }]
 
       response.data.results.map(item => {
@@ -81,7 +83,7 @@ export default function Students() {
           value: item.season
         })
       })
-      setAcademekYear(mass[1].value)
+      setAcademekYear(mass[0].value)
       setYearList(mass)
 
     }, (error) => {
@@ -90,25 +92,23 @@ export default function Students() {
   }, []);
 
   useEffect(() => {
-    if(AcademekYear != 0){
-      setStudents([])
-      getUsers(`${users_student}?page_size=${pageSize}&search=${searchText}&page=${page}&direction=${DirectionID}&academic_group=${GroupID}&year=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
-        console.log(response.data)
-        setStudents(response.data.results)
-        setAllCount(response.data.count)
-        setPageCount(response.data.page_count)
-        if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
-        setYearStatus(false)
-      }, error => {
-        setModalText("Ma'lumot yo'q")
-        console.log(error)
-      })
-    }
+    setStudents([])
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&direction=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
+      console.log(response.data)
+      setStudents(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
+      setYearStatus(false)
+    }, error => {
+      setModalText("Ma'lumot yo'q")
+      console.log(error)
+    })
   }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect])
   // ======
 
   useEffect(() => {
-    
+
     getDirections(`${directions}?page_size=100`, (response) => {
       // setDirections(response.results)
       const currlist = [...response.results]
@@ -119,7 +119,7 @@ export default function Students() {
       })
       setDirections(currlist.map(elem => {
         return {
-          name: elem.name  + " (" + elem.degree + ")",
+          name: elem.name + " (" + elem.degree + ")",
           value: elem.id
         }
       }))
@@ -130,7 +130,7 @@ export default function Students() {
   }, []);
 
   useEffect(() => {
-    if(AcademekYear != 0)
+    if (AcademekYear != 0)
       getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
         // setDirections(response.results)
         const currlist = [...response.data]
@@ -141,7 +141,7 @@ export default function Students() {
         })
         currlist.unshift({
           name: 'Hammasi',
-          id: 'all',
+          id: '',
           student_count: ""
         })
         setGroupList(currlist.map(elem => {
@@ -150,7 +150,7 @@ export default function Students() {
               name: elem.name + " (" + elem.student_count + ")",
               value: elem.id
             }
-          }else {
+          } else {
             return {
               name: elem.name,
               value: elem.id
@@ -205,27 +205,27 @@ export default function Students() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-            <a href={host +  `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}`} target='_blank'>
-            <Button
-              variant="contained"
-              sx={{
-                width: "90px",
-                textTransform: "capitalize",
-                boxShadow: "none",
-                padding: "12px",
-                borderRadius: "10px",
-                fontWeight: "600",
-                fontSize: "14px",
-                lineHeight: "17px"
-              }}
-              startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
-                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-              </svg>
-              }
-            >
-              Excel
-            </Button>
+            <a href={host + `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}`} target='_blank'>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "90px",
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "17px"
+                }}
+                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                </svg>
+                }
+              >
+                Excel
+              </Button>
             </a>
             <Link to={'add'}>
               <Button
@@ -262,7 +262,7 @@ export default function Students() {
           <InputsWrapper>
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
-              selectedOptionP={YearList?.[1]?.value}
+              selectedOptionP={YearList?.[0]?.value}
               selectOptions={YearList}
             />
             <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
