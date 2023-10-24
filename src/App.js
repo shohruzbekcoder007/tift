@@ -151,6 +151,7 @@ import MainHr from './components/MainHr'
 import AddHrEmployees from './components/AddHrEmployees'
 import MainAccountant from './components/MainAccountant'
 import StudentsAccountant from './components/StudentsAccountant'
+import GroupStudents from './components/AdminList/GroupStudents'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -347,6 +348,11 @@ function App() {
                     <Route path='edit' element={<EditStudents />} />
                   </Route>
                   <Route path="addtest" element={<AddTest />} />
+                  <Route path='group' element={<StudentSciences/>}>
+                    <Route index element={<Group />} />
+                    <Route path='students' element={<GroupStudents />} />
+
+                  </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
@@ -488,7 +494,11 @@ function App() {
                     <Route index element={<Directions />} />
                     <Route path='sciences' element={<ScienesStudent />} />
                   </Route>
-                  <Route path='group' element={<Group />} />
+                  <Route path='group' element={<StudentSciences/>}>
+                    <Route index element={<Group />} />
+                    <Route path='students' element={<GroupStudents />} />
+
+                  </Route>
                   <Route path='news' element={<News />} />
                   <Route path='contractprices' element={<Contractprices />} />
 

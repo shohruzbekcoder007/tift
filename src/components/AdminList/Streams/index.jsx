@@ -365,6 +365,7 @@ useEffect(() => {
                 value: 12,
               }]}
             /> */}
+           
             <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
@@ -375,6 +376,11 @@ useEffect(() => {
               selectedOptionP={1}
               selectOptions={SemesterNum}
             />
+             <AllSelectFullWidth
+                chageValueFunction={(val) => setAcademekYear(val)}
+                selectedOptionP={YearList?.[0]?.value}
+                selectOptions={YearList}
+              />
           </InputsWrapper>
         </BoxHeader>
         <BoxHeader>
