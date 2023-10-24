@@ -40,7 +40,7 @@ export default function Students() {
   const [AcademekYear, setAcademekYear] = useState(0)
   const [DegreeSelect, setDegreeSelect] = useState('')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('')
-  const [DirectionID, setDirectionID] = useState('all')
+  const [DirectionID, setDirectionID] = useState('&')
   const [GroupID, setGroupID] = useState('')
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
@@ -93,7 +93,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&direction=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
@@ -114,7 +114,7 @@ export default function Students() {
       const currlist = [...response.results]
       currlist.unshift({
         name: 'Hammasi',
-        id: 'all',
+        id: '&',
         degree: "hammasi"
       })
       setDirections(currlist.map(elem => {
@@ -131,14 +131,14 @@ export default function Students() {
 
   useEffect(() => {
     if (AcademekYear != 0)
-      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
+      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? 'all' : DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
         // setDirections(response.results)
         const currlist = [...response.data]
-        currlist.unshift({
-          name: 'Guruhsiz talabalar',
-          id: 'none',
-          student_count: ""
-        })
+        // currlist.unshift({
+        //   name: 'Guruhsiz talabalar',
+        //   id: 'none',
+        //   student_count: ""
+        // })
         currlist.unshift({
           name: 'Hammasi',
           id: '',
