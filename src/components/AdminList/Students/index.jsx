@@ -17,6 +17,7 @@ import { getAcademecYear } from '../Semestr/requests'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
+import jins from '../../../dictionary/jins'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -44,6 +45,7 @@ export default function Students() {
   const [GroupID, setGroupID] = useState('')
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
+  const [Gender, setGender] = useState('&')
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
 
@@ -93,7 +95,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}`, response => {
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
@@ -104,7 +106,7 @@ export default function Students() {
       setModalText("Ma'lumot yo'q")
       console.log(error)
     })
-  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect])
+  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender])
   // ======
 
   useEffect(() => {
@@ -162,7 +164,12 @@ export default function Students() {
       })
   }, [DirectionID, AcademekYear]);
 
-
+  const jinsList = useMemo(() => {
+    setGender(jins[0].value)
+    return jins.map(elem => {
+      return { value: elem.value, name: elem.uz }
+    })
+  }, [])
   return (
     <>
       <Paper
@@ -276,6 +283,11 @@ export default function Students() {
               chageValueFunction={(val) => setStudyTypeSelect(val)}
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
+            />
+             <AllSelectFullWidth
+              chageValueFunction={val => { setGender(val) }}
+              selectedOptionP={jinsList[0].value}
+              selectOptions={jinsList}
             />
           </InputsWrapper>
         </BoxHeader>

@@ -1,5 +1,11 @@
 export default [
     {
+        value: "&",
+        uz: "jinsi",
+        ru: "erkak",
+        eng: "erkak",
+    },
+    {
         value: "male",
         uz: "erkak",
         ru: "erkak",
