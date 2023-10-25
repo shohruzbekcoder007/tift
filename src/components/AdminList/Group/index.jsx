@@ -465,7 +465,7 @@ export default function Group() {
                   mb: "10px"
                 }}
               >
-                Tutor
+                Tyutor
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setTeacherSelect(val)}
