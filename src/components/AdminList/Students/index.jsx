@@ -45,6 +45,7 @@ export default function Students() {
   const [GroupID, setGroupID] = useState('')
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
+  const [DefaultPage, setDefaultPage] = useState(1)
   const [Gender, setGender] = useState('&')
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
@@ -180,33 +181,6 @@ export default function Students() {
           borderRadius: "10px"
         }}
       >
-
-        {/* <BoxHeader>
-          <InputsWrapper>
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
-
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
-          </InputsWrapper>
-        </BoxHeader> */}
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
@@ -292,26 +266,6 @@ export default function Students() {
           </InputsWrapper>
         </BoxHeader>
 
-        {/* <BoxHeader>
-          <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="F.I.SH" />
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
-            <AllSelectFullWidth
-              chageValueFunction={val => console.log(val)}
-              selectOptions={[{
-                name: "Barchasi",
-                value: 12,
-              }]}
-            />
-          </InputsWrapper>
-        </BoxHeader> */}
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -442,7 +396,7 @@ export default function Students() {
         </BoxBody>
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
+          <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value); setDefaultPage(10) }} />
         </BoxFooter>
       </Paper>
     </>

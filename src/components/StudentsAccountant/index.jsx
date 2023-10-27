@@ -16,8 +16,9 @@ import { getAcademecYear } from '../AdminList/Semestr/requests'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import degree from '../../dictionary/degree'
 import study_type from '../../dictionary/study_type'
-import { accountant_students } from '../../utils/API_urls'
+import { academic_year, accountant_students } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
+import contract_type from '../../dictionary/contract_type'
 
 export default function StudentsAccountant() {
   const [open, setOpen] = React.useState(false);
@@ -40,10 +41,36 @@ export default function StudentsAccountant() {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(1)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
+  const [AcademekYear, setAcademekYear] = useState('all')
+  const [FormPayment, setFormPayment] = useState('&')
+  const [YearList, setYearList] = useState([])
+
+
+  useEffect(() => {
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = [{
+        name: "O'quv yili",
+        value: 'all',
+      }]
+
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.season
+        })
+      })
+      setAcademekYear(mass[0].value)
+      setYearList(mass)
+
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
 
   useEffect(() => {
     setStudents([])
-    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
+    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}&form_of_payment=${FormPayment}`, (response) => {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
@@ -52,7 +79,7 @@ export default function StudentsAccountant() {
       console.log(error);
       setModalText("Ma'lumot yo'q")
     })
-  }, [page, pageSize,Status,searchText])
+  }, [page, pageSize, Status, searchText, AcademekYear,FormPayment])
 
   const openModal = (sum, id) => {
     setstudent_id(id)
@@ -62,12 +89,12 @@ export default function StudentsAccountant() {
   }
 
   useEffect(() => {
-    if(!open) setStudent_contract(0)
-  },[open])
+    if (!open) setStudent_contract(0)
+  }, [open])
 
   const handleClick = (_) => {
     patchStudents_contract(`${accountant_students}${student_id}/`, {
-      summ:New_contract
+      summ: New_contract
     }, (response) => {
       handleClose()
       setStatus(!Status)
@@ -76,6 +103,16 @@ export default function StudentsAccountant() {
       console.log(error);
     })
   }
+
+  const Contract = useMemo(() => {
+    return contract_type.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
+  }, [])
+
 
   return (
     <>
@@ -92,7 +129,7 @@ export default function StudentsAccountant() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-          <Button
+            <Button
               variant="contained"
               sx={{
                 width: "90px",
@@ -116,7 +153,18 @@ export default function StudentsAccountant() {
           </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
-
+          <InputsWrapper>
+            <AllSelectFullWidth
+              chageValueFunction={(val) => setAcademekYear(val)}
+              selectedOptionP={YearList?.[0]?.value}
+              selectOptions={YearList}
+            />
+            <AllSelectFullWidth
+              chageValueFunction={(val) => setFormPayment(val)}
+              selectedOptionP={Contract?.[0]?.value}
+              selectOptions={Contract}
+            />
+          </InputsWrapper>
         </BoxHeader>
 
         {/* <BoxHeader>
@@ -278,7 +326,7 @@ export default function StudentsAccountant() {
                         <th>{elem.academic_year}</th>
                         <th>{Number(elem.contract)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
                         <th>{Number(elem.summ)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
-                        <th style={{color: 'red'}}>{Number(elem.contract - elem.summ)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
+                        <th style={{ color: 'red' }}>{Number(elem.contract - elem.summ)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
                         <th> <Button
                           variant="contained"
                           onClick={() => openModal(elem.summ, elem.id)}
