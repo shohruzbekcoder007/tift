@@ -28,20 +28,21 @@ export default function AddStudents() {
   const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
-  // const [regionList, setRegionList] = useState([])
-  // const [regionList1, setRegionList1] = useState([])
-  // const [districtList, setDistrictList] = useState([])
-  // const [districtList1, setDistrictList1] = useState([])
+  const [regionList, setRegionList] = useState([])
+  const [regionList1, setRegionList1] = useState([])
+  const [districtList, setDistrictList] = useState([])
+  const [districtList1, setDistrictList1] = useState([])
   const [departmentList, setDepartmentList] = useState([])
-  // const [countryList, setCountryList] = useState([])
-  // const [regionId, setRegionId] = useState(null)
-  // const [regionId1, setRegionId1] = useState(null)
+  const [countryList, setCountryList] = useState([])
+  const [regionId, setRegionId] = useState(null)
+  const [regionId1, setRegionId1] = useState(null)
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [academicGroupList, setacademicGroupList] = useState([])
   const [alertMessage, setAlertMessage] = useState('')
   const [PassportStudent, setPassportStudent] = useState('')
   const [BirthdayStudent, setBirthdayStudent] = useState(null)
+  const [AutoOrHandle, setAutoOrHandle] = useState(false)
 
   const [StudentInfo, setStudentInfo] = useState(null)
 
@@ -108,12 +109,12 @@ export default function AddStudents() {
     setFile(newValue)
   }
 
-  // const jinsList = useMemo(() => {
-  //   reqDataChange("gender", jins[0].value)
-  //   return jins.map(elem => {
-  //     return { value: elem.value, name: elem.uz }
-  //   })
-  // }, [])
+  const jinsList = useMemo(() => {
+    reqDataChange("gender", jins[0].value)
+    return jins.map(elem => {
+      return { value: elem.value, name: elem.uz }
+    })
+  }, [])
 
   const StudyTypeList = useMemo(() => {
     reqDataChange("study_type", study_type[0].value)
@@ -143,12 +144,12 @@ export default function AddStudents() {
     })
   }, [])
 
-  // const nationalityList = useMemo(() => {
-  //   reqDataChange("nationality", nationality[0].value)
-  //   return nationality.map(elem => {
-  //     return { value: elem.value, name: elem.uz }
-  //   })
-  // }, [])
+  const nationalityList = useMemo(() => {
+    reqDataChange("nationality", nationality[0].value)
+    return nationality.map(elem => {
+      return { value: elem.value, name: elem.uz }
+    })
+  }, [])
 
   const ContractList = useMemo(() => {
     reqDataChange("contract_type", contract_type[0].value)
@@ -235,37 +236,37 @@ export default function AddStudents() {
     })
   }, [])
 
-  // useEffect(() => {
-  //   if (regionId) {
-  //     getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
-  //       reqDataChange("district", response.data[0]?.id)
-  //       setDistrictList(response.data.map(elem => {
-  //         return {
-  //           name: elem.name,
-  //           value: elem.id
-  //         }
-  //       }))
-  //     }, (error) => {
-  //       console.log(error)
-  //     })
-  //   }
-  // }, [regionId])
+  useEffect(() => {
+    if (regionId) {
+      getRegionListRequest(`${district}?page_size=500&region=${regionId}`, (response) => {
+        reqDataChange("district", response.data[0]?.id)
+        setDistrictList(response.data.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [regionId])
 
-  // useEffect(() => {
-  //   if (regionId1) {
-  //     getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
-  //       reqDataChange("district2", response.data[0]?.id)
-  //       setDistrictList1(response.data.map(elem => {
-  //         return {
-  //           name: elem.name,
-  //           value: elem.id
-  //         }
-  //       }))
-  //     }, (error) => {
-  //       console.log(error)
-  //     })
-  //   }
-  // }, [regionId1])
+  useEffect(() => {
+    if (regionId1) {
+      getRegionListRequest(`${district}?page_size=500&region=${regionId1}`, (response) => {
+        reqDataChange("district2", response.data[0]?.id)
+        setDistrictList1(response.data.map(elem => {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }))
+      }, (error) => {
+        console.log(error)
+      })
+    }
+  }, [regionId1])
 
 
 
@@ -361,123 +362,132 @@ export default function AddStudents() {
         Qo'shish
       </Typography>
       <WrapperBox>
-        <BoxHeader>
-          <div style={{ width: "70%", gap: "20px", display: "grid" }}>
-            <div>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Pasport
-              </Typography>
-              <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
-            </div>
-            <div>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "0"
-                }}
-              >
-                Tug’ilgan kuni
-              </Typography>
-              <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
-            </div>
-            <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
-              <Button
-                variant="contained"
-                onClick={GetStudent}
-                sx={{
-                  width: "90px",
-                  textTransform: "capitalize",
-                  boxShadow: "none",
-                  padding: "12px",
-                  borderRadius: "10px",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  lineHeight: "17px"
-                }}
-                startIcon={null}
-              >
-                Yuklash
-              </Button>
-            </BoxHeader>
-          </div>
-          <div>
-            {
-              StudentInfo ?
-                <WrapperImgCard>
-                  <img src={StudentInfo.photo} alt="" />
-                </WrapperImgCard>
-                :
-                <WrapperImgCard>
-                  <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
-                </WrapperImgCard>
+        {
+          AutoOrHandle ? <>
+            <BoxHeader>
+              <div style={{ width: "70%", gap: "20px", display: "grid" }}>
+                <div>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Pasport
+                  </Typography>
+                  <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
+                </div>
+                <div>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "0"
+                    }}
+                  >
+                    Tug’ilgan kuni
+                  </Typography>
+                  <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
+                </div>
+                <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
+                  <Button
+                    variant="contained"
+                    onClick={GetStudent}
+                    sx={{
+                      width: "90px",
+                      textTransform: "capitalize",
+                      boxShadow: "none",
+                      padding: "12px",
+                      borderRadius: "10px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      lineHeight: "17px"
+                    }}
+                    startIcon={null}
+                  >
+                    Yuklash
+                  </Button>
+                </BoxHeader>
+              </div>
+              <div>
+                {
+                  StudentInfo ?
+                    <WrapperImgCard>
+                      <img src={StudentInfo.photo} alt="" />
+                    </WrapperImgCard>
+                    :
+                    <WrapperImgCard>
+                      <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
+                    </WrapperImgCard>
 
+                }
+              </div>
+            </BoxHeader>
+            {
+              StudentInfo ? <BoxHeader>
+                <StudentInfoCard>
+                  <div>
+                    <h3>Ism: </h3>
+                    <b >{StudentInfo.namelatin}</b>
+                  </div>
+                  <div>
+                    <h3>Fuqorolik: </h3>
+                    <b >{StudentInfo.citizenship}</b>
+                  </div>
+                  <div>
+                    <h3>JSHSHIR: </h3>
+                    <b >{StudentInfo.pinpp}</b>
+                  </div>
+                </StudentInfoCard>
+                <StudentInfoCard>
+                  <div>
+                    <h3>Familiya: </h3>
+                    <b>{StudentInfo.surnamelatin}</b>
+                  </div>
+                  <div>
+                    <h3>Mamlakat: </h3>
+                    <b>{StudentInfo.birthcountry}</b>
+                  </div>
+                  <div>
+                    <h3>Shahar, Tuman: </h3>
+                    <b>{StudentInfo.birthplace}</b>
+                  </div>
+                </StudentInfoCard>
+                <StudentInfoCard>
+
+                  <div>
+                    <h3>Otasining ismi: </h3>
+                    <b >{StudentInfo.patronymlatin}</b>
+                  </div>
+                  <div>
+                    <h3>Millat: </h3>
+                    <b >{StudentInfo.nationality}</b>
+                  </div>
+                  <div>
+                    <h3>Manzil: </h3>
+                    <b >{StudentInfo.docgiveplace}</b>
+                  </div>
+                </StudentInfoCard>
+              </BoxHeader>
+                : ""
             }
-          </div>
-        </BoxHeader>
-          {
-            StudentInfo ?  <BoxHeader>
-            <StudentInfoCard>
-              <div>
-                <h3>Ism: </h3>
-                <b >{StudentInfo.namelatin}</b>
-              </div>
-              <div>
-                <h3>Fuqorolik: </h3>
-                <b >{StudentInfo.citizenship}</b>
-              </div>
-              <div>
-                <h3>JSHSHIR: </h3>
-                <b >{StudentInfo.pinpp}</b>
-              </div>
-            </StudentInfoCard>
-            <StudentInfoCard>
-              <div>
-                <h3>Familiya: </h3>
-                <b>{StudentInfo.surnamelatin}</b>
-              </div>
-              <div>
-                <h3>Mamlakat: </h3>
-                <b>{StudentInfo.birthcountry}</b>
-              </div>
-              <div>
-                <h3>Shahar, Tuman: </h3>
-                <b>{StudentInfo.birthplace}</b>
-              </div>
-            </StudentInfoCard>
-            <StudentInfoCard>
-  
-              <div>
-                <h3>Otasining ismi: </h3>
-                <b >{StudentInfo.patronymlatin}</b>
-              </div>
-              <div>
-                <h3>Millat: </h3>
-                <b >{StudentInfo.nationality}</b>
-              </div>
-              <div>
-                <h3>Manzil: </h3>
-                <b >{StudentInfo.docgiveplace}</b>
-              </div>
-            </StudentInfoCard>
-          </BoxHeader>
-          :""
-          }
-        {/* <BoxHeader>
+
+          </>
+            : <>
+            
+            
+       
+
+        <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -529,10 +539,10 @@ export default function AddStudents() {
               selectOptions={jinsList}
             />
           </WrapperInputsCard>
-        </BoxHeader> */}
+        </BoxHeader>
 
-        {/* <BoxHeader> */}
-        {/* <WrapperInputsCard>
+        <BoxHeader>
+          <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -547,8 +557,8 @@ export default function AddStudents() {
               Familiya
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
-          </WrapperInputsCard> */}
-        {/* <WrapperInputsCard>
+          </WrapperInputsCard>
+          <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -563,8 +573,8 @@ export default function AddStudents() {
               Telefon raqami
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
-          </WrapperInputsCard> */}
-        {/* <WrapperInputsCard>
+          </WrapperInputsCard>
+          <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -579,10 +589,10 @@ export default function AddStudents() {
               Tug’ilgan kuni
             </Typography>
             <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
-          </WrapperInputsCard> */}
-        {/* </BoxHeader> */}
+          </WrapperInputsCard>
+        </BoxHeader>
 
-        {/* <BoxHeader>
+        <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -611,9 +621,9 @@ export default function AddStudents() {
                 mb: "10px"
               }}
             >
-              Elektron pochta
+              JSHSHIR
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
+            <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }}  />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography
@@ -634,9 +644,9 @@ export default function AddStudents() {
               selectOptions={citizenshipList}
             />
           </WrapperInputsCard>
-        </BoxHeader> */}
+        </BoxHeader>
 
-        {/* <BoxHeader>
+        <BoxHeader>
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
@@ -677,7 +687,7 @@ export default function AddStudents() {
           </WrapperInputsCardTwo>
           <WrapperInputsCard>
           </WrapperInputsCard>
-        </BoxHeader> */}
+        </BoxHeader>
 
         <BoxHeader>
           <WrapperInputsCardTwo>
@@ -717,7 +727,7 @@ export default function AddStudents() {
           </WrapperInputsCardTwo>
         </BoxHeader>
 
-        {/* <Typography
+        <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -771,9 +781,9 @@ export default function AddStudents() {
               selectOptions={districtList}
             />
           </WrapperInputsCardTwo>
-        </BoxHeader> */}
+        </BoxHeader>
 
-        {/* <BoxHeader>
+        <BoxHeader>
           <div style={{ width: '100%' }}>
             <Typography
               id="keep-mounted-modal-title"
@@ -790,9 +800,9 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader> */}
+        </BoxHeader>
 
-        {/* <Typography
+        <Typography
           id="keep-mounted-modal-title"
           variant="h6"
           component="h4"
@@ -846,8 +856,8 @@ export default function AddStudents() {
               selectOptions={districtList1}
             />
           </WrapperInputsCardTwo>
-        </BoxHeader> */}
-        {/* 
+        </BoxHeader>
+
         <BoxHeader>
           <div style={{ width: '100%' }}>
             <Typography
@@ -865,8 +875,10 @@ export default function AddStudents() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader> */}
+        </BoxHeader>
 
+        </>
+        }
         <Typography
           id="keep-mounted-modal-title"
           variant="h6"
@@ -1035,7 +1047,7 @@ export default function AddStudents() {
         </BoxHeader>
 
         <BoxHeader>
-          {/* <WrapperInputsCardTwo>
+          <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -1055,7 +1067,7 @@ export default function AddStudents() {
               onChange={setFileHandler}
               fullWidth
             />
-          </WrapperInputsCardTwo> */}
+          </WrapperInputsCardTwo>
           <WrapperInputsCardTwo>
             <Typography
               id="keep-mounted-modal-title"
@@ -1076,6 +1088,7 @@ export default function AddStudents() {
             />
           </WrapperInputsCardTwo>
         </BoxHeader>
+
         <WrapperInputsCardTwo>
           <WrapperButtons>
             <Button
