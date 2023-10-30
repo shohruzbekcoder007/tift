@@ -18,6 +18,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import jins from '../../../dictionary/jins'
+import contract_type from '../../../dictionary/contract_type'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -49,7 +50,17 @@ export default function Students() {
   const [Gender, setGender] = useState('&')
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
+  const [FormPayment, setFormPayment] = useState('&')
 
+
+  const Contract = useMemo(() => {
+    return contract_type.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
+  }, [])
 
   const DegreeList = useMemo(() => {
     degree[0].value = '&'
@@ -96,7 +107,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}`, response => {
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
@@ -107,7 +118,7 @@ export default function Students() {
       setModalText("Ma'lumot yo'q")
       console.log(error)
     })
-  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender])
+  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender,FormPayment])
   // ======
 
   useEffect(() => {
@@ -262,6 +273,12 @@ export default function Students() {
               chageValueFunction={val => { setGender(val) }}
               selectedOptionP={jinsList[0].value}
               selectOptions={jinsList}
+            />
+
+            <AllSelectFullWidth
+              chageValueFunction={(val) => setFormPayment(val)}
+              selectedOptionP={Contract?.[0]?.value}
+              selectOptions={Contract}
             />
           </InputsWrapper>
         </BoxHeader>

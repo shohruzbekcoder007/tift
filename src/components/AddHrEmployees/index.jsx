@@ -17,6 +17,9 @@ import { useNavigate } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 import { StudentInfoCard, WrapperImgCard } from '../AdminList/Students/AddStudent/styles'
 import { getOneStudentData } from '../AdminList/Students/AddStudent/request'
+import { TabPanel, Tabs } from '@mui/base'
+import EmptyPanel from '../Questionnaire/EmptyPanel'
+import { Tab, TabsList } from '../QuestionnaireTeacher/styles'
 
 export default function AddHrEmployees() {
 
@@ -41,6 +44,7 @@ export default function AddHrEmployees() {
   const handleCloseAlert = () => setOpenAlert(false);
   const [PassportStudent, setPassportStudent] = useState('')
   const [BirthdayStudent, setBirthdayStudent] = useState(null)
+  const [AutoOrHandle, setAutoOrHandle] = useState(false)
 
   const [StudentInfo, setStudentInfo] = useState(null)
 
@@ -335,9 +339,42 @@ export default function AddHrEmployees() {
         Qo'shish
       </Typography>
       <WrapperBox>
-
-
-
+      <Tabs defaultValue={0} style={{ width: "100%" }}>
+        <TabsList>
+          <Tab>Qo'lda</Tab>
+          <Tab>OneID</Tab>
+        </TabsList>
+        <TabPanel value={0}>
+          
+        </TabPanel>
+        <TabPanel value={1}>
+          
+        </TabPanel>
+      </Tabs>
+      <BoxHeader>
+          <WrapperInputsCard>
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "16px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px"
+              }}
+            >
+              Rolni tanlang
+            </Typography>
+            <AllSelectFullWidth
+              chageValueFunction={val => { reqDataChange("role", val) }}
+              selectOptions={addRoleList}
+            />
+          </WrapperInputsCard>
+        </BoxHeader>
+        {
+          AutoOrHandle ? <>
+          
         <BoxHeader>
           <div style={{ width: "70%", gap: "20px", display: "grid" }}>
             <div>
@@ -457,29 +494,6 @@ export default function AddHrEmployees() {
               : ""
           }
         </BoxHeader>
-
-        <BoxHeader>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Rolni tanlang
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => { reqDataChange("role", val) }}
-              selectOptions={addRoleList}
-            />
-          </WrapperInputsCard>
-        </BoxHeader>
-        
         <BoxHeader>
           <WrapperInputsCardTwo>
             <Typography
@@ -517,7 +531,8 @@ export default function AddHrEmployees() {
             />
           </WrapperInputsCardTwo>
         </BoxHeader>
-{/* 
+          </> : <>
+          
         <BoxHeader>
           <WrapperInputsCard>
             <Typography
@@ -907,7 +922,16 @@ export default function AddHrEmployees() {
             </Typography>
             <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
           </div>
-        </BoxHeader> */}
+        </BoxHeader>
+          </>
+        }
+
+        
+        
+
+
+        
+
 
         <Typography
           id="keep-mounted-modal-title"

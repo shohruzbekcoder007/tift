@@ -42,7 +42,7 @@ export default function StudentsAccountant() {
   const [pageCount, setPageCount] = useState(1)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   const [AcademekYear, setAcademekYear] = useState('all')
-  const [FormPayment, setFormPayment] = useState('&')
+  const [FormPayment, setFormPayment] = useState('all')
   const [YearList, setYearList] = useState([])
 
 
@@ -70,7 +70,7 @@ export default function StudentsAccountant() {
 
   useEffect(() => {
     setStudents([])
-    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}&form_of_payment=${FormPayment}`, (response) => {
+    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}`, (response) => {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
@@ -159,11 +159,11 @@ export default function StudentsAccountant() {
               selectedOptionP={YearList?.[0]?.value}
               selectOptions={YearList}
             />
-            <AllSelectFullWidth
+            {/* <AllSelectFullWidth
               chageValueFunction={(val) => setFormPayment(val)}
               selectedOptionP={Contract?.[0]?.value}
               selectOptions={Contract}
-            />
+            /> */}
           </InputsWrapper>
         </BoxHeader>
 

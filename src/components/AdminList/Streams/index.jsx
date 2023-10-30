@@ -255,6 +255,8 @@ useEffect(() => {
         setStreamsList(response.data.results);
         setPageCount(response.data.page_count);
         setAllCount(response.data.count);
+        console.log(response);
+        console.log(response.data.results.length == 0);
         if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       }, (error) => {
         setModalText("Ma'lumot yo'q")
