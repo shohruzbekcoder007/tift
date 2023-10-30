@@ -356,7 +356,7 @@ export default function Student_services() {
                   mb: "10px"
                 }}
               >
-                Qayerga?
+                Muassasa nomi
               </Typography>
               <CustomizedInputSimple callback_func={(val) => { setJobInput(val) }} placeholder="Kiriting" />
             </ModalSelectWrapper>
