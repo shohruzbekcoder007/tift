@@ -152,6 +152,8 @@ import AddHrEmployees from './components/AddHrEmployees'
 import MainAccountant from './components/MainAccountant'
 import StudentsAccountant from './components/StudentsAccountant'
 import GroupStudents from './components/AdminList/GroupStudents'
+import CallStudents from './components/CallStudents'
+import SeeStudnetsInfoInvation from './components/SeeStudnetsInfoInvation'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -351,7 +353,10 @@ function App() {
                   <Route path='group' element={<StudentSciences/>}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
-
+                  </Route>
+                  <Route path='Call' element={<StudentSciences/>}>
+                    <Route index element={<CallStudents />} />
+                    <Route path='see' element={<SeeStudnetsInfoInvation />} />
                   </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />

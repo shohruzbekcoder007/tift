@@ -13,7 +13,7 @@ import CustomizedInputSimple from '../CustomizedInputSimple'
 import ServicesTable from '../ServicesTable/ServicesTable'
 import { useMemo } from 'react'
 import { postStudentInformation } from './request'
-import { student_doc, student_documents } from '../../utils/API_urls'
+import { additional_documents, student_doc, student_documents } from '../../utils/API_urls'
 import MuiAlert from '@mui/material/Alert'
 import { getDocumentStudents } from '../ServicesTable/request'
 
@@ -37,9 +37,9 @@ export default function Student_services() {
   const [Data, setData] = useState([]);
 
   useEffect(() => {
-    getDocumentStudents(student_documents, (response) => {
+    getDocumentStudents(additional_documents, (response) => {
       console.log(response);
-      setData(response.data);
+      setData(response.data.results);
     }, (error) => {
       console.log(error);
     });
@@ -227,7 +227,8 @@ export default function Student_services() {
                         <th>{elem.type}</th>
                         <th>{elem.date}</th>
                         {elem.status == "success" ? <th style={{ color: "green" }}>{elem.status}</th> : ""}
-                        {elem.status == "processing" ? <th style={{ color: 'red' }}>{elem.status}</th> : ""}
+                        {elem.status == "processing" ? <th style={{ color: 'rgba(214, 177, 13, 0.993)' }}>{elem.status}</th> : ""}
+                        {elem.status == "error" ? <th style={{ color: 'red' }}>{elem?.description} </th> : ""}
                         {elem.status == "pending" ? <th style={{ color: "rgba(214, 177, 13, 0.993)" }}>{elem.status}</th> : ""}
                         <th>
                           {

@@ -109,6 +109,7 @@ export const holidays_detail = '/holidays_detail/'
 export const kafedra = '/kafedra/'
 export const teacher_change_nb = "/nbpetition_status/"
 export const semester = "/semester/"
+export const additional_documents = "/additional/documents/"
 export const academic_year = "/academic_year/"
 export const employee = "/employee/"
 export const region = "/region/"
