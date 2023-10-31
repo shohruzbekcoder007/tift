@@ -358,6 +358,7 @@ export default function Student_services() {
               >
                 Muassasa nomi
               </Typography>
+              <p style={{margin: "0.5rem 0", fontSize: '13px'}}>O'zingiz ishlayotgan muassasa nomini to'g'ri kiriting</p>
               <CustomizedInputSimple callback_func={(val) => { setJobInput(val) }} placeholder="Kiriting" />
             </ModalSelectWrapper>
           }
