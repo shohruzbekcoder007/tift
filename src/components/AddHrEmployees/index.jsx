@@ -339,19 +339,12 @@ export default function AddHrEmployees() {
         Qo'shish
       </Typography>
       <WrapperBox>
-      <Tabs defaultValue={0} style={{ width: "100%" }}>
-        <TabsList>
-          <Tab>Qo'lda</Tab>
-          <Tab>OneID</Tab>
-        </TabsList>
-        <TabPanel value={0}>
-          
-        </TabPanel>
-        <TabPanel value={1}>
-          
-        </TabPanel>
-      </Tabs>
-      <BoxHeader>
+        <Tabs defaultValue={0} style={{ width: "100%" }}>
+          <TabsList>
+            <Tab>Qo'lda</Tab>
+            <Tab>OneID</Tab>
+          </TabsList>
+          <BoxHeader>
           <WrapperInputsCard>
             <Typography
               id="keep-mounted-modal-title"
@@ -372,565 +365,573 @@ export default function AddHrEmployees() {
             />
           </WrapperInputsCard>
         </BoxHeader>
+          <TabPanel value={0}>
+            <BoxHeader>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Ism
+                </Typography>
+                <CustomizedInputSimple error={NameStatus} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Pasport
+                </Typography>
+                <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Jinsi
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => { reqDataChange("gender", val) }}
+                  selectOptions={jinsList}
+                />
+              </WrapperInputsCard>
+            </BoxHeader>
+
+            <BoxHeader>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Familiya
+                </Typography>
+                <CustomizedInputSimple error={LastNameStatus} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Telefon raqami
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "0"
+                  }}
+                >
+                  Tug’ilgan kuni
+                </Typography>
+                <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
+              </WrapperInputsCard>
+            </BoxHeader>
+
+            <BoxHeader>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Sharifi
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sharifi" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Elektron pochta
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
+              </WrapperInputsCard>
+              <WrapperInputsCard>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Fuqarolik
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("citizenship", val)}
+                  selectOptions={citizenshipList}
+                />
+              </WrapperInputsCard>
+            </BoxHeader>
+
+            <BoxHeader>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Mamlakat
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("country", val)}
+                  selectOptions={countryList}
+                />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Millat
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("nationality", val)}
+                  selectOptions={nationalityList}
+                />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCard>
+
+              </WrapperInputsCard>
+            </BoxHeader>
+
+            <BoxHeader>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Kafedra
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("kafedra", val)}
+                  selectOptions={departmentList}
+                />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  JSHSHIR
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
+              </WrapperInputsCardTwo>
+            </BoxHeader>
+
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "24px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px",
+                p: 2
+              }}
+            >
+              Doimiy yashash manzili
+            </Typography>
+
+            <BoxHeader>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Viloyat
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => { reqDataChange("region", val); setRegionId(val) }}
+                  selectOptions={regionList}
+                />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Shahar, Tuman
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("district", val)}
+                  selectOptions={districtList}
+                />
+              </WrapperInputsCardTwo>
+            </BoxHeader>
+
+            <BoxHeader>
+              <div style={{ width: '100%' }}>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Manzil
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
+              </div>
+            </BoxHeader>
+
+            <Typography
+              id="keep-mounted-modal-title"
+              variant="h6"
+              component="h4"
+              sx={{
+                fontSize: "24px",
+                fontWeight: 600,
+                color: "#000",
+                mb: "10px",
+                p: 2
+              }}
+            >
+              Vaqtinchalik yashash manzili
+            </Typography>
+
+            <BoxHeader>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Viloyat
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => { reqDataChange("region2", val); setRegionId1(val) }}
+                  selectOptions={regionList1}
+                />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Shahar, Tuman
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("district2", val)}
+                  selectOptions={districtList1}
+                />
+              </WrapperInputsCardTwo>
+            </BoxHeader>
+
+            <BoxHeader>
+              <div style={{ width: '100%' }}>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Manzil
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
+              </div>
+            </BoxHeader>
+          </TabPanel>
+          <TabPanel value={1}>
+            <BoxHeader>
+              <div style={{ width: "70%", gap: "20px", display: "grid" }}>
+                <div>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Pasport
+                  </Typography>
+                  <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
+                </div>
+                <div>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "0"
+                    }}
+                  >
+                    Tug’ilgan kuni
+                  </Typography>
+                  <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
+                </div>
+                <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
+                  <Button
+                    variant="contained"
+                    onClick={GetEmployee}
+                    sx={{
+                      width: "90px",
+                      textTransform: "capitalize",
+                      boxShadow: "none",
+                      padding: "12px",
+                      borderRadius: "10px",
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      lineHeight: "17px"
+                    }}
+                    startIcon={null}
+                  >
+                    Yuklash
+                  </Button>
+                </BoxHeader>
+              </div>
+              <div>
+                {
+                  StudentInfo ?
+                    <WrapperImgCard>
+                      <img src={StudentInfo.photo} alt="" />
+                    </WrapperImgCard>
+                    :
+                    <WrapperImgCard>
+                      <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
+                    </WrapperImgCard>
+
+                }
+              </div>
+            </BoxHeader>
+
+            <BoxHeader>
+              {
+                StudentInfo ? <BoxHeader>
+                  <StudentInfoCard>
+                    <div>
+                      <h3>Ism: </h3>
+                      <b >{StudentInfo.namelatin}</b>
+                    </div>
+                    <div>
+                      <h3>Fuqorolik: </h3>
+                      <b >{StudentInfo.citizenship}</b>
+                    </div>
+                    <div>
+                      <h3>JSHSHIR: </h3>
+                      <b >{StudentInfo.pinpp}</b>
+                    </div>
+                  </StudentInfoCard>
+                  <StudentInfoCard>
+                    <div>
+                      <h3>Familiya: </h3>
+                      <b>{StudentInfo.surnamelatin}</b>
+                    </div>
+                    <div>
+                      <h3>Mamlakat: </h3>
+                      <b>{StudentInfo.birthcountry}</b>
+                    </div>
+                    <div>
+                      <h3>Shahar, Tuman: </h3>
+                      <b>{StudentInfo.birthplace}</b>
+                    </div>
+                  </StudentInfoCard>
+                  <StudentInfoCard>
+
+                    <div>
+                      <h3>Sharif: </h3>
+                      <b >{StudentInfo.patronymlatin}</b>
+                    </div>
+                    <div>
+                      <h3>Millat: </h3>
+                      <b >{StudentInfo.nationality}</b>
+                    </div>
+                    <div>
+                      <h3>Manzil: </h3>
+                      <b >{StudentInfo.docgiveplace}</b>
+                    </div>
+                  </StudentInfoCard>
+                </BoxHeader>
+                  : ""
+              }
+            </BoxHeader>
+            <BoxHeader>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Telefon raqami
+                </Typography>
+                <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+              </WrapperInputsCardTwo>
+              <WrapperInputsCardTwo>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Kafedra
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => reqDataChange("kafedra", val)}
+                  selectOptions={departmentList}
+                />
+              </WrapperInputsCardTwo>
+            </BoxHeader>
+          </TabPanel>
+        </Tabs>
+       
         {
           AutoOrHandle ? <>
-          
-        <BoxHeader>
-          <div style={{ width: "70%", gap: "20px", display: "grid" }}>
-            <div>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Pasport
-              </Typography>
-              <CustomizedInputSimple status='passport' defaultValue={PassportStudent} callback_func={(val) => { WritePassport(val) }} placeholder="Passport" />
-            </div>
-            <div>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "0"
-                }}
-              >
-                Tug’ilgan kuni
-              </Typography>
-              <BasicDatePicker setFunction={(val) => { handleDate(val) }} label="Tug’ilgan kuni" />
-            </div>
-            <BoxHeader style={{ margin: "1rem 0", display: "flex", justifyContent: "end" }}>
-              <Button
-                variant="contained"
-                onClick={GetEmployee}
-                sx={{
-                  width: "90px",
-                  textTransform: "capitalize",
-                  boxShadow: "none",
-                  padding: "12px",
-                  borderRadius: "10px",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  lineHeight: "17px"
-                }}
-                startIcon={null}
-              >
-                Yuklash
-              </Button>
-            </BoxHeader>
-          </div>
-          <div>
-            {
-              StudentInfo ?
-                <WrapperImgCard>
-                  <img src={StudentInfo.photo} alt="" />
-                </WrapperImgCard>
-                :
-                <WrapperImgCard>
-                  <img src="https://qabul.tift.uz/static/images/user.jpeg" alt="" />
-                </WrapperImgCard>
 
-            }
-          </div>
-        </BoxHeader>
 
-        <BoxHeader>
-          {
-            StudentInfo ? <BoxHeader>
-              <StudentInfoCard>
-                <div>
-                  <h3>Ism: </h3>
-                  <b >{StudentInfo.namelatin}</b>
-                </div>
-                <div>
-                  <h3>Fuqorolik: </h3>
-                  <b >{StudentInfo.citizenship}</b>
-                </div>
-                <div>
-                  <h3>JSHSHIR: </h3>
-                  <b >{StudentInfo.pinpp}</b>
-                </div>
-              </StudentInfoCard>
-              <StudentInfoCard>
-                <div>
-                  <h3>Familiya: </h3>
-                  <b>{StudentInfo.surnamelatin}</b>
-                </div>
-                <div>
-                  <h3>Mamlakat: </h3>
-                  <b>{StudentInfo.birthcountry}</b>
-                </div>
-                <div>
-                  <h3>Shahar, Tuman: </h3>
-                  <b>{StudentInfo.birthplace}</b>
-                </div>
-              </StudentInfoCard>
-              <StudentInfoCard>
-
-                <div>
-                  <h3>Sharif: </h3>
-                  <b >{StudentInfo.patronymlatin}</b>
-                </div>
-                <div>
-                  <h3>Millat: </h3>
-                  <b >{StudentInfo.nationality}</b>
-                </div>
-                <div>
-                  <h3>Manzil: </h3>
-                  <b >{StudentInfo.docgiveplace}</b>
-                </div>
-              </StudentInfoCard>
-            </BoxHeader>
-              : ""
-          }
-        </BoxHeader>
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Telefon raqami
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Kafedra
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("kafedra", val)}
-              selectOptions={departmentList}
-            />
-          </WrapperInputsCardTwo>
-        </BoxHeader>
           </> : <>
-          
-        <BoxHeader>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Ism
-            </Typography>
-            <CustomizedInputSimple error={NameStatus} callback_func={(val) => { reqDataChange("first_name", val) }} placeholder="Ism" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Pasport
-            </Typography>
-            <CustomizedInputSimple error={PhoneStatus} callback_func={(val) => { reqDataChange("passport", val) }} placeholder="Passport" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Jinsi
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => { reqDataChange("gender", val) }}
-              selectOptions={jinsList}
-            />
-          </WrapperInputsCard>
-        </BoxHeader>
 
-        <BoxHeader>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Familiya
-            </Typography>
-            <CustomizedInputSimple error={LastNameStatus} callback_func={(val) => { reqDataChange("last_name", val) }} placeholder="Familiya" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Telefon raqami
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "0"
-              }}
-            >
-              Tug’ilgan kuni
-            </Typography>
-            <BasicDatePicker setFunction={(val) => { reqDataChange("birthday", val) }} label="Tug’ilgan kuni" />
-          </WrapperInputsCard>
-        </BoxHeader>
 
-        <BoxHeader>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Sharifi
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("middle_name", val) }} placeholder="Sharifi" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Elektron pochta
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("email", val) }} placeholder="@gmail.com" />
-          </WrapperInputsCard>
-          <WrapperInputsCard>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Fuqarolik
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("citizenship", val)}
-              selectOptions={citizenshipList}
-            />
-          </WrapperInputsCard>
-        </BoxHeader>
-
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Mamlakat
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("country", val)}
-              selectOptions={countryList}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Millat
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("nationality", val)}
-              selectOptions={nationalityList}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCard>
-
-          </WrapperInputsCard>
-        </BoxHeader>
-
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Kafedra
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("kafedra", val)}
-              selectOptions={departmentList}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              JSHSHIR
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("jshshr", val) }} placeholder="JSHSHR" />
-          </WrapperInputsCardTwo>
-        </BoxHeader>
-
-        <Typography
-          id="keep-mounted-modal-title"
-          variant="h6"
-          component="h4"
-          sx={{
-            fontSize: "24px",
-            fontWeight: 600,
-            color: "#000",
-            mb: "10px",
-            p: 2
-          }}
-        >
-          Doimiy yashash manzili
-        </Typography>
-
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Viloyat
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => { reqDataChange("region", val); setRegionId(val) }}
-              selectOptions={regionList}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Shahar, Tuman
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("district", val)}
-              selectOptions={districtList}
-            />
-          </WrapperInputsCardTwo>
-        </BoxHeader>
-
-        <BoxHeader>
-          <div style={{ width: '100%' }}>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Manzil
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("address", val) }} placeholder="Manzil" />
-          </div>
-        </BoxHeader>
-
-        <Typography
-          id="keep-mounted-modal-title"
-          variant="h6"
-          component="h4"
-          sx={{
-            fontSize: "24px",
-            fontWeight: 600,
-            color: "#000",
-            mb: "10px",
-            p: 2
-          }}
-        >
-          Vaqtinchalik yashash manzili
-        </Typography>
-
-        <BoxHeader>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Viloyat
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => { reqDataChange("region2", val); setRegionId1(val) }}
-              selectOptions={regionList1}
-            />
-          </WrapperInputsCardTwo>
-          <WrapperInputsCardTwo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Shahar, Tuman
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={val => reqDataChange("district2", val)}
-              selectOptions={districtList1}
-            />
-          </WrapperInputsCardTwo>
-        </BoxHeader>
-
-        <BoxHeader>
-          <div style={{ width: '100%' }}>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Manzil
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { reqDataChange("address2", val) }} placeholder="Manzil" />
-          </div>
-        </BoxHeader>
           </>
         }
 
-        
-        
 
 
-        
+
+
+
 
 
         <Typography

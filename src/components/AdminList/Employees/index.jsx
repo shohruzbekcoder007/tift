@@ -8,10 +8,12 @@ import Button from '@mui/material/Button'
 import { AttendSearchButton } from './styles'
 import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
-import { deleteEmployee, getEmployes } from './request'
-import { employee } from '../../../utils/API_urls'
+import { deleteEmployee, getEmployes, getRoleList } from './request'
+import { employee, role } from '../../../utils/API_urls'
 import { useDispatch } from 'react-redux'
 import { setTitle } from '../../../redux/action/titleActions'
+import AllSelectFullWidth from '../../AllSelectFullWidth'
+import { WrapperInputsCard } from '../../AddHrEmployees/styles'
 
 export default function Employees() {
 
@@ -24,16 +26,35 @@ export default function Employees() {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(1)
   const [deleted, setDeleted] = useState(true)
-
+  const [addRoleList, setaddRoleList] = useState([])
+  const [SelectRole, setSelectRole] = useState('')
   useEffect(() => {
-    getEmployes(`${employee}?page_size=${pageSize}&search=${searchText}&page=${page}`, response => {
-      setEmployes(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-    }, error => {
+    getRoleList(`${role}`, (response) => {
+      setSelectRole(response.data?.[0]?.id)
+      setaddRoleList(response.data.map(elem => {
+        return {
+          value: elem.id,
+          name: elem.name
+        }
+      }))
+    }, (error) => {
       console.log(error)
     })
-  }, [page, pageSize, searchText, deleted])
+  }, [])
+  useEffect(() => {
+    if (SelectRole) {
+      getEmployes(`${employee}?page_size=${pageSize}&search=${searchText}&page=${page}&role=${SelectRole}`, response => {
+        setEmployes(response.data.results)
+        setAllCount(response.data.count)
+        setPageCount(response.data.page_count)
+      }, error => {
+        console.log(error)
+      })
+    }
+  }, [page, pageSize, searchText, deleted,SelectRole])
+
+ 
+
 
   return (
     <>
@@ -49,6 +70,7 @@ export default function Employees() {
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
+
           <AttendSearchButton>
             <Link to='add' onClick={() => {
               dispatch(setTitle({
@@ -67,8 +89,8 @@ export default function Employees() {
                   fontSize: "14px",
                   lineHeight: "17px"
                 }}
-                
-                
+
+
                 startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clipPath="url(#clip0_160_5797)">
                     <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
@@ -86,6 +108,12 @@ export default function Employees() {
             </Link>
             <CustomizedInput callback_func={(val) => { setSearchText(val); setPage(1) }} />
           </AttendSearchButton>
+        </BoxHeader>
+        <BoxHeader>
+          <AllSelectFullWidth
+            chageValueFunction={val => {setSelectRole(val) }}
+            selectOptions={addRoleList}
+          />
         </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
@@ -170,21 +198,21 @@ export default function Employees() {
               </thead>
               <tbody>
                 {
-                 employes.length > 0 ? employes.map((elem, index) => {
-                    return <OneEmployee key={index} elem={elem} setDeleted={setDeleted}/>
+                  employes.length > 0 ? employes.map((elem, index) => {
+                    return <OneEmployee key={index} elem={elem} setDeleted={setDeleted} />
                   })
-                  :
-                  <tr>
-                    <th colSpan={12} align='center'>Ma'lumot yo'q</th>
-                  </tr>
-                
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
+
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize*(page - 1) + 1} dan ${pageSize*(page - 1) + employes.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + employes.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
       </Paper>
@@ -197,40 +225,40 @@ export const OneEmployee = ({ elem, setDeleted }) => {
 
   const deleteStaff = () => {
     deleteEmployee(`${employee}${elem.id}`, (response) => {
-      if(response.status)
+      if (response.status)
         setDeleted(prev => !prev)
     }, (error) => {
       console.log(error)
     })
   }
 
-  
+
 
   return (
     <tr>
       <th>{elem.id}</th>
       <th>
         {
-        elem.image_url ?
-          <img src={`${elem.image_url}`} alt="employer avatar" width="80px" height="80px"/>:
-          <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="36" height="36" rx="10" fill="white" stroke="#C5C5C5" strokeWidth="1.5" />
-            <circle cx="19" cy="13" r="7" fill="#C5C5C5" />
-            <ellipse cx="19" cy="28" rx="12" ry="7" fill="#C5C5C5" />
-          </svg>
+          elem.image_url ?
+            <img src={`${elem.image_url}`} alt="employer avatar" width="80px" height="80px" /> :
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="1" width="36" height="36" rx="10" fill="white" stroke="#C5C5C5" strokeWidth="1.5" />
+              <circle cx="19" cy="13" r="7" fill="#C5C5C5" />
+              <ellipse cx="19" cy="28" rx="12" ry="7" fill="#C5C5C5" />
+            </svg>
         }
       </th>
       <th>{elem.full_name}</th>
       <th>{elem.gender}</th>
       <th>
         {/* <Link to={'career'}> */}
-          <IconButton style={{ margin: '0', padding: "10px 25px" }}>
-            {
-              elem.role.map( (element, ind) => <span key={ind} style={{margin: "0 5px"}}>“{element}”,</span>
-              )
-            }
-            
-          </IconButton>
+        <IconButton style={{ margin: '0', padding: "10px 25px" }}>
+          {
+            elem.role.map((element, ind) => <span key={ind} style={{ margin: "0 5px" }}>“{element}”,</span>
+            )
+          }
+
+        </IconButton>
         {/* </Link> */}
       </th>
       <th>
@@ -239,7 +267,7 @@ export const OneEmployee = ({ elem, setDeleted }) => {
             Ko’rsatish
           </IconButton>
         </Link> */}
-        <Link to={'edit'} state={{employeesID: elem.id}}>
+        <Link to={'edit'} state={{ employeesID: elem.id }}>
           <Button
             variant="contained"
             sx={{

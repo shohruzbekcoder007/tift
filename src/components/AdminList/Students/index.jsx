@@ -197,7 +197,7 @@ export default function Students() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-            <a href={host + `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}`} target='_blank'>
+            <a href={host + `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`} target='_blank'>
               <Button
                 variant="contained"
                 sx={{
