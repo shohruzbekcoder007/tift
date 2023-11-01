@@ -162,44 +162,44 @@ export default function AddStudents() {
   }, [])
 
   useEffect(() => {
-    // getRegionListRequest(`${region}?page_size=500`, (response) => {
-    //   reqDataChange("region", response.data[0]?.id)
-    //   reqDataChange("region2", response.data[0]?.id)
-    //   setRegionList(response.data.map(elem => {
-    //     return {
-    //       name: elem.name,
-    //       value: elem.id
-    //     }
-    //   }))
-    //   setRegionList1(response.data.map(elem => {
-    //     return {
-    //       name: elem.name,
-    //       value: elem.id
-    //     }
-    //   }))
-    //   setRegionId(response.data[0]?.id)
-    //   setRegionId1(response.data[0]?.id)
-    // }, (error) => {
-    //   console.log(error)
-    // })
-    // getRegionListRequest(`${district}?page_size=500`, (response) => {
-    //   reqDataChange("district", response.data[0]?.id)
-    //   reqDataChange("district2", response.data[0]?.id)
-    //   setDistrictList(response.data.map(elem => {
-    //     return {
-    //       name: elem.name,
-    //       value: elem.id
-    //     }
-    //   }))
-    //   setDistrictList1(response.data.map(elem => {
-    //     return {
-    //       name: elem.name,
-    //       value: elem.id
-    //     }
-    //   }))
-    // }, (error) => {
-    //   console.log(error)
-    // })
+    getRegionListRequest(`${region}?page_size=500`, (response) => {
+      reqDataChange("region", response.data[0]?.id)
+      reqDataChange("region2", response.data[0]?.id)
+      setRegionList(response.data.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+      setRegionList1(response.data.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+      setRegionId(response.data[0]?.id)
+      setRegionId1(response.data[0]?.id)
+    }, (error) => {
+      console.log(error)
+    })
+    getRegionListRequest(`${district}?page_size=500`, (response) => {
+      reqDataChange("district", response.data[0]?.id)
+      reqDataChange("district2", response.data[0]?.id)
+      setDistrictList(response.data.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+      setDistrictList1(response.data.map(elem => {
+        return {
+          name: elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
     getRegionListRequest(`${directions}?page_size=500`, (response) => {
       console.log(response);
       setDepartmentList(response.data.results.map(elem => {
@@ -211,17 +211,17 @@ export default function AddStudents() {
     }, (error) => {
       console.log(error)
     })
-    // getRegionListRequest(`${country}`, (response) => {
-    //   reqDataChange("country", response.data[0]?.id)
-    //   setCountryList(response.data.map(elem => {
-    //     return {
-    //       value: elem.id,
-    //       name: elem.name
-    //     }
-    //   }))
-    // }, (error) => {
-    //   console.log(error)
-    // })
+    getRegionListRequest(`${country}`, (response) => {
+      reqDataChange("country", response.data[0]?.id)
+      setCountryList(response.data.map(elem => {
+        return {
+          value: elem.id,
+          name: elem.name
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
 
     getAcademicGroup(`${academic_group_short}?page_size=1000`, (response) => {
       reqDataChange("academic_group", response.data[0]?.id)
