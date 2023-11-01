@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import { TableTHHeader } from '../../../DiplomaTable'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../../PageSelector'
 import CustomizedInput from '../../../CustomizedInput'
 import { AttendSearchButton, WrapperButtons, WrapperInputsCardTwo } from '../styles'
@@ -15,6 +15,11 @@ import lesson_types from '../../../../dictionary/lesson_types'
 import { deletScheduleGroup, getPara, getRooms, getScheduleGroup, getSchudelTable, patchScheduleGroup, postSchudelTable } from './request'
 import { bot_para, room_create_list, scheduletable } from '../../../../utils/API_urls'
 import AlertDialog from '../../../AlertDialog'
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function Schedule() {
   const [open, setOpen] = React.useState(false);
@@ -36,12 +41,26 @@ export default function Schedule() {
   const [ParaSelectChange, setParaSelectChange] = React.useState(null);
   const [TypeSelectChange, setTypeSelectChange] = React.useState(null);
   const [RoomSelectChange, setRoomSelectChange] = React.useState(null);
-
+  const [openAlertM, setOpenAlertM] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlertM(false);
+  
   const [alert, setAlert] = useState(false)
   const [DeletedID, setDeletedID] = useState(null)
   const openAlert = (id) => { 
     setDeletedID(id)
     setAlert(true) 
+  }
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+  
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
   }
 
   const WeekList = useMemo(() => {
@@ -136,6 +155,9 @@ export default function Schedule() {
     }, (response) => {
       setStatus(!Status)
     }, (error) => {
+      serChanged(false)
+      setOpenAlertM(true)
+      setAlertMessage(error.response.data.detail)
       console.log(error);
     })
   }
@@ -253,7 +275,11 @@ export default function Schedule() {
           </ClassScheduleTableWrapper>
         </BoxBody>
 
-
+        <Snackbar open={openAlertM} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
 
 
 

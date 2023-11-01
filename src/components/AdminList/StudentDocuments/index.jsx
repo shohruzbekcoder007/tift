@@ -1,30 +1,245 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
-import { Pagination, Paper, Typography } from '@mui/material'
+import { Checkbox, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
-import { AttendSearchButton } from './styles'
+import { AttendSearchButton, SemesterModalBoxInfo, SemesterModalSelectWrapperInfo } from './styles'
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import Modal from '@mui/material/Modal'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
+import { IconButton } from '../../Final_Dep/style'
+import { ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo } from '../../Information/styles'
+import SelectInput from '@mui/material/Select/SelectInput'
+import { Link } from 'react-router-dom'
+import { academic_group_short, academic_year, additional_documents, directions, semester } from '../../../utils/API_urls'
+import { getAcademic_Year, patchStudentINfoInvition } from './request'
+import AlertDialog from '../../AlertDialog'
+import { getAcademecYear } from '../../AdminList/Semestr/requests'
+import AutocompleteJames from '../../AutocompleteJames'
+import { getDirections } from '../../AdminList/Directions/request'
+import { getAcademicGroup } from '../../AdminList/Streams/request'
+import MuiAlert from '@mui/material/Alert';
 
-export default function StudentDocuments() {
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+export default function SeeStudnetsInfoInvation() {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [file, setFile] = useState(null);
+  const [open2, setOpen2] = React.useState(false);
+  const [institutionName, setinstitutionName] = React.useState('');
+  const [Doc_id, setDoc_id] = React.useState(0);
+  const [Description, setDescription] = React.useState('');
+  const [ListSelect, setListSelect] = React.useState('');
+  const [ListInvitionSelect, setListInvitionSelect] = React.useState('');
 
+  const handleClose = () => setOpen(false);
+  const handleOpen2 = () => setOpen(true);
+  const handleClose2 = () => setOpen(false);
+  const [file, setFile] = useState(null);
+  const [Status, setStatus] = useState(false);
+
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   const setFileHandler = (newValue, info) => {
-      setFile(newValue)
+    setFile(newValue)
+  }
+
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
+
+  const handleOpen = (elem) => {
+    setDoc_id(elem.id)
+    setinstitutionName(elem.job_name)
+    setOpen(true)
+  };
+
+  const [Plans, setPlans] = useState([])
+  const [pageSize, setPageSize] = useState(10)
+  const [searchText, setSearchText] = useState('')
+  const [allCount, setAllCount] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
+  const [deleted, setDeleted] = useState(true)
+  const [alert, setAlert] = useState(false)
+  const [AcademekYear, setAcademekYear] = useState(0)
+  const [DirectionID, setDirectionID] = useState('&')
+  const [GroupID, setGroupID] = useState('')
+  const [YearList, setYearList] = useState([])
+  const [Directions, setDirections] = useState([])
+  const [GroupList, setGroupList] = useState([])
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
+  useEffect(() => {
+    getAcademic_Year(`${additional_documents}?page_size=${pageSize}&search=${searchText}&page=${page}&student__specialty=${DirectionID}&student__academic_group=${GroupID}&student__year_of_admission=${AcademekYear}&type=${ListInvitionSelect}`, response => {
+      console.log(response.data.results);
+      setPlans(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+    }, error => {
+      console.log(error)
+    })
+  }, [page, pageSize, searchText, deleted, Status, DirectionID, GroupID, AcademekYear, ListInvitionSelect])
+
+  useEffect(() => {
+    getAcademecYear(academic_year, (response) => {
+      console.log(response.data.results);
+      let mass = [{
+        name: "O'quv yili",
+        value: '&',
+      }]
+
+      response.data.results.map(item => {
+        mass.push({
+          name: item.name,
+          value: item.season
+        })
+      })
+      setAcademekYear(mass[0].value)
+      setYearList(mass)
+
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
+  useEffect(() => {
+
+    getDirections(`${directions}?page_size=100`, (response) => {
+      // setDirections(response.results)
+      const currlist = [...response.results]
+      currlist.unshift({
+        name: 'Hammasi',
+        id: '&',
+        degree: "hammasi"
+      })
+      setDirections(currlist.map(elem => {
+        return {
+          name: elem.name + " (" + elem.degree + ")",
+          value: elem.id
+        }
+      }))
+
+    }, (error) => {
+      console.log(error);
+    })
+  }, []);
+  useEffect(() => {
+    if (AcademekYear != 0)
+      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? 'all' : DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
+        // setDirections(response.results)
+        const currlist = [...response.data]
+        // currlist.unshift({
+        //   name: 'Guruhsiz talabalar',
+        //   id: 'none',
+        //   student_count: ""
+        // })
+        currlist.unshift({
+          name: 'Hammasi',
+          id: '',
+          student_count: ""
+        })
+        setGroupList(currlist.map(elem => {
+          if (!elem.student_count == "") {
+            return {
+              name: elem.name + " (" + elem.student_count + ")",
+              value: elem.id
+            }
+          } else {
+            return {
+              name: elem.name,
+              value: elem.id
+            }
+          }
+        }))
+      }, (error) => {
+        console.log(error);
+      })
+  }, [DirectionID, AcademekYear]);
+
+  const List = useMemo(() => {
+    return [{
+      name: "Jarayonda",
+      value: "pending"
+    }, {
+      name: "Tasdiqlash",
+      value: "success"
+    },
+    {
+      name: "Bekor qilish",
+      value: "error"
+    },
+    ]
+  }, [])
+
+  const deleteDepartmentHendler = () => {
+
+  }
+
+  const ListInvition = useMemo(() => {
+    return [{
+      name: "Turi",
+      value: "&"
+    }, {
+      name: "Ma'lumotnoma",
+      value: "information"
+    },
+    {
+      name: "Chaqiruv xati",
+      value: "invitation"
+    },
+    {
+      name: "Qayta o'qish uchun ruxsatnoma",
+      value: "reappropriation"
+    }
+    ]
+  }, [])
+
+  useEffect(() => {
+    if (!open) {
+      setinstitutionName('')
+      setDoc_id(0)
+    }
+  }, [open])
+
+  const handleClick = (_) => {
+    // console.log(Doc_id, ListSelect,Description,institutionName);
+    patchStudentINfoInvition(additional_documents, {
+      doc_id: Doc_id,
+      status: ListSelect,
+      description: Description,
+      job: institutionName
+    }, (response => {
+      handleClose()
+      setStatus(!Status)
+      serChanged(true)
+      setOpenAlert(true)
+      setAlertMessage("Saqlandi")
+    }), (error => {
+      serChanged(false)
+      setOpenAlert(true)
+      setAlertMessage(error.response.data.message)
+      console.log(error)
+    }))
   }
 
   return (
-    <ContentWrapper>
+    <ContentWrapper
+    >
       <Paper
         elevation={0}
         sx={{
@@ -33,47 +248,29 @@ export default function StudentDocuments() {
           borderRadius: "10px"
         }}
       >
+
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
             console.log(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
-            <Button
-              variant="contained"
-              onClick={handleOpen}
-              sx={{
-                textTransform: "capitalize",
-                boxShadow: "none",
-                padding: "12px 70px",
-                borderRadius: "10px",
-                fontWeight: "600",
-                fontSize: "14px",
-                lineHeight: "17px"
-              }}
-              startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clipPath="url(#clip0_160_5797)">
-                  <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_160_5797">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
-              }
-            >
-              Qo'shish
-            </Button>
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
         </BoxHeader>
-
         <BoxHeader>
           <InputsWrapper>
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="ID" type={"number"} />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="Talabalar" />
-            {/* <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-            <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" /> */}
+            <AllSelectFullWidth
+              chageValueFunction={(val) => setAcademekYear(val)}
+              selectedOptionP={YearList?.[0]?.value}
+              selectOptions={YearList}
+            />
+            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
+            <AllSelectFullWidth
+              chageValueFunction={val => setListInvitionSelect(val)}
+              selectedOptionP={ListInvition[0]?.value}
+              selectOptions={ListInvition}
+            />
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
@@ -95,7 +292,7 @@ export default function StudentDocuments() {
                     </svg>}
                   />
                   <TableTHHeader
-                    text="Talabalar"
+                    text="Talaba"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -110,7 +307,7 @@ export default function StudentDocuments() {
                     }
                   />
                   <TableTHHeader
-                    text={'Tip'}
+                    text="Guruh"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -125,7 +322,7 @@ export default function StudentDocuments() {
                     }
                   />
                   <TableTHHeader
-                    text={'Fayl'}
+                    text="Sanasi"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clipPath="url(#clip0_78_23319)">
                         <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
@@ -139,57 +336,199 @@ export default function StudentDocuments() {
                     </svg>
                     }
                   />
+                  <TableTHHeader
+                    text="Muassasa nomi"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+                  <TableTHHeader
+                    text="Holati"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+                    <TableTHHeader
+                    text="Fayl"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+                  <TableTHHeader
+                    text="Turi"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23319)">
+                        <path d="M5.33365 15.3334L5.33365 1.78741L5.34365 1.79674L6.86699 3.29274C6.92848 3.3582 7.00257 3.41056 7.08481 3.44667C7.16704 3.48279 7.25572 3.50191 7.34553 3.5029C7.43534 3.50389 7.52442 3.48672 7.60743 3.45242C7.69044 3.41813 7.76566 3.36741 7.82859 3.30332C7.89151 3.23923 7.94083 3.16309 7.97359 3.07946C8.00636 2.99584 8.02188 2.90645 8.01924 2.81668C8.0166 2.7269 7.99585 2.63858 7.95823 2.55703C7.92061 2.47547 7.8669 2.40236 7.80032 2.34208L6.28232 0.849411C6.17365 0.740744 6.00699 0.588744 5.83165 0.433411C5.51624 0.154465 5.10971 0.000488154 4.68865 0.000488136C4.26759 0.000488117 3.86106 0.154465 3.54565 0.433411C3.37099 0.588744 3.20432 0.740744 3.09899 0.845411L1.57632 2.34208C1.45845 2.46754 1.39368 2.63374 1.39557 2.80588C1.39746 2.97802 1.46587 3.14275 1.58648 3.2656C1.70708 3.38844 1.87053 3.45987 2.0426 3.46493C2.21468 3.46999 2.38204 3.40829 2.50965 3.29274L4.00032 1.82941L4.00032 15.3334C4.00032 15.5102 4.07056 15.6798 4.19558 15.8048C4.3206 15.9298 4.49017 16.0001 4.66699 16.0001C4.8438 16.0001 5.01337 15.9298 5.13839 15.8048C5.26341 15.6798 5.33365 15.5102 5.33365 15.3334Z" fill="#B8B8B8" />
+                        <path d="M10.6677 0.666667L10.6676 14.17L9.17898 12.7073C9.11749 12.6419 9.0434 12.5895 8.96116 12.5534C8.87893 12.5173 8.79025 12.4982 8.70044 12.4972C8.61063 12.4962 8.52154 12.5134 8.43854 12.5477C8.35553 12.582 8.2803 12.6327 8.21738 12.6968C8.15446 12.7608 8.10514 12.837 8.07238 12.9206C8.03961 13.0042 8.02408 13.0936 8.02672 13.1834C8.02936 13.2732 8.05012 13.3615 8.08774 13.4431C8.12536 13.5246 8.17907 13.5977 8.24565 13.658L9.76498 15.1507C9.87365 15.2593 10.0403 15.4113 10.215 15.5667C10.5304 15.8456 10.9369 15.9996 11.358 15.9996C11.779 15.9996 12.1856 15.8456 12.501 15.5667C12.6763 15.4113 12.843 15.2593 12.9476 15.1547L14.4676 13.658C14.5855 13.5325 14.6503 13.3663 14.6484 13.1942C14.6465 13.0221 14.5781 12.8573 14.4575 12.7345C14.3369 12.6116 14.1734 12.5402 14.0014 12.5352C13.8293 12.5301 13.6619 12.5918 13.5343 12.7073L12.0076 14.208L12.001 14.2133L12.001 0.666667C12.001 0.489856 11.9307 0.320286 11.8057 0.195262C11.6807 0.0702378 11.5111 -1.37136e-07 11.3343 -1.44865e-07C11.1575 -1.52593e-07 10.9879 0.0702378 10.8629 0.195262C10.7379 0.320286 10.6677 0.489856 10.6677 0.666667Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23319">
+                          <rect width="16" height="16" fill="white" transform="translate(16) rotate(90)" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                    }
+                  />
+
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5].map((elem, index) => {
+                  Plans.length > 0 ? Plans.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>1494</th>
-                        <th>Mirmurodov Azizbek Umidjon o‘g‘li</th>
-                        <th >Отчисление (по собственному желанию)</th>
+                        <th>{elem.id}</th>
+                        <th>{elem.student}</th>
+                        <th>{elem.academic_group}</th>
+                        <th>{elem.date}</th>
+                        <th>{elem.job_name}</th>
+                        <th>{elem.status}</th>
                         <th>
+                       { elem.file ? <a href={`${elem.file}`} target='_blank' >
+                              <Button
+                                variant="contained"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  boxShadow: "none",
+                                  padding: "12px",
+                                  borderRadius: "10px",
+                                  fontWeight: "600",
+                                  fontSize: "14px",
+                                  lineHeight: "17px"
+                                }}
+                                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+                                }
+                              >
+                               
+                              </Button>
+                            </a>
+                              : <Button
+                                disabled
+                                variant="contained"
+                                sx={{
+                                  textTransform: "capitalize",
+                                  boxShadow: "none",
+                                  padding: "12px",
+                                  borderRadius: "10px",
+                                  fontWeight: "600",
+                                  fontSize: "14px",
+                                  lineHeight: "17px"
+                                }}
+                                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+                                }
+                              >
+                               
+                              </Button>
+                          }
+                          </th>
+                        {elem.type == 'information' ? <th>Ma'lumotnoma</th> : ""}
+                        {elem.type == 'invitation' ? <th>Chaqiruv xati</th> : ""}
+                        {elem.type == 'reappropriation' ? <th>Qayta o'qish uchun ruxsatnoma</th> : ""}
+                        <th>
+                          {/* <IconButton style={{ padding: "12px 18px" }}>
+                              Tahrirlash
+                            </IconButton> */}
                           <Button
+                            variant="contained"
+                            onClick={() => handleOpen(elem)}
+                            sx={{
+                              borderRadius: "10px",
+                              textTransform: "capitalize",
+                              boxShadow: "none",
+                              padding: "10px 12px",
+                              // backgroundColor: "BlueButton.main",
+                              // "&:hover": {
+                              //   backgroundColor: "BlueButton.main",
+                              // },
+                            }}
+                            startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clipPath="url(#clip0_1221_28999)">
+                                <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white" />
+                                <path d="M15.8333 5.986C15.6565 5.986 15.487 6.05624 15.3619 6.18126C15.2369 6.30629 15.1667 6.47586 15.1667 6.65267V10H12.5C11.9696 10 11.4609 10.2107 11.0858 10.5858C10.7107 10.9609 10.5 11.4696 10.5 12V14.6667H3.83333C3.3029 14.6667 2.79419 14.456 2.41912 14.0809C2.04405 13.7058 1.83333 13.1971 1.83333 12.6667V3.33333C1.83333 2.8029 2.04405 2.29419 2.41912 1.91912C2.79419 1.54405 3.3029 1.33333 3.83333 1.33333H9.86133C10.0381 1.33333 10.2077 1.2631 10.3327 1.13807C10.4578 1.01305 10.528 0.843478 10.528 0.666667C10.528 0.489856 10.4578 0.320286 10.3327 0.195262C10.2077 0.0702379 10.0381 0 9.86133 0L3.83333 0C2.9496 0.00105857 2.10237 0.352588 1.47748 0.97748C0.852588 1.60237 0.501059 2.4496 0.5 3.33333L0.5 12.6667C0.501059 13.5504 0.852588 14.3976 1.47748 15.0225C2.10237 15.6474 2.9496 15.9989 3.83333 16H11.3953C11.8333 16.0013 12.2671 15.9156 12.6718 15.7481C13.0764 15.5806 13.4438 15.3345 13.7527 15.024L15.5233 13.252C15.8338 12.9432 16.08 12.576 16.2477 12.1715C16.4153 11.767 16.5011 11.3332 16.5 10.8953V6.65267C16.5 6.47586 16.4298 6.30629 16.3047 6.18126C16.1797 6.05624 16.0101 5.986 15.8333 5.986ZM12.81 14.0813C12.542 14.3487 12.2031 14.5337 11.8333 14.6147V12C11.8333 11.8232 11.9036 11.6536 12.0286 11.5286C12.1536 11.4036 12.3232 11.3333 12.5 11.3333H15.1167C15.0342 11.7023 14.8493 12.0406 14.5833 12.3093L12.81 14.0813Z" fill="white" />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_1221_28999">
+                                  <rect width="16" height="16" fill="white" transform="translate(0.5)" />
+                                </clipPath>
+                              </defs>
+                            </svg>}
+                          >
+
+                          </Button>
+                          {/* <Button
                             variant="contained"
                             sx={{
                               borderRadius: "10px",
                               textTransform: "capitalize",
                               boxShadow: "none",
-                              padding: "6px 12px",
-                              marginRight: "20px"
+                              padding: "10px 12px",
+                              margin: '0 10px'
                             }}
-                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <g clipPath="url(#clip0_1148_18869)">
-                                <path d="M6.58614 12.0813C6.77187 12.2672 6.9924 12.4146 7.23514 12.5152C7.47787 12.6158 7.73805 12.6676 8.0008 12.6676C8.26355 12.6676 8.52373 12.6158 8.76647 12.5152C9.0092 12.4146 9.22973 12.2672 9.41547 12.0813L11.5561 9.94067C11.6709 9.81373 11.7325 9.64752 11.7281 9.47644C11.7237 9.30536 11.6537 9.14253 11.5325 9.02165C11.4114 8.90077 11.2484 8.8311 11.0773 8.82707C10.9062 8.82304 10.7402 8.88496 10.6135 9L8.6628 10.9513L8.66747 0.666667C8.66747 0.489856 8.59723 0.320286 8.47221 0.195262C8.34718 0.0702379 8.17761 0 8.0008 0C7.82399 0 7.65442 0.0702379 7.5294 0.195262C7.40437 0.320286 7.33414 0.489856 7.33414 0.666667L7.32814 10.9387L5.38814 9C5.26304 8.875 5.09341 8.8048 4.91657 8.80486C4.73972 8.80493 4.57014 8.87524 4.44514 9.00033C4.32013 9.12543 4.24994 9.29506 4.25 9.4719C4.25006 9.64875 4.32037 9.81833 4.44547 9.94333L6.58614 12.0813Z" fill="white" />
-                                <path d="M15.3333 10.6667C15.1565 10.6667 14.987 10.737 14.8619 10.862C14.7369 10.987 14.6667 11.1566 14.6667 11.3334V14.0001C14.6667 14.1769 14.5964 14.3465 14.4714 14.4715C14.3464 14.5965 14.1768 14.6667 14 14.6667H2C1.82319 14.6667 1.65362 14.5965 1.5286 14.4715C1.40357 14.3465 1.33333 14.1769 1.33333 14.0001V11.3334C1.33333 11.1566 1.2631 10.987 1.13807 10.862C1.01305 10.737 0.843478 10.6667 0.666667 10.6667C0.489856 10.6667 0.320286 10.737 0.195262 10.862C0.0702379 10.987 0 11.1566 0 11.3334L0 14.0001C0 14.5305 0.210714 15.0392 0.585786 15.4143C0.960859 15.7894 1.46957 16.0001 2 16.0001H14C14.5304 16.0001 15.0391 15.7894 15.4142 15.4143C15.7893 15.0392 16 14.5305 16 14.0001V11.3334C16 11.1566 15.9298 10.987 15.8047 10.862C15.6797 10.737 15.5101 10.6667 15.3333 10.6667Z" fill="white" />
+                            startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <g clipPath="url(#clip0_1184_18370)">
+                                <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
+                                <path d="M15.3333 5.986C15.1565 5.986 14.987 6.05624 14.8619 6.18126C14.7369 6.30629 14.6667 6.47586 14.6667 6.65267V10H12C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12V14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H9.36133C9.53815 1.33333 9.70771 1.2631 9.83274 1.13807C9.95776 1.01305 10.028 0.843478 10.028 0.666667C10.028 0.489856 9.95776 0.320286 9.83274 0.195262C9.70771 0.0702379 9.53815 0 9.36133 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H10.8953C11.3333 16.0013 11.7671 15.9156 12.1718 15.7481C12.5764 15.5806 12.9438 15.3345 13.2527 15.024L15.0233 13.252C15.3338 12.9432 15.58 12.576 15.7477 12.1715C15.9153 11.767 16.0011 11.3332 16 10.8953V6.65267C16 6.47586 15.9298 6.30629 15.8047 6.18126C15.6797 6.05624 15.5101 5.986 15.3333 5.986ZM12.31 14.0813C12.042 14.3487 11.7031 14.5337 11.3333 14.6147V12C11.3333 11.8232 11.4036 11.6536 11.5286 11.5286C11.6536 11.4036 11.8232 11.3333 12 11.3333H14.6167C14.5342 11.7023 14.3493 12.0406 14.0833 12.3093L12.31 14.0813Z" fill="white" />
                               </g>
                               <defs>
-                                <clipPath id="clip0_1148_18869">
+                                <clipPath id="clip0_1184_18370">
                                   <rect width="16" height="16" fill="white" />
                                 </clipPath>
                               </defs>
                             </svg>
 
+
                             }
                           >
-                          </Button>
-                        </th>
-                        <th>
-                          <Button
+                          </Button> */}
+                          {/* <Button
                             variant="contained"
                             sx={{
                               borderRadius: "10px",
                               textTransform: "capitalize",
                               boxShadow: "none",
-                              padding: "6px 12px",
+                              padding: "10px 12px",
                               backgroundColor: "redButton.main",
                               "&:hover": {
                                 backgroundColor: "redButton.main",
                               },
+                              margin: '0 10px'
                             }}
-                            startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            onClick={openAlert}
+                            startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clipPath="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
                                 <path d="M6.66667 12.0001C6.84348 12.0001 7.01305 11.9298 7.13807 11.8048C7.2631 11.6798 7.33333 11.5102 7.33333 11.3334V7.33341C7.33333 7.1566 7.2631 6.98703 7.13807 6.86201C7.01305 6.73699 6.84348 6.66675 6.66667 6.66675C6.48986 6.66675 6.32029 6.73699 6.19526 6.86201C6.07024 6.98703 6 7.1566 6 7.33341V11.3334C6 11.5102 6.07024 11.6798 6.19526 11.8048C6.32029 11.9298 6.48986 12.0001 6.66667 12.0001Z" fill="white" />
@@ -204,20 +543,38 @@ export default function StudentDocuments() {
 
                             }
                           >
-                          </Button>
+                          </Button> */}
                         </th>
+                        <AlertDialog
+                          open_alert={alert}
+                          callback1={(_) => {
+                            deleteDepartmentHendler(elem.id)
+                          }}
+                          callback2={() => { setAlert(false) }}
+                          alertText={"Ushbu Rejani haqiqatdan ham o'chirmoqchimisiz?"}
+                        />
                       </tr>
                     )
                   })
+                    :
+                    <tr>
+                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={10} shape="rounded" color="primary" onChange={(_, value) => { console.log(value) }} />
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + Plans.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
+
         <Modal
           keepMounted
           open={open}
@@ -237,7 +594,7 @@ export default function StudentDocuments() {
                   color: "#000"
                 }}
               >
-                Qo’shish                            </Typography>
+                Tahrirlash                            </Typography>
               <span
                 onClick={handleClose}
               >
@@ -246,6 +603,26 @@ export default function StudentDocuments() {
                 </svg>
               </span>
             </ModalHeader>
+            {
+              institutionName &&
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    m: "20px 0 10px 0"
+                  }}
+                >
+                  Muassasa
+                </Typography>
+                <CustomizedInputSimple defaultValue={institutionName} callback_func={(val) => { setinstitutionName(val) }} placeholder="Muassasa nomi" />
+
+              </ModalSelectWrapper>
+            }
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
@@ -258,70 +635,34 @@ export default function StudentDocuments() {
                   m: "20px 0 10px 0"
                 }}
               >
-                Boshlanish sanasi                         </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Tugash sanasi                            </Typography>
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
-
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Talaba                            </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => console.log(val)}
-                selectOptions={[{
-                  name: "name",
-                  value: 12,
-                }]}
-              />
-            </ModalSelectWrapper>
-
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                File
+                Status
               </Typography>
-              <MuiFileInput
-                placeholder="Fayl kiriting"
-                value={file}
-                onChange={setFileHandler}
-                // getInputText={(value) => value ? 'Thanks!' : ''}
-                fullWidth
+
+              <AllSelectFullWidth
+                chageValueFunction={val => setListSelect(val)}
+                selectOptions={List}
               />
+
             </ModalSelectWrapper>
+            <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  m: "20px 0 10px 0"
+                }}
+              >
+                Izoh
+              </Typography>
+              {/* <textarea name="" id="" cols="67" rows="10"></textarea> */}
+              <CustomizedInputSimple callback_func={(val) => { setDescription(val) }} placeholder="Izoh yozing" />
+
+            </ModalSelectWrapper>
+
             <ModalButtons>
               <Button
                 sx={{ width: "50%", textTransform: "none" }}
@@ -333,12 +674,16 @@ export default function StudentDocuments() {
               <Button
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleClick}
               >
                 Saqlash
               </Button>
             </ModalButtons>
           </ModalBox>
         </Modal>
+
+
+
       </Paper>
     </ContentWrapper>
   )

@@ -253,7 +253,7 @@ export default function SeeStudnetsInfoInvation() {
             console.log(val)
           }} />
           <AttendSearchButton>
-            <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
