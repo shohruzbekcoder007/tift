@@ -105,9 +105,10 @@ export default function ScheduleStudy() {
           />
         </BoxHeader>
         <BoxBody>
-          <ClassScheduleTableWrapper>
-            <table>
-              <thead>
+          <ClassScheduleTableWrapper style={{height: '700px'}}>
+            <table 
+            >
+              <thead  style={{position: "sticky",top:0, zIndex: "9" }}>
                 <tr>
                   <TableTHHeader
                     text="Aud."
@@ -322,7 +323,7 @@ export default function ScheduleStudy() {
                  rooms.length > 0 ? rooms.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>{elem.name} ({elem.count})</th>
+                        <th style={{position: "sticky",left:0,backgroundColor: "white", }}>{elem.name} ({elem.count})</th>
                         {
                           elem.schedule.map((el, ind) => {
                             return el.timetable.map((ell, innd) => {
