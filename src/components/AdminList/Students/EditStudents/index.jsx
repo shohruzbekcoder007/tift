@@ -68,14 +68,12 @@ export default function EditStudents() {
     course_number: null,
     email: null,
     phone_number: null,
-    avatar: null,
     form_of_payment: null,
     gpa: null,
     study_type: null,
     degree: null,
     lang: null,
     student_id: null,
-    avatar: null
   })
 
 
@@ -317,6 +315,7 @@ export default function EditStudents() {
         ...newData,
         ...response.data,
       };
+      updatedData.avatar = null
       // Set the updated data in your state
       setNewData(updatedData);
       setStatus(true)
