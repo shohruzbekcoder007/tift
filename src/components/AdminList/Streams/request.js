@@ -22,6 +22,16 @@ export const getSemesters = (url, successfulFunction, errorFunction) => {
     })
 }
 
+export const deleteSemesters = (url, successfulFunction, errorFunction) => {
+    axios.delete(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
+
 
 export const getChangeTeacher = (url, data, successfulFunction, errorFunction) => {
     axios.patch(url, data, {

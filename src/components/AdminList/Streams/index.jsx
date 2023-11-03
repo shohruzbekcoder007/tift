@@ -15,7 +15,7 @@ import { MuiFileInput } from 'mui-file-input'
 import { IconButton } from '../../Final_Dep/style'
 import { Link } from 'react-router-dom'
 import { academic_group_short, academic_year, allusers, my_semesters, parentpatoklist, patok_teacher, patokadmin, science_short } from '../../../utils/API_urls'
-import { getAcademicGroup, getChangeTeacher, getSciense, getSemesters, getStreams, getTeachers, postPatoks } from './request'
+import { deleteSemesters, getAcademicGroup, getChangeTeacher, getSciense, getSemesters, getStreams, getTeachers, postPatoks } from './request'
 import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
 import AutocompleteJames from '../../AutocompleteJames'
@@ -129,10 +129,10 @@ export default function Streams() {
       {
         name: "8",
         value: 8,
-      },{
+      }, {
         name: "9",
         value: 9,
-      },{
+      }, {
         name: "10",
         value: 10,
       }]
@@ -214,22 +214,22 @@ export default function Streams() {
     ]
   }, [])
 
-useEffect(() => {
-  getSemesters(`${my_semesters}`, (response) => {
-    setSemesterSelect(response?.data[0]?.id)
-    setSemesterList(response.data.map(elem => {
-      return {
-        name: elem.parent + " " + elem.name,
-        value: elem.id
-      }
-    }))
-  }, (error) => {
-    console.log(error)
-  })
-},[])
+  useEffect(() => {
+    getSemesters(`${my_semesters}`, (response) => {
+      setSemesterSelect(response?.data[0]?.id)
+      setSemesterList(response.data.map(elem => {
+        return {
+          name: elem.parent + " " + elem.name,
+          value: elem.id
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
+  }, [])
 
   useEffect(() => {
-    
+
     // ?semester${SemesterSelect}
     if (AcademekYear) {
       getSciense(`${science_short}?semester=${SemesterNumber}&academic_year=${AcademekYear}`, (response) => {
@@ -245,7 +245,7 @@ useEffect(() => {
         console.log(error)
       })
     }
-  }, [SemesterSelect, SemesterNumber,AcademekYear])
+  }, [SemesterSelect, SemesterNumber, AcademekYear])
 
   useEffect(() => {
     setStreamsList([])
@@ -262,8 +262,7 @@ useEffect(() => {
         setModalText("Ma'lumot yo'q")
         console.log(error)
       })
-
-      // kodi type error bor 
+      
       // getStreams(`${parentpatoklist}?semester=${SemesterSelect}&science=${ScienseSelect}`, (response) => {
       //   setParentNaameSelect(response.data[0].id)
       //   setParentStreams(response.data.map(elem => {
@@ -275,6 +274,7 @@ useEffect(() => {
       // }, (error) => {
       //   console.log(error)
       // })
+      // kodi type error bor 
     }
 
 
@@ -307,7 +307,7 @@ useEffect(() => {
     }, (error) => {
       console.log(error)
     })
-  },[])
+  }, [])
 
   const handleClick = (_) => {
     console.log(TeachersListSelect);
@@ -346,6 +346,14 @@ useEffect(() => {
     })
   }
 
+  const HandleDelete = (id) => {
+    deleteSemesters(`${patokadmin}${id}/`, (response) => {
+      setStatus(!Status)
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
   return (
     <>
       <Paper
@@ -373,7 +381,7 @@ useEffect(() => {
                 value: 12,
               }]}
             /> */}
-           
+
             <AllSelectFullWidth
               chageValueFunction={val => setSemesterSelect(val)}
               selectOptions={SemesterList}
@@ -384,11 +392,11 @@ useEffect(() => {
               selectedOptionP={1}
               selectOptions={SemesterNum}
             />
-             <AllSelectFullWidth
-                chageValueFunction={(val) => setAcademekYear(val)}
-                selectedOptionP={YearList?.[0]?.value}
-                selectOptions={YearList}
-              />
+            <AllSelectFullWidth
+              chageValueFunction={(val) => setAcademekYear(val)}
+              selectedOptionP={YearList?.[0]?.value}
+              selectOptions={YearList}
+            />
           </InputsWrapper>
         </BoxHeader>
         <BoxHeader>
@@ -550,6 +558,7 @@ useEffect(() => {
                     }
                   />
                   <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -589,7 +598,63 @@ useEffect(() => {
                               }
                             >
                             </Button>
+
+
                           </div>
+                        </th>
+                        <th>
+                          {
+                            elem.parent_name ?
+                              <Link to={'vedomost'} state={{ data: elem.id }}>
+                                <Button
+                                  variant="contained"
+                                  size="small"
+                                  color="secondary"
+                                  sx={{
+                                    textTransform: "none",
+                                    borderRadius: "10px",
+                                    boxShadow: "none",
+                                    width: "181px"
+                                  }}
+                                  startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <g clipPath="url(#clip0_78_22131)">
+                                      <path d="M13.298 3.69068L10.9754 1.36668C10.5429 0.932107 10.0286 0.587569 9.46218 0.352988C8.89575 0.118407 8.28844 -0.00156258 7.67536 1.53658e-05H4.66536C3.78163 0.00107394 2.9344 0.352603 2.30951 0.977495C1.68462 1.60239 1.33309 2.44962 1.33203 3.33335V12.6667C1.33309 13.5504 1.68462 14.3976 2.30951 15.0225C2.9344 15.6474 3.78163 15.999 4.66536 16H11.332C12.2158 15.999 13.063 15.6474 13.6879 15.0225C14.3128 14.3976 14.6643 13.5504 14.6654 12.6667V6.99002C14.667 6.37696 14.547 5.76968 14.3123 5.20333C14.0776 4.63699 13.7329 4.12284 13.298 3.69068ZM12.3554 4.63335C12.5589 4.84278 12.734 5.07814 12.876 5.33335H9.9987C9.82189 5.33335 9.65232 5.26311 9.52729 5.13809C9.40227 5.01306 9.33203 4.84349 9.33203 4.66668V1.78935C9.58732 1.9313 9.82289 2.10612 10.0327 2.30935L12.3554 4.63335ZM13.332 12.6667C13.332 13.1971 13.1213 13.7058 12.7462 14.0809C12.3712 14.456 11.8625 14.6667 11.332 14.6667H4.66536C4.13493 14.6667 3.62622 14.456 3.25115 14.0809C2.87608 13.7058 2.66536 13.1971 2.66536 12.6667V3.33335C2.66536 2.80292 2.87608 2.29421 3.25115 1.91914C3.62622 1.54406 4.13493 1.33335 4.66536 1.33335H7.67536C7.7847 1.33335 7.8907 1.35468 7.9987 1.36468V4.66668C7.9987 5.19711 8.20941 5.70582 8.58448 6.0809C8.95956 6.45597 9.46827 6.66668 9.9987 6.66668H13.3007C13.3107 6.77468 13.332 6.88002 13.332 6.99002V12.6667Z" fill="black" />
+                                    </g>
+                                    <defs>
+                                      <clipPath id="clip0_78_22131">
+                                        <rect width="16" height="16" fill="white" />
+                                      </clipPath>
+                                    </defs>
+                                  </svg>}
+                                >
+                                  Vedomost
+                                </Button>
+                              </Link>
+                              : <Button
+                                variant="contained"
+                                size="small"
+                                color="secondary"
+                                disabled
+                                sx={{
+                                  textTransform: "none",
+                                  borderRadius: "10px",
+                                  boxShadow: "none",
+                                  width: "181px"
+                                }}
+                                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                  <g clipPath="url(#clip0_78_22131)">
+                                    <path d="M13.298 3.69068L10.9754 1.36668C10.5429 0.932107 10.0286 0.587569 9.46218 0.352988C8.89575 0.118407 8.28844 -0.00156258 7.67536 1.53658e-05H4.66536C3.78163 0.00107394 2.9344 0.352603 2.30951 0.977495C1.68462 1.60239 1.33309 2.44962 1.33203 3.33335V12.6667C1.33309 13.5504 1.68462 14.3976 2.30951 15.0225C2.9344 15.6474 3.78163 15.999 4.66536 16H11.332C12.2158 15.999 13.063 15.6474 13.6879 15.0225C14.3128 14.3976 14.6643 13.5504 14.6654 12.6667V6.99002C14.667 6.37696 14.547 5.76968 14.3123 5.20333C14.0776 4.63699 13.7329 4.12284 13.298 3.69068ZM12.3554 4.63335C12.5589 4.84278 12.734 5.07814 12.876 5.33335H9.9987C9.82189 5.33335 9.65232 5.26311 9.52729 5.13809C9.40227 5.01306 9.33203 4.84349 9.33203 4.66668V1.78935C9.58732 1.9313 9.82289 2.10612 10.0327 2.30935L12.3554 4.63335ZM13.332 12.6667C13.332 13.1971 13.1213 13.7058 12.7462 14.0809C12.3712 14.456 11.8625 14.6667 11.332 14.6667H4.66536C4.13493 14.6667 3.62622 14.456 3.25115 14.0809C2.87608 13.7058 2.66536 13.1971 2.66536 12.6667V3.33335C2.66536 2.80292 2.87608 2.29421 3.25115 1.91914C3.62622 1.54406 4.13493 1.33335 4.66536 1.33335H7.67536C7.7847 1.33335 7.8907 1.35468 7.9987 1.36468V4.66668C7.9987 5.19711 8.20941 5.70582 8.58448 6.0809C8.95956 6.45597 9.46827 6.66668 9.9987 6.66668H13.3007C13.3107 6.77468 13.332 6.88002 13.332 6.99002V12.6667Z" fill="black" />
+                                  </g>
+                                  <defs>
+                                    <clipPath id="clip0_78_22131">
+                                      <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                  </defs>
+                                </svg>}
+                              >
+                                Vedomost
+                              </Button>
+                          }
                         </th>
                         <th>
                           <Link to={'schedule'} state={elem}>
@@ -637,6 +702,7 @@ useEffect(() => {
                             }
                           >
                           </Button>
+                          */}
                           <Button
                             variant="contained"
                             sx={{
@@ -645,11 +711,12 @@ useEffect(() => {
                               boxShadow: "none",
                               padding: "10px 12px",
                               backgroundColor: "redButton.main",
+                              margin: "0 1rem",
                               "&:hover": {
                                 backgroundColor: "redButton.main",
                               },
                             }}
-                            onClick={(val) => { }}
+                            onClick={(val) => { HandleDelete(elem.id) }}
                             startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_1148_18282)">
                                 <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
@@ -665,7 +732,7 @@ useEffect(() => {
 
                             }
                           >
-                          </Button> */}
+                          </Button>
                         </th>
                       </tr>
                     )
