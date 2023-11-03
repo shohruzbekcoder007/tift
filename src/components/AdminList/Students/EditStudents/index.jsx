@@ -770,14 +770,11 @@ export default function EditStudents() {
               >
                 Academic group
               </Typography>
-              {newData.academic_group ?
                 <AllSelectFullWidth
                   chageValueFunction={val => reqDataChange("academic_group", val)}
                   selectedOptionP={newData.academic_group}
                   selectOptions={academicGroupList}
                 />
-                : ""
-              }
             </WrapperInputsCardTwo>
             <WrapperInputsCardTwo>
               <Typography
