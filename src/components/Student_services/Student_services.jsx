@@ -223,7 +223,7 @@ export default function Student_services() {
                   Data.length > 0 ? Data.map(elem => {
                     return (
                       <tr>
-                        <th>{elem.call_id}</th>
+                        <th>{elem.id}</th>
                         <th>{elem.type}</th>
                         <th>{elem.date}</th>
                         {elem.status == "success" ? <th style={{ color: "green" }}>{elem.status}</th> : ""}
