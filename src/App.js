@@ -154,6 +154,8 @@ import StudentsAccountant from './components/StudentsAccountant'
 import GroupStudents from './components/AdminList/GroupStudents'
 import CallStudents from './components/CallStudents'
 import SeeStudnetsInfoInvation from './components/SeeStudnetsInfoInvation'
+import ReadingRecovery from './components/AdminList/ReadingRecovery'
+import Moved from './components/AdminList/Moved'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -351,11 +353,11 @@ function App() {
                     <Route path='edit' element={<EditStudents />} />
                   </Route>
                   <Route path="addtest" element={<AddTest />} />
-                  <Route path='group' element={<StudentSciences/>}>
+                  <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
                   </Route>
-                  <Route path='Call' element={<StudentSciences/>}>
+                  <Route path='Call' element={<StudentSciences />}>
                     <Route index element={<CallStudents />} />
                     <Route path='see' element={<SeeStudnetsInfoInvation />} />
                   </Route>
@@ -412,6 +414,13 @@ function App() {
                   <Route path="attendance" element={<Admin_Attendance />} />
                   <Route path="reference" element={<Reference />} />
                   <Route path="studentdocuments" element={<StudentDocuments />} />
+                  
+                  
+                  <Route path="reading-recovery" element={<StudentSciences />} >
+                    <Route index element={<Moved />} />
+                    <Route path='moved' element={<ReadingRecovery />} />
+                  </Route>
+
                   <Route path="semester" element={<StudentSciences />} >
                     <Route index element={<Semestr />} />
                     <Route path='control' element={<InterimControl />} />
@@ -470,7 +479,7 @@ function App() {
                   <Route path='contractprices' element={<Contractprices />} />
 
                   <Route path="sciences" element={<StudentSciences />} >
-                  <Route index element={<SciencePlan />} />
+                    <Route index element={<SciencePlan />} />
                     <Route path='ScienceDirection' element={<ScienceDirection />} />
                     <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
                     <Route path='ScienceDirection/sciences/add' element={<Add />} />
@@ -500,7 +509,7 @@ function App() {
                     <Route index element={<Directions />} />
                     <Route path='sciences' element={<ScienesStudent />} />
                   </Route>
-                  <Route path='group' element={<StudentSciences/>}>
+                  <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
 

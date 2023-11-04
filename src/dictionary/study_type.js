@@ -28,5 +28,11 @@ export default [
         uz: "Online",
         ru: "remote ru",
         eng: "remote eng"
+    },
+    {
+        value: "moved",
+        uz: "O'qishni ko'chirish",
+        ru: "morning ru",
+        eng: "morning eng"
     }
 ]
