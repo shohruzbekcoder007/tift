@@ -84,7 +84,7 @@ export default function Student_services() {
   }, [])
 
   const handleClick = (_) => {
-    postStudentInformation(student_doc, {
+    postStudentInformation(additional_documents, {
       type: ListSelect,
       job: ListSelect != 'information' ? JobInput : ""
     }, (response) => {
