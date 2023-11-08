@@ -156,6 +156,8 @@ import CallStudents from './components/CallStudents'
 import SeeStudnetsInfoInvation from './components/SeeStudnetsInfoInvation'
 import ReadingRecovery from './components/AdminList/ReadingRecovery'
 import Moved from './components/AdminList/Moved'
+import TutorDept from './components/TutorDept'
+import TutorNbStudents from './components/TutorNbStudents'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -293,6 +295,8 @@ function App() {
                       <Route path='tutor-see-schedule' element={<TutorSeeSchedule />} />
                       <Route path="information" element={<TutorSeeInformation />} />
                     </Route>
+                    <Route path="dept" element={<TutorDept />} />
+                    <Route path="NB" element={<TutorNbStudents />} />
                   </Route>
                   <Route path="profile" element={<Profile />} />
                 </Route>

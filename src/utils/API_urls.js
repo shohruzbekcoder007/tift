@@ -91,10 +91,10 @@ export const syllabus_request_id = '/department/syllabus/status'
 
 // accountant
  export const accountant_students = '/additional/accounting/students/'
-
 //tutor
 export const Groups = 'tutor/GroupList/'
 export const Students = 'tutor/GroupList/students/'
+export const tutor_students = '/additional/tutor/nb/'
 
 // admin 
 export const allusers = '/allusers/'
