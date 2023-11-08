@@ -1,6 +1,6 @@
 export default [
     {
-        value: 'all',
+        value: '&',
         uz: "Ta'lim Darajasi",
         ru: "Ta'lim Darajasi",
         eng: "Ta'lim Darajasi",

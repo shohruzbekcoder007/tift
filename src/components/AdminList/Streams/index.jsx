@@ -80,7 +80,10 @@ export default function Streams() {
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
       console.log(response.data.results);
-      let mass = []
+      let mass = [{
+        name: "O'quv yili",
+        value: '&',
+      }]
 
       response.data.results.map(item => {
         mass.push({

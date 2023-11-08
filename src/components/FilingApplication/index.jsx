@@ -31,7 +31,7 @@ export default function FilingApplication() {
     const [syllabus, setSyllabus] = useState([])
     const [pageCount, setPageCount] = useState(1)
     const [science, setScience] = useState(null)
-    const [status, setStatus] = useState('all')
+    const [status, setStatus] = useState('&')
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(10)
     const [allCount, setAllCount] = useState(0)
@@ -95,7 +95,7 @@ export default function FilingApplication() {
 
     useEffect(() => {
         if (semester !== 0) {
-            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${status!="all"?status:''}`, getSyllabus, getSyllabusError)
+            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${status!="&"?status:''}`, getSyllabus, getSyllabusError)
         }
     }, [page, pageSize, semester, status])
 

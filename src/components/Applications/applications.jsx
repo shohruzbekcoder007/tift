@@ -51,7 +51,7 @@ export default function Applications() {
 
     useEffect(() => {
         if (semester !== 0 && statusApplication !== 0) {
-            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${statusApplication != "all" ? statusApplication : ''}`, getSyllabus, getSyllabusError)
+            getTeacherSyllabus(`${teacher_syllabus}?semester=${semester}&page_size=${pageSize}&page=${page}&status=${statusApplication != "&" ? statusApplication : ''}`, getSyllabus, getSyllabusError)
         }
     }, [page, pageSize, semester, statusApplication])
 

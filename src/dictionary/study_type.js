@@ -1,6 +1,6 @@
 export default [
     {
-        value: 'all',
+        value: '&',
         uz: "Ta'lim shakli",
         ru: "Ta'lim shakli",
         eng: "Ta'lim shakli",

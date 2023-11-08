@@ -41,8 +41,8 @@ export default function TutorNbStudents() {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(1)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
-  const [AcademekYear, setAcademekYear] = useState('all')
-  const [FormPayment, setFormPayment] = useState('all')
+  const [AcademekYear, setAcademekYear] = useState('&')
+  const [FormPayment, setFormPayment] = useState('&')
   const [YearList, setYearList] = useState([])
 
 

@@ -1,6 +1,6 @@
 export default [
     {
-        value: "all",
+        value: "&",
         uz: "Brachasi",
         ru: "Brachasi ru",
         eng: "Brachasi eng"

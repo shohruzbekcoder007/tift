@@ -140,7 +140,7 @@ export default function SeeStudnetsInfoInvation() {
   }, []);
   useEffect(() => {
     if (AcademekYear != 0)
-      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? 'all' : DirectionID}&year=${AcademekYear ?? 'all'}`, (response) => {
+      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}&year=${AcademekYear ?? '&'}`, (response) => {
         // setDirections(response.results)
         const currlist = [...response.data]
         // currlist.unshift({

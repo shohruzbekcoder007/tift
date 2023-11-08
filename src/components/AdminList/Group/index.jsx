@@ -50,10 +50,10 @@ export default function Group() {
   const [AcademikGroup, setAcademikGroup] = useState([])
   const [SearchText, setSearchText] = useState('')
   const [Directions, setDirections] = useState([])
-  const [DirectionID, setDirectionID] = useState('all')
-  const [DirectionSelect, setDirectionSelect] = useState('all')
+  const [DirectionID, setDirectionID] = useState('&')
+  const [DirectionSelect, setDirectionSelect] = useState('&')
   const [YearList, setYearList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState('all')
+  const [AcademekYear, setAcademekYear] = useState('&')
   const [RoomSelect, setRoomSelect] = useState(null)
   const [RoomList, setRoomList] = useState([])
   const [TeacherSelect, setTeacherSelect] = useState(null)
@@ -93,7 +93,7 @@ export default function Group() {
       })
       mass.unshift({
         name: "O'quv yili",
-        value: 'all'
+        value: '&'
       })
       setYearList(mass)
 
@@ -147,7 +147,7 @@ export default function Group() {
       const currlist = [...response.results]
       currlist.unshift({
         name: 'Hammasi',
-        id: 'all',
+        id: '&',
         degree: 'hammasi'
       })
       setDirections(currlist.map(elem => {

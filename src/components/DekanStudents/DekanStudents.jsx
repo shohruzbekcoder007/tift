@@ -19,7 +19,7 @@ export default function DekanStudents() {
   const [Students, setStudents] = useState([]);
   const [pageCount, setPageCount] = useState(1)
   const [science, setScience] = useState(null)
-  const [status, setStatus] = useState('all')
+  const [status, setStatus] = useState('&')
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [allCount, setAllCount] = useState(0)
