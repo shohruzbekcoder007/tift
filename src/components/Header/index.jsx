@@ -39,7 +39,6 @@ export default function Header() {
 
 
 
-
   return (
     <>
      
@@ -63,6 +62,9 @@ export default function Header() {
             }
             {
               getRole(user) === "student" && <div>{InfoList.direction} <p>({InfoList.academic_group})</p></div>
+            }
+            {
+              getRole(user) === "tutor" && <div style={{color: "#039E51"}}> {user.first_name + "  " +  user.last_name + "  " + user.middle_name} </div>
             }
           </NavbarWrapper>
           {

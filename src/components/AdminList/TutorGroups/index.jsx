@@ -27,6 +27,7 @@ export default function TutorGroups() {
   const [GroupList, setGroupList] = useState([])
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
+  const [AllStudentCount, setAllStudentCount] = useState(1)
 
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
@@ -38,6 +39,7 @@ export default function TutorGroups() {
       setGroupList(response.results)
       setPageCount(response.page_count)
       setAllCount(response.count)
+      setAllStudentCount(response.results.reduce((total, group) => total + group.student_count, 0));
     }, (error) => {
       console.log(error)
     })
@@ -57,6 +59,9 @@ export default function TutorGroups() {
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
+            <h4>
+          Umumiy talabalar soni: {AllStudentCount} ta
+            </h4>
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
@@ -199,7 +204,7 @@ export default function TutorGroups() {
           </ClassScheduleTableWrapper>
         </BoxBody>
         <BoxFooter>
-          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + GroupList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + GroupList.length} gachasi ko'rsatilmoqda`} </BoxFooterText>
           <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
         {/* <Modal
