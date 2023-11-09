@@ -41,7 +41,7 @@ export default function Header() {
 
   return (
     <>
-     
+
       <HeaderWrapper
       // big='true'
       >
@@ -61,10 +61,15 @@ export default function Header() {
                 </HeaderTitle> : <></>
             }
             {
-              getRole(user) === "student" && <div>{InfoList.direction} <p>({InfoList.academic_group})</p></div>
+              getRole(user) === "student" && <div style={{display: 'block'}}>
+                <p style={{margin: "0"}}>{user.first_name + "  " + user.last_name + "  " + user.middle_name}</p>
+                <div>
+                  {InfoList.direction} ({InfoList.academic_group})
+                </div>
+              </div>
             }
             {
-              getRole(user) === "tutor" && <div style={{color: "#039E51"}}> {user.first_name + "  " +  user.last_name + "  " + user.middle_name} </div>
+              getRole(user) !== "student" && <div style={{ color: "#039E51", fontSize: "13px" }}> {user.first_name + "  " + user.last_name + "  " + user.middle_name} </div>
             }
           </NavbarWrapper>
           {
@@ -98,20 +103,20 @@ export default function Header() {
         <HeaderAccount open={headerAccount}>
           {
             getRole(user) === 'student' && <>
-            {
-              InfoList.form_of_payment == 'contract' ?
-              <NavbarWrapperRight>
-                {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
-                <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-                <Indebtedness>Qarzdorlik: {InfoList.debt >= 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
-              </NavbarWrapperRight>
-              :
-              <NavbarWrapperRight>
-                <h4 style={{color: "rgb(3, 158, 81)"}}>DAVLAT GRANTI</h4>
-              </NavbarWrapperRight>
-            }
+              {
+                InfoList.form_of_payment == 'contract' ?
+                  <NavbarWrapperRight>
+                    {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
+                    <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+                    <Indebtedness>Qarzdorlik: {InfoList.debt >= 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+                  </NavbarWrapperRight>
+                  :
+                  <NavbarWrapperRight>
+                    <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
+                  </NavbarWrapperRight>
+              }
             </>
-          } 
+          }
           {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime> */}

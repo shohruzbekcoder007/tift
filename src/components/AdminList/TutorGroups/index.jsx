@@ -59,9 +59,9 @@ export default function TutorGroups() {
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
-            <h4>
-          Umumiy talabalar soni: {AllStudentCount} ta
-            </h4>
+          <h4>
+            Umumiy talabalar soni: {AllStudentCount} ta
+          </h4>
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
