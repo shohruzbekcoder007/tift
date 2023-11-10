@@ -184,7 +184,7 @@ export default function SciencesAdmin() {
               Excel Yuklash
             </Button>
             <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
-            <Link to={'add'}>
+            <Link to={'add'} state={{year: state.season}}>
               <Button
                 variant="contained"
                 onClick={handleOpen}

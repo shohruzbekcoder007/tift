@@ -8,12 +8,13 @@ import { WrapperButtons } from '../../Employees/Career/styles'
 import { getAdminKafedra } from '../requests'
 import { directions, kafedra, science } from '../../../../utils/API_urls'
 import { createscience, getDirection } from './requests'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function Add() {
 
   let navigate = useNavigate()
-
+  const {state} = useLocation()
   const [adminData, setadminData] = useState({
     name: null,
     semester: null,
@@ -25,13 +26,14 @@ export default function Add() {
     kafedra: null,
     degree: null,
     study_type: null,
-    independently: 0
+    independently: 0,
+    academic_year: state?.year
   })
+  const user = useSelector((state) => state.user);
 
 
 
  const [CreditCost, setCreditCost] = useState(0);
-
   const reqDataChange = (keyname, value) => {
     setadminData(prev => {
       prev.credit = Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently))/ 30)
@@ -46,7 +48,7 @@ export default function Add() {
     console.log(adminData)
     createscience(science, adminData, (response) => {
       if (response.status == 201) {
-        navigate(`/admin/sciences`)
+        navigate(-1)
       } else {
 
       }

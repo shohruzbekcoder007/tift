@@ -365,6 +365,14 @@ function App() {
                     <Route index element={<CallStudents />} />
                     <Route path='see' element={<SeeStudnetsInfoInvation />} />
                   </Route>
+                   <Route path="sciences" element={<StudentSciences />} >
+                    <Route index element={<SciencePlan />} />
+                    <Route path='ScienceDirection' element={<ScienceDirection />} />
+                    <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
+                    <Route path='ScienceDirection/sciences/add' element={<Add />} />
+                    <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
+                    <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                  </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
