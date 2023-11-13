@@ -62,7 +62,7 @@ export default function Header() {
             }
             {
               getRole(user) === "student" && <div style={{display: 'block'}}>
-                <p style={{margin: "0"}}>{user.first_name + "  " + user.last_name + "  " + user.middle_name}</p>
+                <p style={{margin: "0"}}>{user?.first_name + "  " + user?.last_name + "  " + user?.middle_name}</p>
                 <div>
                   {InfoList.direction} ({InfoList.academic_group})
                 </div>

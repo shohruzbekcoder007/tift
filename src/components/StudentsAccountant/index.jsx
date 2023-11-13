@@ -19,6 +19,7 @@ import study_type from '../../dictionary/study_type'
 import { academic_year, accountant_students } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import contract_type from '../../dictionary/contract_type'
+import { useSelector } from 'react-redux'
 
 export default function StudentsAccountant() {
   const [open, setOpen] = React.useState(false);
@@ -45,6 +46,7 @@ export default function StudentsAccountant() {
   const [FormPayment, setFormPayment] = useState('&')
   const [YearList, setYearList] = useState([])
 
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
@@ -311,7 +313,7 @@ export default function StudentsAccountant() {
                     </svg>
                     }
                   />
-                  <th></th>
+                  {user.view_only ? <th></th> : ""}
                 </tr>
               </thead>
               <tbody>
@@ -327,7 +329,9 @@ export default function StudentsAccountant() {
                         <th>{Number(elem.contract)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
                         <th>{Number(elem.summ)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
                         <th style={{ color: 'red' }}>{Number(elem.contract - elem.summ)?.toLocaleString().replace(/,/g, ' ')} so'm</th>
-                        <th> <Button
+                          {user.view_only ? 
+                        <th> 
+                          <Button
                           variant="contained"
                           onClick={() => openModal(elem.summ, elem.id)}
                           sx={{
@@ -350,7 +354,11 @@ export default function StudentsAccountant() {
                           </svg>
                           }
                         >
-                        </Button></th>
+                        </Button>
+                        </th>
+                        : ""
+                          }
+                        
                       </tr>
                     )
                   })
