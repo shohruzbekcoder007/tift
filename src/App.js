@@ -360,6 +360,7 @@ function App() {
                   <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
+                    <Route path='students/edit' element={<EditStudents />} />
                   </Route>
                   <Route path='Call' element={<StudentSciences />}>
                     <Route index element={<CallStudents />} />

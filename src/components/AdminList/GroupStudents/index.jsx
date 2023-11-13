@@ -13,7 +13,7 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { IconButton } from '../../Final_Dep/style'
 import { addGroup, getGroups, getTeachers, patchGroup } from './requests'
-import { academic_group, academic_group_short, academic_year, allusers, bot_para, directions, room_create_list, users_student } from '../../../utils/API_urls'
+import { academic_group, academic_group_short, academic_year, additional_student, allusers, bot_para, directions, room_create_list, users_student } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
 import { getAcademecYear } from '../Semestr/requests'
@@ -74,7 +74,7 @@ export default function GroupStudents() {
 
   useEffect(() => {
     setAcademikGroup([])
-    getGroups(`${users_student}?academic_group=${state}`, (response) => {
+    getGroups(`${additional_student}?academic_group=${state}`, (response) => {
       console.log(response.data);
       setAcademikGroup(response.data.results)
       setPageCount(response.data.page_count)

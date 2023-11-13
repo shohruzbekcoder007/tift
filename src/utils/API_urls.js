@@ -137,6 +137,7 @@ export const additional_student = "/additional/student/"
 export const parentpatoklist = "/parentpatoklist/"
 export const bot_para = "/bot/para/"
 export const patok_teacher = "/patok_teacher/"
+export const additional_action_permission = "/additional/action/permission/"
 
 
 // lawyer
