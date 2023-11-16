@@ -16,6 +16,7 @@ import lesson_types from '../../../dictionary/lesson_types'
 import { createScheduleTable } from './requests';
 import { scheduletable } from '../../../utils/API_urls';
 import { Alert } from '@mui/material';
+import { TrBox, TrBoxFooter, TrBoxHeader } from '../../ClassScheduleTeacher/styles';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -122,12 +123,22 @@ export default function DayTable({ oneday, groups, day, para, room }) {
       >
         {
           oneday?.group?.[0] != null && oneday?.group?.map((element, indx) => {
-            return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element}</span>
+            return <>
+              <TrBox key={indx}>
+                <TrBoxHeader style={{ color: "#000" }}>{oneday.science}</TrBoxHeader>
+                <TrBoxFooter>
+                  <span style={{ color: "#000" }} className="group">{element}</span>
+                  {/* <span className="room">{oneday.teacher}</span> */}
+                </TrBoxFooter>
+              </TrBox>
+              {/* <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "", display: "inline-block", color: "#000" }}>{element + " " + oneday.science}</span> */}
+            </>
           })
         }
         {
           new_lessons?.map((element, indx) => {
-            return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "5px", display: "inline-block", color: "#000" }}>{element.group.name}</span>
+            console.log(element);
+            return <span key={indx} style={{ padding: "10px", backgroundColor: "#eee", borderRadius: "10px", margin: "", display: "inline-block", color: "#000" }}>{element.group.name}</span>
           })
         }
       </ScheduleTable>
