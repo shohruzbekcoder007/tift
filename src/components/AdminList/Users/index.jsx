@@ -95,8 +95,15 @@ export default function Users() {
     })
   }, [pageSize, page, searchText])
 
+
+  // let Latex = require('react-latex')
+  // let fraction = `$$\\frac{1}{2}$$`
+
   return (
     <ContentWrapper>
+        {/* <Latex>
+          {fraction}
+        </Latex> */}
       <Paper
         elevation={0}
         sx={{
