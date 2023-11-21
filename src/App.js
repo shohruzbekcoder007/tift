@@ -441,6 +441,8 @@ function App() {
                   <Route path="streams" element={<StudentSciences />} >
                     <Route index element={<Streams />} />
                     <Route path='schedule' element={<Schedule />} />
+                    <Route path="vedomost" element={<Vedomost />} />
+                    
                   </Route>
                   <Route path="NBfix" element={<NBfix />} />
                   <Route path="transferstudents" element={<TransferStudents />} />
