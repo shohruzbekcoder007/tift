@@ -28,14 +28,14 @@ const baho = (ball) => {
 
 export default function Tasks() {
   const { state } = useLocation()
-  const [myPatokList, setmyPatokList] = useState([])
+  const [myPatokList, setmyPatokList] = useState({})
   const [ball1, setBall1] = useState(0)
   const [ball2, setBall2] = useState(0)
   const [Status, setStatus] = useState(false)
 
   useEffect(() => {
     getMyPatok(`${my_patok}${state.data}/`, (response) => {
-      setmyPatokList(response.data.tasks)
+      setmyPatokList(response.data)
       response.data.tasks.forEach(element => {
         setBall1(prev => {
           return prev + (parseFloat(element.grade) || 0)
@@ -85,6 +85,7 @@ export default function Tasks() {
           <StudentTasksBox>
             <p>O’zlashtirish</p>
             <b>{ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0}%</b>
+            {/* <b>{myPatokList.percentage}</b> */}
           </StudentTasksBox>
           <StudentTasksBox>
             <p>Hozirgi bahosi</p>
@@ -191,7 +192,7 @@ export default function Tasks() {
               </thead>
               <tbody>
                 {
-                  myPatokList.length > 0 ? myPatokList.map((elem, index) => {
+                  myPatokList?.tasks?.length > 0 ? myPatokList?.tasks.map((elem, index) => {
                     console.log(elem)
                     return (
                       <tr key={index}>

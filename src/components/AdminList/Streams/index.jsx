@@ -607,7 +607,7 @@ export default function Streams() {
                         </th>
                         <th>
                           {
-                            elem.parent_name ?
+                            !elem.parent_name ?
                               <Link to={'vedomost'} state={{ data: elem.id }}>
                                 <Button
                                   variant="contained"

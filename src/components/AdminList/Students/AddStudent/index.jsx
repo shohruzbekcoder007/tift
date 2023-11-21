@@ -204,7 +204,7 @@ export default function AddStudents() {
       console.log(response);
       setDepartmentList(response.data.results.map(elem => {
         return {
-          name: elem.name,
+          name: elem.name + " (" + elem.degree + ")",
           value: elem.id
         }
       }))
