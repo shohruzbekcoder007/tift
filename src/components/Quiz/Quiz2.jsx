@@ -59,6 +59,7 @@ function PaperSheet(props) {
   const [openAlert, setOpenAlert] = useState(false)
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
+  const [taskType, settaskType] = useState('')
 
   const handleCloseAlert = () => setOpenAlert(false);
   const confirmExit = (e) => {
@@ -109,7 +110,10 @@ function PaperSheet(props) {
       setTaskId(response.task_id)
       setQuizText(response.task)
       setQuiz(response.questions)
+      console.log(response.questions);
       setTryCount(response.try_count)
+      settaskType(response?.task_type)
+
     }, error => {
       console.log(error)
       let msg = ``
@@ -173,7 +177,6 @@ function PaperSheet(props) {
 
   let Latex = require('react-latex')
 
-
   return (
     <>
       {/* <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
@@ -215,12 +218,15 @@ function PaperSheet(props) {
         </> : <>
           {(testTime != 0) ? <MyTimer testTime={testTime * 60} finishFunction={revealCorrect} /> : <></>}
           <Typography component="h3" variant="headline" sx={{ my: 1 }}>Qolgan urinishlar soni: {tryCount}</Typography>
-          <Typography component="h3">
+          
+          
+          
+          {/* <Typography component="h3">
             <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
               <LiveHelp />
             </Button>
             <span className={props.classes.questionMeta}> {quizText}</span><br />
-          </Typography>
+          </Typography> */}
           {/* {
             finishedTest ? <>
               <Alert
@@ -244,32 +250,43 @@ function PaperSheet(props) {
             </> : null
           } */}
 
+          {
+            taskType != 'latex' ? <Typography variant="headline" component="h3">
+              {current + 1} / {quiz?.length} | {quiz[current]?.question}
+            </Typography> 
+            
+            : 
+            
+            <Typography variant="headline" component="h3">
+              {current + 1} / {quiz?.length} | <img src={`${quiz[current]?.question}`} alt="" />
+            </Typography>
+          }
           <hr style={{ marginBottom: "20px" }} />
-          <Typography variant="headline" sx={{ display: 'flex' }}>
-            <h3>{current + 1} / {quiz.length} | </h3>
-            {/* <h3 dangerouslySetInnerHTML={{__html: quiz[current]?.question }}></h3> */}
-            <h3>
-              <Latex>
-                {quiz[current]?.question}
-              </Latex>
-            </h3>
-          </Typography>
 
           {quiz[current]?.answers.map((opt, index) => {
             return (
               <div key={index} style={{ marginTop: "5px" }}>
-                <Radio
-                  checked={answers.find(elem => elem.question_id == quiz[current].id)?.aswer_id == opt.id}
-                  onChange={handleChange}
-                  value={opt.id}
-                  name={`${quiz[current].id}`}
-                />
-                {/* <span dangerouslySetInnerHTML={{ __html: opt.answer }}></span> */}
-                <span>
-                  <Latex>
+                {
+                  taskType != 'latex' ? <>
+                    <Radio
+                      checked={opt.id == selectedValue}
+                      onChange={handleChange}
+                      value={opt.id}
+                      name={`${quiz[current].id}`}
+                    />
                     {opt.answer}
-                  </Latex>
-                </span>
+                  </>
+                    :
+                    <>
+                      <Radio
+                        checked={opt.id == selectedValue}
+                        onChange={handleChange}
+                        value={opt.id}
+                        name={`${quiz[current].id}`}
+                      />
+                      <img src={opt.answer} alt="" />
+                    </>
+                }
               </div>
             )
           })}
