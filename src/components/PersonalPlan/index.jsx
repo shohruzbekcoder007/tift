@@ -23,7 +23,7 @@ export default function PersonalPlan() {
       <PersonalPlanWrapper>
         {
           personalDataList.map((elem, index) => {
-            return <Semester key={index} title={`${elem.semester}-semestr`} data={elem.sciences} />
+            return <Semester key={index} index={index} title={`${elem.semester}-semestr`} data={elem.sciences} />
           })
         }
 
@@ -32,7 +32,7 @@ export default function PersonalPlan() {
   )
 }
 
-const Semester = ({ title, data }) => {
+const Semester = ({ title, data, index}) => {
   return (
     <PersonalPlanPaper elevation={0} sx={{ borderRadius: "10px" }}>
       <Typography
@@ -76,7 +76,7 @@ const Semester = ({ title, data }) => {
                   <tr key={index}>
                     <th>{elem.science}</th>
                     <th>{elem.credit}</th>
-                    <th>{elem.grade}</th>
+                    <th>{elem.score}</th>
                     <th>{elem.gpa}</th>
                   </tr>
                 )
@@ -90,7 +90,7 @@ const Semester = ({ title, data }) => {
         </table>
       </ClassScheduleTableWrapper>
       <div style={{ display: "flex", justifyContent: 'end' }}>
-        <h3>GPA: 0</h3>
+        <h3>GPA: {data?.[index]?.gpa ?? "0"}</h3>
       </div>
     </PersonalPlanPaper>
   )

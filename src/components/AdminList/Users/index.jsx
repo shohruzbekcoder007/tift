@@ -12,6 +12,8 @@ import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../.
 import { getUsersList, setPasswordUser } from './requests'
 import { change_password, allusers as getAllUser } from '../../../utils/API_urls'
 import MuiAlert from '@mui/material/Alert';
+import 'katex/dist/katex.min.css';
+import { BlockMath } from 'react-katex';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -79,7 +81,7 @@ export default function Users() {
       setAlertMessage(msg)
       handleClose()
     })
-  }
+  } 
 
   useEffect(() => {
     setAlUsers([])
@@ -96,14 +98,11 @@ export default function Users() {
   }, [pageSize, page, searchText])
 
 
-  // let Latex = require('react-latex')
-  // let fraction = `$$\\frac{1}{2}$$`
+
+
 
   return (
     <ContentWrapper>
-        {/* <Latex>
-          {fraction}
-        </Latex> */}
       <Paper
         elevation={0}
         sx={{

@@ -45,6 +45,7 @@ function PaperSheet(props) {
   const [answers, setAnswers] = useState([])
   const [quizText, setQuizText] = useState('')
   const [taskId, setTaskId] = useState(0)
+  const [taskType, settaskType] = useState('')
   const [tryCount, setTryCount] = useState(0)
   const [testTime, setTestTime] = useState(0)
   const [finishedTest, setFinishedTest] = useState(false)
@@ -70,6 +71,7 @@ function PaperSheet(props) {
       const endDate = new Date(`1995-12-17T${response.time}`)
       setTestTime(endDate.getMinutes() - startDate.getMinutes())
       setTaskId(response.task_id)
+      settaskType(response?.task_type)
       setQuizText(response.task)
       setQuiz(response.questions)
       setTryCount(response.try_count)
@@ -187,22 +189,32 @@ function PaperSheet(props) {
             </> : null
           }
 
-          <hr style={{ marginBottom: "20px" }} />
-          <Typography variant="headline" component="h3">
-            {current + 1} / {quiz.length} | {quiz[current]?.question}
-          </Typography>
+          <hr style={{ marginBottom: "21px" }} />
 
+          {
+            taskType != 'latex' ? <Typography variant="headline" component="h3">
+            {current + 1} / {quiz.length} | {quiz[current]?.question}
+          </Typography> : <Typography variant="headline" component="h3">
+            {current + 1} / {quiz.length} | <img src={quiz[current]?.question} alt="" />
+          </Typography>
+          }
+          
           {quiz[current]?.answers.map((opt, index) => {
             return (
               <div key={index} style={{ marginTop: "5px" }}
               >
-                <Radio
+              {
+                taskType != 'latex' ? <>
+                 <Radio
                   checked={opt.id == selectedValue}
                   onChange={handleChange}
                   value={opt.id}
                   name={`${quiz[current].id}`}
                 />
                 {opt.answer}
+                </>
+                : <img src={opt.answer} alt="" />
+              }     
               </div>
             )
           })}
