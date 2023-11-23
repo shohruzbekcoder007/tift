@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper, ClassScheduleTableWrapper } from '../../global_styles/styles'
 import { Button, CircularProgress, Pagination, Paper, Snackbar, Typography } from '@mui/material'
-import { ThesisBody, ThesisHeader } from './styles'
+import { ModalBoxTest, ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
 import DiplomaTable, { TableTHHeader } from '../DiplomaTable'
@@ -13,8 +13,8 @@ import listLanguage from '../DiplomaTable/language.json'
 import { MuiFileInput } from 'mui-file-input'
 import DataPicker from '../DataPicker'
 import { useLocation } from 'react-router'
-import { getTeacheravTasks, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
-import { academic_group_short, host, patokadmin, science_short, teacher_tasks } from '../../utils/API_urls'
+import { getTeacheravTasks, getTestPreview, setTeacheravTasksPost, setTeacheravTasksPut, setTeacherDeleteTasks } from './requests'
+import { academic_group_short, additional_test_preview, host, patokadmin, science_short, teacher_tasks } from '../../utils/API_urls'
 import AllSelect from '../AllSelect'
 import MultipleSelectChip from '../Multisellect'
 import { getAcademicGroup, getSciense } from '../AdminList/Streams/request'
@@ -24,8 +24,11 @@ import AutocompleteJames from '../AutocompleteJames'
 export default function AddTest() {
 
   const [open, setOpen] = useState(false);
+  const [TestModalOpen, setTestModalOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const closeTestModal = () => setTestModalOpen(false);
   const [file, setFile] = useState(null);
   const [tasksList, settasksList] = useState([]);
   const [titleTasks, settitleTasks] = useState(null);
@@ -47,17 +50,45 @@ export default function AddTest() {
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [SearchScience, setSearchScience] = useState('')
+
+  const [TestPriveiwList, setTestPriveiwList] = useState([]);
+  const [Loader, setLoader] = useState("Tekshirib ko'rish")
+
   const handleCloseAlert = () => setOpenAlert(false);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
+  const seeTestModal = () => {
+    setLoader(<CircularProgress color="inherit" size={25} />)
+    const formData = new FormData();
+    formData.append("source", file);
+    getTestPreview(additional_test_preview, formData, (response) => {
+      console.log(response.data.questions);
+      setLoader("Tekshirib ko'rish")
+      setTestPriveiwList(response.data.questions)
+      setTestModalOpen(true)
+
+    }, (error) => {
+      setLoader("Tekshirib ko'rish")
+      let msg = ``
+      if (error.response.data.message) {
+        msg += " " + error.response.data.message
+      }
+
+      setOpenAlert(true)
+      setAlertMessage(msg)
+      serChanged(false)
+      console.log(error);
+    })
+  };
+
   const anchorOrigin1 = {
     vertical: 'bottom',
     horizontal: "right"
   }
-  
+
   const anchorOrigin2 = {
     vertical: 'bottom',
     horizontal: "left"
@@ -81,21 +112,21 @@ export default function AddTest() {
     })
   }, [SearchText])
 
-  
-useEffect(() => {
-  //?semester=${SemesterNumber}
-  getSciense(`${science_short}?page_size=2000`, (response) => {
-    setScienseSelect(' ')
-    setScineseList(response.data.map(elem => {
-      return {
-        name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
-        value: elem.name
-      }
-    }))
-  }, (error) => {
-    console.log(error)
-  })
-}, []);
+
+  useEffect(() => {
+    //?semester=${SemesterNumber}
+    getSciense(`${science_short}?page_size=2000`, (response) => {
+      setScienseSelect(' ')
+      setScineseList(response.data.map(elem => {
+        return {
+          name: elem.name + " (" + elem?.direction + " " + elem?.semester + "-semester " + elem?.study_type + " " + elem?.degree + ")",
+          value: elem.name
+        }
+      }))
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
 
   useEffect(() => {
     if (ScienseSelect) {
@@ -152,7 +183,7 @@ useEffect(() => {
     ]
   }, [])
 
-
+  const items = ['A', 'B', 'C', 'D'];
 
 
   const handleSubmit = async (event) => {
@@ -429,15 +460,16 @@ useEffect(() => {
             </ModalHeader>
           </div>
           <ModalSelectWrapper>
-          {/* <AutocompleteJames label={"Fanlar"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
+            {/* <AutocompleteJames label={"Fanlar"} selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
             <AllSelectFullWidth
               chageValueFunction={val => setSemesterNumber(val)}
               selectedOptionP={1}
               selectOptions={SemesterNum}
             /> */}
           </ModalSelectWrapper>
+
           <ModalSelectWrapper>
-          <Typography
+            <Typography
               id="keep-mounted-modal-title"
               variant="h6"
               component="h4"
@@ -451,8 +483,9 @@ useEffect(() => {
               Fanlar
             </Typography>
             {/* callback_func={val => setSearchScience(val)} */}
-            <AutocompleteJames selectOptions={ScineseList}  chageValueFunction={val => setScienseSelect(val)} />
+            <AutocompleteJames selectOptions={ScineseList} chageValueFunction={val => setScienseSelect(val)} />
           </ModalSelectWrapper>
+
           <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
@@ -472,6 +505,7 @@ useEffect(() => {
               chageValueFunction={handleMultiSelectChange}
             />
           </ModalSelectWrapper>
+
           <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
@@ -488,6 +522,7 @@ useEffect(() => {
             </Typography>
             <CustomizedInputSimple callback_func={val => settitleTasks(val)} />
           </ModalSelectWrapper>
+
           <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
@@ -571,7 +606,7 @@ useEffect(() => {
           </ModalSelectWrapper> : <></>}
 
 
-          {taskmethodVal != "oddiy" ? <ModalSelectWrapper>
+          {taskmethodVal === "file" ? <ModalSelectWrapper>
             <Typography
               id="keep-mounted-modal-title"
               variant="h6"
@@ -590,9 +625,52 @@ useEffect(() => {
               value={file}
               onChange={setFileHandler}
               // getInputText={(value) => value ? 'Thanks!' : ''}
-              fullWidth
+              sx={{
+                width: "100%"
+              }}
             />
+
           </ModalSelectWrapper> : <></>}
+          {taskmethodVal === "test" ?
+
+            <ModalSelectWrapper>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <MuiFileInput
+                  placeholder="Fayl kiriting"
+                  value={file}
+                  onChange={setFileHandler}
+                  // getInputText={(value) => value ? 'Thanks!' : ''}
+                  sx={{
+                    width: "60%"
+                  }}
+                />
+
+                {
+                  file ? <Button
+                    sx={{ width: "30%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "0" }}
+                    variant="contained"
+                    onClick={seeTestModal}
+                  >
+                    {Loader}
+                  </Button>
+                    :
+                    <Button
+                      sx={{ width: "30%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "0" }}
+                      variant="contained"
+                      disabled
+                    >
+                      Tekshirib Ko'rish
+                    </Button>
+                }
+              </div>
+            </ModalSelectWrapper>
+
+
+            : ""}
+
+
+
+
 
           {taskmethodVal == "test" ? <ModalSelectWrapper>
             <Typography
@@ -669,6 +747,52 @@ useEffect(() => {
           </ModalButtons>
         </ModalBox>
       </Modal>
+      <Modal
+        keepMounted
+        open={TestModalOpen}
+        onClose={closeTestModal}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <ModalBoxTest>
+          {
+            TestPriveiwList.length > 0 && TestPriveiwList.map((item, index) => {
+              return (
+                <>
+                  <div style={{ display: "flex" }}>
+                    <h3 style={{ margin: "10px" }}>{index + 1})</h3> <img src={item.question} alt="" />
+                  </div>
+                  {
+                    item?.answers?.map((elem, index) => {
+                      return (
+                        <div style={{ display: "flex" }}>
+                          {index === 0 ? <h5 style={{ margin: "10px 0 0 30px", color: "green" }}>{items[index]})</h5> : <h5 style={{ margin: "10px 0 0 30px" }}>{items[index]})</h5>}
+                          <img style={{ padding: "10px 0", margin: "3px 10px" }} src={`${elem}`} alt="" />
+                        </div>
+                      )
+                    })
+                  }
+                  <br />
+                  {/* <p style={{ margin: "10px 0" }}><b>A)</b> <img src="" alt="" /></p> */}
+                </>
+              )
+            })
+          }
+          <ModalButtons style={{ justifyContent: "end" }}>
+            <Button
+              sx={{ width: "20%", textTransform: "none", borderRadius: "10px", boxShadow: "none", }}
+              variant="contained"
+              type='submit'
+              onClick={closeTestModal}
+            >
+              Yopish
+              {/* {listLanguage.Save['uz']} */}
+            </Button>
+          </ModalButtons>
+        </ModalBoxTest>
+
+      </Modal>
+
       <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
         <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
           {alertMessage}
