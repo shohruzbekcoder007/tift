@@ -761,6 +761,7 @@ export default function AddTest() {
             type="application/pdf"
             width="100%"
             height="1000px"
+            onError={(e) => console.error('Error loading PDF:', e)}
           ></object>
           {/* {
             TestPriveiwList.length > 0 && TestPriveiwList.map((item, index) => {
