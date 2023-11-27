@@ -315,7 +315,8 @@ export default function EditStudents() {
         ...newData,
         ...response.data,
       };
-      updatedData.avatar = null
+      if(response.data.avatar) updatedData.avatar = response.data.avatar.replace('/media/https%3A/','')
+
       // Set the updated data in your state
       setNewData(updatedData);
       setStatus(true)
@@ -340,9 +341,9 @@ export default function EditStudents() {
         Status && <WrapperBox>
           <BoxHeader>
             {
-              newData ?
+              newData.avatar ?
                 <WrapperImgCard>
-                  <img src={host + newData.avatar} alt="" />
+                  <img src={`https://`+newData.avatar} alt="" />
                 </WrapperImgCard>
                 :
                 <WrapperImgCard>
