@@ -21,6 +21,8 @@ import { getAcademicGroup, getSciense } from '../AdminList/Streams/request'
 import { AttendSearchButton } from '../Attend/styles'
 import MuiAlert from '@mui/material/Alert';
 import AutocompleteJames from '../AutocompleteJames'
+
+
 export default function AddTest() {
 
   const [open, setOpen] = useState(false);
@@ -51,7 +53,7 @@ export default function AddTest() {
   const [alertMessage, setAlertMessage] = useState('')
   const [SearchScience, setSearchScience] = useState('')
 
-  const [TestPriveiwList, setTestPriveiwList] = useState([]);
+  const [TestPriveiwList, setTestPriveiwList] = useState('');
   const [Loader, setLoader] = useState("Tekshirib ko'rish")
 
   const handleCloseAlert = () => setOpenAlert(false);
@@ -65,9 +67,9 @@ export default function AddTest() {
     const formData = new FormData();
     formData.append("source", file);
     getTestPreview(additional_test_preview, formData, (response) => {
-      console.log(response.data.questions);
+      console.log(response.data.pdf_url);
       setLoader("Tekshirib ko'rish")
-      setTestPriveiwList(response.data.questions)
+      setTestPriveiwList(response.data.pdf_url)
       setTestModalOpen(true)
 
     }, (error) => {
@@ -184,7 +186,7 @@ export default function AddTest() {
   }, [])
 
   const items = ['A', 'B', 'C', 'D'];
-
+  const type = 'pdf';
 
   const handleSubmit = async (event) => {
     setModalText(<CircularProgress color="success" size={25} />)
@@ -230,8 +232,6 @@ export default function AddTest() {
       serChanged(false)
     })
   };
-
-
   return (
     <ContentWrapper>
       <BoxHeader>
@@ -646,13 +646,14 @@ export default function AddTest() {
                 />
 
                 {
-                  file ? <Button
-                    sx={{ width: "30%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "0" }}
-                    variant="contained"
-                    onClick={seeTestModal}
-                  >
-                    {Loader}
-                  </Button>
+                  file ?
+                    <Button
+                      sx={{ width: "30%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "0" }}
+                      variant="contained"
+                      onClick={seeTestModal}
+                    >
+                      {Loader}
+                    </Button>
                     :
                     <Button
                       sx={{ width: "30%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "0" }}
@@ -755,7 +756,13 @@ export default function AddTest() {
         aria-describedby="keep-mounted-modal-description"
       >
         <ModalBoxTest>
-          {
+          <object
+            data={TestPriveiwList}
+            type="application/pdf"
+            width="100%"
+            height="1000px"
+          ></object>
+          {/* {
             TestPriveiwList.length > 0 && TestPriveiwList.map((item, index) => {
               return (
                 <>
@@ -773,12 +780,11 @@ export default function AddTest() {
                     })
                   }
                   <br />
-                  {/* <p style={{ margin: "10px 0" }}><b>A)</b> <img src="" alt="" /></p> */}
                 </>
               )
             })
-          }
-          <ModalButtons style={{ justifyContent: "end" }}>
+          } */}
+          {/* <ModalButtons style={{ justifyContent: "end" }}>
             <Button
               sx={{ width: "20%", textTransform: "none", borderRadius: "10px", boxShadow: "none", }}
               variant="contained"
@@ -786,9 +792,8 @@ export default function AddTest() {
               onClick={closeTestModal}
             >
               Yopish
-              {/* {listLanguage.Save['uz']} */}
             </Button>
-          </ModalButtons>
+          </ModalButtons> */}
         </ModalBoxTest>
 
       </Modal>
