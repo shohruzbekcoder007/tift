@@ -16,7 +16,7 @@ import { getAcademecYear } from '../AdminList/Semestr/requests'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import degree from '../../dictionary/degree'
 import study_type from '../../dictionary/study_type'
-import { academic_year, accountant_students } from '../../utils/API_urls'
+import { academic_year, accountant_students, directions } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import contract_type from '../../dictionary/contract_type'
 import { useSelector } from 'react-redux'
@@ -45,6 +45,8 @@ export default function StudentsAccountant() {
   const [AcademekYear, setAcademekYear] = useState('&')
   const [FormPayment, setFormPayment] = useState('&')
   const [YearList, setYearList] = useState([])
+  const [DirectionID, setDirectionID] = useState('&')
+  const [Directions, setDirections] = useState([])
 
   const user = useSelector((state) => state.user);
 
@@ -72,7 +74,7 @@ export default function StudentsAccountant() {
 
   useEffect(() => {
     setStudents([])
-    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}`, (response) => {
+    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}&specialty=${DirectionID}`, (response) => {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
@@ -81,14 +83,46 @@ export default function StudentsAccountant() {
       console.log(error);
       setModalText("Ma'lumot yo'q")
     })
-  }, [page, pageSize, Status, searchText, AcademekYear,FormPayment])
+  }, [page, pageSize, Status, searchText, AcademekYear,FormPayment,DirectionID])
 
+  
+  
+  useEffect(() => {
+
+    getDirections(`${directions}?page_size=100`, (response) => {
+      // setDirections(response.results)
+      const currlist = [...response.results]
+      currlist.unshift({
+        name: 'Hammasi',
+        id: '&',
+        degree: "hammasi"
+      })
+      setDirections(currlist.map(elem => {
+        return {
+          name: elem.name + " (" + elem.degree + ")",
+          value: elem.id
+        }
+      }))
+
+    }, (error) => {
+      console.log(error);
+    })
+  }, []);
+  
+  
+  
+  
   const openModal = (sum, id) => {
     setstudent_id(id)
     setStudent_contract(sum)
     setNew_contract(sum)
     handleOpen()
   }
+
+
+
+
+
 
   useEffect(() => {
     if (!open) setStudent_contract(0)
@@ -131,6 +165,7 @@ export default function StudentsAccountant() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
+
             <Button
               variant="contained"
               sx={{
@@ -161,6 +196,8 @@ export default function StudentsAccountant() {
               selectedOptionP={YearList?.[0]?.value}
               selectOptions={YearList}
             />
+          <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+
             {/* <AllSelectFullWidth
               chageValueFunction={(val) => setFormPayment(val)}
               selectedOptionP={Contract?.[0]?.value}

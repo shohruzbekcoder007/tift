@@ -274,7 +274,7 @@ export default function Tasks() {
                                   elem.method === 'test' ?
                                     <>
                                       {
-                                        (infoList.direction_contract - (infoList.direction_contract * 0.4)) > infoList.debt ?
+                                        (infoList.direction_contract - (infoList.direction_contract * 0.4)) >= infoList.debt ?
                                           <Link to="/quiz" state={{ testId: elem.id }}>
                                             <Button
                                               variant="contained"
