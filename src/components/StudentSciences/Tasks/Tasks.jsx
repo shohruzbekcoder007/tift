@@ -6,12 +6,14 @@ import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
 import { StudentAIButton, StudentTasksBox } from './styles'
 import { Link, useLocation } from 'react-router-dom'
-import { host, my_patok, my_task_put, my_task_submission } from '../../../utils/API_urls'
+import { host, my_patok, my_task_put, my_task_submission, student_detail } from '../../../utils/API_urls'
 import { createTaskSubmission, getMyPatok, PutTaskSubmission } from './requests'
 import { dateFormatter } from '../../../utils/dateFormatter'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { MuiFileInput } from 'mui-file-input'
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux'
+import { getStudentInformation } from '../../Information/requests'
 
 const baho = (ball) => {
   if (ball >= 90) {
@@ -32,6 +34,10 @@ export default function Tasks() {
   const [ball1, setBall1] = useState(0)
   const [ball2, setBall2] = useState(0)
   const [Status, setStatus] = useState(false)
+  const [infoList, setInfoList] = useState({})
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   useEffect(() => {
     getMyPatok(`${my_patok}${state.data}/`, (response) => {
@@ -48,6 +54,14 @@ export default function Tasks() {
       console.log(error)
     })
   }, [Status])
+
+  useEffect(() => {
+    getStudentInformation(student_detail, (response) => {
+      setInfoList(response.data.result)
+    }, (error) => {
+      console.log(error)
+    })
+  }, []);
 
   return (
     <>
@@ -93,22 +107,22 @@ export default function Tasks() {
           </StudentTasksBox>
         </BoxHeader>
         <BoxHeader>
-        <Typography
-          variant='h2'
-          sx={{
-            color: 'yellow',
-            fontSize: '14px',
-            fontStyle: 'normal',
-            fontWeight: '600',
-            lineHeight: '150%',
-            padding: "10px",
-            alignItem: "center",
-            bgcolor: "#24bd70",
-            borderRadius: "10px",
-          }}
-        >
-          Oraliq va Yakuniy vazifalarda 3 va undan yuqori baho olsangiz fandan o'tasiz
-        </Typography>
+          <Typography
+            variant='h2'
+            sx={{
+              color: 'yellow',
+              fontSize: '14px',
+              fontStyle: 'normal',
+              fontWeight: '600',
+              lineHeight: '150%',
+              padding: "10px",
+              alignItem: "center",
+              bgcolor: "#24bd70",
+              borderRadius: "10px",
+            }}
+          >
+            Oraliq va Yakuniy vazifalarda 3 va undan yuqori baho olsangiz fandan o'tasiz
+          </Typography>
         </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
@@ -200,13 +214,13 @@ export default function Tasks() {
                         <th>
                           {elem.title}
                           {
-                            (elem.method === 'test' || elem.method === 'oddiy')?
-                            <>
-                            </>:
-                            
-                            <>
-                              <a href={host + elem.source} target="_blank" >
-                                <StudentAIButton>
+                            (elem.method === 'test' || elem.method === 'oddiy') ?
+                              <>
+                              </> :
+
+                              <>
+                                <a href={host + elem.source} target="_blank" >
+                                  <StudentAIButton>
 
                                     <div style={{ width: "40px" }}>
                                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -259,19 +273,35 @@ export default function Tasks() {
                                 {
                                   elem.method === 'test' ?
                                     <>
-                                      <Link to="/quiz" state={{testId: elem.id}}>
-                                        <Button
-                                          variant="contained"
-                                          sx={{
-                                            borderRadius: "10px",
-                                            textTransform: "capitalize",
-                                            boxShadow: "none",
-                                            gap: '8px',
-                                          }}
-                                        >
-                                          Testni boshlash
-                                        </Button>
-                                      </Link>
+                                      {
+                                        (infoList.direction_contract - (infoList.direction_contract * 0.4)) > infoList.debt ?
+                                          <Link to="/quiz" state={{ testId: elem.id }}>
+                                            <Button
+                                              variant="contained"
+                                              sx={{
+                                                borderRadius: "10px",
+                                                textTransform: "capitalize",
+                                                boxShadow: "none",
+                                                gap: '8px',
+                                              }}
+                                            >
+                                              Testni boshlash
+                                            </Button>
+                                          </Link>
+                                          :
+                                          <Button
+                                            variant="contained"
+                                            onClick={handleOpen}
+                                            sx={{
+                                              borderRadius: "10px",
+                                              textTransform: "capitalize",
+                                              boxShadow: "none",
+                                              gap: '8px',
+                                            }}
+                                          >
+                                            Testni boshlash
+                                          </Button>
+                                      }
 
                                     </> :
                                     <>
@@ -293,6 +323,25 @@ export default function Tasks() {
                 }
               </tbody>
             </table>
+
+            <Modal
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="keep-mounted-modal-title"
+              aria-describedby="keep-mounted-modal-description"
+            >
+              <ModalBox>
+                <p style={{margin: "0 0 1rem 0", fontWeight: 500, lineHeight: "20px"}}>Hurmatli talaba shartnoma asosida kontrakt summasining kamida 40% qismi to'lanmaganligi uchun test ishlash imkoniyati sizda mavjud emas.</p>
+                <h4>Murojaat uchun:     
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-telegram"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z" />
+                  </svg>
+                  <a href="https://t.me/creditsystembot">@creditsystembot</a></h4>
+              </ModalBox>
+            </Modal>
           </ClassScheduleTableWrapper>
         </BoxBody>
         {/* <BoxFooter>

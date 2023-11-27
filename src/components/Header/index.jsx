@@ -108,7 +108,7 @@ export default function Header() {
                   <NavbarWrapperRight>
                     {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
                     <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-                    <Indebtedness>Qarzdorlik: {InfoList.debt >= 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+                    <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
                   </NavbarWrapperRight>
                   :
                   <NavbarWrapperRight>
