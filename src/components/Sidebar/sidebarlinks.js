@@ -1021,9 +1021,9 @@ export const accountant_links = [
       </defs>
     </svg>,
     text: {
-      uz: "Talabalar",
-      ru: "Студенты",
-      eng: "Students"
+      uz: "Kontrakt",
+      ru: "Договор",
+      eng: "Contract"
     },
     to: "students",
     type: "text"

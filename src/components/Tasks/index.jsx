@@ -80,16 +80,15 @@ export default function Tasks() {
     ]
   }, [])
 
- useEffect(() => {
-  if (state.type == 'lecture') {
-    tasktype.splice(0,1)
-    tasktype.push({
-      name: "Oraliq",
-      value: 'oraliq',
-    })
-  }
- }, [])
- 
+  useEffect(() => {
+    if (!state.parent) {
+      tasktype.push({
+        name: "Oraliq",
+        value: 'oraliq',
+      })
+    }
+  }, [])
+
 
   const taskmethod = useMemo(() => {
     return [
@@ -347,7 +346,7 @@ export default function Tasks() {
             >
               Vazifa nomi
             </Typography>
-            <CustomizedInputSimple placeholder="kiriting..." callback_func={val => settitleTasks(val)} />
+            <CustomizedInputSimple placeholder="kiriting" callback_func={val => settitleTasks(val)} />
           </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography
