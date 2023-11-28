@@ -279,6 +279,7 @@ export default function EditStudents() {
   // admin/employees
   const EditStudent = () => {
     // console.log(newData)
+    newData.avatar = null
     PatchEmployee(`${users_student}${state?.StudentID}/`, newData, response => {
       navigate(-1)
     }, error => {

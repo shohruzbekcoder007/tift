@@ -346,7 +346,7 @@ export default function Tasks() {
             >
               Vazifa nomi
             </Typography>
-            <CustomizedInputSimple callback_func={val => settitleTasks(val)} />
+            <CustomizedInputSimple placeholder="kiriting..." callback_func={val => settitleTasks(val)} />
           </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography

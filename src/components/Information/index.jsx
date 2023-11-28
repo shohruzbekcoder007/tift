@@ -192,14 +192,14 @@ export default function Information() {
               <HeaderWrapperH4>Manzil (vaqtincha):</HeaderWrapperH4>
               <HeaderWrapperP>{infoList.address2}</HeaderWrapperP>
             </WrapperBody>
-            <WrapperBodyContract>
+            {/* <WrapperBodyContract>
               <Button
                 sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
               >
                 O'qish joyidan ma'lumotnoma
               </Button>
-            </WrapperBodyContract>
+            </WrapperBodyContract> */}
           </HeaderWrapperBottom>
         </HeaderWrapper>
         <HeaderWrapper margin='true'>
