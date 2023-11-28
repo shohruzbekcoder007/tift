@@ -239,7 +239,7 @@ export default function Information() {
             <HeaderWrapperH4>O'qish turi:</HeaderWrapperH4>
             <HeaderWrapperP>{infoList.form_of_payment}</HeaderWrapperP>
           </WrapperBody>
-          <WrapperBodyContract>
+          {/* <WrapperBodyContract>
             {
               StudentContract.length > 0 ? StudentContract.map((elem, index) => {
                 return (
@@ -294,7 +294,7 @@ export default function Information() {
                 :
                 <></>
             }
-          </WrapperBodyContract>
+          </WrapperBodyContract> */}
         </HeaderWrapper>
       </InfoBody>
 

@@ -64,7 +64,7 @@ export default memo(function CustomizedInputSimple({ label, callback_func, place
                 value={value}
                 type={type}
                 helperText={helperText}
-                inputProps={{ maxLength: status === 'passport' ? 9 : false }}
+                inputProps={{ maxLength: status === 'passport' ? 9 : 0 }}
                 onChange={event => { handleChange(event.target.value) }}
                 placeholder={placeholder}
             />

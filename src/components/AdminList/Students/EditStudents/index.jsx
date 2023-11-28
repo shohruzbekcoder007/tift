@@ -204,7 +204,7 @@ export default function EditStudents() {
       console.log(response);
       setDepartmentList(response.data.results.map(elem => {
         return {
-          name: elem.name,
+          name: elem.name + " (" + elem.degree + ")",
           value: elem.id
         }
       }))
@@ -270,13 +270,32 @@ export default function EditStudents() {
           value: elem.id
         }
       }))
-      console.log('sssadsa');
     }, (error) => {
       console.log(error)
     })
   }, []);
 
   // admin/employees
+
+
+  useEffect(() => {
+    getOneEmployees(`${users_student}${state?.StudentID}/`, response => {
+      const updatedData = {
+        ...newData,
+        ...response.data,
+      };
+      if(response.data.avatar) updatedData.avatar = response.data.avatar.replace('/media/https%3A/','')
+      // Set the updated data in your state
+      setNewData(updatedData);
+      setTimeout(() => {
+        setStatus(true)
+      }, 500);
+    }, error => {
+      console.log(error)
+    })
+  }, []);
+
+
   const EditStudent = () => {
     // console.log(newData)
     newData.avatar = null
@@ -309,22 +328,6 @@ export default function EditStudents() {
       setAlertMessage(msg)
     })
   }
-
-  useEffect(() => {
-    getOneEmployees(`${users_student}${state?.StudentID}/`, response => {
-      const updatedData = {
-        ...newData,
-        ...response.data,
-      };
-      if(response.data.avatar) updatedData.avatar = response.data.avatar.replace('/media/https%3A/','')
-
-      // Set the updated data in your state
-      setNewData(updatedData);
-      setStatus(true)
-    }, error => {
-      console.log(error)
-    })
-  }, []);
 
   return (
     <div>

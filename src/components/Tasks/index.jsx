@@ -82,6 +82,7 @@ export default function Tasks() {
 
  useEffect(() => {
   if (state.type == 'lecture') {
+    tasktype.splice(0,1)
     tasktype.push({
       name: "Oraliq",
       value: 'oraliq',
