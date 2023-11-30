@@ -14,7 +14,7 @@ export const ContentWrapper = styled.div`
     gap: 18px;
     flex-wrap: wrap;
     @media (max-width: 600px) {
-        padding: 15px;
+        padding: 30px 10px;
     }
 `
 
@@ -92,6 +92,13 @@ export const ClassScheduleTableWrapper = styled.div`
             }
         }
     }
+
+    @media (max-width: 576px) {
+        
+    }
+
+
+
 `
 
 export const TrHeaderBox = styled.div`

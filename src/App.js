@@ -158,6 +158,7 @@ import ReadingRecovery from './components/AdminList/ReadingRecovery'
 import Moved from './components/AdminList/Moved'
 import TutorDept from './components/TutorDept'
 import TutorNbStudents from './components/TutorNbStudents'
+import Library from './components/Library'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -220,6 +221,7 @@ function App() {
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="readagain" element={<ReadAgain />} />
                   <Route path="personalplan" element={<PersonalPlan />} />
+                  <Route path="library" element={<Library />} />
                   {/* <Route path="olympics" element={<Olympics />} /> */}
                   {/* <Route path="thesisresult" element={<ThesisResult />} /> */}
                   <Route path="information" element={<Information />} />
@@ -239,6 +241,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />
                 </Route>
+
                 <Route path="quiz" element={<QuizWrapper />} />
 
                 <Route path="dekan" element={<MainDekan />}>

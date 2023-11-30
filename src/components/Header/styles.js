@@ -80,6 +80,9 @@ export const HeaderTitle = styled.h1`
   font-weight: ${props => props.theme.text.H1.font_weight};
   font-size: ${props => props.theme.text.H1.font_size};
   color: ${props => props.theme.color.text_color};
+  @media (max-width: 576px) {
+       font-size: 18px;
+    }
 `
 
 export const HeaderAccount = styled.div`

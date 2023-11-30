@@ -175,8 +175,6 @@ function PaperSheet(props) {
     })
   }
 
-  let Latex = require('react-latex')
-
   return (
     <>
       {/* <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>

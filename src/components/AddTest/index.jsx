@@ -812,7 +812,7 @@ const ItemTasks = ({ elem, index }) => {
   const [deleted, setDeleted] = useState(false)
   return (deleted ? <></> :
     <tr >
-      <th>{index + 1}</th>
+      <th>{elem.id}</th>
       <th>{elem.title}</th>
       <th>{elem.deadline}</th>
       <th>{elem.grade}</th>

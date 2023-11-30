@@ -104,13 +104,13 @@ export default function Header() {
           {
             getRole(user) === 'student' && <>
               {
-                InfoList.form_of_payment == 'contract' ?
+                InfoList?.form_of_payment == 'contract' ?
                   <NavbarWrapperRight>
                     {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
                     <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
                     <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
                   </NavbarWrapperRight>
-                  :
+                  : InfoList?.form_of_payment == 'grand' &&
                   <NavbarWrapperRight>
                     <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
                   </NavbarWrapperRight>
