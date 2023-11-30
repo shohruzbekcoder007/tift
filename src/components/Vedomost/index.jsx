@@ -147,6 +147,10 @@ export default function Vedomost() {
                   text={tasksName}
                   iconc={null}
                 />
+                 <TableTHHeader
+                  text="Guruh"
+                  iconc={null}
+                />
                 {
                   tasksTasks.map((elem, index) => {
                     return (
@@ -169,6 +173,7 @@ export default function Vedomost() {
                     <tr key={index}>
                       <th>{index + 1}</th>
                       <th>{elem.full_name}</th>
+                      <th>{elem.group}</th>
                       {
                         elem.tasks.map((element, index) => {
                           return (

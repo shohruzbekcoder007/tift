@@ -106,6 +106,7 @@ export default function Vedomost() {
                   text={tasksName}
                   iconc={null}
                 />
+                 
                 {
                   tasksTasks.map((elem, index) => {
                      return (
