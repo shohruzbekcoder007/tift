@@ -13,6 +13,7 @@ import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { MuiFileInput } from 'mui-file-input'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function University() {
   const [open, setOpen] = React.useState(false);
@@ -21,7 +22,7 @@ export default function University() {
   const [open2, setOpen2] = React.useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-
+  const user = useSelector((state) => state.user);
   return (
     <ContentWrapper>
       <Paper
@@ -37,6 +38,8 @@ export default function University() {
             console.log(val)
           }} />
           <AttendSearchButton>
+            {
+              user['role'] != 'rector' &&
           <Button
               variant="contained"
               onClick={handleOpen}
@@ -63,6 +66,7 @@ export default function University() {
             >
               Qo'shish
             </Button>
+            }
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -129,7 +133,10 @@ export default function University() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -140,6 +147,8 @@ export default function University() {
                         <th>1234</th>
                         <th>Ташкентский Университет Информационных Технологий</th>
                         <th>0</th>
+                        {
+                          user['role'] != 'rector' &&
                         <th>
                           <Button
                             variant="contained"
@@ -194,6 +203,7 @@ export default function University() {
                           >
                           </Button>
                         </th>
+                        }
                       </tr>
                     )
                   })

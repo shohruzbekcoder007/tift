@@ -17,6 +17,7 @@ import { allusers, host, studentnb, user_me, users_student } from '../../../util
 import AutocompleteApi from '../../AutocompleteApi'
 import BasicDatePicker from '../../BasicDatePicker'
 import AutocompleteJames from '../../AutocompleteJames'
+import { useSelector } from 'react-redux'
 
 export default function Reference() {
   const [open, setOpen] = React.useState(false);
@@ -34,7 +35,7 @@ export default function Reference() {
   const [StartDate, setStartDate] = useState(null)
   const [EndDate, setEndDate] = useState(null)
   const [SearchText, setSearchText] = useState('')
-
+  const user = useSelector((state) => state.user);
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
@@ -107,6 +108,8 @@ export default function Reference() {
           }}/>
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -133,6 +136,7 @@ export default function Reference() {
             >
               Qo'shish
             </Button>
+            }
           </AttendSearchButton>
         </BoxHeader>
 

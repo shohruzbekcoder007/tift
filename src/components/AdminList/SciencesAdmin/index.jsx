@@ -20,6 +20,7 @@ import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import { MuiFileInput } from 'mui-file-input'
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,7 +50,7 @@ export default function SciencesAdmin() {
   const [scienceAdmin, setscienceAdmin] = useState([]);
   const [file, setFile] = useState(null);
   const [ModalText, setModalText] = useState('Saqlash');
-
+  const user = useSelector((state) => state.user);
   const [deletedElem, setDeleted] = useState(false)
   const [searchText, setsearchText] = useState('')
   const [openAlert, setOpenAlert] = useState(false)
@@ -184,6 +185,8 @@ export default function SciencesAdmin() {
               Excel Yuklash
             </Button>
             <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Link to={'add'} state={{year: state.season}}>
               <Button
                 variant="contained"
@@ -212,6 +215,7 @@ export default function SciencesAdmin() {
                 Qo'shish
               </Button>
             </Link>
+            }
           </AttendSearchButton>
         </BoxHeader>
 
@@ -374,7 +378,10 @@ export default function SciencesAdmin() {
                     </svg>
                     }
                   /> */}
+                  {
+                    user['role'] != 'rector' &&
                   <th>                                                      </th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -427,14 +434,16 @@ export default function SciencesAdmin() {
                             </g>
                           </svg>
                         </th> */}
+                          {
+                            user['role'] != 'rector' &&
                         <th>
-                          <Link to={"calendarplan"}>
+                          {/* <Link to={"calendarplan"}>
                             <div style={{ width: "100%", textAlign: 'center' }}>
                               <IconButton style={{ margin: "10px 0", width: '100%' }}>
                                 Kalendar rejasi
                               </IconButton>
                             </div>
-                          </Link>
+                          </Link> */}
                           <Link to={'edit'} state={{ data: elem.id }}>
                             <Button
                               variant="contained"
@@ -462,6 +471,8 @@ export default function SciencesAdmin() {
                             >
                             </Button>
                           </Link>
+                          
+                          
                           <Button
                             variant="contained"
                             sx={{
@@ -491,8 +502,10 @@ export default function SciencesAdmin() {
                             }
                           >
                           </Button>
+                          
 
                         </th>
+                  }
                       </tr>
                     )
                   })

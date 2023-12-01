@@ -20,6 +20,7 @@ import { PatchSemester, PostSemesters, deleteSemester, getAcademecYear, getSemes
 import { academic_year, semester } from '../../../utils/API_urls'
 import DataPicker from '../../DataPicker'
 import SemesternumList from '../../../dictionary/semesters'
+import { useSelector } from 'react-redux'
 
 export default function Semestr() {
   const [open, setOpen] = React.useState(false);
@@ -33,7 +34,7 @@ export default function Semestr() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [YearList, setYearList] = useState([])
-
+  const user = useSelector((state) => state.user);
   const [Name, setName] = useState('')
   const [AcademekYear, setAcademekYear] = useState('')
   const [SemesterNum, setSemesterNum] = useState('')
@@ -123,6 +124,8 @@ export default function Semestr() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
+          {
+            user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -149,7 +152,8 @@ export default function Semestr() {
             >
               Qo'shish
             </Button>
-          </AttendSearchButton>
+          }
+              </AttendSearchButton>
         </BoxHeader>
 
         <BoxBody>
@@ -260,7 +264,10 @@ export default function Semestr() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -506,7 +513,7 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
   const [SyylabusEnd, setSyylabusEnd] = useState(null)
   const [Status, setStatus] = useState(false)
 
-
+  const user = useSelector((state) => state.user);
   const deletsemster = (id) => {
     deleteSemester(`${semester}${id}`, (response) => {
       callback_func(true)
@@ -580,6 +587,8 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
           </Button>
         }
       </th>
+      {
+        user['role'] != 'rector' &&
       <th>
         {/* <Link to={'control'}>
       <div style={{width: "100%", textAlign: 'center'}}>
@@ -651,6 +660,7 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
         </Button>
 
       </th>
+      }
     </tr>
 
     <Modal

@@ -20,6 +20,7 @@ import MultipleSelectChip from '../../Multisellect'
 import { useMemo } from 'react'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getAcademecYear } from '../Semestr/requests'
+import { useSelector } from 'react-redux'
 
 export default function Streams() {
   const [open, setOpen] = React.useState(false);
@@ -30,7 +31,7 @@ export default function Streams() {
     setOpen(true);
   }
   const handleClose = () => setOpen(false);
-
+  const user = useSelector((state) => state.user);
 
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
@@ -408,6 +409,8 @@ export default function Streams() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen2}
@@ -434,6 +437,7 @@ export default function Streams() {
             >
               Qo'shish
             </Button>
+            }
             {/* <Button
               variant="contained"
               onClick={handleOpen}
@@ -577,6 +581,8 @@ export default function Streams() {
                         <th>
                           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <p>{elem.teacher}</p>
+                            {
+                              user['role'] != 'rector' &&
                             <Button
                               variant="contained"
                               sx={{
@@ -601,6 +607,7 @@ export default function Streams() {
                               }
                             >
                             </Button>
+                            }
 
 
                           </div>
@@ -706,6 +713,8 @@ export default function Streams() {
                           >
                           </Button>
                           */}
+                          {
+                            user['role'] != 'rector' &&
                           <Button
                             variant="contained"
                             sx={{
@@ -736,6 +745,7 @@ export default function Streams() {
                             }
                           >
                           </Button>
+                          }
                         </th>
                       </tr>
                     )

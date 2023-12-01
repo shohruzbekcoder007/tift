@@ -19,6 +19,7 @@ import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import jins from '../../../dictionary/jins'
 import contract_type from '../../../dictionary/contract_type'
+import { useSelector } from 'react-redux'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -29,6 +30,7 @@ export default function Students() {
     setFile(newValue)
   }
 
+  const user = useSelector((state) => state.user);
   // ======
   const [students, setStudents] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -219,6 +221,8 @@ export default function Students() {
                 Excel
               </Button>
             </a>
+            {
+              user['role'] != 'rector' &&
             <Link to={'add'}>
               <Button
                 variant="contained"
@@ -247,6 +251,7 @@ export default function Students() {
                 Qo'shish
               </Button>
             </Link>
+            }
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -392,7 +397,10 @@ export default function Students() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -433,6 +441,7 @@ const OneStudent = ({ student, setDeleted }) => {
       console.log(error)
     })
   }
+  const user = useSelector((state) => state.user);
 
   return (
     <tr>
@@ -457,6 +466,8 @@ const OneStudent = ({ student, setDeleted }) => {
       }
       <th>{student.specialty}</th>
       <th>{student.course_number}</th>
+      {
+        user['role'] != 'rector' &&
       <th>
         <Link to={'edit'} state={{ StudentID: student.id }}>
           <Button
@@ -513,6 +524,7 @@ const OneStudent = ({ student, setDeleted }) => {
         >
         </Button> */}
       </th>
+      }
     </tr>
   )
 }

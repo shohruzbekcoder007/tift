@@ -270,7 +270,7 @@ function App() {
                     <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
                     <Route path='ScienceDirection/sciences/add' element={<Add />} />
                     <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
-                    <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                    {/* <Route path='ScienceDirection/sciences/calendarplan' element={<CalendarPlanAdmin />} /> */}
                   </Route>
 
                   <Route path="plan" element={<StudentSciences />} >

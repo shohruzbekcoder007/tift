@@ -16,6 +16,7 @@ import { deletScheduleGroup, getPara, getRooms, getScheduleGroup, getSchudelTabl
 import { bot_para, room_create_list, scheduletable } from '../../../../utils/API_urls'
 import AlertDialog from '../../../AlertDialog'
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -31,7 +32,7 @@ export default function Schedule() {
   const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const state = useLocation()
-
+  const user = useSelector((state) => state.user);
   const [DaySelect, setDaySelect] = React.useState('monday');
   const [ParaSelect, setParaSelect] = React.useState(null);
   const [TypeSelect, setTypeSelect] = React.useState('full');
@@ -221,7 +222,10 @@ export default function Schedule() {
                     text={"Аудитория"}
                     iconc={null}
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -252,6 +256,8 @@ export default function Schedule() {
                       selectOptions={RoomList}
                     />
                   </th>
+                  {
+                    user['role'] != 'rector' &&
                   <th style={{ border: "0px", }}>
                     <Button
                       variant="contained"
@@ -269,6 +275,7 @@ export default function Schedule() {
                       Qo'shish
                     </Button>
                   </th>
+                  }
                 </tr>
               </tbody>
             </table>
@@ -352,6 +359,8 @@ export default function Schedule() {
                             selectOptions={RoomList}
                           />
                         </th>
+                        {
+                          user['role'] != 'rector' &&
                         <th style={{ border: "0px", }}>
                           <div style={{display: 'flex', justifyContent: "space-between  "}}>
                           <Button
@@ -401,6 +410,7 @@ export default function Schedule() {
                           alertText={"Ushbu Jadvalni haqiqatdan ham o'chirmoqchimisiz?"}
                         />
                         </th>
+                        }
                       </tr>
                     )
                   })

@@ -94,7 +94,7 @@ export default function SignInSide() {
     dispatch(setUser(response.data))
     const user_role = getRoleUser(response.data)
     setPageLoading(false)
-    if (user_role == "admin") {
+    if (user_role == "admin" || user_role == "rector") {
       navigate(`/${user_role}/users`)
     } else if (user_role == "student") {
       navigate(`/${user_role}/personalplan`)

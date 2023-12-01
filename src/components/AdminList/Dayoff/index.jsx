@@ -13,6 +13,7 @@ import { holidays_create_list, holidays_detail } from '../../../utils/API_urls'
 import { deleteHolidays, getHolidays, postHolidays } from './request'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import DataPicker from '../../DataPicker'
+import { useSelector } from 'react-redux'
 
 export default function Dayoff() {
   const [open, setOpen] = useState(false);
@@ -30,6 +31,7 @@ export default function Dayoff() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [Status, setStatus] = useState(false)
+  const user = useSelector((state) => state.user);
   //?page_size=${pageSize}&page=${page}
   useEffect(() => {
     getHolidays(`${holidays_create_list}?page_size=${pageSize}&page=${page}`, (response) => {
@@ -78,6 +80,8 @@ export default function Dayoff() {
             console.log(val)
           }} />
           <AttendSearchButton>
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -104,6 +108,7 @@ export default function Dayoff() {
             >
               Qo'shish
             </Button>
+            }
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>

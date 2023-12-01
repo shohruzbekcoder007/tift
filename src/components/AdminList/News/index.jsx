@@ -18,6 +18,7 @@ import SelectInput from '@mui/material/Select/SelectInput'
 import { Link } from 'react-router-dom'
 import {news} from '../../../utils/API_urls'
 import {getNews} from './requests'
+import { useSelector } from 'react-redux'
 
 
 export default function News() {
@@ -36,7 +37,7 @@ export default function News() {
   const [Name, setName] = useState('')
   const [RoomType, setRoomType] = useState('labs')
   const [Count, setCount] = useState('')
-
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     getNews(`${news}`, (response) => {
       console.log(response.data.results);
@@ -67,6 +68,8 @@ export default function News() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -93,6 +96,7 @@ export default function News() {
             >
               Qo'shish
             </Button>
+            }
           </AttendSearchButton>
         </BoxHeader>
         {/* <BoxHeader>
@@ -201,7 +205,10 @@ export default function News() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th>                                                </th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -218,6 +225,8 @@ export default function News() {
                          {elem.type ?? "Yo'q"}
                         </IconButton>
                         </th>
+                        {
+                          user['role'] != 'rector' &&
                         <th>
                           <Button
                             variant="contained"
@@ -273,6 +282,7 @@ export default function News() {
                           >
                           </Button>
                         </th>
+                        }
                       </tr>
                     )
                   })

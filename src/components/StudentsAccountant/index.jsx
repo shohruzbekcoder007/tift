@@ -29,6 +29,7 @@ export default function StudentsAccountant() {
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
+  
 
   // ======
   const [students, setStudents] = useState([])
@@ -165,7 +166,8 @@ export default function StudentsAccountant() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-
+          {
+            user['role'] != 'rector' &&
             <Button
               variant="contained"
               sx={{
@@ -186,6 +188,7 @@ export default function StudentsAccountant() {
             >
               Excel
             </Button>
+          }
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
         </BoxHeader>

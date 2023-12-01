@@ -14,12 +14,13 @@ import { AddDirection, DeleteDirection, getDirections, getFakulty } from './requ
 import { directions, facultyshortlist } from '../../../utils/API_urls'
 import MultiSelect from '../../Multisellect'
 import { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function Directions() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
- 
+  const user = useSelector((state) => state.user);
   const [Directions, setDirections] = useState([])
   const [Faculty, setFaculty] = useState([])
   const [DirectionsList, setDirectionsList] = useState([])
@@ -117,6 +118,8 @@ export default function Directions() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -143,6 +146,7 @@ export default function Directions() {
             >
               Qo'shish
             </Button>
+            }
           </AttendSearchButton>
         </BoxHeader>
 
@@ -246,7 +250,10 @@ export default function Directions() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -405,7 +412,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-  
+  const user = useSelector((state) => state.user);
   const patchDirection = (_) => {
 
   }
@@ -426,6 +433,8 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
         <th>{elem.code}</th>
         <th>{elem.degree}</th>
         <th>{elem.faculty}</th>
+        {
+          user['role'] != 'rector' &&
         <th>
           <Button
             variant="contained"
@@ -480,6 +489,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
           >
           </Button>
         </th>
+        }
       </tr>
       <Modal
         keepMounted

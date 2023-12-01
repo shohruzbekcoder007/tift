@@ -15,6 +15,7 @@ import { MuiFileInput } from 'mui-file-input'
 import { Link, useLocation } from 'react-router-dom'
 import { deleteRooms, getRooms, patchRooms, postRooms } from './requests'
 import { room_create_list, room_detail } from '../../../../utils/API_urls'
+import { useSelector } from 'react-redux'
 
 export default function Room() {
   const [open, setOpen] = React.useState(false);
@@ -29,6 +30,7 @@ export default function Room() {
   const [Name, setName] = useState('')
   const [RoomType, setRoomType] = useState('labs')
   const [Count, setCount] = useState('')
+  const user = useSelector((state) => state.user);
   // const [file, setFile] = useState(null);
 
   // const setFileHandler = (newValue, info) => {
@@ -100,6 +102,8 @@ export default function Room() {
             console.log(val)
           }} />
           <AttendSearchButton>
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -126,6 +130,7 @@ export default function Room() {
             >
               Qo'shish
             </Button>
+            }
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -238,7 +243,10 @@ export default function Room() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -371,7 +379,7 @@ const SimpleRoom = ({ elem, callback_func, status, roomtype }) => {
   const [Name, setName] = useState(elem.name)
   const [RoomType, setRoomType] = useState('labs')
   const [Count, setCount] = useState(elem.count)
-
+  const user = useSelector((state) => state.user);
   const handleClick = () => {
     patchRooms(`${room_detail}${elem.id}/`, {
       name: Name,
@@ -401,6 +409,8 @@ const SimpleRoom = ({ elem, callback_func, status, roomtype }) => {
         <th >{elem.name}</th>
         <th>{elem.type}</th>
         <th>{elem.count}</th>
+        {
+          user['role'] != 'rector' &&
         <th>
           <Button
             variant="contained"
@@ -456,6 +466,7 @@ const SimpleRoom = ({ elem, callback_func, status, roomtype }) => {
           >
           </Button>
         </th>
+        }
       </tr>
       <Modal
         keepMounted

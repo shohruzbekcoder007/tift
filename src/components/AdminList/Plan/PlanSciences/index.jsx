@@ -14,6 +14,7 @@ import { useLocation } from 'react-router'
 import { addAcademic_Science, deleteAcademic_Science, editAcademic_Science, getAcademic_Science, getAcademic_ShortScience } from './request'
 import AutocompleteJames from '../../../AutocompleteJames'
 import AlertDialog from '../../../AlertDialog'
+import { useSelector } from 'react-redux'
 
 export default function PlanSciences() {
   const [open, setOpen] = React.useState(false);
@@ -23,7 +24,7 @@ export default function PlanSciences() {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
   const [file, setFile] = useState(null);
-
+  const user = useSelector((state) => state.user);
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   const setFileHandler = (newValue, info) => {
       setFile(newValue)
@@ -131,6 +132,8 @@ export default function PlanSciences() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -157,6 +160,7 @@ export default function PlanSciences() {
             >
               Qo'shish
             </Button>
+            }
           </AttendSearchButton>
         </BoxHeader>
         {/* <BoxHeader>
@@ -220,7 +224,10 @@ export default function PlanSciences() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -230,6 +237,8 @@ export default function PlanSciences() {
                       <tr key={index}>
                         <th>{elem.id}</th>
                         <th>{elem.science}</th>
+                        {
+                          user['role'] != 'rector' &&
                         <th>
                             <Button
                             variant="contained"
@@ -287,6 +296,7 @@ export default function PlanSciences() {
                           >
                           </Button>
                         </th>
+                        }
                         <AlertDialog
                           open_alert={alert}
                           callback1={(_) => {

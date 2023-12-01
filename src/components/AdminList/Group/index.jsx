@@ -22,6 +22,7 @@ import { getPara } from '../Streams/Schedule/request'
 import language from '../../../dictionary/language'
 import MuiAlert from '@mui/material/Alert';
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -36,7 +37,7 @@ const anchorOrigin2 = {
   horizontal: "left"
 }
 
-export default function Group() {
+export default function   Group() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -79,7 +80,7 @@ export default function Group() {
     })
   }, [pageSize, page, Status, SearchText, DirectionID, AcademekYear])
 
-
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
@@ -237,6 +238,8 @@ export default function Group() {
           }} />
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -263,6 +266,7 @@ export default function Group() {
             >
               Qo'shish
             </Button>
+            }
           </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
@@ -382,7 +386,10 @@ export default function Group() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -624,7 +631,7 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers, lang, p
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
-
+  const user = useSelector((state) => state.user);
   const handleClick2 = (_) => {
     let obj = {}
     if (GroupInput) {
@@ -675,6 +682,8 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers, lang, p
         <th>{elem.room_name ?? ""}</th>
         <th>{elem.teacher_name ?? ""}</th>
         <th>{elem.year}</th>
+        {
+          user['role'] != 'rector' &&
         <th>
           {/* <div style={{ width: "100%", textAlign: 'center' }}>
             <IconButton style={{ margin: "10px 0", width: '100%' }}>
@@ -743,6 +752,7 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers, lang, p
           </Link>
           {/* </div> */}
         </th>
+        }
       </tr>
 
       <Modal

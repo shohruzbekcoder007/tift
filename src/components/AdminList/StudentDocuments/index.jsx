@@ -24,6 +24,7 @@ import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../../AdminList/Directions/request'
 import { getAcademicGroup } from '../../AdminList/Streams/request'
 import MuiAlert from '@mui/material/Alert';
+import { useSelector } from 'react-redux'
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -37,7 +38,7 @@ export default function SeeStudnetsInfoInvation() {
   const [Description, setDescription] = React.useState('');
   const [ListSelect, setListSelect] = React.useState('');
   const [ListInvitionSelect, setListInvitionSelect] = React.useState('');
-
+  const user = useSelector((state) => state.user);
   const handleClose = () => setOpen(false);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
@@ -396,8 +397,10 @@ export default function SeeStudnetsInfoInvation() {
                     </svg>
                     }
                   />
-
+                  {
+                  user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -458,6 +461,8 @@ export default function SeeStudnetsInfoInvation() {
                         {elem.type == 'information' ? <th>Ma'lumotnoma</th> : ""}
                         {elem.type == 'invitation' ? <th>Chaqiruv xati</th> : ""}
                         {elem.type == 'reappropriation' ? <th>Qayta o'qish uchun ruxsatnoma</th> : ""}
+                        {
+                          user['role'] != 'rector' &&
                         <th>
                           {/* <IconButton style={{ padding: "12px 18px" }}>
                               Tahrirlash
@@ -545,6 +550,7 @@ export default function SeeStudnetsInfoInvation() {
                           >
                           </Button> */}
                         </th>
+                        }
                         <AlertDialog
                           open_alert={alert}
                           callback1={(_) => {

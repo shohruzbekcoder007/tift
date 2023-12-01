@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import { IconButton } from '../../Final_Dep/style'
 import { deleteEmployee, getEmployes, getRoleList } from './request'
 import { employee, role } from '../../../utils/API_urls'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setTitle } from '../../../redux/action/titleActions'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { WrapperInputsCard } from '../../AddHrEmployees/styles'
@@ -18,7 +18,7 @@ import { WrapperInputsCard } from '../../AddHrEmployees/styles'
 export default function Employees() {
 
   const dispatch = useDispatch()
-
+  const user = useSelector((state) => state.user);
   const [employes, setEmployes] = useState([])
   const [pageSize, setPageSize] = useState(10)
   const [searchText, setSearchText] = useState('')
@@ -72,6 +72,8 @@ export default function Employees() {
           }} />
 
           <AttendSearchButton>
+            {
+              user['role'] != 'rector' &&
             <Link to='add' onClick={() => {
               dispatch(setTitle({
                 text: null,
@@ -106,6 +108,7 @@ export default function Employees() {
                 Qo'shish
               </Button>
             </Link>
+            }
             <CustomizedInput callback_func={(val) => { setSearchText(val); setPage(1) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -193,7 +196,10 @@ export default function Employees() {
                     </svg>
                     }
                   />
+                  {
+                    user['role'] != 'rector' &&
                   <th></th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -222,7 +228,7 @@ export default function Employees() {
 
 
 export const OneEmployee = ({ elem, setDeleted }) => {
-
+  const user = useSelector((state) => state.user);
   const deleteStaff = () => {
     deleteEmployee(`${employee}${elem.id}`, (response) => {
       if (response.status)
@@ -261,6 +267,8 @@ export const OneEmployee = ({ elem, setDeleted }) => {
         </IconButton>
         {/* </Link> */}
       </th>
+        {
+          user['role'] != 'rector' &&
       <th>
         {/* <Link to={'show'}>
           <IconButton style={{ margin: '0 15px', padding: "10px 25px" }}>
@@ -313,14 +321,15 @@ export const OneEmployee = ({ elem, setDeleted }) => {
               <path d="M9.83073 11.9998C10.0075 11.9998 10.1771 11.9296 10.3021 11.8046C10.4272 11.6796 10.4974 11.51 10.4974 11.3332V7.33317C10.4974 7.15636 10.4272 6.98679 10.3021 6.86177C10.1771 6.73674 10.0075 6.6665 9.83073 6.6665C9.65392 6.6665 9.48435 6.73674 9.35932 6.86177C9.2343 6.98679 9.16406 7.15636 9.16406 7.33317V11.3332C9.16406 11.51 9.2343 11.6796 9.35932 11.8046C9.48435 11.9296 9.65392 11.9998 9.83073 11.9998Z" fill="white" />
             </g>
             <defs>
-              <clipPath id="clip0_1221_31960">
-                <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-              </clipPath>
+            <clipPath id="clip0_1221_31960">
+            <rect width="16" height="16" fill="white" transform="translate(0.5)" />
+            </clipPath>
             </defs>
-          </svg>}
-        >
-        </Button> */}
+            </svg>}
+            >
+          </Button> */}
       </th>
+        }
     </tr>
   )
 }

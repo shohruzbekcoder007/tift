@@ -16,6 +16,7 @@ import { IconButton } from '../../Final_Dep/style'
 import { Link } from 'react-router-dom'
 import { DeleteBuilding, getBuildings, patchBuilding, postBuilding } from './requests'
 import { building } from '../../../utils/API_urls'
+import { useSelector } from 'react-redux'
 
 export default function Building() {
   const [open, setOpen] = React.useState(false);
@@ -28,7 +29,7 @@ export default function Building() {
   const [Buildings, setBuildings] = useState(1)
   const [Status, setStatus] = useState(false)
   const [Name, setName] = useState('')
-
+  const user = useSelector((state) => state.user);
   const handleClick = () => {
     postBuilding(`${building}`, {
       name: Name
@@ -70,6 +71,8 @@ export default function Building() {
             console.log(val)
           }} />
           <AttendSearchButton>
+            {
+              user['role'] != 'rector' &&
             <Button
               variant="contained"
               onClick={handleOpen}
@@ -96,6 +99,7 @@ export default function Building() {
             >
               Qo'shish
             </Button>
+            }
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -272,7 +276,7 @@ const SimpleBuilding = ({ elem, callback_func, status }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [Name, setName] = useState(elem.name)
-
+  const user = useSelector((state) => state.user);
   const handleClick = () => {
     patchBuilding(`${building}${elem.id}/`, {
       name: Name
@@ -305,6 +309,8 @@ const SimpleBuilding = ({ elem, callback_func, status }) => {
               room
             </IconButton>
           </Link>
+          {
+            user['role'] != 'rector' &&
           <Button
             variant="contained"
             sx={{
@@ -329,6 +335,9 @@ const SimpleBuilding = ({ elem, callback_func, status }) => {
             }
           >
           </Button>
+          }
+          {
+            user['role'] != 'rector' &&
           <Button
             variant="contained"
             sx={{
@@ -358,6 +367,7 @@ const SimpleBuilding = ({ elem, callback_func, status }) => {
             }
           >
           </Button>
+          }
         </th>
       </tr>
       <Modal
