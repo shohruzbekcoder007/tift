@@ -178,7 +178,6 @@ export default function Vedomost() {
                         elem.tasks.map((element, index) => {
                           return (
                             <th style={{ width: "200px" }} key={index}>
-
                               {
 
                                 element.submission?.source ?

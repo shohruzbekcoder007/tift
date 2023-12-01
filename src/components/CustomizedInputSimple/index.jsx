@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react"
+import React, { memo, useState } from "react"
 import { withStyles } from '@mui/styles'
 import TextField from "@mui/material/TextField"
 
@@ -43,16 +43,9 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default memo(function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type, helperText="", error=false, status='' }) {
+export default memo(function CustomizedInputSimple({ label, callback_func, placeholder, defaultValue="", type, helperText="", error=false }) {
 
     const [value, setValue] = useState(defaultValue)
-    const handleChange = (event) =>{ 
-        if(status === 'passport') {
-            setValue(event.toUpperCase());
-        } 
-        else setValue(event);
-        callback_func(event)
-    }
 
     return (
         <div style={{ position: "relative" }}>
@@ -64,8 +57,7 @@ export default memo(function CustomizedInputSimple({ label, callback_func, place
                 value={value}
                 type={type}
                 helperText={helperText}
-                inputProps={{ maxLength: status === 'passport' ? 9 : 0 }}
-                onChange={event => { handleChange(event.target.value) }}
+                onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}
                 placeholder={placeholder}
             />
         </div>
