@@ -15,15 +15,15 @@ import Questionnaire from './components/Questionnaire'
 import FilingApplication from './components/FilingApplication'
 import Attend from './components/Attend'
 import TeacherSciences from './components/TeacherSciences'
-import CourseManagement from './components/CourseManagement'
-import Login from './components/Login'
+// import CourseManagement from './components/CourseManagement'
+// import Login from './components/Login'
 import DiplomaTopics from './components/DiplomaTopics'
 import MainStudent from './components/MainStudent'
 import Profile from './components/Profile'
 import ReadAgain from './components/ReadAgain'
 import PersonalPlan from './components/PersonalPlan'
-import Olympics from './components/Olympics'
-import ThesisResult from './components/ThesisResult'
+// import Olympics from './components/Olympics'
+// import ThesisResult from './components/ThesisResult'
 import Information from './components/Information'
 import QuestionnaireTeacher from './components/QuestionnaireTeacher'
 import StudentSciences from './components/StudentSciences'
@@ -39,11 +39,11 @@ import MainDepartment from './components/MainDepartment'
 import TeacherSciencesMain from './components/TeacherSciences/TeacherSciencesMain'
 import CalendarPlan, { CalendarPlanMain } from './components/TeacherSciences/CalendarPlan'
 import CalendarPlans from './components/StatistikaList/CalendarPlan/CalendarPlans'
-import CalendarStudent from './components/StudentSciences/CalendarPlan/CalendarPlan'
-import Applications from './components/Applications/applications'
-import Patoks from './components/Patoks/Patoks'
-import Final_Dep from './components/Final_Dep/Final_Dep'
-import Questions from './components/Questions/Questions'
+// import CalendarStudent from './components/StudentSciences/CalendarPlan/CalendarPlan'
+// import Applications from './components/Applications/applications'
+// import Patoks from './components/Patoks/Patoks'
+// import Final_Dep from './components/Final_Dep/Final_Dep'
+// import Questions from './components/Questions/Questions'
 import ThematicBlock from './components/TeacherSciences/ThematicBlock'
 import DekanGroups from './components/DekanGroups/DekanGroups'
 import Appropriation from './components/Appropriation/Appropriation'
@@ -126,7 +126,7 @@ import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
 import SignInSide from './components/SignInSide'
 import DekanStudent from './components/DekanStudent'
-import IndividualPysical from './components/IndividualPysical'
+// import IndividualPysical from './components/IndividualPysical'
 import TutorSeeSchedule from './components/TutorSeeSchedule'
 import MainLawyer from './components/MainLawyer'
 import LawyerAllStudents from './components/LawyerAllStudents'
@@ -159,6 +159,7 @@ import Moved from './components/AdminList/Moved'
 import TutorDept from './components/TutorDept'
 import TutorNbStudents from './components/TutorNbStudents'
 import Library from './components/Library'
+import MainRector from './components/MainRector'
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -186,6 +187,148 @@ function App() {
             <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
+                <Route path="rector" element={<MainRector />}>
+                  <Route path="addtest" element={<AddTest />} />
+                  <Route path="variables" element={<Variables />} />
+                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="videoguide" element={<VideoGuide />} />
+                  <Route path="users" element={<Users />} />
+                  <Route path="attendance" element={<Admin_Attendance />} />
+                  <Route path="reference" element={<Reference />} />
+                  <Route path="studentdocuments" element={<StudentDocuments />} />
+
+
+                  <Route path="reading-recovery" element={<StudentSciences />} >
+                    <Route index element={<Moved />} />
+                    <Route path='moved' element={<ReadingRecovery />} />
+                  </Route>
+
+                  <Route path="semester" element={<StudentSciences />} >
+                    <Route index element={<Semestr />} />
+                    <Route path='control' element={<InterimControl />} />
+                  </Route>
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                    <Route path="vedomost" element={<Vedomost />} />
+
+                  </Route>
+                  <Route path="NBfix" element={<NBfix />} />
+                  <Route path="transferstudents" element={<TransferStudents />} />
+                  <Route path="scholarship" element={<Scholarship />} />
+                  <Route path="addcredit" element={<AddCredit />} />
+                  <Route path="building" element={<StudentSciences />} >
+                    <Route index element={<Building />} />
+                    <Route path='room' element={<Room />} />
+                  </Route>
+                  <Route path="university" element={<University />} />
+                  <Route path="organizations" element={<Organizations />} />
+                  <Route path="dayoff" element={<Dayoff />} />
+                  <Route path="agreement" element={<StudentSciences />} >
+                    <Route index element={<Agreement />} />
+                    <Route path='payments' element={<Payments />} />
+                  </Route>
+                  <Route path="readagain" element={<Readagain />} />
+                  <Route path="contractpricesmarketing" element={<ContractpricesMarketing />} />
+                  <Route path="sections" element={<Sections />} />
+                  <Route path="faculties" element={<StudentSciences />} >
+                    <Route index element={<Faculties />} />
+                    <Route path='kafedra' element={<Kafedra />} />
+                  </Route>
+                  <Route path="employees" element={<StudentSciences />} >
+                    <Route index element={<Employees />} />
+                    <Route path='career' element={<Career />} />
+                    <Route path='show' element={<Show />} />
+                    <Route path='edit' element={<EditEmployeess />} />
+                    <Route path='add' element={<AddEmployees />} />
+                  </Route>
+                  <Route path="students-contract" element={<StudentSciences />} >
+                    <Route index element={<StudentsAccountant />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route>
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<Students />} />
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route>
+                  <Route path="directions" element={<StudentSciences />} >
+                    <Route index element={<Directions />} />
+                    <Route path='sciences' element={<ScienesStudent />} />
+                  </Route>
+                  <Route path='group' element={<Group />} />
+                  <Route path='news' element={<News />} />
+                  <Route path='contractprices' element={<Contractprices />} />
+
+                  <Route path="sciences" element={<StudentSciences />} >
+                    <Route index element={<SciencePlan />} />
+                    <Route path='ScienceDirection' element={<ScienceDirection />} />
+                    <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
+                    <Route path='ScienceDirection/sciences/add' element={<Add />} />
+                    <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
+                    <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                  </Route>
+
+                  <Route path="plan" element={<StudentSciences />} >
+                    <Route index element={<Plan />} />
+                    <Route path="curriculum" element={<Outlet />} >
+                      <Route index element={<Curriculum />} />
+                      <Route path='sciences' element={<PlanSciences />} />
+                    </Route>
+                  </Route>
+                  <Route path="adminusers" element={<StudentSciences />} >
+                    <Route index element={<AdminUsers />} />
+                    <Route path='add' element={<AdminUsersAdd />} />
+                    <Route path='edit' element={<AdminUsersEdit />} />
+                  </Route>
+                  <Route path='roles' element={<Roles />} />
+                  <Route path='server' element={<Server />} />
+                  <Route path="students" element={<StudentSciences />} >
+                    <Route index element={<Students />} />
+                    <Route path='information' element={<InformationStudent />} />
+                  </Route>
+                  <Route path="directions" element={<StudentSciences />} >
+                    <Route index element={<Directions />} />
+                    <Route path='sciences' element={<ScienesStudent />} />
+                  </Route>
+                  <Route path='group' element={<StudentSciences />}>
+                    <Route index element={<Group />} />
+                    <Route path='students' element={<GroupStudents />} />
+
+                  </Route>
+                  <Route path='news' element={<News />} />
+                  <Route path='contractprices' element={<Contractprices />} />
+
+                  <Route path="sciences" element={<StudentSciences />} >
+                    <Route index element={<SciencesAdmin />} />
+                    <Route path='add' element={<Add />} />
+                    <Route path='edit' element={<Edit />} />
+                    <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                  </Route>
+
+                  <Route path="plan" element={<StudentSciences />} >
+                    <Route index element={<Plan />} />
+                    <Route path="curriculum" element={<Outlet />} >
+                      <Route index element={<Curriculum />} />
+                      <Route path='sciences' element={<PlanSciences />} />
+                    </Route>
+                  </Route>
+                  <Route path="adminusers" element={<StudentSciences />} >
+                    <Route index element={<AdminUsers />} />
+                    <Route path='add' element={<AdminUsersAdd />} />
+                    <Route path='edit' element={<AdminUsersEdit />} />
+                  </Route>
+                  <Route path='roles' element={<Roles />} />
+                  <Route path='server' element={<Server />} />
+                  <Route path='schedule' element={<ScheduleStudy />} />
+                  <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
+
+                </Route>
+
                 <Route path="teacher" element={<Main user={user} />}>
                   <Route path="dashboard" element={<TeacherStatistic />} />
                   <Route path="news" element={<TeacherDashboard />} />
@@ -369,7 +512,7 @@ function App() {
                     <Route index element={<CallStudents />} />
                     <Route path='see' element={<SeeStudnetsInfoInvation />} />
                   </Route>
-                   <Route path="sciences" element={<StudentSciences />} >
+                  <Route path="sciences" element={<StudentSciences />} >
                     <Route index element={<SciencePlan />} />
                     <Route path='ScienceDirection' element={<ScienceDirection />} />
                     <Route path='ScienceDirection/sciences' element={<SciencesAdmin />} />
@@ -430,8 +573,8 @@ function App() {
                   <Route path="attendance" element={<Admin_Attendance />} />
                   <Route path="reference" element={<Reference />} />
                   <Route path="studentdocuments" element={<StudentDocuments />} />
-                  
-                  
+
+
                   <Route path="reading-recovery" element={<StudentSciences />} >
                     <Route index element={<Moved />} />
                     <Route path='moved' element={<ReadingRecovery />} />
@@ -445,7 +588,7 @@ function App() {
                     <Route index element={<Streams />} />
                     <Route path='schedule' element={<Schedule />} />
                     <Route path="vedomost" element={<Vedomost />} />
-                    
+
                   </Route>
                   <Route path="NBfix" element={<NBfix />} />
                   <Route path="transferstudents" element={<TransferStudents />} />
@@ -560,6 +703,8 @@ function App() {
                   <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
 
                 </Route>
+
+
               </>
             ) : <></>}
             <Route path="pagenotfound" element={<PageNotFound />} />

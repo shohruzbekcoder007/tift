@@ -21,6 +21,7 @@ import { getAcademicGroup, getSciense } from '../AdminList/Streams/request'
 import { AttendSearchButton } from '../Attend/styles'
 import MuiAlert from '@mui/material/Alert';
 import AutocompleteJames from '../AutocompleteJames'
+import { useSelector } from 'react-redux'
 
 
 export default function AddTest() {
@@ -29,7 +30,7 @@ export default function AddTest() {
   const [TestModalOpen, setTestModalOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const user = useSelector((state) => state.user);
   const closeTestModal = () => setTestModalOpen(false);
   const [file, setFile] = useState(null);
   const [tasksList, settasksList] = useState([]);
