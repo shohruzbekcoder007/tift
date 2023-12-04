@@ -128,7 +128,7 @@ import SignInSide from './components/SignInSide'
 import DekanStudent from './components/DekanStudent'
 // import IndividualPysical from './components/IndividualPysical'
 import TutorSeeSchedule from './components/TutorSeeSchedule'
-import MainLawyer from './components/MainLawyer'
+import MainArchive from './components/MainLawyer'
 import LawyerAllStudents from './components/LawyerAllStudents'
 import LawyerDashboard from './components/LawyerDashboard'
 import AddEmployees from './components/AdminList/Employees/AddEmployees'
@@ -555,7 +555,7 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
-                <Route path="lawyer" element={<MainLawyer />}>
+                <Route path="archive" element={<MainArchive />}>
                   <Route path="dashboard" element={<LawyerDashboard />} />
                   <Route path="students" element={<LawyerAllStudents />} />
                   <Route path="profile" element={<Profile />} />
