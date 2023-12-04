@@ -15,10 +15,10 @@ export default function MainLawyer() {
     return (
         <MainWrapper>
             {
-                getRole(user) === "lawyer" ?
+                getRole(user) === "archive" ?
                 <>
                     <Header/>
-                    <Sidebar role={'lawyer'}/>
+                    <Sidebar role={'archive'}/>
                     <Outlet/>
                 </>: user == null ? 
                     <Spinner/>:
