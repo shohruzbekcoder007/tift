@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Modal, Pagination, Paper, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
 import { ModalBoxInfo, TeacherSciencesButtonBox } from './styles'
@@ -8,7 +8,13 @@ import AllSelect from '../AllSelect'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
 import { getLawyerStudent, postLawyerStudent } from './requests'
-import { host, lawyer_studentdocument } from '../../utils/API_urls'
+import { academic_group_short, directions, host, lawyer_studentdocument } from '../../utils/API_urls'
+import { getDirections } from '../AdminList/Directions/request'
+import study_type from '../../dictionary/study_type'
+import AutocompleteJames from '../AutocompleteJames'
+import AllSelectFullWidth from '../AllSelectFullWidth'
+import { InputsWrapper } from '../CourseManagement/styles'
+import { getAcademicGroup } from '../AdminList/Streams/request'
 
 export default function LawyerAllStudents() {
 
@@ -16,7 +22,10 @@ export default function LawyerAllStudents() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
+  const [Course_number, setCourse_number] = useState(1)
+  const [SearchText, setSearchText] = useState('')
   const [allStudent, setallStudent] = useState([])
+  const [Directions, setDirections] = useState([])
   // const [studentDocument, setstudentDocument] = useState([])
   // const handleOpen = () => setOpen(true)
   // const [open, setOpen] = useState(false)
@@ -24,15 +33,48 @@ export default function LawyerAllStudents() {
   // const [file1, setFile1] = useState(null)
   // const [file2, setFile2] = useState(null)
   // const handleClose = () => setOpen(false)
+  const [GroupList, setGroupList] = useState([])
+  const [DirectionID, setDirectionID] = useState('&')
+  const [GroupID, setGroupID] = useState('')
+  const [StudyTypeSelect, setStudyTypeSelect] = useState('')
 
 
+  const StudyTipeList = useMemo(() => {
+    study_type[0].value = '&'
+    return study_type.map(elem => {
+      return {
+        name: elem.uz,
+        value: elem.value
+      }
+    })
+  }, [])
 
+  const CourseNumber = useMemo(() => {
+    return [
+      {
+        name: '1-kurs',
+        value: 1,
+      },
+      {
+        name: '2-kurs',
+        value: 2,
+      },
+      {
+        name: '3-kurs',
+        value: 3,
+      },
+      {
+        name: '4-kurs',
+        value: 4,
+      }
+    ]
+  }, [])
 
 
 
 
   useEffect(() => {
-    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}`, (response) => {
+    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
@@ -41,7 +83,65 @@ export default function LawyerAllStudents() {
       console.log(error)
     })
 
-  }, [pageSize, page])
+  }, [pageSize, page, SearchText,DirectionID,GroupID,StudyTypeSelect,Course_number])
+
+  useEffect(() => {
+
+    getDirections(`${directions}?page_size=100`, (response) => {
+      // setDirections(response.results)
+      const currlist = [...response.results]
+      currlist.unshift({
+        name: 'Hammasi',
+        id: '&',
+        degree: "hammasi"
+      })
+      setDirections(currlist.map(elem => {
+        return {
+          name: elem.name + " (" + elem.degree + ")",
+          value: elem.id
+        }
+      }))
+
+    }, (error) => {
+      console.log(error);
+    })
+  }, []);
+
+
+
+  useEffect(() => {
+      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}`, (response) => {
+        // setDirections(response.results)
+        const currlist = [...response.data]
+        // currlist.unshift({
+        //   name: 'Guruhsiz talabalar',
+        //   id: 'none',
+        //   student_count: ""
+        // })
+        currlist.unshift({
+          name: 'Hammasi',
+          id: '',
+          student_count: ""
+        })
+        setGroupList(currlist.map(elem => {
+          if (!elem.student_count == "") {
+            return {
+              name: elem.name + " (" + elem.student_count + ")",
+              value: elem.id
+            }
+          } else {
+            return {
+              name: elem.name,
+              value: elem.id
+            }
+          }
+        }))
+      }, (error) => {
+        console.log(error);
+      })
+  }, [DirectionID, ]);
+
+
 
 
   return (
@@ -55,34 +155,26 @@ export default function LawyerAllStudents() {
         }}
       >
         <BoxHeader>
-          <AllSelect
-            chageValueFunction={val => { console.log(); }}
-            selectOptions={[
-              {
-                name: '1-kurs',
-                value: 1,
-              },
-              {
-                name: '2-kurs',
-                value: 2,
-              },
-              {
-                name: '3-kurs',
-                value: 3,
-              },
-              {
-                name: '4-kurs',
-                value: 4,
-              }
-            ]}
-          />
-          <CustomizedInput callback_func={(val) => { console.log(val) }} />
-        </BoxHeader>
-        <BoxHeader>
+          
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
-
+          <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+        </BoxHeader>
+        <BoxHeader>
+          <InputsWrapper>
+          <AllSelect
+            chageValueFunction={val => { setCourse_number(val); }}
+            selectOptions={CourseNumber}
+          />
+          <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+          <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
+          <AllSelectFullWidth
+              chageValueFunction={(val) => setStudyTypeSelect(val)}
+              selectedOptionP={StudyTipeList[0].value}
+              selectOptions={StudyTipeList}
+            />
+          </InputsWrapper>
         </BoxHeader>
         <BoxBody>
           <ClassScheduleTableWrapper>
@@ -190,12 +282,12 @@ const LawyerStudent = ({ elem }) => {
         type: "diplom",
         is_submission: true
       })
-    }else if (CheckBox1) {
+    } else if (CheckBox1) {
       array.push({
         type: "passport",
         is_submission: true
       })
-    }else if (CheckBox2) {
+    } else if (CheckBox2) {
       array.push({
         type: "photo",
         is_submission: true
@@ -214,30 +306,30 @@ const LawyerStudent = ({ elem }) => {
         is_submission: true,
         file: file
       })
-    }else if (file1) {
+    } else if (file1) {
       array.push({
         type: "passport",
         is_submission: true,
-         file: file1
+        file: file1
       })
-    }else if (file2) {
+    } else if (file2) {
       array.push({
         type: "photo",
         is_submission: true,
-         file: file2
+        file: file2
       })
     }
     else if (file3) {
       array.push({
         type: "contract",
         is_submission: true,
-         file: file3
+        file: file3
       })
     }
 
     if (array.length > 0) formData.append("document", array);
 
-    postLawyerStudent(`${lawyer_studentdocument}`, formData, (response) => { 
+    postLawyerStudent(`${lawyer_studentdocument}`, formData, (response) => {
       console.log(response);
       handleClose()
     }, (error) => {
