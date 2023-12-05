@@ -16,7 +16,7 @@ import { getAcademecYear } from '../AdminList/Semestr/requests'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import degree from '../../dictionary/degree'
 import study_type from '../../dictionary/study_type'
-import { academic_year, accountant_students, directions } from '../../utils/API_urls'
+import { academic_group_short, academic_year, accountant_students, directions } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import contract_type from '../../dictionary/contract_type'
 import { useSelector } from 'react-redux'
@@ -48,6 +48,8 @@ export default function StudentsAccountant() {
   const [YearList, setYearList] = useState([])
   const [DirectionID, setDirectionID] = useState('&')
   const [Directions, setDirections] = useState([])
+  const [GroupList, setGroupList] = useState([])
+  const [GroupID, setGroupID] = useState('')
 
   const user = useSelector((state) => state.user);
 
@@ -109,6 +111,39 @@ export default function StudentsAccountant() {
       console.log(error);
     })
   }, []);
+
+
+  useEffect(() => {
+    getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}`, (response) => {
+      // setDirections(response.results)
+      const currlist = [...response.data]
+      // currlist.unshift({
+      //   name: 'Guruhsiz talabalar',
+      //   id: 'none',
+      //   student_count: ""
+      // })
+      currlist.unshift({
+        name: 'Hammasi',
+        id: '',
+        student_count: ""
+      })
+      setGroupList(currlist.map(elem => {
+        if (!elem.student_count == "") {
+          return {
+            name: elem.name + " (" + elem.student_count + ")",
+            value: elem.id
+          }
+        } else {
+          return {
+            name: elem.name,
+            value: elem.id
+          }
+        }
+      }))
+    }, (error) => {
+      console.log(error);
+    })
+}, [DirectionID, ]);
   
   
   
@@ -200,6 +235,7 @@ export default function StudentsAccountant() {
               selectOptions={YearList}
             />
           <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+          <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
 
             {/* <AllSelectFullWidth
               chageValueFunction={(val) => setFormPayment(val)}

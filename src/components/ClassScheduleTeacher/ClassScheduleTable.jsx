@@ -13,7 +13,6 @@ export default function ClassScheduleTable({ table }) {
 
   // Get the current day of the week
   const currentDayOfWeek = currentDate.toLocaleDateString('en-US', options);
-  console.log(currentDayOfWeek);
   return (
     <ClassScheduleTableWrapper>
       <table>

@@ -10,6 +10,8 @@ import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
 import { getStudentInformation } from '../Information/requests'
 import { student_detail } from '../../utils/API_urls'
+import Conguratilations from '../../imgs/Conguratilations.json'
+import Conguratilations2 from '../../imgs/Conguratilations2.json'
 import Lottie from 'lottie-react'
 
 export default function Header() {
@@ -21,6 +23,7 @@ export default function Header() {
   const [headerAccount, setHeaderAccount] = useState(false)
   const [openNotes, setOpenNotes] = useState(false)
   const [InfoList, setInfoList] = useState(false)
+  const [HappyBirthday, setHappyBirthday] = useState(false)
 
   const [countNote, setCountNote] = useState(0)
   const handleHeaderAccount = () => {
@@ -29,9 +32,23 @@ export default function Header() {
     })
   }
 
+
+
   useEffect(() => {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    
+    const fullDate = `${month}-${day}`;
     getRole(user) === "student" && getStudentInformation(student_detail, (response) => {
       setInfoList(response.data.result)
+      if (response.data.result.birthday.slice(5) == fullDate) {
+        setHappyBirthday(true)
+        setTimeout(() => {
+          setHappyBirthday(false)
+        }, 1700);
+      }
     }, (error) => {
       console.log(error)
     })
@@ -42,12 +59,19 @@ export default function Header() {
 
   return (
     <>
-
+      {
+        HappyBirthday && <><div className='animation_gif' style={{ position: "absolute", top: "-10%", left: "0%", zIndex: 999999 }} >
+          <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
+        </div>
+          <div className='animation_gif2' style={{ position: "absolute", top: "-10%", right: "0%", zIndex: 999999 }} >
+            <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2}  />
+          </div></>
+      }
       <HeaderWrapper
       // big='true'
       >
 
-      {/* <div style={{position: "absolute", top: "0", left:"0"}} >
+        {/* <div style={{position: "absolute", top: "0", left:"0"}} >
         <Lottie size={'20px'} animationData={Conguratilations} />
       </div> */}
         <HeaderTitleHamburger>
@@ -64,8 +88,8 @@ export default function Header() {
                 </HeaderTitle> : <></>
             }
             {
-              getRole(user) === "student" && <div style={{display: 'block'}}>
-                <p style={{margin: "0"}}>{user?.first_name + "  " + user?.last_name + "  " + user?.middle_name}</p>
+              getRole(user) === "student" && <div style={{ display: 'block' }}>
+                <p style={{ margin: "0" }}>{user?.first_name + "  " + user?.last_name + "  " + user?.middle_name}</p>
                 <div>
                   {InfoList.direction} ({InfoList.academic_group})
                 </div>
