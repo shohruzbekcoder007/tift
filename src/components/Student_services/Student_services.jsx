@@ -20,6 +20,7 @@ import { getDocumentStudents } from '../ServicesTable/request'
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
   const [ListSelect, setListSelect] = React.useState('');
+  const [KontraktTypeSelect, setKontraktTypeSelect] = React.useState('');
   const [JobInput, setJobInput] = React.useState('');
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -79,15 +80,40 @@ export default function Student_services() {
     {
       name: "Qayta o'qish uchun ruxsatnoma",
       value: "reappropriation"
+    },
+    {
+      name: "To'lov shartnomasini olish",
+      value: "payment_contract"
     }
     ]
   }, [])
 
+  const KontraktType = useMemo(() => {
+    return [{
+      name: "Ikki tomonlama shartnoma",
+      value: "two"
+    },
+    {
+      name: "Uch tomonlama shartnoma",
+      value: "three"
+    },
+    ]
+  }, [])
+
   const handleClick = (_) => {
-    postStudentInformation(additional_documents, {
+    let sendData = {
       type: ListSelect,
-      job: ListSelect != 'information' ? JobInput : ""
-    }, (response) => {
+    }
+
+    if (ListSelect == "payment_contract") {
+      sendData.contract_form = KontraktTypeSelect
+    }
+
+    if (ListSelect == "information") {
+      sendData.job = JobInput
+    }
+    
+    postStudentInformation(additional_documents,sendData , (response) => {
       setStatus(!Status)
       setOpen(false)
       setOpenAlert(true)
@@ -359,8 +385,30 @@ export default function Student_services() {
               >
                 Muassasa nomi
               </Typography>
-              <p style={{margin: "0.5rem 0", fontSize: '13px'}}>O'zingiz ishlayotgan muassasa nomini to'g'ri kiriting</p>
+              <p style={{ margin: "0.5rem 0", fontSize: '13px' }}>O'zingiz ishlayotgan muassasa nomini to'g'ri kiriting</p>
               <CustomizedInputSimple callback_func={(val) => { setJobInput(val) }} placeholder="Kiriting" />
+            </ModalSelectWrapper>
+          }
+          {
+            ListSelect == 'payment_contract' && <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                
+              </Typography>
+              <AllSelectFullWidth
+                chageValueFunction={val => setKontraktTypeSelect(val)}
+                selectedOptionP={KontraktType[0].value}
+                selectOptions={KontraktType}
+              />
             </ModalSelectWrapper>
           }
 
@@ -377,7 +425,7 @@ export default function Student_services() {
               variant="contained"
               onClick={handleClick}
             >
-              Saqlash
+              Yuborish
             </Button>
           </ModalButtons>
         </ModalBox>
