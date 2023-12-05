@@ -111,7 +111,7 @@ export default function Student_services() {
       sendData.contract_form = KontraktTypeSelect
     }
 
-    if (ListSelect == "information") {
+    if (ListSelect != "information") {
       sendData.job = JobInput
     }
     

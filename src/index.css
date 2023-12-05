@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Inter';
   background-color: #F0F0F0;
+  position: relative;
 }
 
 code {
@@ -56,4 +57,22 @@ marquee {
 marquee > svg {
   margin: 0 0 0 0.3rem;
     color: rgba(0, 0, 255, 0.642);
+}
+
+
+.animation_gif {
+
+}
+
+.animation_gif2 {
+
+}
+
+@media (max-width: 768px) {
+  .animation_gif {
+    position: fixed;
+  }
+  .animation_gif2 {
+    display: none;
+  }
 }

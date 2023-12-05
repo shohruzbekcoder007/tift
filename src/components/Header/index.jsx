@@ -10,6 +10,7 @@ import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
 import { getStudentInformation } from '../Information/requests'
 import { student_detail } from '../../utils/API_urls'
+import Lottie from 'lottie-react'
 
 export default function Header() {
 
@@ -46,7 +47,9 @@ export default function Header() {
       // big='true'
       >
 
-
+      {/* <div style={{position: "absolute", top: "0", left:"0"}} >
+        <Lottie size={'20px'} animationData={Conguratilations} />
+      </div> */}
         <HeaderTitleHamburger>
           <span
             onClick={() => { dispatch(setSidebar("big")) }}

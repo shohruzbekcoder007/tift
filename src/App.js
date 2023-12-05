@@ -160,6 +160,10 @@ import TutorDept from './components/TutorDept'
 import TutorNbStudents from './components/TutorNbStudents'
 import Library from './components/Library'
 import MainRector from './components/MainRector'
+import Lottie from 'lottie-react'
+import Conguratilations from './imgs/Conguratilations.json'
+import Conguratilations2 from './imgs/Conguratilations2.json'
+
 function App() {
 
   const user = useSelector((state) => state.user);
@@ -181,7 +185,12 @@ function App() {
     <MuiTheme theme={muiTheme}>
 
       <ThemeProvider theme={defaultTheme}>
-
+        {/* <div className='animation_gif' style={{position: "absolute", top: "-10%", left:"-5%", zIndex:999999}} >
+          <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
+        </div>
+        <div className='animation_gif2' style={{position: "absolute", top: "-10%", right:"-5%", zIndex:999999}} >
+          <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
+        </div> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />
