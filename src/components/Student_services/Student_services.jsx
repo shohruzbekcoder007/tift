@@ -36,38 +36,6 @@ export default function Student_services() {
   });
 
   const [Data, setData] = useState([]);
-
-  useEffect(() => {
-    getDocumentStudents(additional_documents, (response) => {
-      console.log(response);
-      setData(response.data.results);
-    }, (error) => {
-      console.log(error);
-    });
-  }, [Status]);
-
-  const anchorOrigin1 = {
-    vertical: 'bottom',
-    horizontal: "right"
-  }
-
-  const anchorOrigin2 = {
-    vertical: 'bottom',
-    horizontal: "left"
-  }
-
-  const chageRowHadler = (val) => {
-    console.log(val)
-  }
-
-  const chageSearch = (val) => {
-    console.log(val)
-  }
-
-  const chagePageHandle = (_, value) => {
-    console.log(value)
-  }
-
   const List = useMemo(() => {
     return [{
       name: "Ma'lumotnoma",
@@ -99,12 +67,46 @@ export default function Student_services() {
     },
     ]
   }, [])
+  useEffect(() => {
+    getDocumentStudents(additional_documents, (response) => {
+      console.log(response);
+      setData(response.data.results);
+    }, (error) => {
+      console.log(error);
+    });
+  setKontraktTypeSelect(KontraktType[0].value)
+
+  }, [Status]);
+
+  const anchorOrigin1 = {
+    vertical: 'bottom',
+    horizontal: "right"
+  }
+
+  const anchorOrigin2 = {
+    vertical: 'bottom',
+    horizontal: "left"
+  }
+
+  const chageRowHadler = (val) => {
+    console.log(val)
+  }
+
+  const chageSearch = (val) => {
+    console.log(val)
+  }
+
+  const chagePageHandle = (_, value) => {
+    console.log(value)
+  }
+
+
 
   const handleClick = (_) => {
     let sendData = {
       type: ListSelect,
     }
-
+    
     if (ListSelect == "payment_contract") {
       sendData.contract_form = KontraktTypeSelect
     }
