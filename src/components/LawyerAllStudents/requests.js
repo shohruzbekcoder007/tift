@@ -17,7 +17,8 @@ export const postLawyerStudent = (url, data, successfulFunction, errorFunction) 
     axios.post(url, data, {
         headers: {
             Authorization: `Bearer ${decrypted}`,
-            "Content-Type": "multipart/form-data",
+            // "Content-Type": "multipart/form-data",
+            
         },
     }).then(response => {
         successfulFunction(response)

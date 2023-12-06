@@ -83,7 +83,8 @@ export default function LawyerAllStudents() {
       console.log(error)
     })
 
-  }, [pageSize, page, SearchText,DirectionID,GroupID,StudyTypeSelect,Course_number])
+
+  }, [pageSize, page, SearchText, DirectionID, GroupID, StudyTypeSelect, Course_number])
 
   useEffect(() => {
 
@@ -109,37 +110,37 @@ export default function LawyerAllStudents() {
 
 
 
-  useEffect(() => {
-      getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}`, (response) => {
-        // setDirections(response.results)
-        const currlist = [...response.data]
-        // currlist.unshift({
-        //   name: 'Guruhsiz talabalar',
-        //   id: 'none',
-        //   student_count: ""
-        // })
-        currlist.unshift({
-          name: 'Hammasi',
-          id: '',
-          student_count: ""
-        })
-        setGroupList(currlist.map(elem => {
-          if (!elem.student_count == "") {
-            return {
-              name: elem.name + " (" + elem.student_count + ")",
-              value: elem.id
-            }
-          } else {
-            return {
-              name: elem.name,
-              value: elem.id
-            }
-          }
-        }))
-      }, (error) => {
-        console.log(error);
-      })
-  }, [DirectionID, ]);
+  // useEffect(() => {
+  //   getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}`, (response) => {
+  //     // setDirections(response.results)
+  //     const currlist = [...response.data]
+  //     // currlist.unshift({
+  //     //   name: 'Guruhsiz talabalar',
+  //     //   id: 'none',
+  //     //   student_count: ""
+  //     // })
+  //     currlist.unshift({
+  //       name: 'Hammasi',
+  //       id: '',
+  //       student_count: ""
+  //     })
+  //     setGroupList(currlist.map(elem => {
+  //       if (!elem.student_count == "") {
+  //         return {
+  //           name: elem.name + " (" + elem.student_count + ")",
+  //           value: elem.id
+  //         }
+  //       } else {
+  //         return {
+  //           name: elem.name,
+  //           value: elem.id
+  //         }
+  //       }
+  //     }))
+  //   }, (error) => {
+  //     console.log(error);
+  //   })
+  // }, [DirectionID,]);
 
 
 
@@ -155,7 +156,7 @@ export default function LawyerAllStudents() {
         }}
       >
         <BoxHeader>
-          
+
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
@@ -163,13 +164,13 @@ export default function LawyerAllStudents() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
-          <AllSelect
-            chageValueFunction={val => { setCourse_number(val); }}
-            selectOptions={CourseNumber}
-          />
-          <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
-          <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
-          <AllSelectFullWidth
+            <AllSelect
+              chageValueFunction={val => { setCourse_number(val); }}
+              selectOptions={CourseNumber}
+            />
+            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
+            <AllSelectFullWidth
               chageValueFunction={(val) => setStudyTypeSelect(val)}
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
@@ -266,6 +267,12 @@ const LawyerStudent = ({ elem }) => {
   }
 
   const openModalBoxStudent = (element) => {
+    getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
+      console.log(response.data.document);
+    }, (error) => {
+      console.log(error)
+    })
+
     setstudentDocument(element.document)
     console.log(studentDocument);
     handleOpen()
@@ -273,68 +280,111 @@ const LawyerStudent = ({ elem }) => {
 
   const SubmintGradeTasks = (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("student", elem.id);
+    // const formData = new FormData();
+    // formData.append("student", elem.id);
 
     let array = []
+    console.log(CheckBox);
     if (CheckBox) {
-      array.push({
-        type: "diplom",
-        is_submission: true
-      })
-    } else if (CheckBox1) {
-      array.push({
-        type: "passport",
-        is_submission: true
-      })
-    } else if (CheckBox2) {
-      array.push({
-        type: "photo",
-        is_submission: true
-      })
-    }
-    else if (CheckBox3) {
+      console.log("ishladi");
       array.push({
         type: "contract",
         is_submission: true
       })
     }
-
-    if (file) {
+    if (CheckBox1) {
       array.push({
         type: "diplom",
-        is_submission: true,
-        file: file
+        is_submission: true
       })
-    } else if (file1) {
+    }
+    if (CheckBox2) {
       array.push({
         type: "passport",
-        is_submission: true,
-        file: file1
+        is_submission: true
       })
-    } else if (file2) {
+    }
+    if (CheckBox3) {
       array.push({
         type: "photo",
-        is_submission: true,
-        file: file2
-      })
-    }
-    else if (file3) {
-      array.push({
-        type: "contract",
-        is_submission: true,
-        file: file3
+        is_submission: true
       })
     }
 
-    if (array.length > 0) formData.append("document", array);
+    // if (file) {
+    //   array.push({
+    //     type: "diplom",
+    //     is_submission: true,
+    //     file: file
+    //   })
+    // } else if (file1) {
+    //   array.push({
+    //     type: "passport",
+    //     is_submission: true,
+    //     file: file1
+    //   })
+    // } else if (file2) {
+    //   array.push({
+    //     type: "photo",
+    //     is_submission: true,
+    //     file: file2
+    //   })
+    // }
+    // else if (file3) {
+    //   array.push({
+    //     type: "contract",
+    //     is_submission: true,
+    //     file: file3
+    //   })
+    // }
 
-    postLawyerStudent(`${lawyer_studentdocument}`, formData, (response) => {
+    // if (array.length > 0) {
+    //   formData.append("document", array);
+    if (studentDocument.length > 0) array = studentDocument
+    // }
+    // console.log(formData);
+    console.log(array);
+
+    postLawyerStudent(`${lawyer_studentdocument}`, {
+      student: elem.id,
+      document: array
+    }, (response) => {
       console.log(response);
       handleClose()
     }, (error) => {
       console.log(error)
     })
+  }
+
+  const GoEdit = (type, status, index) => {
+    console.log(type, status, index);
+    let array = [...studentDocument]
+    console.log(array);
+    if (status) {
+      array[index].is_submission = status
+    }else {
+      array[index].is_submission = status
+    }
+    setstudentDocument(array)
+    // if (type == "diplom") {
+    //   array.push({
+    //     type: "diplom",
+    //     is_submission: true
+    //   })
+    // }
+    // if (type == "passport") {
+    //   array.push({
+    //     type: "passport",
+    //     is_submission: true
+    //   })
+    // }
+    // if (type == "photo") {
+    //   array.push({
+    //     type: "photo",
+    //     is_submission: true
+    //   })
+    // }
+
   }
 
   return (
@@ -376,7 +426,7 @@ const LawyerStudent = ({ elem }) => {
           aria-labelledby="keep-mounted-modal-title"
           aria-describedby="keep-mounted-modal-description"
         >
-          <form style={{ width: "100%" }} onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='multipart/form-data'>
+          <form style={{ width: "100%" }} onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='application/json'>
             <ModalBoxInfo>
               <div style={{ marginBottom: '20px' }}>
                 <ModalHeader>
@@ -408,22 +458,36 @@ const LawyerStudent = ({ elem }) => {
                   <table>
                     <thead>
                       <tr>
-                        <TableTHHeader
-                          text="Diplom/Atstat"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="Pasport kopiya"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="Rasm"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="Kantrakt"
-                          iconc={null}
-                        />
+                        {
+                          studentDocument.length > 0 ?
+                          studentDocument.map((elem, index) => {
+                            return (
+                              <TableTHHeader
+                                text={elem.type}
+                                iconc={null}
+                              />
+                            )
+                          }):
+                           <>
+                            <TableTHHeader
+                              text="contract"
+                              iconc={null}
+                            />
+                            <TableTHHeader
+                              text="diplom"
+                              iconc={null}
+                            /> 
+                           <TableTHHeader
+                            text="passport"
+                            iconc={null}
+                          />
+                           <TableTHHeader
+                            text="photo"
+                            iconc={null}
+                          />
+                           </>
+
+                        }
                       </tr>
                     </thead>
                     <tbody>
@@ -436,14 +500,14 @@ const LawyerStudent = ({ elem }) => {
                                   <th key={index}>
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       {
-                                        <Checkbox {...label} onChange={(event) => { }} checked />
+                                        <Checkbox {...label} onChange={(event) => GoEdit(elem.type, false,index)} checked={true} />
                                       }
                                     </TeacherSciencesButtonBox>
                                   </th> :
-                                  <th>
+                                  <th key={index}>
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       {
-                                        <Checkbox {...label} onChange={(event) => { }} />
+                                        <Checkbox {...label} onChange={(event) => GoEdit(elem.type, true, index)} />
                                       }
                                     </TeacherSciencesButtonBox>
                                   </th>
@@ -473,7 +537,7 @@ const LawyerStudent = ({ elem }) => {
                             </>
                         }
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <th>
                           <MuiFileInput
                             placeholder="Fayl"
@@ -510,8 +574,8 @@ const LawyerStudent = ({ elem }) => {
                             fullWidth
                           />
                         </th>
-                      </tr>
-                      <tr>
+                      </tr> */}
+                      {/* <tr>
                         {
                           studentDocument ?
                             studentDocument.map((elem, index) => {
@@ -565,7 +629,7 @@ const LawyerStudent = ({ elem }) => {
                             }) :
                             <></>
                         }
-                      </tr>
+                      </tr> */}
 
                     </tbody>
                   </table>
