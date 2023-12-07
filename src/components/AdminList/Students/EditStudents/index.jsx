@@ -442,7 +442,7 @@ export default function EditStudents() {
               >
                 Telefon raqami
               </Typography>
-              <CustomizedInputSimple type={'number'} defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
+              <CustomizedInputSimple type={'text'} defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="+998 9X XXX-XX-XX" />
             </WrapperInputsCard>
             <WrapperInputsCard>
               <Typography

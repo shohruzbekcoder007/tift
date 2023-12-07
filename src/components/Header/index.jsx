@@ -13,7 +13,8 @@ import { student_detail } from '../../utils/API_urls'
 import Conguratilations from '../../imgs/Conguratilations.json'
 import Conguratilations2 from '../../imgs/Conguratilations2.json'
 import Lottie from 'lottie-react'
-
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 export default function Header() {
 
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ export default function Header() {
   const [InfoList, setInfoList] = useState(false)
   const [HappyBirthday, setHappyBirthday] = useState(false)
 
+  const { width, height } = useWindowSize()
+
   const [countNote, setCountNote] = useState(0)
   const handleHeaderAccount = () => {
     setHeaderAccount(prev => {
@@ -35,19 +38,19 @@ export default function Header() {
 
 
   useEffect(() => {
+
     const today = new Date();
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
-    
+
     const fullDate = `${month}-${day}`;
     getRole(user) === "student" && getStudentInformation(student_detail, (response) => {
       setInfoList(response.data.result)
       if (response.data.result.birthday.slice(5) == fullDate) {
         setHappyBirthday(true)
         setTimeout(() => {
-          setHappyBirthday(false)
-        }, 1700);
+          setHappyBirthday(false) 
+        }, 3000);
       }
     }, (error) => {
       console.log(error)
@@ -59,12 +62,19 @@ export default function Header() {
 
   return (
     <>
+
       {
-        HappyBirthday && <><div className='animation_gif' style={{ position: "absolute", top: "-10%", left: "0%", zIndex: 999999 }} >
-          <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
-        </div>
+        HappyBirthday && <>
+          <div className='animation_gif' style={{ position: "absolute", top: "-10%", left: "0%", zIndex: 999999 }} >
+            <Confetti
+              width={width}
+              height={height}
+              gravity={0.2}
+            />
+            <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
+          </div>
           <div className='animation_gif2' style={{ position: "absolute", top: "-10%", right: "0%", zIndex: 999999 }} >
-            <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2}  />
+            <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
           </div></>
       }
       <HeaderWrapper
