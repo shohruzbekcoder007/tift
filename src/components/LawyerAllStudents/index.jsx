@@ -73,40 +73,32 @@ export default function LawyerAllStudents() {
     ]
   }, [])
 
-  const FilterDoc = useMemo(() => {
-    return [
-      {
-        name: 'Umumiy',
-        value: "all",
-      },
-      {
-        name: 'To\'liq',
-        value: "full",
-      },
-      {
-        name: 'Bo\'sh',
-        value: "empty",
-      },
-    ]
-  }, [])
+  // const FilterDoc = useMemo(() => {
+  //   return [
+  //     {
+  //       name: 'Umumiy',
+  //       value: "all",
+  //     },
+  //     {
+  //       name: 'To\'liq',
+  //       value: "full",
+  //     },
+  //     {
+  //       name: 'Bo\'sh',
+  //       value: "empty",
+  //     },
+  //   ]
+  // }, [])
 
 
 
 
   useEffect(() => {
     getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}`, (response) => {
-      setallStudent2(response.data.results)
-      response.data.results.map((elem) => {
-        if (elem.submission_count === 0) {
-          elem.type = 'empty'
-        }else {
-          elem.type = 'full'
-        }
-      })
+     
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
-      goFilter(FilterDocuments)
     }, (error) => {
       console.log(error)
     })
@@ -170,23 +162,6 @@ export default function LawyerAllStudents() {
   //   })
   // }, [DirectionID,]);
 
-  const goFilter = (status) => {
-    setFilterDocuments(status)
-    let result = []
-    if (status == 'all') {
-      setallStudent(allStudent2)
-    }else{
-      allStudent.map(item => {
-        console.log(item);
-        if (item.type == status) {
-          result.push(item)          
-        }
-      })
-      console.log(result);
-      setallStudent(result)
-    }
-  }
-
 
   return (
     <ContentWrapper>
@@ -218,10 +193,10 @@ export default function LawyerAllStudents() {
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
             />
-            <AllSelect
+            {/* <AllSelect
               chageValueFunction={val => { goFilter(val); }}
               selectOptions={FilterDoc}
-            />
+            /> */}
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
