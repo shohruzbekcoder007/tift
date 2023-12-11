@@ -73,29 +73,32 @@ export default function LawyerAllStudents() {
     ]
   }, [])
 
-  // const FilterDoc = useMemo(() => {
-  //   return [
-  //     {
-  //       name: 'Umumiy',
-  //       value: "all",
-  //     },
-  //     {
-  //       name: 'To\'liq',
-  //       value: "full",
-  //     },
-  //     {
-  //       name: 'Bo\'sh',
-  //       value: "empty",
-  //     },
-  //   ]
-  // }, [])
+  const FilterDoc = useMemo(() => {
+    return [
+      {
+        name: 'Umumiy',
+        value: "all",
+      },
+      {
+        name: 'Hujjati to\'liq',
+        value: "green",
+      },
+      {
+        name: 'Hujjati to\'liq emas',
+        value: "yellow",
+      },
+      {
+        name: 'Hujjati yo\'q',
+        value: "red",
+      },
+    ]
+  }, [])
 
 
 
 
   useEffect(() => {
-    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}`, (response) => {
-
+    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}&color=${FilterDocuments}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
@@ -104,7 +107,7 @@ export default function LawyerAllStudents() {
     })
 
 
-  }, [pageSize, page, SearchText, DirectionID, GroupID, StudyTypeSelect, Course_number, Status])
+  }, [pageSize, page, SearchText, DirectionID, GroupID, StudyTypeSelect, Course_number, Status, FilterDocuments])
 
   useEffect(() => {
 
@@ -193,10 +196,10 @@ export default function LawyerAllStudents() {
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
             />
-            {/* <AllSelect
-              chageValueFunction={val => { goFilter(val); }}
+            <AllSelect
+              chageValueFunction={val => { setFilterDocuments(val); }}
               selectOptions={FilterDoc}
-            /> */}
+            />
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
@@ -237,9 +240,9 @@ export default function LawyerAllStudents() {
               </thead>
               <tbody>
                 {
-                  allStudent.length > 0 ? allStudent.map((elem) => {
+                  allStudent.length > 0 ? allStudent.map((elem, index) => {
                     return (
-                      <LawyerStudent elem={elem} callback_func={(val) => setStatus(val)} status={Status} />
+                      <LawyerStudent elem={elem} key={index} callback_func={(val) => setStatus(val)} status={Status} />
                     )
                   })
                     :
@@ -269,10 +272,12 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   const [file2, setFile2] = useState(null)
   const [file3, setFile3] = useState(null)
 
-  const [CheckBox, setCheckBox] = useState(null)
+  const [CheckBox0, setCheckBox0] = useState(null)
   const [CheckBox1, setCheckBox1] = useState(null)
   const [CheckBox2, setCheckBox2] = useState(null)
   const [CheckBox3, setCheckBox3] = useState(null)
+  const [CheckBoxAll, setCheckBoxAll] = useState(null)
+
 
 
 
@@ -280,30 +285,93 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  // useEffect(() => {
+  //   console.log("modal false ishladi");
+  //     setCheckBox0(null)
+  //     setCheckBox1(null)
+  //     setCheckBox2(null)
+  //     setCheckBox3(null)
+  //     setCheckBoxAll(null)
+  // }, [open])
+
+  useEffect(() => {
+    if (elem.submission_count == 0) {
+      elem.document = [
+        {
+          type: "contract",
+          is_submission: false,
+        },
+        {
+          type: "diplom",
+          is_submission: false,
+        },
+        {
+          type: "passport",
+          is_submission: false,
+        },
+        {
+          type: "photo",
+          is_submission: false,
+        },
+        {
+          type: "all",
+          is_submission: false,
+        }
+      ]
+    }
+
+    if (elem.submission_count > 0 && elem.submission_count < 4) {
+      elem.document.push({
+        type: "all",
+        is_submission: false,
+      })
+    }
+
+
+    if (elem.submission_count == 4) {
+      elem.document.push({
+        type: "all",
+        is_submission: true
+      })
+    }
+
+    setstudentDocument(elem.document)
+    console.log(elem.document);
+  }, [elem])
+
+
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-  const setFileHandler = (newValue, info) => {
-    setFile(newValue)
-  }
-  const setFileHandler1 = (newValue, info) => {
-    setFile1(newValue)
-  }
-  const setFileHandler2 = (newValue, info) => {
-    setFile2(newValue)
-  }
-  const setFileHandler3 = (newValue, info) => {
-    setFile3(newValue)
-  }
+  // const setFileHandler = (newValue, info) => {
+  //   setFile(newValue)
+  // }
+  // const setFileHandler1 = (newValue, info) => {
+  //   setFile1(newValue)
+  // }
+  // const setFileHandler2 = (newValue, info) => {
+  //   setFile2(newValue)
+  // }
+  // const setFileHandler3 = (newValue, info) => {
+  //   setFile3(newValue)
+  // }
 
   const openModalBoxStudent = (element) => {
-    getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
-      console.log(response.data.document);
-    }, (error) => {
-      console.log(error)
-    })
+    // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
+    //   console.log(response.data.document);
+    // }, (error) => {
+    //   console.log(error)
+    // })
 
-    setstudentDocument(element.document)
-    console.log(studentDocument);
+
+    // if (element.document.length < 5) {
+    //   }else {
+    //     element.document.push({
+    //       type: "all",
+    //       is_submission: false
+    //     })
+    //   }
+
+    // setstudentDocument(element.document)
     handleOpen()
   }
   // console.log(CheckBox);
@@ -314,7 +382,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // formData.append("student", elem.id);
 
     let array = []
-    if (CheckBox) {
+    if (CheckBox0) {
       console.log("ishladi");
       array.push({
         type: "contract",
@@ -370,7 +438,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // if (array.length > 0) {
     //   formData.append("document", array);
     if (studentDocument.length > 0) {
-      setCheckBox(null)
+      setCheckBox0(null)
       setCheckBox1(null)
       setCheckBox2(null)
       setCheckBox3(null)
@@ -393,13 +461,29 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
   const GoEdit = (type, status, index) => {
     console.log(type, status, index);
+
     let array = [...studentDocument]
-    console.log(array);
-    if (status) {
-      array[index].is_submission = status
+
+
+    if (type == 'all') {
+      for (let i = 0; i < array.length; i++) {
+        array[i].is_submission = status
+      }
     } else {
+    for (let i = 0; i < array.length; i++) {
       array[index].is_submission = status
+        if (!array[i].is_submission) {
+          array[array.length -1].is_submission = false
+        }else if (array[0].is_submission && array[1].is_submission && array[2].is_submission && array[3].is_submission){
+          array[array.length -1].is_submission = true
+        }
+      }
     }
+
+    console.log(array);
+
+    handleClose()
+    handleOpen()
     setstudentDocument(array)
     // if (type == "diplom") {
     //   array.push({
@@ -431,7 +515,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
       <th>{elem.submission_count}/4</th>
       <th>
         {
-          elem.submission_count == 0 ? <Button
+          elem.submission_count == 0 && <Button
             variant="contained"
             sx={{
               marginLeft: '15px',
@@ -459,7 +543,10 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
             }
           >
             Docs
-          </Button> : <Button
+          </Button>
+        }
+        {
+          elem.submission_count == 4 && <Button
             variant="contained"
             sx={{
               marginLeft: '15px',
@@ -467,7 +554,9 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
               textTransform: "capitalize",
               boxShadow: "none",
               padding: "10px 12px",
+
             }}
+
             onClick={(_) => { openModalBoxStudent(elem) }}
             startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_160_5797)">
@@ -484,8 +573,40 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
             Docs
           </Button>
         }
+        {
+          elem.submission_count > 0 && elem.submission_count < 4 && <Button
+            variant="contained"
+            sx={{
+              marginLeft: '15px',
+              borderRadius: '10px',
+              textTransform: "capitalize",
+              boxShadow: "none",
+              padding: "10px 12px",
+              backgroundColor: "YellowButton.main",
+              "&:hover": {
+                backgroundColor: "YellowButton.main",
+              },
+              color: "black"
+            }}
+            onClick={(_) => { openModalBoxStudent(elem) }}
+            startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_160_5797)">
+                <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="black" />
+              </g>
+              <defs>
+                <clipPath id="clip0_160_5797">
+                  <rect width="20" height="20" fill="black" />
+                </clipPath>
+              </defs>
+            </svg>
+            }
+          >
+            Docs
+          </Button>
+        }
 
       </th>
+
       <Modal
         keepMounted
         open={open}
@@ -525,55 +646,56 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                 <table>
                   <thead>
                     <tr>
-                        <TableTHHeader
-                          text="contract"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="diplom"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="passport"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="photo"
-                          iconc={null}
-                        />
-                        <TableTHHeader
-                          text="To'liq"
-                          iconc={null}
-                        />
+                      <TableTHHeader
+                        text="contract"
+                        iconc={null}
+                      />
+                      <TableTHHeader
+                        text="diplom"
+                        iconc={null}
+                      />
+                      <TableTHHeader
+                        text="passport"
+                        iconc={null}
+                      />
+                      <TableTHHeader
+                        text="photo"
+                        iconc={null}
+                      />
+                      <TableTHHeader
+                        text="To'liq"
+                        iconc={null}
+                      />
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       {
                         studentDocument.length > 0 ?
-                          studentDocument.map((elem, index) => {
+                          studentDocument.map((elems, index) => {
+                            console.log(elems);
                             return (
-                              elem.is_submission ?
+                              elems.is_submission == true ?
                                 <th key={index}>
                                   <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                     {
-                                      <Checkbox {...label} onChange={(event) => GoEdit(elem.type, false, index)} checked={true} />
+                                      <Checkbox {...label} onChange={(event) => GoEdit(elems.type, false, index)} checked={true} />
                                     }
                                   </TeacherSciencesButtonBox>
                                 </th> :
                                 <th key={index}>
                                   <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                     {
-                                      <Checkbox {...label} onChange={(event) => GoEdit(elem.type, true, index)} />
+                                      <Checkbox {...label} onChange={(event) => GoEdit(elems.type, true, index)} checked={false} />
                                     }
                                   </TeacherSciencesButtonBox>
-                                </th> 
+                                </th>
                             )
                           }) :
                           <>
-                            <th>
+                            {/* <th>
                               <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBox(event.target.value)} />
+                                <Checkbox {...label} onChange={(event) => setCheckBox0(event.target.value)} />
                               </TeacherSciencesButtonBox>
                             </th>
                             <th>
@@ -593,9 +715,9 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                             </th>
                             <th>
                               <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => console.log(event.target.value)} />
+                                <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
                               </TeacherSciencesButtonBox>
-                            </th>
+                            </th> */}
                           </>
                       }
                     </tr>

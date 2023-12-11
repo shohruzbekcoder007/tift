@@ -61,26 +61,7 @@ export default function Header() {
   }, []);
 
 
-  const interactivity = {
-    mode: "scroll",
-    actions: [
-      {
-        visibility: [0, 0.2],
-        type: "stop",
-        frames: [0],
-      },
-      {
-        visibility: [0.2, 0.45],
-        type: "seek",
-        frames: [0, 45],
-      },
-      {
-        visibility: [0.45, 1.0],
-        type: "loop",
-        frames: [45, 60],
-      },
-    ],
-  };
+  
 
   return (
     <>
@@ -112,7 +93,7 @@ export default function Header() {
       >
 
         {/* <div style={{position: "absolute", top: "0", left:"0"}} >
-        <Lottie size={'20px'} animationData={Conguratilations} />
+        <Lottie size={'20px'} animationData={Snow} />
       </div> */}
         <HeaderTitleHamburger>
           <span
