@@ -12,9 +12,12 @@ import { getStudentInformation } from '../Information/requests'
 import { student_detail } from '../../utils/API_urls'
 import Conguratilations from '../../imgs/Conguratilations.json'
 import Conguratilations2 from '../../imgs/Conguratilations2.json'
+import Snow from '../../imgs/snow2.json'
 import Lottie from 'lottie-react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import Snowfall from 'react-snowfall'
+
 export default function Header() {
 
   const navigate = useNavigate();
@@ -49,7 +52,7 @@ export default function Header() {
       if (response.data.result.birthday.slice(5) == fullDate) {
         setHappyBirthday(true)
         setTimeout(() => {
-          setHappyBirthday(false) 
+          setHappyBirthday(false)
         }, 3000);
       }
     }, (error) => {
@@ -58,7 +61,26 @@ export default function Header() {
   }, []);
 
 
-
+  const interactivity = {
+    mode: "scroll",
+    actions: [
+      {
+        visibility: [0, 0.2],
+        type: "stop",
+        frames: [0],
+      },
+      {
+        visibility: [0.2, 0.45],
+        type: "seek",
+        frames: [0, 45],
+      },
+      {
+        visibility: [0.45, 1.0],
+        type: "loop",
+        frames: [45, 60],
+      },
+    ],
+  };
 
   return (
     <>
@@ -77,6 +99,14 @@ export default function Header() {
             <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
           </div></>
       }
+     
+      {/* <div style={{
+        position: 'fixed',
+        width: '100vw',
+        height: '100vh',
+      }}>
+        <Snowfall />
+      </div> */}
       <HeaderWrapper
       // big='true'
       >

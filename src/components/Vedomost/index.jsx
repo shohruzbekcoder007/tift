@@ -90,7 +90,7 @@ export default function Vedomost() {
         >
           O’zlashtirish qaydnomasi
         </Typography>
-        <a href={host + `/api/v1/teacher/vedomosts/${state.data}`} target='_blank'>
+        <a href={host + `/api/v1/teacher/vedomosts/${state.data}`} >
         <Button
           variant="contained"
           onClick={(_) => { }}

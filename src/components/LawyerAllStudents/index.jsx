@@ -25,6 +25,7 @@ export default function LawyerAllStudents() {
   const [Course_number, setCourse_number] = useState(1)
   const [SearchText, setSearchText] = useState('')
   const [allStudent, setallStudent] = useState([])
+  const [allStudent2, setallStudent2] = useState([])
   const [Directions, setDirections] = useState([])
   // const [studentDocument, setstudentDocument] = useState([])
   // const handleOpen = () => setOpen(true)
@@ -38,6 +39,7 @@ export default function LawyerAllStudents() {
   const [GroupID, setGroupID] = useState('')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('')
   const [Status, setStatus] = useState(false)
+  const [FilterDocuments, setFilterDocuments] = useState('all')
 
 
   const StudyTipeList = useMemo(() => {
@@ -71,15 +73,40 @@ export default function LawyerAllStudents() {
     ]
   }, [])
 
+  const FilterDoc = useMemo(() => {
+    return [
+      {
+        name: 'Umumiy',
+        value: "all",
+      },
+      {
+        name: 'To\'liq',
+        value: "full",
+      },
+      {
+        name: 'Bo\'sh',
+        value: "empty",
+      },
+    ]
+  }, [])
+
 
 
 
   useEffect(() => {
     getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}`, (response) => {
+      setallStudent2(response.data.results)
+      response.data.results.map((elem) => {
+        if (elem.submission_count === 0) {
+          elem.type = 'empty'
+        }else {
+          elem.type = 'full'
+        }
+      })
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
-
+      goFilter(FilterDocuments)
     }, (error) => {
       console.log(error)
     })
@@ -143,7 +170,22 @@ export default function LawyerAllStudents() {
   //   })
   // }, [DirectionID,]);
 
-
+  const goFilter = (status) => {
+    setFilterDocuments(status)
+    let result = []
+    if (status == 'all') {
+      setallStudent(allStudent2)
+    }else{
+      allStudent.map(item => {
+        console.log(item);
+        if (item.type == status) {
+          result.push(item)          
+        }
+      })
+      console.log(result);
+      setallStudent(result)
+    }
+  }
 
 
   return (
@@ -175,6 +217,10 @@ export default function LawyerAllStudents() {
               chageValueFunction={(val) => setStudyTypeSelect(val)}
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
+            />
+            <AllSelect
+              chageValueFunction={val => { goFilter(val); }}
+              selectOptions={FilterDoc}
             />
           </InputsWrapper>
         </BoxHeader>
@@ -290,7 +336,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     console.log(studentDocument);
     handleOpen()
   }
-  console.log(CheckBox);
+  // console.log(CheckBox);
 
   const SubmintGradeTasks = (event) => {
     event.preventDefault();

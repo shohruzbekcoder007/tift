@@ -9,6 +9,8 @@ import { setTitle } from '../../redux/action/titleActions'
 import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links, admin_links, hr_Links, accountant_links, rector_links, archive_Links } from './sidebarlinks'
 import { additional_action_permission } from '../../utils/API_urls'
 import { getAcademic_Year } from '../CallStudents/request'
+import Lottie from 'lottie-react'
+import Snow from '../../imgs/snow2.json'
 
 
 export default function Sidebar({ role }) {
@@ -53,6 +55,9 @@ export default function Sidebar({ role }) {
 
   return (
     <SidebarWrapper type={sidebar}>
+       {/* <div style={{ position: "absolute", top: "-10%", right: "0%", zIndex: 1 }}>
+        <Lottie style={{height: window.innerHeight, color: "gray"}} size={'20px'} animationData={Snow} />
+      </div> */}
       <SidebarHeader>
         <img src={logo} alt="logo" />
         <span style={{ margin: '1rem 0 0 0' }} onClick={() => { dispatch(setSidebar('small')) }}>
