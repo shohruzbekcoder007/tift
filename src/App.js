@@ -160,6 +160,7 @@ import TutorDept from './components/TutorDept'
 import TutorNbStudents from './components/TutorNbStudents'
 import Library from './components/Library'
 import MainRector from './components/MainRector'
+import Snow from './components/Snow'
 
 
 function App() {
@@ -185,12 +186,13 @@ function App() {
 
       <ThemeProvider theme={defaultTheme}>
         
-        
+      <Snow/>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
+                
                 <Route path="rector" element={<MainRector />}>
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
