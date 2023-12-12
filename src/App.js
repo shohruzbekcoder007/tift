@@ -186,7 +186,7 @@ function App() {
 
       <ThemeProvider theme={defaultTheme}>
         
-      <Snow/>
+      <Snow />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />

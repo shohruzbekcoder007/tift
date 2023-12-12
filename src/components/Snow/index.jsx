@@ -1,79 +1,36 @@
-import React, { useEffect } from 'react';
-import './Snow.css'; // Create a CSS file for styling
+import React, { useEffect, useState } from 'react';
+import './Snow.css';
 
-const Snow = () => {
-//   useEffect(() => {
-//     // Function to create snowflakes
-//     const createSnowflake = () => {
-//       const snowflake = document.createElement('div');
-//       snowflake.className = 'snowflake';
-//       snowflake.style.left = `${Math.random() * window.innerWidth}px`;
-//       document.body.appendChild(snowflake);
+const Snowflakes = () => {
+   const [SnowFlake, setSnowFlake] = useState([...Array(15)])
+  useEffect(() => {
+    const snowflakes = document.querySelectorAll('.snowflake');
+    window.innerWidth > 600 && setSnowFlake([...Array(15)])
+    snowflakes.forEach((snowflake) => {
+      const fontSize = window.innerWidth > 600
+        ? `calc(1.5rem + (2.5rem - 1rem) * ${Math.random()})`
+        : `calc(.7rem + (1.5rem - .7rem) * ${Math.random()})`;
 
-//       // Animate snowflake
-//       snowflake.animate(
-//         [
-//           { transform: 'translateY(-100vh)' },
-//           { transform: 'translateY(100vh)' },
-//         ],
-//         {
-//           duration: Math.random() * 3000 + 3000, // Random duration between 3-6 seconds
-//           iterations: Infinity,
-//           easing: 'linear',
-//         }
-//       );
-//     };
+      const leftPosition = Math.random() * 100;
+      const animationDuration = Math.random() * 5 + 3;
+      const animationDelay = Math.random() * 3;
 
-//     // Create initial snowflakes
-//     for (let i = 0; i < 50; i++) {
-//       createSnowflake();
-//     }
+      snowflake.style.fontSize = fontSize;
+      snowflake.style.left = `${leftPosition}%`;
+      snowflake.style.animationDuration = `${animationDuration}s`;
+      snowflake.style.animationDelay = `${animationDelay}s`;
+    });
+  }, []);
 
-//     // Create new snowflake every 200 milliseconds
-//     const snowfallInterval = setInterval(createSnowflake, 200);
-
-//     // Cleanup on component unmount
-//     return () => clearInterval(snowfallInterval);
-//   }, []);
-
-  return <div class="snowflakes" aria-hidden="true">
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-  <div class="snowflake">
-    <div class="inner">❅</div>
-  </div>
-</div>; // Empty fragment, as this component doesn't render any visible content
+  return (
+    <div className="snowflakes" aria-hidden="true">
+      {SnowFlake.map((_, index) => (
+        <div key={index} className="snowflake">
+          <div className="inner">&#10052;</div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
-export default Snow;
+export default Snowflakes;

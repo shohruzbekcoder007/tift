@@ -26,6 +26,7 @@ export default function StudentsAccountant() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState(null);
+  
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
