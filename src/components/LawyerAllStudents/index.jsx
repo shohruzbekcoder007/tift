@@ -15,6 +15,7 @@ import AutocompleteJames from '../AutocompleteJames'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { InputsWrapper } from '../CourseManagement/styles'
 import { getAcademicGroup } from '../AdminList/Streams/request'
+import { AttendSearchButton } from '../Attend/styles'
 
 export default function LawyerAllStudents() {
 
@@ -177,11 +178,32 @@ export default function LawyerAllStudents() {
         }}
       >
         <BoxHeader>
-
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
-          <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+          <AttendSearchButton>
+            <Button
+              variant="contained"
+              sx={{
+                width: "90px",
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "12px",
+                borderRadius: "10px",
+                fontWeight: "600",
+                fontSize: "14px",
+                lineHeight: "17px"
+              }}
+              startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+              </svg>
+              }
+            >
+              Excel
+            </Button>
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+          </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
@@ -470,12 +492,12 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
         array[i].is_submission = status
       }
     } else {
-    for (let i = 0; i < array.length; i++) {
-      array[index].is_submission = status
+      for (let i = 0; i < array.length; i++) {
+        array[index].is_submission = status
         if (!array[i].is_submission) {
-          array[array.length -1].is_submission = false
-        }else if (array[0].is_submission && array[1].is_submission && array[2].is_submission && array[3].is_submission){
-          array[array.length -1].is_submission = true
+          array[array.length - 1].is_submission = false
+        } else if (array[0].is_submission && array[1].is_submission && array[2].is_submission && array[3].is_submission) {
+          array[array.length - 1].is_submission = true
         }
       }
     }

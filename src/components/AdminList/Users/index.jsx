@@ -16,6 +16,9 @@ import 'katex/dist/katex.min.css';
 import { BlockMath } from 'react-katex';
 import { useSelector } from 'react-redux'
 
+import Logo from '../../../imgs/main_logo.png'
+import ME from './ME.jpg'
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -100,6 +103,74 @@ export default function Users() {
   }, [pageSize, page, searchText])
 
 
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(error => {
+        console.error('Service Worker registration failed:', error);
+      });
+  }
+
+  let options = {
+    dir: 'auto',              // Text direction
+    lang: 'en-US',            // A language tag
+    badge: '/orange-cat.png', // Display when insufficient room
+    body: 'Hello World',      // Body text
+    tag: 'mytag',             // Tag for categorization
+    icon: '/line-cat.png',    // To display in the notification
+    image: '/orange-cat.png', // To display in the notification
+    data: {                   // Arbitrary data; any data type
+      cheese: 'I like cheese',
+      pizza: 'Excellent cheese delivery mechanism',
+      arbitrary: {
+        faveNumber: 42,
+        myBool: true
+      }
+    },
+    vibrate: [200, 100, 200], // Vibration pattern for hardware
+    renotify: false,          // Notify if replaced? Default false
+    requireInteraction: false,// Active until click? Default false
+    /*
+      actions:   // Array of NotificationActions
+                 // Only usable with a service worker
+      [{
+        action: 'shop',
+        title: 'Shop!',
+        icon: '/bags.png'
+      },],
+    */
+  }
+
+  const showNotification = () => {
+    if ('Notification' in window) {
+      Notification.requestPermission().then((permission) => {
+        alert(permission);
+        if (permission === 'granted') {
+          new Notification('JaMeS', {
+            body: 'Yeyeyeyeye bu kim edi bu',
+            icon: Logo,
+            image: ME,
+            data: {
+              cheese: 'I like cheese',
+              pizza: 'Excellent cheese delivery mechanism',
+              arbitrary: {
+                faveNumber: 42,
+                myBool: true
+              }
+            },
+            badge: Logo
+          });
+        }
+      });
+    }
+  };
+
+
+
+
+
 
 
 
@@ -114,6 +185,14 @@ export default function Users() {
         }}
       >
 
+        <Button
+          sx={{ width: "200px", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+          variant="contained"
+          type="submit"
+          onClick={showNotification}
+        >
+          Notification TEST
+        </Button>
         <BoxHeader>
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
