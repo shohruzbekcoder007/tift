@@ -22,9 +22,10 @@ ChartJs.register(
 );
 
 export default function LawyerDashboard() {
-  const [Course_number, setCourse_number] = useState(1)
+  const [Course_number, setCourse_number] = useState('&')
   const [Status, setStatus] = useState(false)
   const [StudentCount, setStudentCount] = useState(0)
+
   const [dataDiplom, setdataDiplom] = useState({
     labels: [
       'Topshirganlar',
@@ -85,6 +86,10 @@ export default function LawyerDashboard() {
 
   const CourseNumber = useMemo(() => {
     return [
+      {
+        name: 'Kurslar',
+        value: "&",
+      },
       {
         name: '1-kurs',
         value: 1,
