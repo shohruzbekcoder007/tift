@@ -125,6 +125,7 @@ export default function LawyerDashboard() {
       setdataPhoto(dataPhoto)
       setStatus(true)
     }, (error) => {
+      setStudentCount(0)
       console.log(error);
     })
   }, [Course_number])
@@ -154,7 +155,7 @@ export default function LawyerDashboard() {
               chageValueFunction={val => { setCourse_number(val); }}
               selectOptions={CourseNumber}
             />
-            <h3>{Course_number} - kurs talabalari soni {StudentCount}</h3>
+            <h3>{Course_number == "&" ? "Umumiy" : Course_number + " - kurs"} talabalari soni {StudentCount}</h3>
             <CustomizedInput callback_func={(val) => { console.log(val) }} />
           </BoxHeader>
 
