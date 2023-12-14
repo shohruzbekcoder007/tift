@@ -141,5 +141,8 @@ export const patok_teacher = "/patok_teacher/"
 export const additional_action_permission = "/additional/action/permission/"
 
 
-// lawyer
+// archive
 export const lawyer_studentdocument = "/studentdocument/"
+export const additional_statistics_archive = "/additional/statistics/archive/"
+export const additional_ie_archive = "/additional/ie/archive/"
+

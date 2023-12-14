@@ -7,8 +7,8 @@ import { MuiFileInput } from 'mui-file-input'
 import AllSelect from '../AllSelect'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
-import { getLawyerStudent, postLawyerStudent } from './requests'
-import { academic_group_short, directions, host, lawyer_studentdocument } from '../../utils/API_urls'
+import { getLawyerStudent, getLawyerStudentExcel, postLawyerStudent } from './requests'
+import { academic_group_short, additional_ie_archive, directions, host, lawyer_studentdocument } from '../../utils/API_urls'
 import { getDirections } from '../AdminList/Directions/request'
 import study_type from '../../dictionary/study_type'
 import AutocompleteJames from '../AutocompleteJames'
@@ -38,9 +38,10 @@ export default function LawyerAllStudents() {
   const [GroupList, setGroupList] = useState([])
   const [DirectionID, setDirectionID] = useState('&')
   const [GroupID, setGroupID] = useState('')
-  const [StudyTypeSelect, setStudyTypeSelect] = useState('')
+  const [StudyTypeSelect, setStudyTypeSelect] = useState('&')
   const [Status, setStatus] = useState(false)
   const [FilterDocuments, setFilterDocuments] = useState('all')
+  const [Excel, setExcel] = useState(null)
 
 
   const StudyTipeList = useMemo(() => {
@@ -99,7 +100,7 @@ export default function LawyerAllStudents() {
 
 
   useEffect(() => {
-    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}&color=${FilterDocuments}`, (response) => {
+    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&study_type=${StudyTypeSelect}&course_number=${Course_number}&color=${FilterDocuments}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
@@ -107,8 +108,14 @@ export default function LawyerAllStudents() {
       console.log(error)
     })
 
+    getLawyerStudentExcel(`${additional_ie_archive}?color=${FilterDocuments}&specialty=${DirectionID}&course_number=${Course_number}&study_type=${StudyTypeSelect}`, (response) => {
+      setExcel(response.data.url)
+    }, (error) => {
+      console.log(error);
+      setExcel(null)
+    })
 
-  }, [pageSize, page, SearchText, DirectionID, GroupID, StudyTypeSelect, Course_number, Status, FilterDocuments])
+  }, [pageSize, page, SearchText, DirectionID,  StudyTypeSelect, Course_number, Status, FilterDocuments])
 
   useEffect(() => {
 
@@ -182,26 +189,28 @@ export default function LawyerAllStudents() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-            <Button
-              variant="contained"
-              sx={{
-                width: "90px",
-                textTransform: "capitalize",
-                boxShadow: "none",
-                padding: "12px",
-                borderRadius: "10px",
-                fontWeight: "600",
-                fontSize: "14px",
-                lineHeight: "17px"
-              }}
-              startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
-                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-              </svg>
-              }
-            >
-              Excel
-            </Button>
+            <a href={Excel ? Excel : "#"} target='_blank'>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "90px",
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "17px"
+                }}
+                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                </svg>
+                }
+              >
+                Excel
+              </Button>
+            </a>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
         </BoxHeader>
@@ -358,7 +367,6 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     }
 
     setstudentDocument(elem.document)
-    console.log(elem.document);
   }, [elem])
 
 
@@ -695,7 +703,6 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                       {
                         studentDocument.length > 0 ?
                           studentDocument.map((elems, index) => {
-                            console.log(elems);
                             return (
                               elems.is_submission == true ?
                                 <th key={index}>

@@ -11,6 +11,16 @@ export const getLawyerStudent = (url, successfulFunction, errorFunction) => {
     })
 }
 
+export const getLawyerStudentExcel = (url, successfulFunction, errorFunction) => {
+    axios.get(url, {
+        headers: headerConfig(),
+    }).then(response => {
+        successfulFunction(response)
+    }).catch((error) => {
+        errorFunction(error)
+    })
+}
+
 export const postLawyerStudent = (url, data, successfulFunction, errorFunction) => {
     const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
   const decrypted = bytes.toString(enc.Utf8);
