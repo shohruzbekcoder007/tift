@@ -23,7 +23,7 @@ export default function LawyerAllStudents() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
-  const [Course_number, setCourse_number] = useState(1)
+  const [Course_number, setCourse_number] = useState('&')
   const [SearchText, setSearchText] = useState('')
   const [allStudent, setallStudent] = useState([])
   const [allStudent2, setallStudent2] = useState([])
@@ -57,6 +57,10 @@ export default function LawyerAllStudents() {
   const CourseNumber = useMemo(() => {
     return [
       {
+        name: 'Kurslar',
+        value: "&",
+      },
+      {
         name: '1-kurs',
         value: 1,
       },
@@ -78,7 +82,7 @@ export default function LawyerAllStudents() {
   const FilterDoc = useMemo(() => {
     return [
       {
-        name: 'Umumiy',
+        name: 'Umumiy Hujjatlar',
         value: "all",
       },
       {

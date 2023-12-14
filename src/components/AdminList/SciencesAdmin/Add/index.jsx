@@ -15,6 +15,7 @@ export default function Add() {
 
   let navigate = useNavigate()
   const {state} = useLocation()
+
   const [adminData, setadminData] = useState({
     name: null,
     semester: null,
@@ -24,10 +25,11 @@ export default function Add() {
     credit: 0,
     code: null,
     kafedra: null,
-    degree: null,
+    degree: state?.degree,
     study_type: null,
     independently: 0,
-    academic_year: state?.year
+    academic_year: state?.year,
+    direction: state?.id
   })
   const user = useSelector((state) => state.user);
 
@@ -62,7 +64,7 @@ export default function Add() {
 
 
   useEffect(() => {
-    reqDataChange('degree', admindegree[0]['value'])
+    // reqDataChange('degree', admindegree[0]['value'])
     reqDataChange('study_type', adminstudytype[0]['value'])
     getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
       reqDataChange('kafedra', response.data.results[0]['id'])
@@ -76,31 +78,31 @@ export default function Add() {
       console.log(error)
     })
 
-    getDirection(`${directions}`, (response) => {
-      reqDataChange('direction', response.data.results[0]['id'])
-      setDirectionList(response.data.results.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    // getDirection(`${directions}`, (response) => {
+    //   reqDataChange('direction', response.data.results[0]['id'])
+    //   setDirectionList(response.data.results.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
   }, [])
 
-  const admindegree = useMemo(() => {
-    return [
-      {
-        name: "Bakalavr",
-        value: 'bachelor',
-      },
-      {
-        name: "Magistr",
-        value: 'master',
-      },
-    ]
-  }, [])
+  // const admindegree = useMemo(() => {
+  //   return [
+  //     {
+  //       name: "Bakalavr",
+  //       value: 'bachelor',
+  //     },
+  //     {
+  //       name: "Magistr",
+  //       value: 'master',
+  //     },
+  //   ]
+  // }, [])
 
   const Selection = useMemo(() => {
     return [
@@ -316,7 +318,7 @@ export default function Add() {
                 />
               </ModalSelectWrapper>
 
-              <ModalSelectWrapper>
+              {/* <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -333,9 +335,9 @@ export default function Add() {
                   chageValueFunction={val => reqDataChange('direction', val)}
                   selectOptions={DirectionList}
                 />
-              </ModalSelectWrapper>
+              </ModalSelectWrapper> */}
 
-              <ModalSelectWrapper>
+              {/* <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -352,7 +354,7 @@ export default function Add() {
                   chageValueFunction={val => reqDataChange('degree', val)}
                   selectOptions={admindegree}
                 />
-              </ModalSelectWrapper>
+              </ModalSelectWrapper> */}
               <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"

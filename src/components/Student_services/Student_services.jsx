@@ -411,6 +411,7 @@ export default function Student_services() {
                 selectedOptionP={KontraktType[0].value}
                 selectOptions={KontraktType}
               />
+              <p style={{margin: '0.5rem 0', color: "red", fontSize: "13px"}}>Hurmatli talaba to'lovni amalga oshirayotgan vaqtda <b> F.I.SH, Passport seriya va raqami hamda shartnoma ID raqami</b> yozilishi shart</p>
             </ModalSelectWrapper>
           }
 
