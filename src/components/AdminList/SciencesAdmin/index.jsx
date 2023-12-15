@@ -159,8 +159,14 @@ export default function SciencesAdmin() {
   const DeleteScience = (pk) => {
     setAdminDeleteScience(`${science}${pk}`, (response) => {
       if (response.status)
+        setOpenAlert(true)
+        serChanged(true)
+        setAlertMessage("O'chirildi")
         setDeleted(prev => !prev)
     }, (error) => {
+      setOpenAlert(true)
+        serChanged(false)
+        setAlertMessage(error.response.data.detail)
       console.log(error)
     })
   }
