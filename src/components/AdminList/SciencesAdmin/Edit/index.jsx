@@ -129,7 +129,7 @@ export default function Edit() {
   const updatescienceF = () => {
     updatescience(`${science}${state.data}/`, adminData, (response) => {
       if (response) {
-        navigate(`/admin/sciences`)
+        navigate(-1)
       } else {
 
       }
@@ -137,6 +137,19 @@ export default function Edit() {
       console.log(error)
     })
   }
+
+  const Selection = useMemo(() => {
+    return [
+      {
+        name: "Required",
+        value: 'required',
+      },
+      {
+        name: "Selection",
+        value: 'selection',
+      }
+    ]
+  }, [])
 
 
 
@@ -219,6 +232,7 @@ export default function Edit() {
                   </Typography>
                   <CustomizedInputSimple callback_func={(val) => { reqDataChange('lecture', val) }} type={"number"} defaultValue={returndata?.lecture} />
                 </ModalSelectWrapper>
+
                 <ModalSelectWrapper>
                   <Typography
                     id="keep-mounted-modal-title"
@@ -235,6 +249,7 @@ export default function Edit() {
                   </Typography>
                   <CustomizedInputSimple callback_func={(val) => { reqDataChange('practice', val) }} type={"number"} defaultValue={returndata?.practice} />
                 </ModalSelectWrapper>
+
                 <ModalSelectWrapper>
                   <Typography
                     id="keep-mounted-modal-title"
@@ -251,6 +266,24 @@ export default function Edit() {
                   </Typography>
                   <CustomizedInputSimple callback_func={(val) => { reqDataChange('lab', val) }} type={"number"} defaultValue={returndata?.lab} />
                 </ModalSelectWrapper>
+
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Mustaqil ta'lim
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('independently', val) }} type={"number"} defaultValue={returndata?.independently} />
+                </ModalSelectWrapper>
+
                 <ModalSelectWrapper>
                   <Typography
                     id="keep-mounted-modal-title"
@@ -303,7 +336,7 @@ export default function Edit() {
                   />
                 </ModalSelectWrapper>
 
-                {/* <ModalSelectWrapper>
+                <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -315,12 +348,13 @@ export default function Edit() {
                     mb: "10px"
                   }}
                 >
-                  Yo'nalish                        </Typography>
+                  Fan tanlov                        </Typography>
                 <AllSelectFullWidth
-                  chageValueFunction={val => reqDataChange('direction', val)}
-                  selectOptions={DirectionList}
+                  chageValueFunction={val => reqDataChange('discipline_type', val)}
+                  selectedOptionP={returndata?.discipline_type}
+                  selectOptions={Selection}
                 />
-              </ModalSelectWrapper> */}
+              </ModalSelectWrapper>
                 {/* <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"

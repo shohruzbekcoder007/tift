@@ -179,20 +179,17 @@ function App() {
     getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
   }, [])
 
-  
+
 
   return (
     <MuiTheme theme={muiTheme}>
-
       <ThemeProvider theme={defaultTheme}>
-        
-      <Snow />
+        <Snow />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
-                
                 <Route path="rector" element={<MainRector />}>
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
