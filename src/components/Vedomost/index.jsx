@@ -7,13 +7,16 @@ import { Link, Outlet, useLocation } from 'react-router-dom'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import { createTaskGrade, getTeacherVedemost } from './requests'
-import { host, teacher_submission_grade, teacher_vedemost } from '../../utils/API_urls'
+import { host, teacher_submission_grade, teacher_vedemost, teacher_vedemosts } from '../../utils/API_urls'
 import { ThesisHeader } from '../Thesis/styles'
+import { AES, enc } from 'crypto-js'
 
 export default function Vedomost() {
   const { state } = useLocation()
   console.log(state);
   const [tasksName, settasksName] = useState(null)
+  const [VedemostExcel, setVedemostExcel] = useState(null)
+
   const [tasksTasks, settasksTasks] = useState([])
   const [tasksStudents, settasksStudents] = useState([])
   const [studentSource, setstudentSource] = useState(null)
@@ -66,6 +69,18 @@ export default function Vedomost() {
     })
   }
 
+  const bytes = AES.decrypt(sessionStorage.getItem("access_token"), '@q1y1npar0l@');
+  const decrypted = bytes.toString(enc.Utf8);
+
+  useEffect(() => {
+    getTeacherVedemost(`${teacher_vedemosts}${state.data}/`, (response) => {
+      setVedemostExcel(response.data.detail)
+    }, (error) => {
+      console.log(error)
+    })
+  }, [])
+  
+
 
   return (
     <Paper
@@ -90,7 +105,9 @@ export default function Vedomost() {
         >
           O’zlashtirish qaydnomasi
         </Typography>
-        <a href={host + `/api/v1/teacher/vedomosts/${state.data}`} >
+        {
+          VedemostExcel ? 
+        <a href={VedemostExcel} >
         <Button
           variant="contained"
           onClick={(_) => { }}
@@ -112,6 +129,29 @@ export default function Vedomost() {
           Vedemost Yuklab olish
         </Button>
         </a>
+        :
+        <Button
+          variant="contained"
+          onClick={(_) => { }}
+          sx={{
+            textTransform: "capitalize",
+            boxShadow: "none",
+            padding: "12px 70px",
+            borderRadius: "10px",
+            fontWeight: "600",
+            fontSize: "14px",
+            lineHeight: "17px"
+          }}
+          disabled
+          startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+            <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z" />
+            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+          </svg>
+          }
+        >
+          Vedemost Yuklab olish
+        </Button>
+        }
       </ThesisHeader>
 
       <BoxHeader>

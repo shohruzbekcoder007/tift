@@ -48,6 +48,7 @@ export const teacher_tasks = "/teacher/tasks/"
 export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
+export const teacher_vedemosts = "/teacher/vedomosts/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
 export const teacher_jurnal = "/teacher/jurnal/"
 
