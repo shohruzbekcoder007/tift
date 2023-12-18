@@ -168,12 +168,17 @@ export default function StudentSciencesMain() {
                     sciences.map((elem, index) => {
                       return (
                         <tr key={index}>
-                          <th>{elem.name}</th>
+                          <th> <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
+                            {elem.name}
+                          </Link>
+                          </th>
                           <th>
                             {
                               elem.groups?.length === 0 ? <></> :
-                                elem.groups.map((elem, index) => {
-                                  return <p key={"t" + index}><span>{elem.name}</span>-<span>{elem.teacher}</span><br /></p>
+                                elem.groups.map((elems, index) => {
+                                  return <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
+                                    <p key={"t" + index}><span>{elems.name}</span>-<span>{elems.teacher}</span><br /></p>
+                                  </Link>
                                 })
                             }
                           </th>

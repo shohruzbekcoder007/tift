@@ -251,6 +251,10 @@ export default function LawyerAllStudents() {
                     iconc={null}
                   />
                   <TableTHHeader
+                    text="Telefon raqami"
+                    iconc={null}
+                  />
+                  <TableTHHeader
                     text="Yo'nalish"
                     iconc={null}
                   />
@@ -544,6 +548,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     <tr key={elem.id}>
       <th>{elem.id}</th>
       <th>{elem.full_name}</th>
+      <th>{elem.phone_number} {elem.phone_number2}</th>
       <th>{elem.specialty_name}</th>
       <th>{elem.academic_group_name}</th>
       <th>{elem.submission_count}/4</th>

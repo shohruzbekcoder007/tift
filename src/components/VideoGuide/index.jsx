@@ -6,7 +6,7 @@ import { VideoResponsive, VideoResponsiveBox, VideoResponsiveFooter, VideoTitle 
 export default function VideoGuide() {
     return (
         <ContentWrapper>
-            <VideoResponsiveBox>
+            {/* <VideoResponsiveBox>
                 <VideoResponsive>
                     <YoutubeEmbed embedId="hNit29grY6Q" />
                 </VideoResponsive>
@@ -29,7 +29,7 @@ export default function VideoGuide() {
                 <VideoResponsiveFooter>
                     <VideoTitle>HEMIS tizimidan baholarni olib o'tish</VideoTitle>
                 </VideoResponsiveFooter>
-            </VideoResponsiveBox>
+            </VideoResponsiveBox> */}
         </ContentWrapper>
     )
 }

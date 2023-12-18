@@ -161,6 +161,8 @@ import TutorNbStudents from './components/TutorNbStudents'
 import Library from './components/Library'
 import MainRector from './components/MainRector'
 import Snow from './components/Snow'
+import GroupPersonalPlan from './components/AdminList/GroupPersonalPlan'
+import GroupEditStudents from './components/AdminList/GroupEditStudents'
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -300,7 +302,7 @@ function App() {
                   <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
-
+                    <Route path='personalplan' element={<GroupPersonalPlan />} />
                   </Route>
                   <Route path='news' element={<News />} />
                   <Route path='contractprices' element={<Contractprices />} />
@@ -672,11 +674,16 @@ function App() {
                     <Route index element={<Directions />} />
                     <Route path='sciences' element={<ScienesStudent />} />
                   </Route>
+
                   <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
-
+                    {/* <Route path='personalplan' element={<StudentSciences />}> */}
+                      <Route path='personalplan' element={<GroupPersonalPlan />} />
+                      <Route path='personalplan/editscore' element={<GroupEditStudents />} />
+                    {/* </Route> */}
                   </Route>
+
                   <Route path='news' element={<News />} />
                   <Route path='contractprices' element={<Contractprices />} />
 

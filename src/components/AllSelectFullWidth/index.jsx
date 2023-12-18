@@ -11,7 +11,7 @@ export default memo(function AllSelectFullWidth({chageValueFunction, selectOptio
     const handleChange = (event) => {
         setAge(event.target.value );
         chageValueFunction(event.target.value)
-        console.log(selectedOptionP == event.target.value);
+        // console.log(selectedOptionP == event.target.value);
     };
 
   useEffect(() => {

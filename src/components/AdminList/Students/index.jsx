@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -19,7 +19,8 @@ import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import jins from '../../../dictionary/jins'
 import contract_type from '../../../dictionary/contract_type'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTable } from '../../../redux/action/tableActions'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -31,6 +32,8 @@ export default function Students() {
   }
 
   const user = useSelector((state) => state.user);
+  const table = useSelector((state) => state.table);
+  const dispatch = useDispatch()
   // ======
   const [students, setStudents] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -41,7 +44,7 @@ export default function Students() {
   const [deleted, setDeleted] = useState(true)
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState(0)
+  const [AcademekYear, setAcademekYear] = useState("&")
   const [DegreeSelect, setDegreeSelect] = useState('')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('')
   const [DirectionID, setDirectionID] = useState('&')
@@ -84,7 +87,6 @@ export default function Students() {
     })
   }, [])
 
-
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
       console.log(response.data.results);
@@ -108,23 +110,6 @@ export default function Students() {
   }, []);
 
   useEffect(() => {
-    setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
-      console.log(response.data)
-      setStudents(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-      if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
-      setYearStatus(false)
-    }, error => {
-      setModalText("Ma'lumot yo'q")
-      console.log(error)
-    })
-  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender,FormPayment])
-  // ======
-
-  useEffect(() => {
-
     getDirections(`${directions}?page_size=100`, (response) => {
       // setDirections(response.results)
       const currlist = [...response.results]
@@ -184,6 +169,54 @@ export default function Students() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
+  // useEffect(() => {
+  //   if (page) {
+  //     alert('ss')
+  //   }
+  // }, [page])
+
+  // useMemo(() =>  alert('ss'), [page])
+  const handleClick = useCallback((type, val) => {
+    // setCount ishlatilganda, count o'zgaruvchisi o'zgaradi, lekin handleClick tiklanishida o'zgarmaydi.
+    // alert(val);
+    setPage(val);
+    setDefaultPage(10)
+    GetStudents(type, val)
+  }, [])
+
+
+
+  useEffect(() => {
+    if (table.results.length > 0) {
+      setStudents(table.results)
+      setAllCount(table.count)
+      setPage(table.page)
+      setPageCount(table.page_count)
+    } else {
+      AcademekYear && GetStudents()
+    }
+  }, [pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect, Gender, FormPayment])
+  // ======
+
+
+  function GetStudents(type, val) {
+    // setStudents([])
+    // alert(AcademekYear,DirectionID);
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${type == 'page' ? val : page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
+      console.log(response.data)
+      setStudents(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      dispatch(setTable(response.data))
+      if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
+    }, error => {
+      setModalText("Ma'lumot yo'q")
+      console.log(error)
+    })
+  }
+
+
   return (
     <>
       <Paper
@@ -223,34 +256,34 @@ export default function Students() {
             </a>
             {
               user['role'] != 'rector' &&
-            <Link to={'add'}>
-              <Button
-                variant="contained"
-                onClick={handleOpen}
-                sx={{
-                  textTransform: "capitalize",
-                  boxShadow: "none",
-                  padding: "12px 70px",
-                  borderRadius: "10px",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  lineHeight: "17px"
-                }}
-                startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clipPath="url(#clip0_160_5797)">
-                    <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_160_5797">
-                      <rect width="20" height="20" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg>
-                }
-              >
-                Qo'shish
-              </Button>
-            </Link>
+              <Link to={'add'}>
+                <Button
+                  variant="contained"
+                  onClick={handleOpen}
+                  sx={{
+                    textTransform: "capitalize",
+                    boxShadow: "none",
+                    padding: "12px 70px",
+                    borderRadius: "10px",
+                    fontWeight: "600",
+                    fontSize: "14px",
+                    lineHeight: "17px"
+                  }}
+                  startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clipPath="url(#clip0_160_5797)">
+                      <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="white" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_160_5797">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                  }
+                >
+                  Qo'shish
+                </Button>
+              </Link>
             }
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
           </AttendSearchButton>
@@ -262,7 +295,7 @@ export default function Students() {
               selectedOptionP={YearList?.[0]?.value}
               selectOptions={YearList}
             />
-            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'150px'} selectOptions={Directions} selectedOptionP={Directions?.[1]?.value} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
@@ -274,7 +307,7 @@ export default function Students() {
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
             />
-             <AllSelectFullWidth
+            <AllSelectFullWidth
               chageValueFunction={val => { setGender(val) }}
               selectedOptionP={jinsList[0].value}
               selectOptions={jinsList}
@@ -399,7 +432,7 @@ export default function Students() {
                   />
                   {
                     user['role'] != 'rector' &&
-                  <th></th>
+                    <th></th>
                   }
                 </tr>
               </thead>
@@ -419,10 +452,13 @@ export default function Students() {
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
-        <BoxFooter>
-          <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value); setDefaultPage(10) }} />
-        </BoxFooter>
+        {
+          students.length > 0 &&
+          <BoxFooter>
+            <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
+            <Pagination count={pageCount} shape="rounded" defaultPage={page} color="primary" onChange={(_, value) => handleClick("page", value)} />
+          </BoxFooter>
+        }
       </Paper>
     </>
   )
@@ -468,33 +504,33 @@ const OneStudent = ({ student, setDeleted }) => {
       <th>{student.course_number}</th>
       {
         user['role'] != 'rector' &&
-      <th>
-        <Link to={'edit'} state={{ StudentID: student.id }}>
-          <Button
-            variant="contained"
-            sx={{
-              borderRadius: "10px",
-              textTransform: "capitalize",
-              boxShadow: "none",
-              padding: "6px 12px",
-              marginRight: "20px"
-            }}
-            startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clipPath="url(#clip0_1221_28999)">
-                <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white" />
-                <path d="M15.8333 5.986C15.6565 5.986 15.487 6.05624 15.3619 6.18126C15.2369 6.30629 15.1667 6.47586 15.1667 6.65267V10H12.5C11.9696 10 11.4609 10.2107 11.0858 10.5858C10.7107 10.9609 10.5 11.4696 10.5 12V14.6667H3.83333C3.3029 14.6667 2.79419 14.456 2.41912 14.0809C2.04405 13.7058 1.83333 13.1971 1.83333 12.6667V3.33333C1.83333 2.8029 2.04405 2.29419 2.41912 1.91912C2.79419 1.54405 3.3029 1.33333 3.83333 1.33333H9.86133C10.0381 1.33333 10.2077 1.2631 10.3327 1.13807C10.4578 1.01305 10.528 0.843478 10.528 0.666667C10.528 0.489856 10.4578 0.320286 10.3327 0.195262C10.2077 0.0702379 10.0381 0 9.86133 0L3.83333 0C2.9496 0.00105857 2.10237 0.352588 1.47748 0.97748C0.852588 1.60237 0.501059 2.4496 0.5 3.33333L0.5 12.6667C0.501059 13.5504 0.852588 14.3976 1.47748 15.0225C2.10237 15.6474 2.9496 15.9989 3.83333 16H11.3953C11.8333 16.0013 12.2671 15.9156 12.6718 15.7481C13.0764 15.5806 13.4438 15.3345 13.7527 15.024L15.5233 13.252C15.8338 12.9432 16.08 12.576 16.2477 12.1715C16.4153 11.767 16.5011 11.3332 16.5 10.8953V6.65267C16.5 6.47586 16.4298 6.30629 16.3047 6.18126C16.1797 6.05624 16.0101 5.986 15.8333 5.986ZM12.81 14.0813C12.542 14.3487 12.2031 14.5337 11.8333 14.6147V12C11.8333 11.8232 11.9036 11.6536 12.0286 11.5286C12.1536 11.4036 12.3232 11.3333 12.5 11.3333H15.1167C15.0342 11.7023 14.8493 12.0406 14.5833 12.3093L12.81 14.0813Z" fill="white" />
-              </g>
-              <defs>
-                <clipPath id="clip0_1221_28999">
-                  <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                </clipPath>
-              </defs>
-            </svg>
-            }
-          >
-          </Button>
-        </Link>
-        {/* <Button
+        <th>
+          <Link to={'edit'} state={{ StudentID: student.id }}>
+            <Button
+              variant="contained"
+              sx={{
+                borderRadius: "10px",
+                textTransform: "capitalize",
+                boxShadow: "none",
+                padding: "6px 12px",
+                marginRight: "20px"
+              }}
+              startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_1221_28999)">
+                  <path d="M12.94 0.619885L4.81195 8.74789C4.50151 9.05665 4.2554 9.42392 4.08787 9.82845C3.92034 10.233 3.83471 10.6667 3.83595 11.1046V11.9999C3.83595 12.1767 3.90619 12.3463 4.03121 12.4713C4.15624 12.5963 4.32581 12.6666 4.50262 12.6666H5.39795C5.83579 12.6678 6.26953 12.5822 6.67406 12.4146C7.07858 12.2471 7.44585 12.001 7.75462 11.6906L15.8826 3.56255C16.2722 3.172 16.491 2.64287 16.491 2.09122C16.491 1.53957 16.2722 1.01044 15.8826 0.619885C15.4864 0.241148 14.9594 0.0297852 14.4113 0.0297852C13.8632 0.0297852 13.3362 0.241148 12.94 0.619885ZM14.94 2.61989L6.81195 10.7479C6.43603 11.1215 5.92795 11.3318 5.39795 11.3332H5.16928V11.1046C5.17067 10.5745 5.381 10.0665 5.75462 9.69055L13.8826 1.56255C14.025 1.42652 14.2144 1.35061 14.4113 1.35061C14.6082 1.35061 14.7976 1.42652 14.94 1.56255C15.0799 1.7029 15.1585 1.89301 15.1585 2.09122C15.1585 2.28942 15.0799 2.47954 14.94 2.61989Z" fill="white" />
+                  <path d="M15.8333 5.986C15.6565 5.986 15.487 6.05624 15.3619 6.18126C15.2369 6.30629 15.1667 6.47586 15.1667 6.65267V10H12.5C11.9696 10 11.4609 10.2107 11.0858 10.5858C10.7107 10.9609 10.5 11.4696 10.5 12V14.6667H3.83333C3.3029 14.6667 2.79419 14.456 2.41912 14.0809C2.04405 13.7058 1.83333 13.1971 1.83333 12.6667V3.33333C1.83333 2.8029 2.04405 2.29419 2.41912 1.91912C2.79419 1.54405 3.3029 1.33333 3.83333 1.33333H9.86133C10.0381 1.33333 10.2077 1.2631 10.3327 1.13807C10.4578 1.01305 10.528 0.843478 10.528 0.666667C10.528 0.489856 10.4578 0.320286 10.3327 0.195262C10.2077 0.0702379 10.0381 0 9.86133 0L3.83333 0C2.9496 0.00105857 2.10237 0.352588 1.47748 0.97748C0.852588 1.60237 0.501059 2.4496 0.5 3.33333L0.5 12.6667C0.501059 13.5504 0.852588 14.3976 1.47748 15.0225C2.10237 15.6474 2.9496 15.9989 3.83333 16H11.3953C11.8333 16.0013 12.2671 15.9156 12.6718 15.7481C13.0764 15.5806 13.4438 15.3345 13.7527 15.024L15.5233 13.252C15.8338 12.9432 16.08 12.576 16.2477 12.1715C16.4153 11.767 16.5011 11.3332 16.5 10.8953V6.65267C16.5 6.47586 16.4298 6.30629 16.3047 6.18126C16.1797 6.05624 16.0101 5.986 15.8333 5.986ZM12.81 14.0813C12.542 14.3487 12.2031 14.5337 11.8333 14.6147V12C11.8333 11.8232 11.9036 11.6536 12.0286 11.5286C12.1536 11.4036 12.3232 11.3333 12.5 11.3333H15.1167C15.0342 11.7023 14.8493 12.0406 14.5833 12.3093L12.81 14.0813Z" fill="white" />
+                </g>
+                <defs>
+                  <clipPath id="clip0_1221_28999">
+                    <rect width="16" height="16" fill="white" transform="translate(0.5)" />
+                  </clipPath>
+                </defs>
+              </svg>
+              }
+            >
+            </Button>
+          </Link>
+          {/* <Button
           variant="contained"
           sx={{
             borderRadius: "10px",
@@ -523,7 +559,7 @@ const OneStudent = ({ student, setDeleted }) => {
           onClick={studentDeleted}
         >
         </Button> */}
-      </th>
+        </th>
       }
     </tr>
   )
