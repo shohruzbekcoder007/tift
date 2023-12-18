@@ -152,6 +152,7 @@ export default function GroupEditStudents() {
   //   })
   // }
 
+  
   const handleClick = (_) => {
     addNewStudentsScore(additional_student_ratingnotebook, updateScore, (response) => {
       console.log(response);
