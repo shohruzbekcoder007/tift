@@ -524,7 +524,7 @@ export default function SciencesAdmin() {
                         <th>{elem.independently}</th>
                         <th>{elem.discipline_type}</th>
                         <th>
-                          <Link to={'editscore'} state={{ science: elem.id, group: state.group  }}>
+                          <Link to={'editscore'} state={{ science: elem.id, group: state.group, credit: elem.credit }}>
                             <IconButton style={{ margin: "10px 0 0 20px", width: '70%' }}>
                               Talabalar
                             </IconButton>

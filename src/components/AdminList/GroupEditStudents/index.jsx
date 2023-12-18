@@ -12,7 +12,7 @@ import AllSelectFullWidth from '../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../CustomizedInputSimple'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { IconButton } from '../../Final_Dep/style'
-import { addGroup, getGroups, getTeachers, patchGroup } from './requests'
+import { addGroup, addNewStudentsScore, getGroups, getTeachers, patchGroup } from './requests'
 import { academic_group, academic_group_short, academic_year, additional_student, additional_student_ratingnotebook, allusers, bot_para, directions, room_create_list, users_student } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
@@ -62,6 +62,8 @@ export default function GroupEditStudents() {
   const [Status, setStatus] = useState(false)
   const [pageCount, setPageCount] = useState(1)
   const [AcademikGroup, setAcademikGroup] = useState([])
+  const [UpdateStudents, setUpdateStudents] = useState([])
+  const [UpdateDate, setUpdateDate] = useState([])
   const [SearchText, setSearchText] = useState('')
   const [Directions, setDirections] = useState([])
   const [DirectionID, setDirectionID] = useState('&')
@@ -82,8 +84,8 @@ export default function GroupEditStudents() {
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
 
-  const {state} = useLocation()
-  
+  const { state } = useLocation()
+
 
   useEffect(() => {
     setAcademikGroup([])
@@ -97,55 +99,93 @@ export default function GroupEditStudents() {
     })
   }, [pageSize, page, Status, SearchText, DirectionID, AcademekYear])
 
+  let updateScore = {
+    science: state?.science,
+    credit: state?.credit,
+    students: UpdateStudents
+  }
 
+  // const handleClick = (_) => {
+  //   let obj = {}
+  //   if (GroupInput) {
+  //     obj.name = GroupInput
+  //   }
+  //   if (LangSelect) {
+  //     obj.lang = LangSelect
+  //   }
+  //   if (TeacherSelect) {
+  //     obj.teacher = TeacherSelect
+  //   }
+  //   if (DirectionSelect) {
+  //     obj.direction = DirectionSelect
+  //   }
+  //   if (YearSelect) {
+  //     obj.year = YearSelect
+  //   }
+  //   if (ParaSelect) {
+  //     obj.para = ParaSelect
+  //   }
+  //   if (RoomSelect) {
+  //     obj.room = RoomSelect
+  //   }
+  //   addGroup(academic_group, obj, (response) => {
+  //     setAlertMessage("Qo'shildi")
+  //     setOpenAlert(true)
+  //     setStatus(!Status)
+  //     serChanged(true)
+  //     handleClose()
+  //   }, (error) => {
+  //     console.log(error);
+  //     let msg = ``
+  //     if (error.response.data.name) {
+  //       msg += 'name ' + error.response.data.name
+  //     }
+  //     if (error.response.data.year) {
+  //       msg += '  year ' + error.response.data.year
+  //     }
+  //     if (error.response.data.direction) {
+  //       msg += 'direction ' + error.response.data.direction
+  //     }
+  //     setAlertMessage(msg)
+  //     serChanged(false)
+  //     setOpenAlert(true)
+  //   })
+  // }
 
   const handleClick = (_) => {
-    let obj = {}
-    if (GroupInput) {
-      obj.name = GroupInput
-    }
-    if (LangSelect) {
-      obj.lang = LangSelect
-    }
-    if (TeacherSelect) {
-      obj.teacher = TeacherSelect
-    }
-    if (DirectionSelect) {
-      obj.direction = DirectionSelect
-    }
-    if (YearSelect) {
-      obj.year = YearSelect
-    }
-    if (ParaSelect) {
-      obj.para = ParaSelect
-    }
-    if (RoomSelect) {
-      obj.room = RoomSelect
-    }
-    addGroup(academic_group, obj, (response) => {
-      setAlertMessage("Qo'shildi")
-      setOpenAlert(true)
-      setStatus(!Status)
-      serChanged(true)
-      handleClose()
+    addNewStudentsScore(additional_student_ratingnotebook, updateScore, (response) => {
+      console.log(response);
     }, (error) => {
-      console.log(error);
-      let msg = ``
-      if (error.response.data.name) {
-        msg += 'name ' + error.response.data.name
-      }
-      if (error.response.data.year) {
-        msg += '  year ' + error.response.data.year
-      }
-      if (error.response.data.direction) {
-        msg += 'direction ' + error.response.data.direction
-      }
-      setAlertMessage(msg)
-      serChanged(false)
-      setOpenAlert(true)
+      console.log(error)
     })
   }
 
+
+
+  function EditScoreStudent(val, index) {
+    let currMass = [...AcademikGroup]
+    let update = [...UpdateStudents]
+    currMass[index].score = parseInt(val);
+    let found = false;
+    
+    update.forEach(item => {
+      if (item.student === currMass[index].id) {
+        item.score = parseInt(currMass[index].score);
+        item.grade = baho(currMass[index].score);
+        found = true;
+      }
+    });
+
+    if (!found) {
+      update.push({
+        student: currMass[index].id,
+        score: parseInt(currMass[index].score),
+        grade: baho(currMass[index].score)
+      });
+    }
+    setUpdateStudents(update)
+    setAcademikGroup(currMass)
+  }
 
   return (
     <>
@@ -163,6 +203,13 @@ export default function GroupEditStudents() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
+            <Button
+              sx={{ width: "50%", textTransform: "none", boxShadow: "none", borderRadius: "10px" }}
+              variant="contained"
+              onClick={handleClick}
+              >
+              Saqlash
+            </Button>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             {/* <Button
               variant="contained"
@@ -249,7 +296,7 @@ export default function GroupEditStudents() {
                     </svg>
                     }
                   />
-                  
+
                   <TableTHHeader
                     text={'Guruh'}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,7 +327,7 @@ export default function GroupEditStudents() {
                     </svg>
                     }
                   />
-                  
+
                   <TableTHHeader
                     text={"Baho"}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -326,7 +373,7 @@ export default function GroupEditStudents() {
                     </svg>
                     }
                   /> */}
-                  
+
                   {/* <th></th> */}
                 </tr>
               </thead>
@@ -334,7 +381,7 @@ export default function GroupEditStudents() {
                 {
                   AcademikGroup.length > 0 ? AcademikGroup.map((elem, index) => {
                     return (
-                      <OneStudent student={elem} key={index}  />
+                      <OneStudent student={elem} key={index} callback_func={(val) => EditScoreStudent(val, index)} />
                     )
                   })
                     :
@@ -352,195 +399,195 @@ export default function GroupEditStudents() {
         </BoxFooter>
 
 
-        <Modal
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="keep-mounted-modal-title"
-          aria-describedby="keep-mounted-modal-description"
-        >
-          <ModalBox>
-            <ModalHeader>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  color: "#000"
-                }}
-              >
-                Qo’shish                            </Typography>
-              <span
-                onClick={handleClose}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                </svg>
-              </span>
-            </ModalHeader>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Guruh
-              </Typography>
+        {/* <Modal
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="keep-mounted-modal-title"
+            aria-describedby="keep-mounted-modal-description"
+          >
+            <ModalBox>
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000"
+                  }}
+                >
+                  Qo’shish                            </Typography>
+                <span
+                  onClick={handleClose}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+              </ModalHeader>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    m: "20px 0 10px 0"
+                  }}
+                >
+                  Guruh
+                </Typography>
 
-              <CustomizedInputSimple callback_func={(val) => { setGroupInput(val) }} placeholder="" />
+                <CustomizedInputSimple callback_func={(val) => { setGroupInput(val) }} placeholder="" />
 
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Tutor
-              </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setTeacherSelect(val)}
-                selectedOptionP={TeacherList?.[0]?.value}
-                selectOptions={TeacherList}
-              />
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Tutor
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setTeacherSelect(val)}
+                  selectedOptionP={TeacherList?.[0]?.value}
+                  selectOptions={TeacherList}
+                />
 
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Til                            </Typography>
-              {/* <AllSelectFullWidth
-                chageValueFunction={val => setLangSelect(val)}
-                selectedOptionP={LangList?.[0]?.value}
-                selectOptions={LangList}
-              /> */}
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Til                            </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setLangSelect(val)}
+                  selectedOptionP={LangList?.[0]?.value}
+                  selectOptions={LangList}
+                />
 
-            </ModalSelectWrapper>
+              </ModalSelectWrapper>
 
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Para                          </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setParaSelect(val)}
-                selectedOptionP={ParaList?.[0]?.value}
-                selectOptions={ParaList}
-              />
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Para                          </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setParaSelect(val)}
+                  selectedOptionP={ParaList?.[0]?.value}
+                  selectOptions={ParaList}
+                />
 
-            </ModalSelectWrapper>
+              </ModalSelectWrapper>
 
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Xona                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setRoomSelect(val)}
-                selectOptions={RoomList}
-              />
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Xona                        </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setRoomSelect(val)}
+                  selectOptions={RoomList}
+                />
 
-            </ModalSelectWrapper>
+              </ModalSelectWrapper>
 
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Yo’nalish:                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setDirectionSelect(val)}
-                selectOptions={Directions}
-              />
-
-
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Yil:
-              </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => setYearSelect(val)}
-                selectOptions={YearList}
-              />
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Yo’nalish:                        </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setDirectionSelect(val)}
+                  selectOptions={Directions}
+                />
 
 
-            </ModalSelectWrapper>
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#000",
+                    mb: "10px"
+                  }}
+                >
+                  Yil:
+                </Typography>
+                <AllSelectFullWidth
+                  chageValueFunction={val => setYearSelect(val)}
+                  selectOptions={YearList}
+                />
 
-            <ModalButtons>
-              <Button
-                sx={{ width: "50%", textTransform: "none" }}
-                variant="outlined"
-                onClick={handleClose}
-              >
-                Bekor qilish
-              </Button>
-              <Button
-                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                variant="contained"
-                onClick={handleClick}
-              >
-                Saqlash
-              </Button>
-            </ModalButtons>
-          </ModalBox>
-        </Modal>
+
+              </ModalSelectWrapper>
+
+              <ModalButtons>
+                <Button
+                  sx={{ width: "50%", textTransform: "none" }}
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  Bekor qilish
+                </Button>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                  variant="contained"
+                  onClick={handleClick}
+                >
+                  Saqlash
+                </Button>
+              </ModalButtons>
+            </ModalBox>
+          </Modal> */}
 
       </Paper>
       <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
@@ -554,15 +601,20 @@ export default function GroupEditStudents() {
 
 
 
-const OneStudent = ({ student, setDeleted }) => {
+const OneStudent = ({ student, setDeleted, callback_func }) => {
+
+  function EditScore(value) {
+    callback_func(value)
+    // console.log(value, student.student_id);
+  }
 
   return (
     <tr>
       <th>{student.student_id}</th>
       <th>{student.full_name}</th>
       <th>{student.academic_group != null ? student.academic_group : ""}</th>
-      <th>
-        <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" defaultValue={student.score}/>
+      <th style={{ width: "100px" }}>
+        <CustomizedInputSimple callback_func={(val) => { EditScore(val) }} placeholder="" type={'number'} defaultValue={student.score} />
       </th>
       <th>{baho(student.score)}</th>
       {/* {

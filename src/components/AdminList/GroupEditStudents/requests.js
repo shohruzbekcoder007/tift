@@ -22,7 +22,7 @@ export const getTeachers = (url, successfulFunction, errorFunction) => {
 }
 
 
-export const addGroup = (url, data, successfulFunction, errorFunction) => {
+export const addNewStudentsScore = (url, data, successfulFunction, errorFunction) => {
     axios.post(url, data, {
         headers: headerConfig(),
     }).then(response => {
