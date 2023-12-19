@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import Select from "react-select";
 
 let apples = [
@@ -207,40 +207,70 @@ let cheeses = [
   "Manouri"
 ];
 
-let options = [];
+// let options = [];
 
-options = options.concat(apples.map(x => "Apple - " + x));
-options = options.concat(cheeses.map(x => "Cheese - " + x));
+// options = options.concat(apples.map(x => "Apple - " + x));
+// options = options.concat(cheeses.map(x => "Cheese - " + x));
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 function MakeOption(x) {
   return { value: x, label: x };
 }
 
-class DoubleClickAndSearchSelect extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: ""
-    };
-  }
-  handleInputChange = (value, e) => {
-    if (e.action === "input-change") {
-      this.setState({ value });
+const DoubleClickAndSearchSelect = ({ selectOptions, chageValueFunction, callback_func, label, width }) => {
+  const [value, setValue] = useState('');
+
+  const handleInputChange = (newValue, { action }) => {
+    if (action === 'input-change') {
+      setValue(newValue);
     }
   };
-  render() {
-    return (
-      <Select
-        isMulti
-        name="colors"
-        options={options.map(x => MakeOption(x))}
-        className="basic-multi-select"
-        classNamePrefix="select"
-        closeMenuOnSelect={false}
-        onInputChange={this.handleInputChange}
-        inputValue={this.state.value}
-      />
-    );
-  }
-}
+
+  return (
+    <Select
+      sx={{
+        width: width ?? '100%',
+        minWidth: '300px',
+        // height: '40px',
+        backgroundColor: "#F6F6F6",
+        fontSize: '10px',
+        fontFamily: 'Inter',
+        fontWeight: '500',
+        color: '#151515',
+        borderRadius: "10px",
+        '& .MuiInputBase-root': {
+          borderColor: "red",
+          outlineColor: "red",
+        },
+        '& .MuiSelect-select': {
+          padding: 0,
+          color: "#151515",
+          paddingRight: "22px !important",
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: "#F6F6F6",
+        },
+        '& .MuiOutlinedInput-notchedOutline:hover': {
+          borderColor: "#F6F6F6",
+        }
+      }}
+
+
+      name="colors"
+      isMulti
+      options={options}
+      className="basic-multi-select"
+      classNamePrefix="select"
+      closeMenuOnSelect={false}
+      onInputChange={handleInputChange}
+      inputValue={value}
+    />
+  );
+};
+
 export default DoubleClickAndSearchSelect;

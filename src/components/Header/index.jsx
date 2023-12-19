@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { HeaderAccount, HeaderAccountItem, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, Indebtedness, NavbarWrapper, NavbarWrapperRight, TreeDots } from './styles'
+import { ContractFilter, HeaderAccount, HeaderAccountItem, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, Indebtedness, NavbarWrapper, NavbarWrapperRight, TreeDots } from './styles'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
@@ -9,7 +9,7 @@ import Notification from '../Notification'
 import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
 import { getStudentInformation } from '../Information/requests'
-import { student_detail } from '../../utils/API_urls'
+import { my_semesters, student_detail } from '../../utils/API_urls'
 import Conguratilations from '../../imgs/Conguratilations.json'
 import Conguratilations2 from '../../imgs/Conguratilations2.json'
 import Snow from '../../imgs/snow2.json'
@@ -17,6 +17,8 @@ import Lottie from 'lottie-react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import Snowfall from 'react-snowfall'
+import { getSemester } from '../FilingApplication/requests'
+import AllSelect from '../AllSelect'
 
 export default function Header() {
 
@@ -38,6 +40,28 @@ export default function Header() {
     })
   }
 
+  const [semesters, setSemesters] = useState([])
+  const [semester, setSemester] = useState(0)
+
+
+  const getSemesters = (response) => {
+    const semester_firstly = response.data.map(element => {
+
+      console.log();
+      return {
+        value: element.id,
+        name: `${element.parent}`
+      }
+    })
+    setSemester(semester_firstly[0].value)
+    setSemesters(semester_firstly)
+  }
+
+  const getSemestersEror = (error) => { console.log(error) }
+
+  useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+  }, [])
 
 
   useEffect(() => {
@@ -61,7 +85,7 @@ export default function Header() {
   }, []);
 
 
-  
+
 
   return (
     <>
@@ -80,7 +104,7 @@ export default function Header() {
             <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
           </div></>
       }
-     
+
       {/* <div style={{
         position: 'fixed',
         width: '100vw',
@@ -149,22 +173,28 @@ export default function Header() {
           </svg>
         </TreeDots>
         <HeaderAccount open={headerAccount}>
-          {
-            getRole(user) === 'student' && <>
-              {
-                InfoList?.form_of_payment == 'contract' ?
-                  <NavbarWrapperRight>
-                    {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
-                    <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-                    <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
-                  </NavbarWrapperRight>
-                  : InfoList?.form_of_payment == 'grand' &&
-                  <NavbarWrapperRight>
-                    <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
-                  </NavbarWrapperRight>
-              }
-            </>
-          }
+          <ContractFilter>
+            {/* <AllSelect
+              chageValueFunction={val => { setSemester(val) }}
+              selectOptions={semesters}
+            /> */}
+            {
+              getRole(user) === 'student' && <>
+                {
+                  InfoList?.form_of_payment == 'contract' ?
+                    <NavbarWrapperRight>
+                      {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
+                      <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+                      <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+                    </NavbarWrapperRight>
+                    : InfoList?.form_of_payment == 'grand' &&
+                    <NavbarWrapperRight>
+                      <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
+                    </NavbarWrapperRight>
+                }
+              </>
+            }
+          </ContractFilter>
           {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime> */}

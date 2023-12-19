@@ -565,7 +565,6 @@ function App() {
                   <Route path="profile" element={<Profile />} />
                 </Route>
 
-
                 <Route path="admin" element={<MainAdmin />}>
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
@@ -679,8 +678,8 @@ function App() {
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
                     {/* <Route path='personalplan' element={<StudentSciences />}> */}
-                      <Route path='personalplan' element={<GroupPersonalPlan />} />
-                      <Route path='personalplan/editscore' element={<GroupEditStudents />} />
+                    <Route path='personalplan' element={<GroupPersonalPlan />} />
+                    <Route path='personalplan/editscore' element={<GroupEditStudents />} />
                     {/* </Route> */}
                   </Route>
 

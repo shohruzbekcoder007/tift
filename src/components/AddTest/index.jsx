@@ -188,7 +188,6 @@ export default function AddTest() {
   }, [])
 
   const items = ['A', 'B', 'C', 'D'];
-  const type = 'pdf';
 
   const handleSubmit = async (event) => {
     setModalText(<CircularProgress color="success" size={25} />)
@@ -236,7 +235,7 @@ export default function AddTest() {
   };
   return (
     <ContentWrapper>
-      {/* <DoubleClickAndSearchSelect/> */}
+      <DoubleClickAndSearchSelect/>
       <BoxHeader>
         <Typography
           variant='h2'

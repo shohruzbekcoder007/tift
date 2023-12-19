@@ -13,7 +13,9 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
   //     }, 1000)
   
   //     return () => clearTimeout(delayDebounceFn)
-  //   }, [searchTerm])
+  //   }, [searchTerm])p
+
+
   return (
     <Autocomplete
       disablePortal
@@ -45,6 +47,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
             borderColor: "#F6F6F6",
         }
     }}
+    isMulti
       getOptionLabel={(option) => option.name}
       filterOptions={(options, { inputValue }) =>
         options.filter(
@@ -57,6 +60,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
           {option.name}
         </li>
       }}
+      // onInputChange={handleInputChange}
       onChange={(_, newValue) => {
         // setSearchTerm(newValue?.value)
         chageValueFunction(newValue?.value)

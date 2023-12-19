@@ -35,6 +35,10 @@ export default function StudentSciencesMain() {
 
   const getSemestersEror = (error) => { console.log(error) }
 
+  useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+  }, [])
+
   const getSciensesArrayF = (response) => {
     console.log(response.data.science);
     setSciences(response.data.science)
@@ -48,9 +52,7 @@ export default function StudentSciencesMain() {
     getSciences(`${my_sciences}?semester=${semester_id}`, getSciensesArrayF, getSciensesArrayE)
   }
 
-  useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
-  }, [])
+ 
 
   useEffect(() => {
     if (semester !== 0) {
