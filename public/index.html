@@ -32,6 +32,13 @@
   </marquee>
   <div id="root">
   </div>
+  <script>
+    document.addEventListener("wheel", function(event){
+      if(document.activeElement.type === "number"){
+        document.activeElement.blur();
+      }
+    });
+  </script>
 </body>
 
 </html>
