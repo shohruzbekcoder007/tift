@@ -22,6 +22,7 @@ import { AttendSearchButton } from '../Attend/styles'
 import MuiAlert from '@mui/material/Alert';
 import AutocompleteJames from '../AutocompleteJames'
 import { useSelector } from 'react-redux'
+import DoubleClickAndSearchSelect from '../DoubleClickAndSearchSelect'
 
 
 export default function AddTest() {
@@ -235,6 +236,7 @@ export default function AddTest() {
   };
   return (
     <ContentWrapper>
+      {/* <DoubleClickAndSearchSelect/> */}
       <BoxHeader>
         <Typography
           variant='h2'

@@ -17,8 +17,8 @@ export default function StudentSciencesMain() {
 
   const language = useSelector(state => state.language)
 
-  const [semesters, setSemesters] = useState([])
   const [sciences, setSciences] = useState([])
+  const [semesters, setSemesters] = useState([])
   const [semester, setSemester] = useState(0)
 
 
