@@ -145,7 +145,7 @@ export default function SciencesAdmin() {
 
 
   useEffect(() => {
-    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}&direction=${state.id}&semester=${SemesterNumber}`, (response) => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${studytypechoes}&degree=${degreechoes}&search=${searchText}&direction=${state.id}&semester=${SemesterNumber}&academic_year=${state.season}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)

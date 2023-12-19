@@ -141,6 +141,7 @@ export const parentpatoklist = "/parentpatoklist/"
 export const bot_para = "/bot/para/"
 export const patok_teacher = "/patok_teacher/"
 export const additional_action_permission = "/additional/action/permission/"
+export const additional_front_update = "/additional/action/permission/"
 
 
 // archive

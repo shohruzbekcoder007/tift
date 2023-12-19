@@ -458,6 +458,7 @@ const OneStudent = ({ student, setDeleted }) => {
       console.log(error)
     })
   }
+  
   const user = useSelector((state) => state.user);
 
   return (
