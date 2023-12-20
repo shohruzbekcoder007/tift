@@ -73,7 +73,8 @@ export const student_test_detail = "student/test-detail/"
 export const student_test_solve = "student/test-solve/"
 export const student_doc = "/documents/student-doc/"
 export const student_documents = "/documents/student-documents/"
-
+export const additional_student_contractdebt = "/additional/student/contractdebt/"
+export const additional_student_year = "/additional/student/year/"
 
 // semester 
 export const my_semesters = '/my-semesters/'

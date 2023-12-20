@@ -9,7 +9,7 @@ import Notification from '../Notification'
 import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
 import { getStudentInformation } from '../Information/requests'
-import { my_semesters, student_detail } from '../../utils/API_urls'
+import { additional_student_contractdebt, additional_student_year, my_semesters, student_detail } from '../../utils/API_urls'
 import Conguratilations from '../../imgs/Conguratilations.json'
 import Conguratilations2 from '../../imgs/Conguratilations2.json'
 import Snow from '../../imgs/snow2.json'
@@ -19,6 +19,8 @@ import Confetti from 'react-confetti'
 import Snowfall from 'react-snowfall'
 import { getSemester } from '../FilingApplication/requests'
 import AllSelect from '../AllSelect'
+import { getContractDebt } from './requests'
+import AllSelectFullWidth from '../AllSelectFullWidth'
 
 export default function Header() {
 
@@ -30,6 +32,8 @@ export default function Header() {
   const [openNotes, setOpenNotes] = useState(false)
   const [InfoList, setInfoList] = useState(false)
   const [HappyBirthday, setHappyBirthday] = useState(false)
+  const [Contract, setContract] = useState(null)
+  const [Debt, setDebt] = useState(null)
 
   const { width, height } = useWindowSize()
 
@@ -45,23 +49,32 @@ export default function Header() {
 
 
   const getSemesters = (response) => {
-    const semester_firstly = response.data.map(element => {
-
-      console.log();
+    const semester_firstly = response.data.results.map((element,index) => {
       return {
-        value: element.id,
-        name: `${element.parent}`
+        value: parseInt(element.slice(0,4)),
+        name: element
       }
     })
-    setSemester(semester_firstly[0].value)
+    setSemester(semester_firstly[semester_firstly.length-1].value)
     setSemesters(semester_firstly)
+    GetDebt(response.data.results[response.data.results.length-1].slice(0,4))
   }
 
   const getSemestersEror = (error) => { console.log(error) }
 
   useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
+    getSemester(additional_student_year, getSemesters, getSemestersEror)
   }, [])
+
+  function GetDebt(year) {
+    getContractDebt(`${additional_student_contractdebt}?academic_year=${year}`, (response) => {
+      setContract(response.data.results.contract)
+      setDebt(response.data.results.debt)
+    }, (error) => {
+      console.log(error);
+    })
+  }
+  
 
 
   useEffect(() => {
@@ -174,18 +187,21 @@ export default function Header() {
         </TreeDots>
         <HeaderAccount open={headerAccount}>
           <ContractFilter>
-            {/* <AllSelect
-              chageValueFunction={val => { setSemester(val) }}
+           {
+           getRole(user) === 'student' &&  <AllSelectFullWidth
+              chageValueFunction={val => { GetDebt(val) }}
+              selectedOptionP={semester}
               selectOptions={semesters}
-            /> */}
+            />
+            }
             {
               getRole(user) === 'student' && <>
                 {
                   InfoList?.form_of_payment == 'contract' ?
                     <NavbarWrapperRight>
                       {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
-                      <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-                      <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+                      <h4>Kontrakt: {Number(Contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+                      <Indebtedness>Qarzdorlik: {Debt > 0 ? Debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
                     </NavbarWrapperRight>
                     : InfoList?.form_of_payment == 'grand' &&
                     <NavbarWrapperRight>
