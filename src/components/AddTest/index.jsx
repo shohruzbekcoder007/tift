@@ -235,7 +235,7 @@ export default function AddTest() {
   };
   return (
     <ContentWrapper>
-      <DoubleClickAndSearchSelect/>
+      {/* <DoubleClickAndSearchSelect/> */}
       <BoxHeader>
         <Typography
           variant='h2'
