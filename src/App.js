@@ -163,6 +163,8 @@ import MainRector from './components/MainRector'
 import Snow from './components/Snow'
 import GroupPersonalPlan from './components/AdminList/GroupPersonalPlan'
 import GroupEditStudents from './components/AdminList/GroupEditStudents'
+import ReadAgainStudents from './components/AdminList/ReadAgainStudents'
+import AdditionalResubmission from './components/AdminList/AdditionalResubmission'
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -587,6 +589,21 @@ function App() {
                     <Route index element={<Semestr />} />
                     <Route path='control' element={<InterimControl />} />
                   </Route>
+
+
+                  <Route path="readagain" element={<StudentSciences />} >
+                    <Route index element={<Readagain />} />
+                    {/* <Route path='control' element={<InterimControl />} /> */}
+                    <Route path="students" element={<ReadAgainStudents />} >
+                      <Route index element={<ReadAgainStudents />} />
+                      <Route path='additional' element={<AdditionalResubmission />} />
+                    </Route>
+                  </Route>
+
+                  {/* <Route path="readagain" element={<Readagain />} /> */}
+
+
+
                   <Route path="streams" element={<StudentSciences />} >
                     <Route index element={<Streams />} />
                     <Route path='schedule' element={<Schedule />} />
@@ -608,7 +625,6 @@ function App() {
                     <Route index element={<Agreement />} />
                     <Route path='payments' element={<Payments />} />
                   </Route>
-                  <Route path="readagain" element={<Readagain />} />
                   <Route path="contractpricesmarketing" element={<ContractpricesMarketing />} />
                   <Route path="sections" element={<Sections />} />
                   <Route path="faculties" element={<StudentSciences />} >
@@ -658,6 +674,7 @@ function App() {
                       <Route path='sciences' element={<PlanSciences />} />
                     </Route>
                   </Route>
+
                   <Route path="adminusers" element={<StudentSciences />} >
                     <Route index element={<AdminUsers />} />
                     <Route path='add' element={<AdminUsersAdd />} />
@@ -700,11 +717,13 @@ function App() {
                       <Route path='sciences' element={<PlanSciences />} />
                     </Route>
                   </Route>
+
                   <Route path="adminusers" element={<StudentSciences />} >
                     <Route index element={<AdminUsers />} />
                     <Route path='add' element={<AdminUsersAdd />} />
                     <Route path='edit' element={<AdminUsersEdit />} />
                   </Route>
+
                   <Route path='roles' element={<Roles />} />
                   <Route path='server' element={<Server />} />
                   <Route path='schedule' element={<ScheduleStudy />} />

@@ -24,9 +24,9 @@ export default function Vedomost() {
   const [maxGrade, setmaxGrade] = useState(null)
   const [tasksGradeId, settasksGradeId] = useState(null)
   const [tasksGrade, settasksGrade] = useState(null)
+  const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
-  const [open, setOpen] = useState(false);
   const [Status, setStatus] = useState(false);
 
 

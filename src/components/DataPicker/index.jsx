@@ -10,7 +10,7 @@ export default function DataPicker({ setFunction }) {
     <LocalizationProvider dateAdapter={AdapterDayjs} sx={{width: "100%"}}>
       <DemoContainer components={['DatePicker']} sx={{width: "100%", minWidth: "300px", '&.MuiInputBase-root': {width: "100%"}}}>
         <DatePicker 
-          sx={{width: "100%"}} 
+          sx={{width: "100%", zIndex: 0}} 
           views={["day","month", "year"]}
           label={'Sana'}
           renderInput={(params) => <TextField {...params} />}

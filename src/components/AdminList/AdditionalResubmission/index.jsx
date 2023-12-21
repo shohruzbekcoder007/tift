@@ -17,12 +17,12 @@ import { ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo } from '../../In
 import SelectInput from '@mui/material/Select/SelectInput'
 import { Link } from 'react-router-dom'
 import { PatchSemester, PostSemesters, deleteSemester, getAcademecYear, getSemesters } from './requests'
-import { academic_year, semester } from '../../../utils/API_urls'
+import { academic_year, additional_resubmission, semester } from '../../../utils/API_urls'
 import DataPicker from '../../DataPicker'
 import SemesternumList from '../../../dictionary/semesters'
 import { useSelector } from 'react-redux'
 
-export default function Readagain() {
+export default function AdditionalResubmission() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
   const [SemesterList, setSemesterList] = React.useState(false);
@@ -61,7 +61,7 @@ export default function Readagain() {
 
 
   useEffect(() => {
-    getSemesters(`${semester}?page_size=${pageSize}&page=${page}`, (response) => {
+    getSemesters(`${additional_resubmission}?page_size=${pageSize}&page=${page}`, (response) => {
       setSemesterList(response.data.results)
       setPageCount(response.data.page_count)
       setAllCount(response.data.count)
@@ -69,20 +69,6 @@ export default function Readagain() {
       console.log(error)
     })
 
-    getAcademecYear(academic_year, (response) => {
-      console.log(response.data.results);
-      let mass = [...YearList]
-      response.data.results.map(item => {
-        mass.push({
-          name: item.name,
-          value: item.id
-        })
-      })
-      setYearList(mass)
-
-    }, (error) => {
-      console.log(error)
-    })
   }, [pageSize, page, Status])
 
 
@@ -512,43 +498,8 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
   const [SyylabusStart, setSyylabusStart] = useState(null)
   const [SyylabusEnd, setSyylabusEnd] = useState(null)
   const [Status, setStatus] = useState(false)
-
   const user = useSelector((state) => state.user);
-  // const deletsemster = (id) => {
-  //   deleteSemester(`${semester}${id}`, (response) => {
-  //     callback_func(true)
-  //   }, (error) => {
-  //     console.log(error)
-  //   })
-  // }
 
-  // const editsemester = (item) => {
-  //   console.log(item.name);
-  //   handleOpen2()
-  //   // PatchSemester(`${semester}${id}`, (response) => {
-  //   //   setStatus(!Status)
-  //   // }, (error) => {
-  //   //     console.log(error)
-  //   // })
-  // }
-
-  // const handleClick2 = () => {
-  //   PatchSemester(`${semester}${elem.id}/`, {
-  //     parent: AcademekYear,
-  //     name: Name,
-  //     season: SemesterNum,
-  //     start_date: StartDate,
-  //     end_date: EndDate,
-  //     syllabus_start: SyylabusStart,
-  //     syllabus_end: SyylabusEnd
-  //   }, (response) => {
-  //     callback_func(true)
-  //     handleClose2()
-  //     console.log(response);
-  //   }, (error) => {
-  //     console.log(error)
-  //   })
-  // }
   return (
     <>
       <tr >
@@ -594,276 +545,7 @@ const SimpleSemester = ({ elem, callback_func, Semester, YearList }) => {
             </IconButton>
           </Link>
         </th>
-
-        {/* {
-        user['role'] != 'rector' &&
-      <th>
-        <Link to={'control'}>
-      <div style={{width: "100%", textAlign: 'center'}}>
-        <IconButton style={{margin: "0", width: '100%'}}>
-          Oraliq nazorat
-        </IconButton>
-      </div>
-      </Link>
-        <IconButton style={{ margin: '15px 0 0 0' }}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18.3307 9.99984C18.3307 14.5998 14.5974 18.3332 9.9974 18.3332C5.3974 18.3332 1.66406 14.5998 1.66406 9.99984C1.66406 5.39984 5.3974 1.6665 9.9974 1.6665C14.5974 1.6665 18.3307 5.39984 18.3307 9.99984Z" stroke="#252525" strokeWidth="1.5" stroke-linecap="round" strokeLinejoin="round" />
-            <path d="M13.0953 12.65L10.512 11.1083C10.062 10.8416 9.69531 10.2 9.69531 9.67497V6.2583" stroke="#252525" strokeWidth="1.5" stroke-linecap="round" strokeLinejoin="round" />
-          </svg>
-        </IconButton>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: "10px",
-            textTransform: "capitalize",
-            boxShadow: "none",
-            padding: "10px 12px",
-            margin: '0 10px'
-          }}
-          onClick={(_) => editsemester(elem)}
-          startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_1184_18370)">
-              <path d="M12.44 0.619885L4.31195 8.74789C4.00151 9.05665 3.7554 9.42392 3.58787 9.82845C3.42034 10.233 3.33471 10.6667 3.33595 11.1046V11.9999C3.33595 12.1767 3.40619 12.3463 3.53121 12.4713C3.65624 12.5963 3.82581 12.6666 4.00262 12.6666H4.89795C5.33579 12.6678 5.76953 12.5822 6.17406 12.4146C6.57858 12.2471 6.94585 12.001 7.25462 11.6906L15.3826 3.56255C15.7722 3.172 15.991 2.64287 15.991 2.09122C15.991 1.53957 15.7722 1.01044 15.3826 0.619885C14.9864 0.241148 14.4594 0.0297852 13.9113 0.0297852C13.3632 0.0297852 12.8362 0.241148 12.44 0.619885ZM14.44 2.61989L6.31195 10.7479C5.93603 11.1215 5.42795 11.3318 4.89795 11.3332H4.66928V11.1046C4.67067 10.5745 4.881 10.0665 5.25462 9.69055L13.3826 1.56255C13.525 1.42652 13.7144 1.35061 13.9113 1.35061C14.1082 1.35061 14.2976 1.42652 14.44 1.56255C14.5799 1.7029 14.6585 1.89301 14.6585 2.09122C14.6585 2.28942 14.5799 2.47954 14.44 2.61989Z" fill="white" />
-              <path d="M15.3333 5.986C15.1565 5.986 14.987 6.05624 14.8619 6.18126C14.7369 6.30629 14.6667 6.47586 14.6667 6.65267V10H12C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12V14.6667H3.33333C2.8029 14.6667 2.29419 14.456 1.91912 14.0809C1.54405 13.7058 1.33333 13.1971 1.33333 12.6667V3.33333C1.33333 2.8029 1.54405 2.29419 1.91912 1.91912C2.29419 1.54405 2.8029 1.33333 3.33333 1.33333H9.36133C9.53815 1.33333 9.70771 1.2631 9.83274 1.13807C9.95776 1.01305 10.028 0.843478 10.028 0.666667C10.028 0.489856 9.95776 0.320286 9.83274 0.195262C9.70771 0.0702379 9.53815 0 9.36133 0L3.33333 0C2.4496 0.00105857 1.60237 0.352588 0.97748 0.97748C0.352588 1.60237 0.00105857 2.4496 0 3.33333L0 12.6667C0.00105857 13.5504 0.352588 14.3976 0.97748 15.0225C1.60237 15.6474 2.4496 15.9989 3.33333 16H10.8953C11.3333 16.0013 11.7671 15.9156 12.1718 15.7481C12.5764 15.5806 12.9438 15.3345 13.2527 15.024L15.0233 13.252C15.3338 12.9432 15.58 12.576 15.7477 12.1715C15.9153 11.767 16.0011 11.3332 16 10.8953V6.65267C16 6.47586 15.9298 6.30629 15.8047 6.18126C15.6797 6.05624 15.5101 5.986 15.3333 5.986ZM12.31 14.0813C12.042 14.3487 11.7031 14.5337 11.3333 14.6147V12C11.3333 11.8232 11.4036 11.6536 11.5286 11.5286C11.6536 11.4036 11.8232 11.3333 12 11.3333H14.6167C14.5342 11.7023 14.3493 12.0406 14.0833 12.3093L12.31 14.0813Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_1184_18370">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-
-
-          }
-        >
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: "10px",
-            textTransform: "capitalize",
-            boxShadow: "none",
-            padding: "10px 12px",
-            backgroundColor: "redButton.main",
-            "&:hover": {
-              backgroundColor: "redButton.main",
-            },
-          }}
-          onClick={(val) => deletsemster(elem.id)}
-          startIcon={<svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_1148_18282)">
-              <path d="M14.0026 2.66667H11.9359C11.7812 1.91428 11.3718 1.23823 10.7768 0.752479C10.1817 0.266727 9.43741 0.000969683 8.66927 0L7.33594 0C6.5678 0.000969683 5.82348 0.266727 5.22844 0.752479C4.63339 1.23823 4.224 1.91428 4.06927 2.66667H2.0026C1.82579 2.66667 1.65622 2.7369 1.5312 2.86193C1.40618 2.98695 1.33594 3.15652 1.33594 3.33333C1.33594 3.51014 1.40618 3.67971 1.5312 3.80474C1.65622 3.92976 1.82579 4 2.0026 4H2.66927V12.6667C2.67033 13.5504 3.02186 14.3976 3.64675 15.0225C4.27164 15.6474 5.11887 15.9989 6.0026 16H10.0026C10.8863 15.9989 11.7336 15.6474 12.3585 15.0225C12.9833 14.3976 13.3349 13.5504 13.3359 12.6667V4H14.0026C14.1794 4 14.349 3.92976 14.474 3.80474C14.599 3.67971 14.6693 3.51014 14.6693 3.33333C14.6693 3.15652 14.599 2.98695 14.474 2.86193C14.349 2.7369 14.1794 2.66667 14.0026 2.66667ZM7.33594 1.33333H8.66927C9.08279 1.33384 9.48602 1.46225 9.82368 1.70096C10.1613 1.93967 10.4169 2.27699 10.5553 2.66667H5.44994C5.58833 2.27699 5.84387 1.93967 6.18153 1.70096C6.51919 1.46225 6.92242 1.33384 7.33594 1.33333ZM12.0026 12.6667C12.0026 13.1971 11.7919 13.7058 11.4168 14.0809C11.0417 14.456 10.533 14.6667 10.0026 14.6667H6.0026C5.47217 14.6667 4.96346 14.456 4.58839 14.0809C4.21332 13.7058 4.0026 13.1971 4.0026 12.6667V4H12.0026V12.6667Z" fill="white" />
-              <path d="M6.66667 12.0001C6.84348 12.0001 7.01305 11.9298 7.13807 11.8048C7.2631 11.6798 7.33333 11.5102 7.33333 11.3334V7.33341C7.33333 7.1566 7.2631 6.98703 7.13807 6.86201C7.01305 6.73699 6.84348 6.66675 6.66667 6.66675C6.48986 6.66675 6.32029 6.73699 6.19526 6.86201C6.07024 6.98703 6 7.1566 6 7.33341V11.3334C6 11.5102 6.07024 11.6798 6.19526 11.8048C6.32029 11.9298 6.48986 12.0001 6.66667 12.0001Z" fill="white" />
-              <path d="M9.33073 12.0001C9.50754 12.0001 9.67711 11.9298 9.80213 11.8048C9.92716 11.6798 9.9974 11.5102 9.9974 11.3334V7.33341C9.9974 7.1566 9.92716 6.98703 9.80213 6.86201C9.67711 6.73699 9.50754 6.66675 9.33073 6.66675C9.15392 6.66675 8.98435 6.73699 8.85932 6.86201C8.7343 6.98703 8.66406 7.1566 8.66406 7.33341V11.3334C8.66406 11.5102 8.7343 11.6798 8.85932 11.8048C8.98435 11.9298 9.15392 12.0001 9.33073 12.0001Z" fill="white" />
-            </g>
-            <defs>
-              <clipPath id="clip0_1148_18282">
-                <rect width="16" height="16" fill="white" />
-              </clipPath>
-            </defs>
-          </svg>
-
-          }
-        >
-        </Button>
-
-      </th>
-      } */}
       </tr>
-
-      {/* <Modal
-      keepMounted
-      open={open2}
-      onClose={handleClose2}
-      aria-labelledby="keep-mounted-modal-title"
-      aria-describedby="keep-mounted-modal-description"
-    >
-      <SemesterModalBoxInfo>
-
-        <div style={{ marginBottom: '20px' }}>
-          <ModalHeader>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "20px",
-                fontWeight: 600,
-                color: "#000",
-              }}
-            >
-              Tahrirlash
-            </Typography>
-            <span
-              onClick={handleClose2}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-              </svg>
-            </span>
-          </ModalHeader>
-        </div>
-
-
-        <div className='modal_box_body'>
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Nomi
-            </Typography>
-            <CustomizedInputSimple callback_func={(val) => { setName(val) }} defaultValue={elem.name} />
-
-          </SemesterModalSelectWrapperInfo>
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Akademik year
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={(val) => setAcademekYear(val)}
-              selectedOptionP={elem.season}
-              selectOptions={YearList}
-            />
-
-          </SemesterModalSelectWrapperInfo>
-        </div>
-
-        <div className='modal_box_body'>
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Semestr
-            </Typography>
-            <AllSelectFullWidth
-              chageValueFunction={(val) => setSemesterNum(val)}
-              selectedOptionP={Number(elem?.name?.slice(0,1))}
-              selectOptions={Semester}
-            />
-          </SemesterModalSelectWrapperInfo>
-        </div>
-
-        <div className='modal_box_body'>
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Boshlanish sanasi
-            </Typography>
-            <DataPicker setFunction={(val) => { setStartDate(val) }} />
-
-
-          </SemesterModalSelectWrapperInfo>
-
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Tugash sanasi
-            </Typography>
-            <DataPicker setFunction={(val) => { setEndDate(val) }} />
-          </SemesterModalSelectWrapperInfo>
-        </div>
-
-        <div className='modal_box_body'>
-
-
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Boshlanish sanasi (Syylabus)
-            </Typography>
-            <DataPicker setFunction={(val) => { setSyylabusStart(val) }} />
-
-          </SemesterModalSelectWrapperInfo>
-
-          <SemesterModalSelectWrapperInfo>
-            <Typography
-              id="keep-mounted-modal-title"
-              variant="h6"
-              component="h4"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#000",
-                mb: "10px"
-              }}
-            >
-              Tugash sanasi (Syylabus)
-            </Typography>
-            <DataPicker setFunction={(val) => { setSyylabusEnd(val) }} />
-          </SemesterModalSelectWrapperInfo>
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'end' }}>
-          <ModalButtonsInfo>
-            <Button
-              sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-              variant="outlined"
-              onClick={handleClose2}>
-              Bekor qilish
-            </Button>
-            <Button
-              onClick={handleClick2}
-              sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-              variant="contained">
-              Saqlash
-            </Button>
-          </ModalButtonsInfo>
-        </div>
-      </SemesterModalBoxInfo>
-    </Modal> */}
     </>
   )
 }

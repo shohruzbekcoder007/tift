@@ -9,8 +9,8 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
       id="combo-box-demo"
       options={selectOptions}
       sx={{
-        width: width ?? '100%',
-        minWidth: '300px',
+        width: '100%',
+        minWidth: width ? width : '300px',
         // height: '40px',
         backgroundColor: "#F6F6F6",
         fontSize: '10px',
@@ -32,7 +32,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
         },
         '& .MuiOutlinedInput-notchedOutline:hover': {
             borderColor: "#F6F6F6",
-        }
+        },
     }}
     isMulti
       getOptionLabel={(option) => option.name}
@@ -41,7 +41,7 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
           ({ name }) => name.toLowerCase().includes(inputValue.toLowerCase())
         )
       }
-      renderInput={(params) => <TextField {...params} label={label} />}
+      renderInput={(params) => <TextField  {...params} label={label} />}
       renderOption={(props, option) => {
         return <li {...props} key={option.value}>
           {option.name}

@@ -297,7 +297,7 @@ export const student_Links = [
     </svg>
     ,
     text: {
-      uz: "Qayta o’qish",
+      uz: "Qayta Topshirish",
       ru: "Прочитай заново",
       eng: "Read again"
     },
@@ -1954,7 +1954,7 @@ export const admin_links = [
     </svg>
     ,
     text: {
-      uz: "Qayta o’qish",
+      uz: "Qayta Topshirish",
       ru: "Прочитай заново",
       eng: "Read again"
     },

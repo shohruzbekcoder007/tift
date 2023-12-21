@@ -34,5 +34,11 @@ export default [
         uz: "O'qishni ko'chirish",
         ru: "morning ru",
         eng: "morning eng"
+    },
+    {
+        value: "nan",
+        uz: "Yo'q",
+        ru: "morning ru",
+        eng: "morning eng"
     }
 ]
