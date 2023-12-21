@@ -235,7 +235,7 @@ export default function AddTest() {
   };
   return (
     <ContentWrapper>
-      {/* <DoubleClickAndSearchSelect/> */}
+      <DoubleClickAndSearchSelect />
       <BoxHeader>
         <Typography
           variant='h2'
@@ -430,6 +430,7 @@ export default function AddTest() {
           <Pagination count={10} shape="rounded" color="primary" onChange={chagePageHandle} />
         </BoxFooter> */}
       </Paper>
+
       <Modal
         keepMounted
         open={open}
@@ -750,6 +751,7 @@ export default function AddTest() {
           </ModalButtons>
         </ModalBox>
       </Modal>
+      
       <Modal
         keepMounted
         open={TestModalOpen}

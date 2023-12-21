@@ -188,7 +188,7 @@ export default function Header() {
         <HeaderAccount open={headerAccount}>
           <ContractFilter>
            {
-           getRole(user) === 'student' &&  <AllSelectFullWidth
+           getRole(user) === 'student' && InfoList?.form_of_payment == 'contract' && <AllSelectFullWidth
               chageValueFunction={val => { GetDebt(val) }}
               selectedOptionP={semester}
               selectOptions={semesters}

@@ -228,9 +228,9 @@ export default function SignInSide() {
             >
               Tizimga Kirish
             </Button>
-            <Typography variant="body2" color="text.secondary" align="center">
+            {/* <Typography variant="body2" color="text.secondary" align="center">
               <a href="https://t.me/creditsystembot">Telegram bot</a>
-            </Typography>
+            </Typography> */}
             <Copyright />
           </Box>
         </Box>

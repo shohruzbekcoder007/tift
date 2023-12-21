@@ -260,7 +260,6 @@ const DoubleClickAndSearchSelect = ({ selectOptions, chageValueFunction, callbac
         }
       }}
 
-
       name="colors"
       isMulti
       options={options}
