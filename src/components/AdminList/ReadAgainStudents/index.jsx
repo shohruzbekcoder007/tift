@@ -488,6 +488,7 @@ const OneStudent = ({ student, setDeleted }) => {
     postGrade(`${additional_resubmission}`, SendData, (response) => {
       // setOneStudentList(response.data.results)
       console.log(response);
+      handleClose()
     }, (error) => {
       console.log(error);
     })
