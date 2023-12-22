@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import { AttendSearchButton, ModalBoxAddintional } from './styles'
 import { InputsWrapper } from '../../CourseManagement/styles'
 import { Link } from 'react-router-dom'
-import { deleteStudent, getUsers } from './request'
+import { deleteStudent, getUsers, postGrade } from './request'
 import { Students, academic_group_short, academic_year, additional_resubmission, additional_student, directions, employee, host, users_student } from '../../../utils/API_urls'
 import AutocompleteJames from '../../AutocompleteJames'
 import { getDirections } from '../Directions/request'
@@ -452,8 +452,8 @@ export default function ReadAgainStudents() {
 const OneStudent = ({ student, setDeleted }) => {
   const [OneStudentList, setOneStudentList] = useState([]);
   const [employes, setEmployes] = useState([])
+  const [SendData, setSendData] = useState([])
   const [SelectReteacher, setSelectReteacher] = useState('')
-
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false)
   const handleOpen = () => setOpen(true)
@@ -462,8 +462,9 @@ const OneStudent = ({ student, setDeleted }) => {
 
   const handleClick = (_) => {
     getUsers(`${additional_resubmission}?student=${student.id}`, (response) => {
+      
+      console.log(response.data.results);
       setOneStudentList(response.data.results)
-      console.log();
     }, (error) => {
       console.log(error);
     })
@@ -481,6 +482,55 @@ const OneStudent = ({ student, setDeleted }) => {
       console.log(error)
     })
     handleOpen()
+  }
+
+  const handleSend = (_) => {
+    postGrade(`${additional_resubmission}`, SendData, (response) => {
+      // setOneStudentList(response.data.results)
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
+  const EditGrade = (student_info, value) => {
+    let found = false;
+    SendData.forEach(item => {
+      if (item.id === student_info.id) {
+        item.grade = parseInt(value)  
+        found = true;
+      }
+    });
+    if (!found) {
+      let obj ={
+        id: student_info.id,
+        grade: student_info.grade ? parseInt(student_info.grade) : parseInt(value),
+      }
+      if (student_info.reteacher) {
+        obj.teacher = student_info.reteacher
+      }
+      SendData.push(obj);
+    }
+  }
+
+  const EditTeacher = (student_info, value) => {
+    let found = false;
+    SendData.forEach(item => {
+      if (item.id === student_info.id) {
+        item.teacher = value
+        found = true;
+      }
+    });
+    if (!found) {
+      let obj ={
+        id: student_info.id,
+        teacher: student_info.reteacher ? student_info.reteacher : value,
+      }
+      if (student_info.grade) {
+        obj.grade = parseInt(student_info.grade)
+      }
+      SendData.push(obj);
+    }
   }
 
 
@@ -593,12 +643,12 @@ const OneStudent = ({ student, setDeleted }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    {
-                      OneStudentList.length > 0 ? OneStudentList.map((item, index) => {
-                        return (
-                          <>
-                            <th>{item.student}</th>
+                  {
+                    OneStudentList.length > 0 ? OneStudentList.map((item, index) => {
+                      return (
+                        <>
+                          <tr>
+                            <th>{item.id}</th>
                             <th>{item.student_name}</th>
                             <th>{item.science_name}</th>
                             <th>{item.group_name}</th>
@@ -606,21 +656,23 @@ const OneStudent = ({ student, setDeleted }) => {
                             <th>
                               {item.reteacher_name}
                               <AutocompleteJames
-                                chageValueFunction={val => { setSelectReteacher(val) }}
-                                
+                                chageValueFunction={val => { EditTeacher(item,val) }}
+
                                 selectOptions={employes}
                               />
                             </th>
                             <th>
-                              <CustomizedInputSimple width={"200px"} callback_func={(val) => { console.log(val) }} type={'number'} placeholder="" />
+                              <CustomizedInputSimple defaultValue={parseInt(item.grade)} width={"200px"} callback_func={(val) => { EditGrade(item,val) }}  type={'number'} placeholder="" />
                             </th>
                             <th>{item.max_grade}</th>
-                          </>
-                        )
-                      }) : <th align='center' colSpan={12}>Ma'lumot yoq</th>
-                    }
-                    {/* <th>{maxGrade}</th> */}
-                  </tr>
+                          </tr>
+                        </>
+                      )
+                    }) : <tr>
+                      <th align='center' colSpan={12}>Ma'lumot yoq</th>
+                    </tr>
+                  }
+                  {/* <th>{maxGrade}</th> */}
                 </tbody>
               </table>
             </ClassScheduleTableWrapper>
@@ -648,6 +700,7 @@ const OneStudent = ({ student, setDeleted }) => {
               <Button
                 sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                 variant="contained"
+                onClick={handleSend}
               >
                 Saqlash
               </Button>
