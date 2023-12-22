@@ -68,7 +68,7 @@ export default function Student_services() {
       value: "invitation"
     },
     {
-      name: "Qayta o'qish uchun ruxsatnoma",
+      name: "Qayta topshirish uchun ruxsatnoma",
       value: "reappropriation"
     },
     {
@@ -76,6 +76,48 @@ export default function Student_services() {
       value: "payment_contract"
     }
     ]
+  }, [])
+
+  const SemesterNum = useMemo(() => {
+    return [
+      {
+        name: "1",
+        value: 1,
+      },
+      {
+        name: "2",
+        value: 2,
+      },
+      {
+        name: "3",
+        value: 3,
+      },
+      {
+        name: "4",
+        value: 4,
+      },
+      {
+        name: "5",
+        value: 5,
+      },
+      {
+        name: "6",
+        value: 6,
+      },
+      {
+        name: "7",
+        value: 7,
+      },
+      {
+        name: "8",
+        value: 8,
+      }, {
+        name: "9",
+        value: 9,
+      }, {
+        name: "10",
+        value: 10,
+      }]
   }, [])
 
   const KontraktType = useMemo(() => {
@@ -456,11 +498,11 @@ export default function Student_services() {
                   mb: "10px"
                 }}
               >
-                Qayta o'qish uchun Semesterni tanlang
+                Qayta topshirish uchun Semesterni tanlang
               </Typography>
               <AllSelectFullWidth chageValueFunction={val => { setSemester(val) }}
                 selectedOptionP={semester}        
-                selectOptions={semesters}
+                selectOptions={SemesterNum}
               />
             </ModalSelectWrapper>
           }

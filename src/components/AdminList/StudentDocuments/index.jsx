@@ -204,10 +204,56 @@ export default function SeeStudnetsInfoInvation() {
       value: "invitation"
     },
     {
-      name: "Qayta o'qish uchun ruxsatnoma",
+      name: "Qayta topshirish uchun ruxsatnoma",
       value: "reappropriation"
     }
     ]
+  }, [])
+
+  const SemesterNum = useMemo(() => {
+    return [
+      {
+        name: "Semester",
+        value: "&",
+      },
+      {
+        name: "1",
+        value: 1,
+      },
+      {
+        name: "2",
+        value: 2,
+      },
+      {
+        name: "3",
+        value: 3,
+      },
+      {
+        name: "4",
+        value: 4,
+      },
+      {
+        name: "5",
+        value: 5,
+      },
+      {
+        name: "6",
+        value: 6,
+      },
+      {
+        name: "7",
+        value: 7,
+      },
+      {
+        name: "8",
+        value: 8,
+      }, {
+        name: "9",
+        value: 9,
+      }, {
+        name: "10",
+        value: 10,
+      }]
   }, [])
 
   useEffect(() => {
@@ -475,7 +521,7 @@ export default function SeeStudnetsInfoInvation() {
                         </th>
                         {elem.type == 'information' ? <th>Ma'lumotnoma</th> : ""}
                         {elem.type == 'invitation' ? <th>Chaqiruv xati</th> : ""}
-                        {elem.type == 'reappropriation' ? <th>Qayta o'qish uchun ruxsatnoma</th> : ""}
+                        {elem.type == 'reappropriation' ? <th>Qayta topshirish uchun ruxsatnoma</th> : ""}
                         {elem.type == 'payment_contract' ? <th>To'lov shartnoma</th> : ""}
                         {
                           user['role'] != 'rector' &&

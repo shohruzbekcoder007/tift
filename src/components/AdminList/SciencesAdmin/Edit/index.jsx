@@ -15,7 +15,7 @@ export default function Edit() {
 
   const [adminkafedra, setadminkafedra] = useState([]);
   const [returndata, setreturndata] = useState(null);
-  const [DirectionList, setDirectionList] = useState([]);
+  // const [DirectionList, setDirectionList] = useState([]);
   const [Status, setStatus] = useState(false);
 
   const [adminData, setadminData] = useState({
@@ -51,17 +51,17 @@ export default function Edit() {
       console.log(error)
     })
 
-    getDirection(`${directions}`, (response) => {
-      reqDataChange('direction', response.data.results[0]['id'])
-      setDirectionList(response.data.results.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    // getDirection(`${directions}`, (response) => {
+    //   reqDataChange('direction', response.data.results[0]['id'])
+    //   setDirectionList(response.data.results.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
   }, [])
 
   useEffect(() => {
