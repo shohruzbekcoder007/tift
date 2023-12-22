@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './Snow.css';
 
 const Snowflakes = () => {
-   const [SnowFlake, setSnowFlake] = useState([...Array(15)])
+   const [SnowFlake, setSnowFlake] = useState([...Array(7)])
   useEffect(() => {
     const snowflakes = document.querySelectorAll('.snowflake');
     window.innerWidth > 600 && setSnowFlake([...Array(15)])
     snowflakes.forEach((snowflake) => {
       const fontSize = window.innerWidth > 600
-        ? `calc(1.5rem + (2.5rem - 1rem) * ${Math.random()})`
-        : `calc(.7rem + (1.5rem - .7rem) * ${Math.random()})`;
+        ? `calc(1rem + (2rem - 1rem) * ${Math.random()})`
+        : `calc(.7rem + (1.3rem - .7rem) * ${Math.random()})`;
 
       const leftPosition = Math.random() * 100;
       const animationDuration = Math.random() * 5 + 3;

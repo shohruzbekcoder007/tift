@@ -485,8 +485,6 @@ export default function GroupStudents() {
                 chageValueFunction={val => setDirectionSelect(val)}
                 selectOptions={Directions}
               />
-
-
             </ModalSelectWrapper>
             <ModalSelectWrapper>
               <Typography
