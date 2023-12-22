@@ -2,8 +2,8 @@
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-export const host = "https://api.tift.uz"
-// export const host = "http://192.168.10.164:8000"
+// export const host = "https://api.tift.uz"
+export const host = "http://192.168.10.164:8000"
 // export const host = "http://jaloliddinruzikulov.jprq.site"
 // export const host = "https://api.tift.uz"
 // export const host = "http://jaloliddinruzikulov.jprq.site/"
@@ -145,6 +145,7 @@ export const bot_para = "/bot/para/"
 export const patok_teacher = "/patok_teacher/"
 export const additional_action_permission = "/additional/action/permission/"
 export const additional_front_update = "/additional/action/permission/"
+export const gpa_reflesh = "/gpa_reflesh/"
 
 
 // archive

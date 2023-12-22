@@ -31,8 +31,8 @@ export default function Student_services() {
   const [alertMessage, setAlertMessage] = useState('')
   const [Status, setStatus] = useState(false)
   const handleCloseAlert = () => setOpenAlert(false);
-  const [semesters, setSemesters] = useState([])
-  const [semester, setSemester] = useState(0)
+  // const [semesters, setSemesters] = useState([])
+  const [semester, setSemester] = useState(1)
 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -40,22 +40,22 @@ export default function Student_services() {
   });
 
 
-  const getSemesters = (response) => {
-    const semester_firstly = response.data.map(element => {
-      return {
-        value: element.id,
-        name: `${element.parent} ${element.name}`
-      }
-    })
-    setSemester(semester_firstly[0].value)
-    setSemesters(semester_firstly)
-  }
-  const getSemestersEror = (error) => { console.log(error) }
+  // const getSemesters = (response) => {
+  //   const semester_firstly = response.data.map(element => {
+  //     return {
+  //       value: element.id,
+  //       name: `${element.parent} ${element.name}`
+  //     }
+  //   })
+  //   setSemester(semester_firstly[0].value)
+  //   setSemesters(semester_firstly)
+  // }
+  // const getSemestersEror = (error) => { console.log(error) }
 
 
-  useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
-  }, [])
+  // useEffect(() => {
+  //   getSemester(my_semesters, getSemesters, getSemestersEror)
+  // }, [])
 
   const [Data, setData] = useState([]);
   const List = useMemo(() => {
@@ -501,7 +501,7 @@ export default function Student_services() {
                 Qayta topshirish uchun Semesterni tanlang
               </Typography>
               <AllSelectFullWidth chageValueFunction={val => { setSemester(val) }}
-                selectedOptionP={semester}        
+                selectedOptionP={SemesterNum[0].value}        
                 selectOptions={SemesterNum}
               />
             </ModalSelectWrapper>
