@@ -92,18 +92,41 @@ export default function Tasks() {
             <p>To'plangan bal</p>
             <b>{ball2}</b>
           </StudentTasksBox>
-          <StudentTasksBox>
+          <StudentTasksBox >
+
             <p>Maks. bal</p>
-            <b>{ball1}</b>
+            <b>{myPatokList.max_grade}</b>
+
           </StudentTasksBox>
-          <StudentTasksBox>
-            <p>O’zlashtirish</p>
-            <b>{ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0}%</b>
-            {/* <b>{myPatokList.percentage}</b> */}
+
+          <StudentTasksBox  style={{  display: 'flex', justifyContent: "space-between", alignItems: "center", padding: "1rem" }}>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>Joriy</p>
+              <b>{myPatokList.percentage_joriy}%</b>
+            </div>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>Yakuniy</p>
+              <b>{myPatokList.percentage_yakuniy}%</b>
+            </div>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>O’zlashtirish</p>
+              <b>{ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0}%</b>
+            </div>
           </StudentTasksBox>
-          <StudentTasksBox>
-            <p>Hozirgi bahosi</p>
-            <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
+
+          <StudentTasksBox style={{  display: 'flex', justifyContent: "space-between", alignItems: "center", padding: "1rem" }}>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>Joriy</p>
+              <b>{myPatokList.overall_joriy}</b>
+            </div>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>Yakuniy</p>
+              <b>{myPatokList.overall_yakuniy}</b>
+            </div>
+            <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
+              <p>Hozirgi bahosi</p>
+              <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
+            </div>
           </StudentTasksBox>
         </BoxHeader>
         <BoxHeader>
@@ -306,7 +329,7 @@ export default function Tasks() {
                                   elem.method === 'test' ?
                                     <>
                                       {
-                                        (infoList.direction_contract - (infoList.direction_contract * 0.4)) >= infoList.debt || elem.type != "yakuniy"  ?
+                                        (infoList.direction_contract - (infoList.direction_contract * 0.4)) >= infoList.debt || elem.type != "yakuniy" ?
                                           <Link to="/quiz" state={{ testId: elem.id }}>
                                             <Button
                                               variant="contained"
@@ -364,8 +387,8 @@ export default function Tasks() {
               aria-describedby="keep-mounted-modal-description"
             >
               <ModalBox>
-                <p style={{margin: "0 0 1rem 0", fontWeight: 500, lineHeight: "20px"}}>Hurmatli talaba shartnoma asosida kontrakt summasining kamida 40% qismi to'lanmaganligi uchun test ishlash imkoniyati sizda mavjud emas.</p>
-                <h4>Murojaat uchun:     
+                <p style={{ margin: "0 0 1rem 0", fontWeight: 500, lineHeight: "20px" }}>Hurmatli talaba shartnoma asosida kontrakt summasining kamida 40% qismi to'lanmaganligi uchun test ishlash imkoniyati sizda mavjud emas.</p>
+                <h4>Murojaat uchun:
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="blue" class="bi bi-telegram"
                     viewBox="0 0 16 16">
                     <path

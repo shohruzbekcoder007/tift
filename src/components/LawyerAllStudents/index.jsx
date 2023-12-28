@@ -293,7 +293,7 @@ export default function LawyerAllStudents() {
               </thead>
               <tbody>
                 {
-                  allStudent.length > 0 ? allStudent.map((elem) => {
+                  allStudent.length > 0 ? allStudent.map((elem, index) => {
                     return (
                       <LawyerStudent elem={elem} key={index} callback_func={(val) => setStatus(val)} status={Status} />
                     )
@@ -302,10 +302,7 @@ export default function LawyerAllStudents() {
                     <tr>
                       <th align='center' colSpan={12}>Ma'lumot yo'q</th>
                     </tr>
-                    :
-                    <tr>
-                      <th align='center' colSpan={12}>Ma'lumot yo'q</th>
-                    </tr>
+                   
                 }
               </tbody>
             </table>
@@ -523,7 +520,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
     let array = []
     
-    if (CheckBox) {
+    if (CheckBox0) {
       console.log("ishladi");
       array.push({
         type: "contract",
@@ -750,7 +747,6 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
         }
 
       </th>
-      <th>
         <Modal
           keepMounted
           open={open}
@@ -856,7 +852,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                             <>
                               <th>
                                 <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                  <Checkbox {...label} onChange={(event) => setCheckBox(event.target.value)} />
+                                  <Checkbox {...label} onChange={(event) => setCheckBox0(event.target.value)} />
                                 </TeacherSciencesButtonBox>
                               </th>
                               <th>
