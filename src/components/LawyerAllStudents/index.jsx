@@ -221,15 +221,15 @@ export default function LawyerAllStudents() {
               </thead>
               <tbody>
                 {
-                 allStudent.length > 0 ? allStudent.map((elem) => {
+                  allStudent.length > 0 ? allStudent.map((elem) => {
                     return (
                       <LawyerStudent elem={elem} callback_func={(val) => setStatus(val)} status={Status} />
                     )
                   })
-                  : 
-                  <tr>
-                    <th align='center' colSpan={12}>Ma'lumot yo'q</th>
-                  </tr>
+                    :
+                    <tr>
+                      <th align='center' colSpan={12}>Ma'lumot yo'q</th>
+                    </tr>
                 }
               </tbody>
             </table>
@@ -257,6 +257,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   const [CheckBox1, setCheckBox1] = useState(null)
   const [CheckBox2, setCheckBox2] = useState(null)
   const [CheckBox3, setCheckBox3] = useState(null)
+  const [CheckBoxAll, setCheckBoxAll] = useState(null)
 
 
 
@@ -266,31 +267,44 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-  const setFileHandler = (newValue, info) => {
-    setFile(newValue)
-  }
-  const setFileHandler1 = (newValue, info) => {
-    setFile1(newValue)
-  }
-  const setFileHandler2 = (newValue, info) => {
-    setFile2(newValue)
-  }
-  const setFileHandler3 = (newValue, info) => {
-    setFile3(newValue)
-  }
+  // const setFileHandler = (newValue, info) => {
+  //   setFile(newValue)
+  // }
+  // const setFileHandler1 = (newValue, info) => {
+  //   setFile1(newValue)
+  // }
+  // const setFileHandler2 = (newValue, info) => {
+  //   setFile2(newValue)
+  // }
+  // const setFileHandler3 = (newValue, info) => {
+  //   setFile3(newValue)
+  // }
 
   const openModalBoxStudent = (element) => {
-    getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
-      console.log(response.data.document);
-    }, (error) => {
-      console.log(error)
-    })
+    // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
+    //   console.log(response.data.document);
+    // }, (error) => {
+    //   console.log(error)
+    // })
 
+    console.log(element);
+    if (element.document.length > 0 && element.document.length < 5) {
+      if (element.document[0].is_submission == true && element.document[1].is_submission == true && element.document[2].is_submission == true && element.document[3].is_submission == true){
+         element.document.push({
+           type: "Hammasi",
+           is_submission: true
+         })
+      }else {
+         element.document.push({
+          type: "Hammasi",
+          is_submission: false
+        })
+      }
+    }
     setstudentDocument(element.document)
-    console.log(studentDocument);
+    console.log(element.document);
     handleOpen()
   }
-  console.log(CheckBox);
 
   const SubmintGradeTasks = (event) => {
     event.preventDefault();
@@ -298,6 +312,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // formData.append("student", elem.id);
 
     let array = []
+    
     if (CheckBox) {
       console.log("ishladi");
       array.push({
@@ -358,6 +373,8 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
       setCheckBox1(null)
       setCheckBox2(null)
       setCheckBox3(null)
+      setCheckBoxAll(null)
+      
       array = studentDocument
     }
     // }
@@ -377,6 +394,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
   const GoEdit = (type, status, index) => {
     console.log(type, status, index);
+    
     let array = [...studentDocument]
     console.log(array);
     if (status) {
@@ -537,6 +555,10 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                                 text="photo"
                                 iconc={null}
                               />
+                              <TableTHHeader
+                                text="Hammasi"
+                                iconc={null}
+                              />
                             </>
 
                         }
@@ -552,15 +574,19 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                                   <th key={index}>
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       {
-                                        <Checkbox {...label} onChange={(event) => GoEdit(elem.type, false, index)} checked={true} />
+                                        <Checkbox {...label} onChange={(_) => GoEdit(elem.type, false, index)} checked={true} />
                                       }
                                     </TeacherSciencesButtonBox>
                                   </th> :
                                   <th key={index}>
                                     <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                       {
-                                        <Checkbox {...label} onChange={(event) => GoEdit(elem.type, true, index)} />
+                                        <Checkbox {...label} onChange={(_) => GoEdit(elem.type, true, index)} />
                                       }
+                                    </TeacherSciencesButtonBox>
+                                  </th> && <th>
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
                                     </TeacherSciencesButtonBox>
                                   </th>
                               )
@@ -584,6 +610,11 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                               <th>
                                 <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
                                   <Checkbox {...label} onChange={(event) => setCheckBox3(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
                                 </TeacherSciencesButtonBox>
                               </th>
                             </>
@@ -685,6 +716,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
                     </tbody>
                   </table>
+
                 </ClassScheduleTableWrapper>
               </ModalSelectWrapper>
               <ModalSelectWrapper>
