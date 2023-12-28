@@ -21,6 +21,20 @@ export const HeaderWrapper = styled.div`
   }
 
 `
+export const ContractFilter = styled.div`
+ display: flex;
+ div {
+  margin: 0 0.25rem;
+ }
+ @media (max-width: 576px) {
+      display: block;
+      margin: 0;
+      div {
+        margin:  0.25rem 0; 
+      }
+    }
+`
+
 
 export const HeaderTitleHamburger = styled.div`
   display: flex;

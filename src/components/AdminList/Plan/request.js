@@ -20,17 +20,18 @@ export const getAcademic_Year = (url, successfulFunction, errorFunction) => {
 //     })
 // }
 
-// export const deleteEmployee = (url, successfulFunction, errorFunction) => {
-//     axios.delete(
-//         url,
-//         {
-//         headers: headerConfig(),
-//     }).then(response => {
-//         successfulFunction(response.data)
-//     }).catch((error) => {
-//         errorFunction(error)
-//     })
-// }
+export const GetGpaRefresh = (url,data, successfulFunction, errorFunction) => {
+    axios.post(
+        url,
+        data,
+        {
+            headers: headerConfig(),
+        }).then(response => {
+            successfulFunction(response.data)
+        }).catch((error) => {
+            errorFunction(error)
+        })
+}
 
 // export const createEmployee = (url, data, successfulFunction, errorFunction) => {
 

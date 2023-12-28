@@ -17,8 +17,8 @@ export default function StudentSciencesMain() {
 
   const language = useSelector(state => state.language)
 
-  const [semesters, setSemesters] = useState([])
   const [sciences, setSciences] = useState([])
+  const [semesters, setSemesters] = useState([])
   const [semester, setSemester] = useState(0)
 
 
@@ -35,6 +35,10 @@ export default function StudentSciencesMain() {
 
   const getSemestersEror = (error) => { console.log(error) }
 
+  useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+  }, [])
+
   const getSciensesArrayF = (response) => {
     console.log(response.data.science);
     setSciences(response.data.science)
@@ -48,9 +52,7 @@ export default function StudentSciencesMain() {
     getSciences(`${my_sciences}?semester=${semester_id}`, getSciensesArrayF, getSciensesArrayE)
   }
 
-  useEffect(() => {
-    getSemester(my_semesters, getSemesters, getSemestersEror)
-  }, [])
+ 
 
   useEffect(() => {
     if (semester !== 0) {
@@ -168,12 +170,17 @@ export default function StudentSciencesMain() {
                     sciences.map((elem, index) => {
                       return (
                         <tr key={index}>
-                          <th>{elem.name}</th>
+                          <th> <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
+                            {elem.name}
+                          </Link>
+                          </th>
                           <th>
                             {
                               elem.groups?.length === 0 ? <></> :
-                                elem.groups.map((elem, index) => {
-                                  return <p key={"t" + index}><span>{elem.name}</span>-<span>{elem.teacher}</span><br /></p>
+                                elem.groups.map((elems, index) => {
+                                  return <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
+                                    <p key={"t" + index}><span>{elems.name}</span>-<span>{elems.teacher}</span><br /></p>
+                                  </Link>
                                 })
                             }
                           </th>

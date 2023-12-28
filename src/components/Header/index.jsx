@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { HeaderAccount, HeaderAccountItem, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, Indebtedness, NavbarWrapper, NavbarWrapperRight, TreeDots } from './styles'
+import { ContractFilter, HeaderAccount, HeaderAccountItem, HeaderTitle, HeaderTitleHamburger, HeaderWrapper, Indebtedness, NavbarWrapper, NavbarWrapperRight, TreeDots } from './styles'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
@@ -9,12 +9,19 @@ import Notification from '../Notification'
 import { getRole } from '../../utils/getRole'
 import { setTitle } from '../../redux/action/titleActions'
 import { getStudentInformation } from '../Information/requests'
-import { student_detail } from '../../utils/API_urls'
+import { additional_student_contractdebt, additional_student_year, my_semesters, student_detail } from '../../utils/API_urls'
 import Conguratilations from '../../imgs/Conguratilations.json'
 import Conguratilations2 from '../../imgs/Conguratilations2.json'
+import Snow from '../../imgs/snow2.json'
 import Lottie from 'lottie-react'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import Snowfall from 'react-snowfall'
+import { getSemester } from '../FilingApplication/requests'
+import AllSelect from '../AllSelect'
+import { getContractDebt } from './requests'
+import AllSelectFullWidth from '../AllSelectFullWidth'
+
 export default function Header() {
 
   const navigate = useNavigate();
@@ -25,6 +32,8 @@ export default function Header() {
   const [openNotes, setOpenNotes] = useState(false)
   const [InfoList, setInfoList] = useState(false)
   const [HappyBirthday, setHappyBirthday] = useState(false)
+  const [Contract, setContract] = useState(null)
+  const [Debt, setDebt] = useState(null)
 
   const { width, height } = useWindowSize()
 
@@ -35,6 +44,37 @@ export default function Header() {
     })
   }
 
+  const [semesters, setSemesters] = useState([])
+  const [semester, setSemester] = useState(0)
+
+
+  const getSemesters = (response) => {
+    const semester_firstly = response.data.results.map((element,index) => {
+      return {
+        value: parseInt(element.slice(0,4)),
+        name: element
+      }
+    })
+    setSemester(semester_firstly[semester_firstly.length-1].value)
+    setSemesters(semester_firstly)
+    GetDebt(response.data.results[response.data.results.length-1].slice(0,4))
+  }
+
+  const getSemestersEror = (error) => { console.log(error) }
+
+  useEffect(() => {
+    getSemester(additional_student_year, getSemesters, getSemestersEror)
+  }, [])
+
+  function GetDebt(year) {
+    getContractDebt(`${additional_student_contractdebt}?academic_year=${year}`, (response) => {
+      setContract(response.data.results.contract)
+      setDebt(response.data.results.debt)
+    }, (error) => {
+      console.log(error);
+    })
+  }
+  
 
 
   useEffect(() => {
@@ -49,7 +89,7 @@ export default function Header() {
       if (response.data.result.birthday.slice(5) == fullDate) {
         setHappyBirthday(true)
         setTimeout(() => {
-          setHappyBirthday(false) 
+          setHappyBirthday(false)
         }, 3000);
       }
     }, (error) => {
@@ -77,12 +117,20 @@ export default function Header() {
             <Lottie width={"400px"} size={'20px'} animationData={Conguratilations2} />
           </div></>
       }
+
+      {/* <div style={{
+        position: 'fixed',
+        width: '100vw',
+        height: '100vh',
+      }}>
+        <Snowfall />
+      </div> */}
       <HeaderWrapper
       // big='true'
       >
 
         {/* <div style={{position: "absolute", top: "0", left:"0"}} >
-        <Lottie size={'20px'} animationData={Conguratilations} />
+        <Lottie size={'20px'} animationData={Snow} />
       </div> */}
         <HeaderTitleHamburger>
           <span
@@ -138,22 +186,31 @@ export default function Header() {
           </svg>
         </TreeDots>
         <HeaderAccount open={headerAccount}>
-          {
-            getRole(user) === 'student' && <>
-              {
-                InfoList?.form_of_payment == 'contract' ?
-                  <NavbarWrapperRight>
-                    {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
-                    <h4>Kontrakt: {Number(InfoList.direction_contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
-                    <Indebtedness>Qarzdorlik: {InfoList.debt > 0 ? InfoList.debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
-                  </NavbarWrapperRight>
-                  : InfoList?.form_of_payment == 'grand' &&
-                  <NavbarWrapperRight>
-                    <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
-                  </NavbarWrapperRight>
-              }
-            </>
-          }
+          <ContractFilter>
+           {
+           getRole(user) === 'student' && InfoList?.form_of_payment == 'contract' && <AllSelectFullWidth
+              chageValueFunction={val => { GetDebt(val) }}
+              selectedOptionP={semester}
+              selectOptions={semesters}
+            />
+            }
+            {
+              getRole(user) === 'student' && <>
+                {
+                  InfoList?.form_of_payment == 'contract' ?
+                    <NavbarWrapperRight>
+                      {/*(contractValue - paid).toLocaleString().replace(/,/g, ' ');  */}
+                      <h4>Kontrakt: {Number(Contract)?.toLocaleString().replace(/,/g, ' ')} so'm    </h4>
+                      <Indebtedness>Qarzdorlik: {Debt > 0 ? Debt?.toLocaleString().replace(/,/g, ' ') + " so'm" : 'Qarzdorlik yo\'q'}  </Indebtedness>
+                    </NavbarWrapperRight>
+                    : InfoList?.form_of_payment == 'grand' &&
+                    <NavbarWrapperRight>
+                      <h4 style={{ color: "rgb(3, 158, 81)" }}>DAVLAT GRANTI</h4>
+                    </NavbarWrapperRight>
+                }
+              </>
+            }
+          </ContractFilter>
           {/* <HeaderAccountTime>
           {listLanguage.ServerTime['ru']} 06.06.23
         </HeaderAccountTime> */}

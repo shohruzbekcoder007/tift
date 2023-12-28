@@ -16,23 +16,29 @@ import { IconButton } from '../../Final_Dep/style'
 import { ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo } from '../../Information/styles'
 import SelectInput from '@mui/material/Select/SelectInput'
 import { Link } from 'react-router-dom'
-import { academic_year } from '../../../utils/API_urls'
-import { getAcademic_Year } from './request'
+import { academic_year, gpa_reflesh, my_semesters } from '../../../utils/API_urls'
+import { GetGpaRefresh, getAcademic_Year } from './request'
 import AlertDialog from '../../AlertDialog'
+import { getSemester } from '../ScheduleStudy/requests'
 
 export default function Plan() {
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const [Year, setYear] = useState(null);
+
   const handleClose = () => setOpen(false);
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const [file, setFile] = useState(null);
-
+  
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
+  const handleOpen = (season) => {
+    setOpen(true)
+    setYear(season)
+  };
 
 
   const [Plans, setPlans] = useState([])
@@ -45,6 +51,8 @@ export default function Plan() {
   const [alert, setAlert] = useState(false)
   const openAlert = () => { setAlert(true) }
 
+  const [semesters, setSemesters] = useState([])
+  const [semester, setSemester] = useState(null)
 
   useEffect(() => {
     getAcademic_Year(`${academic_year}?page_size=${pageSize}&search=${searchText}&page=${page}`, response => {
@@ -58,8 +66,36 @@ export default function Plan() {
   }, [page, pageSize, searchText, deleted])
 
 
-  const deleteDepartmentHendler = () =>{
-    
+
+  const getSemesters = (response) => {
+    const semester_firstly = response.data.map(element => {
+      return {
+        value: element.id,
+        name: `${element.parent} ${element.name}`
+      }
+    })
+    setSemester(semester_firstly[0].value)
+    setSemesters(semester_firstly)
+  }
+  const getSemestersEror = (error) => { console.log(error) }
+
+
+  useEffect(() => {
+    getSemester(my_semesters, getSemesters, getSemestersEror)
+  }, [])
+
+
+
+  const RefreshGPA = () => {
+    GetGpaRefresh(`${gpa_reflesh}`, {
+      semester: semester,
+      year: Year
+    }, response => {
+      handleClose()
+      console.log(response);
+    }, error => {
+      console.log(error)
+    })
   }
 
   return (
@@ -176,6 +212,7 @@ export default function Plan() {
                           </Link>
                           <Button
                             variant="contained"
+                            onClick={(_) => handleOpen(elem.season)}
                             sx={{
                               borderRadius: "10px",
                               textTransform: "capitalize",
@@ -246,14 +283,14 @@ export default function Plan() {
                           >
                           </Button> */}
                         </th>
-                        <AlertDialog
+                        {/* <AlertDialog
                           open_alert={alert}
                           callback1={(_) => {
                             deleteDepartmentHendler(elem.id)
                           }}
                           callback2={() => { setAlert(false) }}
                           alertText={"Ushbu Rejani haqiqatdan ham o'chirmoqchimisiz?"}
-                        />
+                        /> */}
                       </tr>
                     )
                   })
@@ -289,7 +326,7 @@ export default function Plan() {
                   color: "#000"
                 }}
               >
-                Qo’shish                            </Typography>
+                Semesterni tanlang                        </Typography>
               <span
                 onClick={handleClose}
               >
@@ -310,16 +347,21 @@ export default function Plan() {
                   m: "20px 0 10px 0"
                 }}
               >
-                Yil                </Typography>
+                {/* Yil */}
+              </Typography>
 
-              <CustomizedInputSimple callback_func={(val) => { console.log(val) }} placeholder="" />
+              <AllSelectFullWidth
+                chageValueFunction={val => setSemester(val)}
+                selectedOptionP={semesters[0]?.value}        
+                selectOptions={semesters}
+              />
 
             </ModalSelectWrapper>
 
 
-            <ModalSelectWrapper>
+            {/* <ModalSelectWrapper>
               <Checkbox {...label} /> Eski o'quv dasturidan nusxa ko'chirish
-            </ModalSelectWrapper>
+            </ModalSelectWrapper> */}
 
             <ModalButtons>
               <Button
@@ -330,10 +372,11 @@ export default function Plan() {
                 Bekor qilish
               </Button>
               <Button
+                onClick={RefreshGPA}
                 sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
                 variant="contained"
               >
-                Saqlash
+                Yangilash
               </Button>
             </ModalButtons>
           </ModalBox>

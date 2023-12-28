@@ -284,8 +284,6 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
   }
 
   const {state} = useLocation()
-  console.log(state);
-
   return (
     <>
       <tr>
@@ -295,7 +293,7 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
         <th>{elem.degree}</th>
         <th>{elem.faculty}</th>
         <th>
-          <Link to={'sciences'} state={{id: elem.id, season: state}}>
+          <Link to={'sciences'} state={{id: elem.id, season: state, degree: elem.degree}}>
             <Button
               variant="contained"
               sx={{

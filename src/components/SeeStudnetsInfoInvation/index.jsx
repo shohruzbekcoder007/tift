@@ -203,7 +203,7 @@ export default function SeeStudnetsInfoInvation() {
       value: "invitation"
     },
     {
-      name: "Qayta o'qish uchun ruxsatnoma",
+      name: "Qayta topshirish uchun ruxsatnoma",
       value: "reappropriation"
     }
     ]
@@ -456,7 +456,8 @@ export default function SeeStudnetsInfoInvation() {
                           </th>
                         {elem.type == 'information' ? <th>Ma'lumotnoma</th> : ""}
                         {elem.type == 'invitation' ? <th>Chaqiruv xati</th> : ""}
-                        {elem.type == 'reappropriation' ? <th>Qayta o'qish uchun ruxsatnoma</th> : ""}
+                        {elem.type == 'reappropriation' ? <th>Qayta topshirish uchun ruxsatnoma</th> : ""}
+                        {elem.type == 'payment_contract' ? <th>To'lov shartnoma</th> : ""}
                         <th>
                           {/* <IconButton style={{ padding: "12px 18px" }}>
                               Tahrirlash

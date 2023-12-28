@@ -2,7 +2,8 @@
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
 // export const host = "http://husanibragimov.jprq.live"
-export const host = "https://api.tift.uz"
+// export const host = "https://api.tift.uz"
+export const host = "http://192.168.10.164:8000"
 // export const host = "http://jaloliddinruzikulov.jprq.site"
 // export const host = "https://api.tift.uz"
 // export const host = "http://jaloliddinruzikulov.jprq.site/"
@@ -48,6 +49,7 @@ export const teacher_tasks = "/teacher/tasks/"
 export const teacher_attendance = "/teacher/attendance/"
 export const teacher_set_nb_students = "/teacher/nb-report/set_nb_students/"
 export const teacher_vedemost = "/teacher/vedemost/"
+export const teacher_vedemosts = "/teacher/vedomosts/"
 export const teacher_submission_grade = "/teacher/submission-grade/"
 export const teacher_jurnal = "/teacher/jurnal/"
 
@@ -72,7 +74,8 @@ export const student_test_detail = "student/test-detail/"
 export const student_test_solve = "student/test-solve/"
 export const student_doc = "/documents/student-doc/"
 export const student_documents = "/documents/student-documents/"
-
+export const additional_student_contractdebt = "/additional/student/contractdebt/"
+export const additional_student_year = "/additional/student/year/"
 
 // semester 
 export const my_semesters = '/my-semesters/'
@@ -122,6 +125,7 @@ export const academic_group_short = "/academic_group/short/"
 export const additional_ie_science = "/additional/ie/science/"
 export const additional_ie_oneid = "/additional/integration/oneid/"
 export const additional_test_preview = "/additional/test/preview/"
+export const additional_resubmission = "/additional/resubmission/"
 
 export const building = "/building/"
 export const room_create_list = "/room_create_list/"
@@ -135,11 +139,17 @@ export const scheduletable = "/scheduletable/"
 export const patokadmin = "/patokadmin/"
 export const users_student = "/users/student/"
 export const additional_student = "/additional/student/"
+export const additional_student_ratingnotebook = "/additional/student/ratingnotebook/"
 export const parentpatoklist = "/parentpatoklist/"
 export const bot_para = "/bot/para/"
 export const patok_teacher = "/patok_teacher/"
 export const additional_action_permission = "/additional/action/permission/"
+export const additional_front_update = "/additional/action/permission/"
+export const gpa_reflesh = "/gpa_reflesh/"
 
 
-// lawyer
+// archive
 export const lawyer_studentdocument = "/studentdocument/"
+export const additional_statistics_archive = "/additional/statistics/archive/"
+export const additional_ie_archive = "/additional/ie/archive/"
+

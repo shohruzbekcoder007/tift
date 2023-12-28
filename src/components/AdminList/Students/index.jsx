@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../../global_styles/styles'
 import { CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../../PageSelector'
@@ -19,7 +19,8 @@ import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
 import jins from '../../../dictionary/jins'
 import contract_type from '../../../dictionary/contract_type'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTable } from '../../../redux/action/tableActions'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -31,6 +32,7 @@ export default function Students() {
   }
 
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
   // ======
   const [students, setStudents] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -107,6 +109,20 @@ export default function Students() {
     })
   }, []);
 
+  // useEffect(() => {
+  //   if (page) {
+  //     alert('ss')
+  //   }
+  // }, [page])
+
+  // useMemo(() =>  alert('ss'), [page])
+ const handleClick = useCallback((type, val) => {
+    // setCount ishlatilganda, count o'zgaruvchisi o'zgaradi, lekin handleClick tiklanishida o'zgarmaydi.
+    
+  }, [])
+  
+  
+
   useEffect(() => {
     setStudents([])
     getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
@@ -114,6 +130,7 @@ export default function Students() {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
+      dispatch(setTable(response.data))
       if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       setYearStatus(false)
     }, error => {
@@ -262,7 +279,7 @@ export default function Students() {
               selectedOptionP={YearList?.[0]?.value}
               selectOptions={YearList}
             />
-            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
+            <AutocompleteJames width={'150px'} selectOptions={Directions}  chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
             <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
@@ -421,7 +438,7 @@ export default function Students() {
         </BoxBody>
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value); setDefaultPage(10) }} />
+          <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => {setPage(value); setDefaultPage(10)}} />
         </BoxFooter>
       </Paper>
     </>
@@ -441,6 +458,7 @@ const OneStudent = ({ student, setDeleted }) => {
       console.log(error)
     })
   }
+  
   const user = useSelector((state) => state.user);
 
   return (

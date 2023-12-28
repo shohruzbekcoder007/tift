@@ -13,9 +13,10 @@ import CustomizedInputSimple from '../CustomizedInputSimple'
 import ServicesTable from '../ServicesTable/ServicesTable'
 import { useMemo } from 'react'
 import { postStudentInformation } from './request'
-import { additional_documents, student_doc, student_documents } from '../../utils/API_urls'
+import { additional_documents, my_semesters, student_doc, student_documents } from '../../utils/API_urls'
 import MuiAlert from '@mui/material/Alert'
 import { getDocumentStudents } from '../ServicesTable/request'
+import { getSemester } from '../FilingApplication/requests'
 
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
@@ -30,10 +31,31 @@ export default function Student_services() {
   const [alertMessage, setAlertMessage] = useState('')
   const [Status, setStatus] = useState(false)
   const handleCloseAlert = () => setOpenAlert(false);
+  // const [semesters, setSemesters] = useState([])
+  const [semester, setSemester] = useState(1)
+
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+
+
+  // const getSemesters = (response) => {
+  //   const semester_firstly = response.data.map(element => {
+  //     return {
+  //       value: element.id,
+  //       name: `${element.parent} ${element.name}`
+  //     }
+  //   })
+  //   setSemester(semester_firstly[0].value)
+  //   setSemesters(semester_firstly)
+  // }
+  // const getSemestersEror = (error) => { console.log(error) }
+
+
+  // useEffect(() => {
+  //   getSemester(my_semesters, getSemesters, getSemestersEror)
+  // }, [])
 
   const [Data, setData] = useState([]);
   const List = useMemo(() => {
@@ -46,7 +68,7 @@ export default function Student_services() {
       value: "invitation"
     },
     {
-      name: "Qayta o'qish uchun ruxsatnoma",
+      name: "Qayta topshirish uchun ruxsatnoma",
       value: "reappropriation"
     },
     {
@@ -54,6 +76,48 @@ export default function Student_services() {
       value: "payment_contract"
     }
     ]
+  }, [])
+
+  const SemesterNum = useMemo(() => {
+    return [
+      {
+        name: "1",
+        value: 1,
+      },
+      {
+        name: "2",
+        value: 2,
+      },
+      {
+        name: "3",
+        value: 3,
+      },
+      {
+        name: "4",
+        value: 4,
+      },
+      {
+        name: "5",
+        value: 5,
+      },
+      {
+        name: "6",
+        value: 6,
+      },
+      {
+        name: "7",
+        value: 7,
+      },
+      {
+        name: "8",
+        value: 8,
+      }, {
+        name: "9",
+        value: 9,
+      }, {
+        name: "10",
+        value: 10,
+      }]
   }, [])
 
   const KontraktType = useMemo(() => {
@@ -67,6 +131,8 @@ export default function Student_services() {
     },
     ]
   }, [])
+
+
   useEffect(() => {
     getDocumentStudents(additional_documents, (response) => {
       console.log(response);
@@ -74,7 +140,7 @@ export default function Student_services() {
     }, (error) => {
       console.log(error);
     });
-  setKontraktTypeSelect(KontraktType[0].value)
+    setKontraktTypeSelect(KontraktType[0].value)
 
   }, [Status]);
 
@@ -106,7 +172,7 @@ export default function Student_services() {
     let sendData = {
       type: ListSelect,
     }
-    
+
     if (ListSelect == "payment_contract") {
       sendData.contract_form = KontraktTypeSelect
     }
@@ -114,8 +180,12 @@ export default function Student_services() {
     if (ListSelect != "information") {
       sendData.job = JobInput
     }
-    
-    postStudentInformation(additional_documents,sendData , (response) => {
+
+    if (ListSelect == "reappropriation") {
+      sendData.semester = semester
+    }
+
+    postStudentInformation(additional_documents, sendData, (response) => {
       setStatus(!Status)
       setOpen(false)
       setOpenAlert(true)
@@ -404,16 +474,38 @@ export default function Student_services() {
                   mb: "10px"
                 }}
               >
-                
+
               </Typography>
               <AllSelectFullWidth
                 chageValueFunction={val => setKontraktTypeSelect(val)}
                 selectedOptionP={KontraktType[0].value}
                 selectOptions={KontraktType}
               />
+              <p style={{ margin: '0.5rem 0', color: "red", fontSize: "13px" }}>Hurmatli talaba to'lovni amalga oshirayotgan vaqtda <b> F.I.SH, Passport seriya va raqami hamda shartnoma ID raqami</b> yozilishi shart</p>
             </ModalSelectWrapper>
           }
 
+          {
+            ListSelect == "reappropriation" && <ModalSelectWrapper>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "#000",
+                  mb: "10px"
+                }}
+              >
+                Qayta topshirish uchun Semesterni tanlang
+              </Typography>
+              <AllSelectFullWidth chageValueFunction={val => { setSemester(val) }}
+                selectedOptionP={SemesterNum[0].value}        
+                selectOptions={SemesterNum}
+              />
+            </ModalSelectWrapper>
+          }
           <ModalButtons>
             <Button
               sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}

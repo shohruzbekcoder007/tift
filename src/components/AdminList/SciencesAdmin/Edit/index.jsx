@@ -1,6 +1,6 @@
 import { Button, Checkbox, Pagination, Paper, Typography } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import { BoxBody, BoxFooter, BoxTableCard, ClassScheduleTableWrapper, HeaderWrapper, HeaderWrapperH4, HeaderWrapperP, WrapperBody, WrapperBottom,  BuildingModalLang, BuildingModalLangText  } from './styles'
+import { BoxBody, BoxFooter, BoxTableCard, ClassScheduleTableWrapper, HeaderWrapper, HeaderWrapperH4, HeaderWrapperP, WrapperBody, WrapperBottom, BuildingModalLang, BuildingModalLangText } from './styles'
 import { BoxFooterText, BoxHeader, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import CustomizedInputSimple from '../../../CustomizedInputSimple'
@@ -12,10 +12,11 @@ import { updatescience } from './requests'
 import { getDirection } from '../Add/requests'
 
 export default function Edit() {
-  
+
   const [adminkafedra, setadminkafedra] = useState([]);
   const [returndata, setreturndata] = useState(null);
-  const [DirectionList, setDirectionList] = useState([]);
+  // const [DirectionList, setDirectionList] = useState([]);
+  const [Status, setStatus] = useState(false);
 
   const [adminData, setadminData] = useState({
     name: null,
@@ -31,29 +32,16 @@ export default function Edit() {
 
   })
 
-  console.log(adminData);
-  const {state} = useLocation()
+  const { state } = useLocation()
   let navigate = useNavigate()
 
   useEffect(() => {
-    reqDataChange('degree',admindegree[0]['value'])
-    reqDataChange('study_type',adminstudytype[0]['value'])
+    reqDataChange('degree', admindegree[0]['value'])
+    reqDataChange('study_type', adminstudytype[0]['value'])
     getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
-      
-      reqDataChange('kafedra',response.data.results[0]['id'])
-      setadminkafedra(response.data.results.map( elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-        console.log(error)
-    })
 
-    getDirection(`${directions}`, (response) => {
-      reqDataChange('direction', response.data.results[0]['id'])
-      setDirectionList(response.data.results.map(elem => {
+      reqDataChange('kafedra', response.data.results[0]['id'])
+      setadminkafedra(response.data.results.map(elem => {
         return {
           name: elem.name,
           value: elem.id
@@ -62,10 +50,23 @@ export default function Edit() {
     }, (error) => {
       console.log(error)
     })
+
+    // getDirection(`${directions}`, (response) => {
+    //   reqDataChange('direction', response.data.results[0]['id'])
+    //   setDirectionList(response.data.results.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
   }, [])
 
   useEffect(() => {
     getAdminKafedra(`${science}${state.data}/`, (response) => {
+      console.log(response.data);
       setreturndata(response.data)
       setadminData({
         name: response.data.name,
@@ -79,8 +80,9 @@ export default function Edit() {
         degree: response.data.degree,
         study_type: response.data.study_type,
       })
+      setStatus(true)
     }, (error) => {
-        console.log(error)
+      console.log(error)
     })
   }, [])
 
@@ -95,15 +97,15 @@ export default function Edit() {
   const admindegree = useMemo(() => {
     return [
       {
-      name: "Bakalavr",
-      value: 'bachelor',
+        name: "Bakalavr",
+        value: 'bachelor',
       },
       {
         name: "Magistr",
         value: 'master',
       },
-  ]
-  },[])
+    ]
+  }, [])
 
   const adminstudytype = useMemo(() => {
     return [{
@@ -122,19 +124,32 @@ export default function Edit() {
       name: "remote",
       value: 'remote',
     }]
-  },[])
+  }, [])
 
   const updatescienceF = () => {
     updatescience(`${science}${state.data}/`, adminData, (response) => {
       if (response) {
-        navigate(`/admin/sciences`)
-      }else{
+        navigate(-1)
+      } else {
 
       }
     }, (error) => {
-        console.log(error)
-      })
+      console.log(error)
+    })
   }
+
+  const Selection = useMemo(() => {
+    return [
+      {
+        name: "Required",
+        value: 'required',
+      },
+      {
+        name: "Selection",
+        value: 'selection',
+      }
+    ]
+  }, [])
 
 
 
@@ -150,155 +165,178 @@ export default function Edit() {
         Tahrirlash
       </Typography>
       <BoxTableCard>
-      <Paper
-        elevation={0}
-        sx={{
-          width: '100%',
-          padding: "20px",
-          borderRadius: "10px"
-        }}
-      >
-        <div style={{display: "flex"}}>
-          <HeaderWrapper>
-          {/* <BuildingModalLang>
+        <Paper
+          elevation={0}
+          sx={{
+            width: '100%',
+            padding: "20px",
+            borderRadius: "10px"
+          }}
+        >
+          <div style={{ display: "flex" }}>
+            {
+              Status &&
+              <HeaderWrapper>
+                {/* <BuildingModalLang>
             <BuildingModalLangText>RU</BuildingModalLangText>
             <BuildingModalLangText>UZC</BuildingModalLangText>
             <BuildingModalLangText>UZL</BuildingModalLangText>
             <BuildingModalLangText>EN</BuildingModalLangText>
             <BuildingModalLangText>KAR</BuildingModalLangText>
           </BuildingModalLang> */}
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Nomi
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('name',val) }} defaultValue={returndata?.name}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Semestr
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('semester',val) }} type={"number"} defaultValue={returndata?.semester}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Leksiya
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('lecture',val) }} type={"number"} defaultValue={returndata?.lecture}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Amaliyot
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('practice',val) }} type={"number"} defaultValue={returndata?.practice}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Labaratoriya
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('lab',val) }} type={"number"} defaultValue={returndata?.lab}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Kredit
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('credit',val) }} type={"number"} defaultValue={returndata?.credit}/>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  m: "20px 0 10px 0"
-                }}
-              >
-                Kod
-              </Typography>
-              <CustomizedInputSimple callback_func={(val) => { reqDataChange('code',val) }} defaultValue={returndata?.code} />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Kafedra                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => reqDataChange('kafedra',val)}
-                selectOptions={adminkafedra}
-              />
-            </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Nomi
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('name', val) }} defaultValue={adminData?.name} />
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Semestr
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('semester', val) }} type={"number"} defaultValue={returndata?.semester} />
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Leksiya
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('lecture', val) }} type={"number"} defaultValue={returndata?.lecture} />
+                </ModalSelectWrapper>
 
-            <ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Amaliyot
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('practice', val) }} type={"number"} defaultValue={returndata?.practice} />
+                </ModalSelectWrapper>
+
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Labaratoriya
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('lab', val) }} type={"number"} defaultValue={returndata?.lab} />
+                </ModalSelectWrapper>
+
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Mustaqil ta'lim
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('independently', val) }} type={"number"} defaultValue={returndata?.independently} />
+                </ModalSelectWrapper>
+
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Kredit
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('credit', val) }} type={"number"} defaultValue={returndata?.credit} />
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      m: "20px 0 10px 0"
+                    }}
+                  >
+                    Kod
+                  </Typography>
+                  <CustomizedInputSimple callback_func={(val) => { reqDataChange('code', val) }} defaultValue={returndata?.code} />
+                </ModalSelectWrapper>
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Kafedra                        </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => reqDataChange('kafedra', val)}
+                    selectedOptionP={returndata?.kafedra}
+                    selectOptions={adminkafedra}
+                  />
+                </ModalSelectWrapper>
+
+                <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -310,13 +348,14 @@ export default function Edit() {
                     mb: "10px"
                   }}
                 >
-                  Yo'nalish                        </Typography>
+                  Fan tanlov                        </Typography>
                 <AllSelectFullWidth
-                  chageValueFunction={val => reqDataChange('direction', val)}
-                  selectOptions={DirectionList}
+                  chageValueFunction={val => reqDataChange('discipline_type', val)}
+                  selectedOptionP={returndata?.discipline_type}
+                  selectOptions={Selection}
                 />
               </ModalSelectWrapper>
-            <ModalSelectWrapper>
+                {/* <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"
                 variant="h6"
@@ -333,44 +372,46 @@ export default function Edit() {
                 chageValueFunction={val => reqDataChange('degree', val)}
                 selectOptions={admindegree}
               />
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  color: "#000",
-                  mb: "10px"
-                }}
-              >
-                Ta’lim turi                        </Typography>
-              <AllSelectFullWidth
-                chageValueFunction={val => reqDataChange('study_type',val)}
-                selectOptions={adminstudytype}
-              />
-            </ModalSelectWrapper>
-          <WrapperButtons>
-          <Button
-            sx={{ width: "50%", textTransform: "none" }}
-            variant="outlined"
-          >
-            Bekor qilish
-          </Button>
-          <Button
-            sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-            variant="contained"
-            onClick={updatescienceF}
-          >
-            Saqlash
-          </Button>
-          </WrapperButtons>
-          </HeaderWrapper>
-        </div>
-        
-      </Paper>
+            </ModalSelectWrapper> */}
+                <ModalSelectWrapper>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "#000",
+                      mb: "10px"
+                    }}
+                  >
+                    Ta’lim turi                        </Typography>
+                  <AllSelectFullWidth
+                    chageValueFunction={val => reqDataChange('study_type', val)}
+                    selectedOptionP={returndata?.study_type}
+                    selectOptions={adminstudytype}
+                  />
+                </ModalSelectWrapper>
+                <WrapperButtons>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none" }}
+                    variant="outlined"
+                  >
+                    Bekor qilish
+                  </Button>
+                  <Button
+                    sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                    variant="contained"
+                    onClick={updatescienceF}
+                  >
+                    Saqlash
+                  </Button>
+                </WrapperButtons>
+              </HeaderWrapper>
+            }
+          </div>
+
+        </Paper>
       </BoxTableCard>
     </>
   )

@@ -7,14 +7,15 @@ import { MuiFileInput } from 'mui-file-input'
 import AllSelect from '../AllSelect'
 import CustomizedInput from '../CustomizedInput'
 import PageSelector from '../PageSelector'
-import { getLawyerStudent, postLawyerStudent } from './requests'
-import { academic_group_short, directions, host, lawyer_studentdocument } from '../../utils/API_urls'
+import { getLawyerStudent, getLawyerStudentExcel, postLawyerStudent } from './requests'
+import { academic_group_short, additional_ie_archive, directions, host, lawyer_studentdocument } from '../../utils/API_urls'
 import { getDirections } from '../AdminList/Directions/request'
 import study_type from '../../dictionary/study_type'
 import AutocompleteJames from '../AutocompleteJames'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import { InputsWrapper } from '../CourseManagement/styles'
 import { getAcademicGroup } from '../AdminList/Streams/request'
+import { AttendSearchButton } from '../Attend/styles'
 
 export default function LawyerAllStudents() {
 
@@ -22,9 +23,10 @@ export default function LawyerAllStudents() {
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [page, setPage] = useState(1)
-  const [Course_number, setCourse_number] = useState(1)
+  const [Course_number, setCourse_number] = useState('&')
   const [SearchText, setSearchText] = useState('')
   const [allStudent, setallStudent] = useState([])
+  const [allStudent2, setallStudent2] = useState([])
   const [Directions, setDirections] = useState([])
   // const [studentDocument, setstudentDocument] = useState([])
   // const handleOpen = () => setOpen(true)
@@ -36,8 +38,11 @@ export default function LawyerAllStudents() {
   const [GroupList, setGroupList] = useState([])
   const [DirectionID, setDirectionID] = useState('&')
   const [GroupID, setGroupID] = useState('')
-  const [StudyTypeSelect, setStudyTypeSelect] = useState('')
+  const [StudyTypeSelect, setStudyTypeSelect] = useState('&')
   const [Status, setStatus] = useState(false)
+  const [FilterDocuments, setFilterDocuments] = useState('all')
+  const [Excel, setExcel] = useState(null)
+  const [vedemostopen, setvedemostopen] = useState(false);
 
 
   const StudyTipeList = useMemo(() => {
@@ -52,6 +57,10 @@ export default function LawyerAllStudents() {
 
   const CourseNumber = useMemo(() => {
     return [
+      {
+        name: 'Kurslar',
+        value: "&",
+      },
       {
         name: '1-kurs',
         value: 1,
@@ -71,21 +80,42 @@ export default function LawyerAllStudents() {
     ]
   }, [])
 
+  const FilterDoc = useMemo(() => {
+    return [
+      {
+        name: 'Umumiy Hujjatlar',
+        value: "all",
+      },
+      {
+        name: 'Hujjati to\'liq',
+        value: "green",
+      },
+      {
+        name: 'Hujjati to\'liq emas',
+        value: "yellow",
+      },
+      {
+        name: 'Hujjati yo\'q',
+        value: "red",
+      },
+    ]
+  }, [])
+
 
 
 
   useEffect(() => {
-    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&academic_group=${GroupID}&study_type=${StudyTypeSelect}&course_number=${Course_number}`, (response) => {
+    getLawyerStudent(`${lawyer_studentdocument}?page_size=${pageSize}&page=${page}&search=${SearchText}&specialty=${DirectionID}&study_type=${StudyTypeSelect}&course_number=${Course_number}&color=${FilterDocuments}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setallStudent(response.data.results)
-
     }, (error) => {
       console.log(error)
     })
 
 
-  }, [pageSize, page, SearchText, DirectionID, GroupID, StudyTypeSelect, Course_number, Status])
+
+  }, [pageSize, page, SearchText, DirectionID, StudyTypeSelect, Course_number, Status, FilterDocuments])
 
   useEffect(() => {
 
@@ -110,6 +140,25 @@ export default function LawyerAllStudents() {
   }, []);
 
 
+
+
+
+
+
+
+
+
+  const OpenVedemost = () => {
+    if (!Excel) {
+      getLawyerStudentExcel(`${additional_ie_archive}?color=${FilterDocuments}&specialty=${DirectionID}&course_number=${Course_number}&study_type=${StudyTypeSelect}`, (response) => {
+        setExcel(response.data.url)
+      }, (error) => {
+        console.log(error);
+        setExcel(null)
+      })
+    }
+    setvedemostopen(true)
+  }
 
   // useEffect(() => {
   //   getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}`, (response) => {
@@ -144,8 +193,6 @@ export default function LawyerAllStudents() {
   // }, [DirectionID,]);
 
 
-
-
   return (
     <ContentWrapper>
       <Paper
@@ -157,11 +204,33 @@ export default function LawyerAllStudents() {
         }}
       >
         <BoxHeader>
-
           <PageSelector chageValueFunction={(val) => {
             setPageSize(val)
           }} />
-          <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+          <AttendSearchButton>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "90px",
+                  textTransform: "capitalize",
+                  boxShadow: "none",
+                  padding: "12px",
+                  borderRadius: "10px",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  lineHeight: "17px"
+                }}
+                onClick={OpenVedemost}
+                startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-download" viewBox="0 0 16 16">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                  <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                </svg>
+                }
+              >
+                Excel
+              </Button>
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+          </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
@@ -176,6 +245,10 @@ export default function LawyerAllStudents() {
               selectedOptionP={StudyTipeList[0].value}
               selectOptions={StudyTipeList}
             />
+            <AllSelect
+              chageValueFunction={val => { setFilterDocuments(val); }}
+              selectOptions={FilterDoc}
+            />
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
@@ -189,6 +262,10 @@ export default function LawyerAllStudents() {
                   />
                   <TableTHHeader
                     text="Student"
+                    iconc={null}
+                  />
+                  <TableTHHeader
+                    text="Telefon raqami"
                     iconc={null}
                   />
                   <TableTHHeader
@@ -211,11 +288,6 @@ export default function LawyerAllStudents() {
                     iconc={null}
                   />
 
-                  <TableTHHeader
-                    text=''
-                    iconc={null}
-                  />
-
                 </tr>
 
               </thead>
@@ -223,9 +295,13 @@ export default function LawyerAllStudents() {
                 {
                   allStudent.length > 0 ? allStudent.map((elem) => {
                     return (
-                      <LawyerStudent elem={elem} callback_func={(val) => setStatus(val)} status={Status} />
+                      <LawyerStudent elem={elem} key={index} callback_func={(val) => setStatus(val)} status={Status} />
                     )
                   })
+                    :
+                    <tr>
+                      <th align='center' colSpan={12}>Ma'lumot yo'q</th>
+                    </tr>
                     :
                     <tr>
                       <th align='center' colSpan={12}>Ma'lumot yo'q</th>
@@ -240,6 +316,69 @@ export default function LawyerAllStudents() {
           <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
       </Paper>
+
+      <Modal
+        keepMounted
+        open={vedemostopen}
+        onClose={(_) => setvedemostopen(false)}
+        aria-labelledby="keep-mounted-modal-title"
+        aria-describedby="keep-mounted-modal-description"
+      >
+        <ModalBox>
+          <div style={{ marginBottom: '20px' }}>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000",
+                }}
+              >
+                Excel
+              </Typography>
+              <span
+                onClick={(_) => setvedemostopen(false)}
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                </svg>
+              </span>
+
+            </ModalHeader>
+          </div>
+
+          {
+            Excel ?
+              <a href={Excel} target='_blank'>
+                <ModalButtons>
+                  <Button
+                    sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "10px" }}
+                    variant="contained"
+                  >
+                    <svg style={{ margin: "0 1rem" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                    </svg> <h3>Yuklab olish</h3>
+                  </Button>
+                </ModalButtons>
+              </a> :
+              <ModalButtons>
+                <Button
+                  disabled
+                  sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "10px" }}
+                  variant="contained"
+                >
+                  <svg style={{ margin: "0 1rem" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                  </svg> <h3>Yuklab olish</h3>
+                </Button>
+              </ModalButtons>
+          }
+        </ModalBox>
+
+      </Modal>
     </ContentWrapper>
   )
 }
@@ -253,7 +392,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   const [file2, setFile2] = useState(null)
   const [file3, setFile3] = useState(null)
 
-  const [CheckBox, setCheckBox] = useState(null)
+  const [CheckBox0, setCheckBox0] = useState(null)
   const [CheckBox1, setCheckBox1] = useState(null)
   const [CheckBox2, setCheckBox2] = useState(null)
   const [CheckBox3, setCheckBox3] = useState(null)
@@ -264,6 +403,60 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   const [studentDocument, setstudentDocument] = useState([])
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  // useEffect(() => {
+  //   console.log("modal false ishladi");
+  //     setCheckBox0(null)
+  //     setCheckBox1(null)
+  //     setCheckBox2(null)
+  //     setCheckBox3(null)
+  //     setCheckBoxAll(null)
+  // }, [open])
+
+  useEffect(() => {
+    if (elem.submission_count == 0) {
+      elem.document = [
+        {
+          type: "contract",
+          is_submission: false,
+        },
+        {
+          type: "diplom",
+          is_submission: false,
+        },
+        {
+          type: "passport",
+          is_submission: false,
+        },
+        {
+          type: "photo",
+          is_submission: false,
+        },
+        {
+          type: "all",
+          is_submission: false,
+        }
+      ]
+    }
+
+    if (elem.submission_count > 0 && elem.submission_count < 4) {
+      elem.document.push({
+        type: "all",
+        is_submission: false,
+      })
+    }
+
+
+    if (elem.submission_count == 4) {
+      elem.document.push({
+        type: "all",
+        is_submission: true
+      })
+    }
+
+    setstudentDocument(elem.document)
+  }, [elem])
+
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -279,8 +472,25 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   // const setFileHandler3 = (newValue, info) => {
   //   setFile3(newValue)
   // }
+  // const setFileHandler = (newValue, info) => {
+  //   setFile(newValue)
+  // }
+  // const setFileHandler1 = (newValue, info) => {
+  //   setFile1(newValue)
+  // }
+  // const setFileHandler2 = (newValue, info) => {
+  //   setFile2(newValue)
+  // }
+  // const setFileHandler3 = (newValue, info) => {
+  //   setFile3(newValue)
+  // }
 
   const openModalBoxStudent = (element) => {
+    // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
+    //   console.log(response.data.document);
+    // }, (error) => {
+    //   console.log(error)
+    // })
     // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
     //   console.log(response.data.document);
     // }, (error) => {
@@ -369,7 +579,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // if (array.length > 0) {
     //   formData.append("document", array);
     if (studentDocument.length > 0) {
-      setCheckBox(null)
+      setCheckBox0(null)
       setCheckBox1(null)
       setCheckBox2(null)
       setCheckBox3(null)
@@ -396,12 +606,27 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     console.log(type, status, index);
     
     let array = [...studentDocument]
-    console.log(array);
-    if (status) {
-      array[index].is_submission = status
+
+
+    if (type == 'all') {
+      for (let i = 0; i < array.length; i++) {
+        array[i].is_submission = status
+      }
     } else {
-      array[index].is_submission = status
+      for (let i = 0; i < array.length; i++) {
+        array[index].is_submission = status
+        if (!array[i].is_submission) {
+          array[array.length - 1].is_submission = false
+        } else if (array[0].is_submission && array[1].is_submission && array[2].is_submission && array[3].is_submission) {
+          array[array.length - 1].is_submission = true
+        }
+      }
     }
+
+    console.log(array);
+
+    handleClose()
+    handleOpen()
     setstudentDocument(array)
     // if (type == "diplom") {
     //   array.push({
@@ -428,12 +653,13 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     <tr key={elem.id}>
       <th>{elem.id}</th>
       <th>{elem.full_name}</th>
+      <th>{elem.phone_number} {elem.phone_number2}</th>
       <th>{elem.specialty_name}</th>
       <th>{elem.academic_group_name}</th>
       <th>{elem.submission_count}/4</th>
       <th>
         {
-          elem.submission_count == 0 ? <Button
+          elem.submission_count == 0 && <Button
             variant="contained"
             sx={{
               marginLeft: '15px',
@@ -461,7 +687,10 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
             }
           >
             Docs
-          </Button> : <Button
+          </Button>
+        }
+        {
+          elem.submission_count == 4 && <Button
             variant="contained"
             sx={{
               marginLeft: '15px',
@@ -469,7 +698,9 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
               textTransform: "capitalize",
               boxShadow: "none",
               padding: "10px 12px",
+
             }}
+
             onClick={(_) => { openModalBoxStudent(elem) }}
             startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_160_5797)">
@@ -478,6 +709,37 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
               <defs>
                 <clipPath id="clip0_160_5797">
                   <rect width="20" height="20" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+            }
+          >
+            Docs
+          </Button>
+        }
+        {
+          elem.submission_count > 0 && elem.submission_count < 4 && <Button
+            variant="contained"
+            sx={{
+              marginLeft: '15px',
+              borderRadius: '10px',
+              textTransform: "capitalize",
+              boxShadow: "none",
+              padding: "10px 12px",
+              backgroundColor: "YellowButton.main",
+              "&:hover": {
+                backgroundColor: "YellowButton.main",
+              },
+              color: "black"
+            }}
+            onClick={(_) => { openModalBoxStudent(elem) }}
+            startIcon={<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_160_5797)">
+                <path d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17317C0.00433286 8.00043 -0.193701 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8079C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C19.9971 7.34872 18.9426 4.80684 17.0679 2.9321C15.1932 1.05736 12.6513 0.00286757 10 0ZM10 18.3333C8.35183 18.3333 6.74066 17.8446 5.37025 16.9289C3.99984 16.0132 2.93174 14.7117 2.30101 13.189C1.67028 11.6663 1.50525 9.99076 1.82679 8.37425C2.14834 6.75774 2.94201 5.27288 4.10745 4.10744C5.27289 2.94201 6.75774 2.14833 8.37425 1.82679C9.99076 1.50525 11.6663 1.67027 13.189 2.301C14.7118 2.93173 16.0132 3.99984 16.9289 5.37025C17.8446 6.74066 18.3333 8.35182 18.3333 10C18.3309 12.2094 17.4522 14.3276 15.8899 15.8899C14.3276 17.4522 12.2094 18.3309 10 18.3333ZM14.1667 10C14.1667 10.221 14.0789 10.433 13.9226 10.5893C13.7663 10.7455 13.5544 10.8333 13.3333 10.8333H10.8333V13.3333C10.8333 13.5543 10.7455 13.7663 10.5893 13.9226C10.433 14.0789 10.221 14.1667 10 14.1667C9.77899 14.1667 9.56703 14.0789 9.41075 13.9226C9.25447 13.7663 9.16667 13.5543 9.16667 13.3333V10.8333H6.66667C6.44566 10.8333 6.2337 10.7455 6.07742 10.5893C5.92113 10.433 5.83334 10.221 5.83334 10C5.83334 9.77899 5.92113 9.56703 6.07742 9.41074C6.2337 9.25447 6.44566 9.16667 6.66667 9.16667H9.16667V6.66667C9.16667 6.44565 9.25447 6.23369 9.41075 6.07741C9.56703 5.92113 9.77899 5.83333 10 5.83333C10.221 5.83333 10.433 5.92113 10.5893 6.07741C10.7455 6.23369 10.8333 6.44565 10.8333 6.66667V9.16667H13.3333C13.5544 9.16667 13.7663 9.25447 13.9226 9.41074C14.0789 9.56703 14.1667 9.77899 14.1667 10Z" fill="black" />
+              </g>
+              <defs>
+                <clipPath id="clip0_160_5797">
+                  <rect width="20" height="20" fill="black" />
                 </clipPath>
               </defs>
             </svg>
@@ -658,7 +920,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                           />
                         </th>
                       </tr> */}
-                      {/* <tr>
+                    {/* <tr>
                         {
                           studentDocument ?
                             studentDocument.map((elem, index) => {
@@ -740,8 +1002,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
             </ModalBoxInfo>
           </form>
 
-        </Modal>
-      </th>
+      </Modal>
     </tr>
   )
 }

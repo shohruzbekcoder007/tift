@@ -332,7 +332,7 @@ export default function EditEmployeess() {
             >
               Telefon raqami
             </Typography>
-            <CustomizedInputSimple defaultValue={newData.phone_number} type={"number"} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="" />
+            <CustomizedInputSimple defaultValue={newData.phone_number} callback_func={(val) => { reqDataChange("phone_number", val) }} placeholder="" />
           </WrapperInputsCard>
           <WrapperInputsCard>
             <Typography

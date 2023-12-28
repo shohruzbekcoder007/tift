@@ -750,6 +750,11 @@ const SimpleGroups = ({ elem, callback_func, Status, YearList, Teachers, lang, p
               Talabalar
             </IconButton>
           </Link>
+          <Link to={'personalplan'} state={{id: elem.direction, group: elem.id}}>
+            <IconButton style={{ margin: "10px 0 0 20px", width: '30%' }}>
+              Shaxsiy reja
+            </IconButton>
+          </Link>
           {/* </div> */}
         </th>
         }

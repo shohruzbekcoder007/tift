@@ -55,6 +55,7 @@ export default memo(function CustomizedInputSimple({ label, callback_func, place
                 variant="outlined"
                 id="custom-css-outlined-input"
                 value={value}
+                maxRows={2}
                 type={type}
                 helperText={helperText}
                 onChange={event => { setValue(event.target.value); callback_func(event.target.value) }}

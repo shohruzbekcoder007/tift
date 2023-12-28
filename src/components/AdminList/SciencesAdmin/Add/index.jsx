@@ -1,4 +1,4 @@
-import { Button, Checkbox, Pagination, Paper, Typography } from '@mui/material'
+import { Button, Checkbox, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxTableCard, ClassScheduleTableWrapper, HeaderWrapper, HeaderWrapperH4, HeaderWrapperP, WrapperBody, WrapperBottom, BuildingModalLang, BuildingModalLangText } from './styles'
 import { BoxFooterText, BoxHeader, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../../global_styles/styles'
@@ -10,11 +10,27 @@ import { directions, kafedra, science } from '../../../../utils/API_urls'
 import { createscience, getDirection } from './requests'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+const anchorOrigin1 = {
+  vertical: 'bottom',
+  horizontal: "right"
+}
+
+const anchorOrigin2 = {
+  vertical: 'bottom',
+  horizontal: "left"
+}
 
 export default function Add() {
 
   let navigate = useNavigate()
-  const {state} = useLocation()
+  const { state } = useLocation()
+
   const [adminData, setadminData] = useState({
     name: null,
     semester: null,
@@ -24,23 +40,27 @@ export default function Add() {
     credit: 0,
     code: null,
     kafedra: null,
-    degree: null,
+    degree: state?.degree,
     study_type: null,
     independently: 0,
-    academic_year: state?.year
+    academic_year: state?.year,
+    direction: state?.id
   })
   const user = useSelector((state) => state.user);
+  const [openAlert, setOpenAlert] = useState(false)
+  const [changed, serChanged] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+  const handleCloseAlert = () => setOpenAlert(false);
 
 
-
- const [CreditCost, setCreditCost] = useState(0);
+  const [CreditCost, setCreditCost] = useState(0);
   const reqDataChange = (keyname, value) => {
     setadminData(prev => {
-      prev.credit = Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently))/ 30)
+      prev.credit = Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently)) / 30)
       prev[keyname] = value
       return prev;
     })
-    setCreditCost(Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently))/ 30))
+    setCreditCost(Math.round(((+adminData.lecture) + (+adminData.practice) + (+adminData.lab) + (+adminData.independently)) / 30))
   }
 
 
@@ -48,11 +68,18 @@ export default function Add() {
     console.log(adminData)
     createscience(science, adminData, (response) => {
       if (response.status == 201) {
+        setOpenAlert(true)
+        serChanged(true)
+        setAlertMessage("Muvofaqqiyatli qo'shildi")
         navigate(-1)
       } else {
 
       }
     }, (error) => {
+        setOpenAlert(true)
+        serChanged(false)
+        console.log();
+        setAlertMessage(error.message)
       console.log(error)
     })
   }
@@ -62,7 +89,7 @@ export default function Add() {
 
 
   useEffect(() => {
-    reqDataChange('degree', admindegree[0]['value'])
+    // reqDataChange('degree', admindegree[0]['value'])
     reqDataChange('study_type', adminstudytype[0]['value'])
     getAdminKafedra(`${kafedra}?page_size=1000`, (response) => {
       reqDataChange('kafedra', response.data.results[0]['id'])
@@ -76,31 +103,31 @@ export default function Add() {
       console.log(error)
     })
 
-    getDirection(`${directions}`, (response) => {
-      reqDataChange('direction', response.data.results[0]['id'])
-      setDirectionList(response.data.results.map(elem => {
-        return {
-          name: elem.name,
-          value: elem.id
-        }
-      }))
-    }, (error) => {
-      console.log(error)
-    })
+    // getDirection(`${directions}`, (response) => {
+    //   reqDataChange('direction', response.data.results[0]['id'])
+    //   setDirectionList(response.data.results.map(elem => {
+    //     return {
+    //       name: elem.name,
+    //       value: elem.id
+    //     }
+    //   }))
+    // }, (error) => {
+    //   console.log(error)
+    // })
   }, [])
 
-  const admindegree = useMemo(() => {
-    return [
-      {
-        name: "Bakalavr",
-        value: 'bachelor',
-      },
-      {
-        name: "Magistr",
-        value: 'master',
-      },
-    ]
-  }, [])
+  // const admindegree = useMemo(() => {
+  //   return [
+  //     {
+  //       name: "Bakalavr",
+  //       value: 'bachelor',
+  //     },
+  //     {
+  //       name: "Magistr",
+  //       value: 'master',
+  //     },
+  //   ]
+  // }, [])
 
   const Selection = useMemo(() => {
     return [
@@ -294,7 +321,7 @@ export default function Add() {
                 >
                   Kod
                 </Typography>
-                
+
                 <CustomizedInputSimple callback_func={(val) => { reqDataChange('code', val) }} placeholder="" />
               </ModalSelectWrapper>
               <ModalSelectWrapper>
@@ -316,7 +343,7 @@ export default function Add() {
                 />
               </ModalSelectWrapper>
 
-              <ModalSelectWrapper>
+              {/* <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -333,9 +360,9 @@ export default function Add() {
                   chageValueFunction={val => reqDataChange('direction', val)}
                   selectOptions={DirectionList}
                 />
-              </ModalSelectWrapper>
+              </ModalSelectWrapper> */}
 
-              <ModalSelectWrapper>
+              {/* <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
                   variant="h6"
@@ -352,7 +379,7 @@ export default function Add() {
                   chageValueFunction={val => reqDataChange('degree', val)}
                   selectOptions={admindegree}
                 />
-              </ModalSelectWrapper>
+              </ModalSelectWrapper> */}
               <ModalSelectWrapper>
                 <Typography
                   id="keep-mounted-modal-title"
@@ -437,6 +464,11 @@ export default function Add() {
           </div>
 
         </Paper>
+        <Snackbar open={openAlert} anchorOrigin={changed ? anchorOrigin1 : anchorOrigin2} autoHideDuration={6000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity={changed ? "success" : "error"} sx={{ width: '100%' }}>
+            {alertMessage}
+          </Alert>
+        </Snackbar>
       </BoxTableCard>
     </>
   )
