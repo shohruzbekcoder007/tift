@@ -498,14 +498,14 @@ const OneStudent = ({ student, setDeleted }) => {
     let found = false;
     SendData.forEach(item => {
       if (item.id === student_info.id) {
-        item.grade = parseInt(value)  
+        item.grade = parseFloat(value)  
         found = true;
       }
     });
     if (!found) {
       let obj ={
         id: student_info.id,
-        grade: student_info.grade ? parseInt(student_info.grade) : parseInt(value),
+        grade: student_info.grade ? parseFloat(student_info.grade) : parseFloat(value),
       }
       if (student_info.reteacher) {
         obj.teacher = student_info.reteacher
@@ -528,7 +528,7 @@ const OneStudent = ({ student, setDeleted }) => {
         teacher: student_info.reteacher ? student_info.reteacher : value,
       }
       if (student_info.grade) {
-        obj.grade = parseInt(student_info.grade)
+        obj.grade = parseFloat(student_info.grade)
       }
       SendData.push(obj);
     }
@@ -663,7 +663,7 @@ const OneStudent = ({ student, setDeleted }) => {
                               />
                             </th>
                             <th>
-                              <CustomizedInputSimple defaultValue={parseInt(item.grade)} width={"200px"} callback_func={(val) => { EditGrade(item,val) }}  type={'number'} placeholder="" />
+                              <CustomizedInputSimple defaultValue={parseFloat(item.grade)} width={"200px"} callback_func={(val) => { EditGrade(item,val) }}  type={'number'} placeholder="" />
                             </th>
                             <th>{item.max_grade}</th>
                           </tr>
