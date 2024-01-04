@@ -302,6 +302,7 @@ export default function LawyerAllStudents() {
                     <tr>
                       <th align='center' colSpan={12}>Ma'lumot yo'q</th>
                     </tr>
+                   
                 }
               </tbody>
             </table>
@@ -396,7 +397,6 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
 
 
-
   const [studentDocument, setstudentDocument] = useState([])
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -469,6 +469,18 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
   // const setFileHandler3 = (newValue, info) => {
   //   setFile3(newValue)
   // }
+  // const setFileHandler = (newValue, info) => {
+  //   setFile(newValue)
+  // }
+  // const setFileHandler1 = (newValue, info) => {
+  //   setFile1(newValue)
+  // }
+  // const setFileHandler2 = (newValue, info) => {
+  //   setFile2(newValue)
+  // }
+  // const setFileHandler3 = (newValue, info) => {
+  //   setFile3(newValue)
+  // }
 
   const openModalBoxStudent = (element) => {
     // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
@@ -476,20 +488,30 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // }, (error) => {
     //   console.log(error)
     // })
+    // getLawyerStudent(`${lawyer_studentdocument}${elem.id}/`, (response) => {
+    //   console.log(response.data.document);
+    // }, (error) => {
+    //   console.log(error)
+    // })
 
-
-    // if (element.document.length < 5) {
-    //   }else {
-    //     element.document.push({
-    //       type: "all",
-    //       is_submission: false
-    //     })
-    //   }
-
-    // setstudentDocument(element.document)
+    console.log(element);
+    if (element.document.length > 0 && element.document.length < 5) {
+      if (element.document[0].is_submission == true && element.document[1].is_submission == true && element.document[2].is_submission == true && element.document[3].is_submission == true){
+         element.document.push({
+           type: "Hammasi",
+           is_submission: true
+         })
+      }else {
+         element.document.push({
+          type: "Hammasi",
+          is_submission: false
+        })
+      }
+    }
+    setstudentDocument(element.document)
+    console.log(element.document);
     handleOpen()
   }
-  // console.log(CheckBox);
 
   const SubmintGradeTasks = (event) => {
     event.preventDefault();
@@ -497,6 +519,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
     // formData.append("student", elem.id);
 
     let array = []
+    
     if (CheckBox0) {
       console.log("ishladi");
       array.push({
@@ -557,6 +580,8 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
       setCheckBox1(null)
       setCheckBox2(null)
       setCheckBox3(null)
+      setCheckBoxAll(null)
+      
       array = studentDocument
     }
     // }
@@ -576,7 +601,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
 
   const GoEdit = (type, status, index) => {
     console.log(type, status, index);
-
+    
     let array = [...studentDocument]
 
 
@@ -722,121 +747,138 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
         }
 
       </th>
+        <Modal
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <form style={{ width: "100%" }} onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='application/json'>
+            <ModalBoxInfo>
+              <div style={{ marginBottom: '20px' }}>
+                <ModalHeader>
+                  <Typography
+                    id="keep-mounted-modal-title"
+                    variant="h6"
+                    component="h4"
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: 600,
+                      color: "#000",
+                    }}
+                  >
+                    Student dokumentlari
+                  </Typography>
+                  <span
+                    onClick={handleClose}
+                  >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                    </svg>
+                  </span>
+                </ModalHeader>
+              </div>
+              <ModalSelectWrapper>
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+                <ClassScheduleTableWrapper>
+                  <table>
+                    <thead>
+                      <tr>
+                        {
+                          studentDocument.length > 0 ?
+                            studentDocument.map((elem, index) => {
+                              return (
+                                <TableTHHeader
+                                  text={elem.type}
+                                  iconc={null}
+                                />
+                              )
+                            }) :
+                            <>
+                              <TableTHHeader
+                                text="contract"
+                                iconc={null}
+                              />
+                              <TableTHHeader
+                                text="diplom"
+                                iconc={null}
+                              />
+                              <TableTHHeader
+                                text="passport"
+                                iconc={null}
+                              />
+                              <TableTHHeader
+                                text="photo"
+                                iconc={null}
+                              />
+                              <TableTHHeader
+                                text="Hammasi"
+                                iconc={null}
+                              />
+                            </>
 
-      <Modal
-        keepMounted
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="keep-mounted-modal-title"
-        aria-describedby="keep-mounted-modal-description"
-      >
-        <form style={{ width: "100%" }} onSubmit={SubmintGradeTasks} method="HTTP_METHOD" encType='application/json'>
-          <ModalBoxInfo>
-            <div style={{ marginBottom: '20px' }}>
-              <ModalHeader>
-                <Typography
-                  id="keep-mounted-modal-title"
-                  variant="h6"
-                  component="h4"
-                  sx={{
-                    fontSize: "20px",
-                    fontWeight: 600,
-                    color: "#000",
-                  }}
-                >
-                  Student dokumentlari
-                </Typography>
-                <span
-                  onClick={handleClose}
-                >
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                  </svg>
-                </span>
-              </ModalHeader>
-            </div>
-            <ModalSelectWrapper>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-              <ClassScheduleTableWrapper>
-                <table>
-                  <thead>
-                    <tr>
-                      <TableTHHeader
-                        text="contract"
-                        iconc={null}
-                      />
-                      <TableTHHeader
-                        text="diplom"
-                        iconc={null}
-                      />
-                      <TableTHHeader
-                        text="passport"
-                        iconc={null}
-                      />
-                      <TableTHHeader
-                        text="photo"
-                        iconc={null}
-                      />
-                      <TableTHHeader
-                        text="To'liq"
-                        iconc={null}
-                      />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      {
-                        studentDocument.length > 0 ?
-                          studentDocument.map((elems, index) => {
-                            return (
-                              elems.is_submission == true ?
-                                <th key={index}>
-                                  <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                    {
-                                      <Checkbox {...label} onChange={(event) => GoEdit(elems.type, false, index)} checked={true} />
-                                    }
-                                  </TeacherSciencesButtonBox>
-                                </th> :
-                                <th key={index}>
-                                  <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                    {
-                                      <Checkbox {...label} onChange={(event) => GoEdit(elems.type, true, index)} checked={false} />
-                                    }
-                                  </TeacherSciencesButtonBox>
-                                </th>
-                            )
-                          }) :
-                          <>
-                            {/* <th>
-                              <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBox0(event.target.value)} />
-                              </TeacherSciencesButtonBox>
-                            </th>
-                            <th>
-                              <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBox1(event.target.value)} />
-                              </TeacherSciencesButtonBox>
-                            </th>
-                            <th>
-                              <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBox2(event.target.value)} />
-                              </TeacherSciencesButtonBox>
-                            </th>
-                            <th>
-                              <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBox3(event.target.value)} />
-                              </TeacherSciencesButtonBox>
-                            </th>
-                            <th>
-                              <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
-                              </TeacherSciencesButtonBox>
-                            </th> */}
-                          </>
-                      }
-                    </tr>
-                    {/* <tr>
+                        }
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {
+                          studentDocument.length > 0 ?
+                            studentDocument.map((elem, index) => {
+                              return (
+                                elem.is_submission ?
+                                  <th key={index}>
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      {
+                                        <Checkbox {...label} onChange={(_) => GoEdit(elem.type, false, index)} checked={true} />
+                                      }
+                                    </TeacherSciencesButtonBox>
+                                  </th> :
+                                  <th key={index}>
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      {
+                                        <Checkbox {...label} onChange={(_) => GoEdit(elem.type, true, index)} />
+                                      }
+                                    </TeacherSciencesButtonBox>
+                                  </th> && <th>
+                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                      <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
+                                    </TeacherSciencesButtonBox>
+                                  </th>
+                              )
+                            }) :
+                            <>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox0(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox1(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox2(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBox3(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                              <th>
+                                <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
+                                  <Checkbox {...label} onChange={(event) => setCheckBoxAll(event.target.value)} />
+                                </TeacherSciencesButtonBox>
+                              </th>
+                            </>
+                        }
+                      </tr>
+                      {/* <tr>
                         <th>
                           <MuiFileInput
                             placeholder="Fayl"
@@ -930,30 +972,31 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                         }
                       </tr> */}
 
-                  </tbody>
-                </table>
-              </ClassScheduleTableWrapper>
-            </ModalSelectWrapper>
-            <ModalSelectWrapper>
-            </ModalSelectWrapper>
-            <ModalButtons>
-              <Button
-                sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
-                variant="outlined"
-                onClick={handleClose}
-              >
-                Bekor qilish
-              </Button>
-              <Button
-                sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-                variant="contained"
-                type="submit"
-              >
-                Saqlash
-              </Button>
-            </ModalButtons>
-          </ModalBoxInfo>
-        </form>
+                    </tbody>
+                  </table>
+
+                </ClassScheduleTableWrapper>
+              </ModalSelectWrapper>
+              <ModalSelectWrapper>
+              </ModalSelectWrapper>
+              <ModalButtons>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px" }}
+                  variant="outlined"
+                  onClick={handleClose}
+                >
+                  Bekor qilish
+                </Button>
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+                >
+                  Saqlash
+                </Button>
+              </ModalButtons>
+            </ModalBoxInfo>
+          </form>
 
       </Modal>
     </tr>
