@@ -398,16 +398,38 @@ function App() {
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="addtest" element={<AddTest />} />
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<DekanStudent />} />
-                    <Route path='appropriation' element={<Appropriation />} />
-                    <Route path='students' element={<DekanStudents />} />
+                    <Route path='information' element={<InformationStudent />} />
                   </Route>
-                  <Route path="groups" element={<StudentSciences />} >
-                    <Route index element={<DekanGroups />} />
-                    <Route path='appropriation' element={<Appropriation />} />
-                    <Route path='students' element={<DekanStudents />} />
+
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                    <Route path="vedomost" element={<Vedomost />} />
                   </Route>
+                  <Route path='Call' element={<StudentSciences />}>
+                    <Route index element={<CallStudents />} />
+                    <Route path='see' element={<SeeStudnetsInfoInvation />} />
+                  </Route>
+                  {/* <Route index element={<Students />} /> */}
+                  {/* <Route path="students" element={<StudentSciences />} >
+                    <Route path='information' element={<InformationStudent />} />
+                    <Route path='add' element={<AddStudents />} />
+                    <Route path='edit' element={<EditStudents />} />
+                  </Route> */}
+
+                  <Route path='group' element={<StudentSciences />}>
+                    <Route index element={<Group />} />
+                    <Route path='students' element={<GroupStudents />} />
+                    <Route path='students/edit' element={<EditStudents />} />
+                  </Route>
+                  <Route path='schedule' element={<ScheduleStudy />} />
+
+                  <Route path="reference" element={<Reference />} />
+
+
                   <Route path='statistika' element={<StudentSciences />}>
                     <Route index element={<DekanStatistic />} />
                     <Route path='kontingent' element={<Kontingent />} />

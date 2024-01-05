@@ -24,6 +24,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Link, useLocation } from 'react-router-dom'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
+import { useSelector } from 'react-redux'
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -69,8 +70,9 @@ export default function GroupStudents() {
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
+  const user = useSelector((state) => state.user);
 
-  const {state} = useLocation()
+  const { state } = useLocation()
 
   useEffect(() => {
     setAcademikGroup([])
@@ -236,7 +238,7 @@ export default function GroupStudents() {
                     </svg>
                     }
                   />
-                  
+
                   <TableTHHeader
                     text={'Guruh'}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -267,7 +269,7 @@ export default function GroupStudents() {
                     </svg>
                     }
                   />
-                  
+
                   <TableTHHeader
                     text={"Ta'lim shakli"}
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,7 +315,7 @@ export default function GroupStudents() {
                     </svg>
                     }
                   />
-                  
+
                   <th></th>
                 </tr>
               </thead>
@@ -321,7 +323,7 @@ export default function GroupStudents() {
                 {
                   AcademikGroup.length > 0 ? AcademikGroup.map((elem, index) => {
                     return (
-                      <OneStudent student={elem} key={index}  />
+                      <OneStudent student={elem} key={index} />
                     )
                   })
                     :
@@ -347,26 +349,29 @@ export default function GroupStudents() {
           aria-describedby="keep-mounted-modal-description"
         >
           <ModalBox>
-            <ModalHeader>
-              <Typography
-                id="keep-mounted-modal-title"
-                variant="h6"
-                component="h4"
-                sx={{
-                  fontSize: "20px",
-                  fontWeight: 600,
-                  color: "#000"
-                }}
-              >
-                Qo’shish                            </Typography>
-              <span
-                onClick={handleClose}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
-                </svg>
-              </span>
-            </ModalHeader>
+            {
+              user['role'] == 'dekan' &&
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000"
+                  }}
+                >
+                  Qo’shish                            </Typography>
+                <span
+                  onClick={handleClose}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+              </ModalHeader>
+            }
             <ModalSelectWrapper>
               <Typography
                 id="keep-mounted-modal-title"

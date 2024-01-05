@@ -63,7 +63,7 @@ export default function Header() {
   const getSemestersEror = (error) => { console.log(error) }
 
   useEffect(() => {
-    getSemester(additional_student_year, getSemesters, getSemestersEror)
+    getRole(user) === "student" && getSemester(additional_student_year, getSemesters, getSemestersEror)
   }, [])
 
   function GetDebt(year) {
