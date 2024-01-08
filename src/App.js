@@ -192,7 +192,6 @@ function App() {
         <Snow />
         <BrowserRouter>
           <Routes>
-            {UsersRole === "admin" && document?.querySelector('jdiv')?.classList?.add("d-none")}
             <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>

@@ -32,29 +32,47 @@ export default function Students() {
   }
 
   const user = useSelector((state) => state.user);
+  const searchSelects = useSelector((state) => state.table);
   const dispatch = useDispatch()
   // ======
   const [students, setStudents] = useState([])
-  const [pageSize, setPageSize] = useState(10)
-  const [searchText, setSearchText] = useState('')
+  const [pageSize, setPageSize] = useState(searchSelects.pageSize)
+  const [searchText, setSearchText] = useState(searchSelects.searchText)
   const [allCount, setAllCount] = useState(0)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(searchSelects.page)
   const [pageCount, setPageCount] = useState(1)
   const [deleted, setDeleted] = useState(true)
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState(0)
-  const [DegreeSelect, setDegreeSelect] = useState('')
-  const [StudyTypeSelect, setStudyTypeSelect] = useState('')
-  const [DirectionID, setDirectionID] = useState('&')
-  const [GroupID, setGroupID] = useState('')
+  const [AcademekYear, setAcademekYear] = useState(searchSelects.AcademekYear)
+  const [DegreeSelect, setDegreeSelect] = useState(searchSelects.DegreeSelect)
+  const [StudyTypeSelect, setStudyTypeSelect] = useState(searchSelects.StudyTypeSelect)
+  const [DirectionID, setDirectionID] = useState(searchSelects.DirectionID)
+  const [GroupID, setGroupID] = useState(searchSelects.GroupID)
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
   const [DefaultPage, setDefaultPage] = useState(1)
-  const [Gender, setGender] = useState('&')
+  const [Gender, setGender] = useState(searchSelects.Gender)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
-  const [FormPayment, setFormPayment] = useState('&')
+  const [FormPayment, setFormPayment] = useState(searchSelects.FormPayment)
+
+
+  useEffect(() => {
+    
+    // setPageSize(searchSelects.pageSize)
+    // setSearchText(searchSelects.searchText)
+    // setPage(searchSelects.page)
+    // setDirectionID(searchSelects.DirectionID)
+    // setGroupID(searchSelects.GroupID)
+    // setAcademekYear(searchSelects.AcademekYear)
+    // setDegreeSelect(searchSelects.DegreeSelect)
+    // setStudyTypeSelect(searchSelects.StudyTypeSelect)
+    // setGender(searchSelects.Gender)
+    // setFormPayment(searchSelects.FormPayment)
+
+    console.log(searchSelects, "<===")
+  }, [])
 
 
   const Contract = useMemo(() => {
@@ -109,20 +127,6 @@ export default function Students() {
     })
   }, []);
 
-  // useEffect(() => {
-  //   if (page) {
-  //     alert('ss')
-  //   }
-  // }, [page])
-
-  // useMemo(() =>  alert('ss'), [page])
- const handleClick = useCallback((type, val) => {
-    // setCount ishlatilganda, count o'zgaruvchisi o'zgaradi, lekin handleClick tiklanishida o'zgarmaydi.
-    
-  }, [])
-  
-  
-
   useEffect(() => {
     setStudents([])
     getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
@@ -130,7 +134,18 @@ export default function Students() {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
-      dispatch(setTable(response.data))
+      dispatch(setTable({
+        page, 
+        pageSize, 
+        searchText, 
+        DirectionID, 
+        GroupID, 
+        AcademekYear, 
+        StudyTypeSelect, 
+        DegreeSelect,
+        Gender,
+        FormPayment
+      }))
       if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       setYearStatus(false)
     }, error => {
@@ -138,12 +153,10 @@ export default function Students() {
       console.log(error)
     })
   }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender,FormPayment])
-  // ======
 
   useEffect(() => {
 
     getDirections(`${directions}?page_size=100`, (response) => {
-      // setDirections(response.results)
       const currlist = [...response.results]
       currlist.unshift({
         name: 'Hammasi',
@@ -165,13 +178,7 @@ export default function Students() {
   useEffect(() => {
     if (AcademekYear != 0)
       getAcademicGroup(`${academic_group_short}?page_size=1000&direction=${DirectionID == "&" ? '&' : DirectionID}&year=${AcademekYear ?? '&'}`, (response) => {
-        // setDirections(response.results)
         const currlist = [...response.data]
-        // currlist.unshift({
-        //   name: 'Guruhsiz talabalar',
-        //   id: 'none',
-        //   student_count: ""
-        // })
         currlist.unshift({
           name: 'Hammasi',
           id: '',
@@ -201,6 +208,7 @@ export default function Students() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
   return (
     <>
       <Paper
@@ -212,9 +220,12 @@ export default function Students() {
         }}
       >
         <BoxHeader>
-          <PageSelector chageValueFunction={(val) => {
-            setPageSize(val)
-          }} />
+          <PageSelector
+            defPage={pageSize}
+            chageValueFunction={(val) => {
+              setPageSize(val)
+            }} 
+          />
           <AttendSearchButton>
             <a href={host + `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`} target='_blank'>
               <Button
@@ -438,7 +449,7 @@ export default function Students() {
         </BoxBody>
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => {setPage(value); setDefaultPage(10)}} />
+          <Pagination  count={pageCount} defaultPage={page} shape="rounded" color="primary" onChange={(_, value) => {setPage(value); setDefaultPage(10)}} />
         </BoxFooter>
       </Paper>
     </>

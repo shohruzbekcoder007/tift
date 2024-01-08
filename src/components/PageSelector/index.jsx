@@ -6,8 +6,8 @@ import { SelectorText } from './styles';
 import listLanguage from './language.json'
 import { useSelector } from 'react-redux';
 
-export default function PageSelector({chageValueFunction}) {
-    const [age, setAge] = React.useState(10);
+export default function PageSelector({chageValueFunction, defPage }) {
+    const [age, setAge] = React.useState(defPage?defPage:10);
     const language = useSelector(state => state.language)
 
     const handleChange = (event) => {
