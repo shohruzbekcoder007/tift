@@ -17,6 +17,8 @@ import { createScheduleTable } from './requests';
 import { scheduletable } from '../../../utils/API_urls';
 import { Alert } from '@mui/material';
 import { TrBox, TrBoxFooter, TrBoxHeader } from '../../ClassScheduleTeacher/styles';
+import { useSelector } from 'react-redux';
+import { getRole } from '../../../utils/getRole';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -28,6 +30,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function DayTable({ oneday, groups, day, para, room }) {
+  const user = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
   const [new_lessons, setNewLessons] = useState([])
@@ -142,6 +145,8 @@ export default function DayTable({ oneday, groups, day, para, room }) {
           })
         }
       </ScheduleTable>
+      {
+        getRole(user) != "dekan" &&
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
@@ -298,6 +303,7 @@ export default function DayTable({ oneday, groups, day, para, room }) {
           </Button>
         </DialogActions>
       </BootstrapDialog>
+      }
     </>
   )
 }

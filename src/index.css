@@ -80,6 +80,9 @@ marquee > a {
   }
 }
 
+.d-none {
+  display: none;
+}
 
 /* jdiv {
   display: none !important;

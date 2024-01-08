@@ -22,6 +22,8 @@ import language from '../../../../dictionary/language'
 import { PatchEmployee, getOneEmployees } from '../EditEmployees/request'
 import AllSelectFullWidth from '../../../AllSelectFullWidth'
 import { WrapperImgCard } from '../AddStudent/styles'
+import { getRole } from '../../../../utils/getRole'
+import { useSelector } from 'react-redux'
 
 export default function EditStudents() {
 
@@ -43,6 +45,7 @@ export default function EditStudents() {
   const [alertMessage, setAlertMessage] = useState('')
   const handleCloseAlert = () => setOpenAlert(false);
   const [Status, setStatus] = useState(false)
+  const user = useSelector((state) => state.user);
 
   const [newData, setNewData] = useState({
     citizenship: null,
@@ -284,7 +287,7 @@ export default function EditStudents() {
         ...newData,
         ...response.data,
       };
-      if(response.data.avatar) updatedData.avatar = response.data.avatar.replace('/media/https%3A/','')
+      if (response.data.avatar) updatedData.avatar = response.data.avatar.replace('/media/https%3A/', '')
       // Set the updated data in your state
       setNewData(updatedData);
       setTimeout(() => {
@@ -347,7 +350,7 @@ export default function EditStudents() {
             {
               newData.avatar ?
                 <WrapperImgCard>
-                  <img src={`https://`+newData.avatar} alt="" />
+                  <img src={`https://` + newData.avatar} alt="" />
                 </WrapperImgCard>
                 :
                 <WrapperImgCard>
@@ -774,11 +777,11 @@ export default function EditStudents() {
               >
                 Academic group
               </Typography>
-                <AllSelectFullWidth
-                  chageValueFunction={val => reqDataChange("academic_group", val)}
-                  selectedOptionP={newData.academic_group}
-                  selectOptions={academicGroupList}
-                />
+              <AllSelectFullWidth
+                chageValueFunction={val => reqDataChange("academic_group", val)}
+                selectedOptionP={newData.academic_group}
+                selectOptions={academicGroupList}
+              />
             </WrapperInputsCardTwo>
             <WrapperInputsCardTwo>
               <Typography
@@ -967,15 +970,17 @@ export default function EditStudents() {
                 variant="outlined"
                 onClick={() => navigate(-1)}
               >
-                Bekor qilish
+                Orqaga qaytish
               </Button>
-              <Button
-                sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
-                variant="contained"
-                onClick={EditStudent}
-              >
-                Saqlash
-              </Button>
+              {getRole(user) != 'dekan' &&
+                <Button
+                  sx={{ width: "50%", textTransform: "none", boxShadow: "none" }}
+                  variant="contained"
+                  onClick={EditStudent}
+                >
+                  Saqlash
+                </Button>
+              }
             </WrapperButtons>
           </WrapperInputsCardTwo>
         </WrapperBox>

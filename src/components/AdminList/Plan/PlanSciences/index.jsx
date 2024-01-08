@@ -31,6 +31,8 @@ export default function PlanSciences() {
   }
   const { state } = useLocation()
 
+  console.log(state);
+
   const [Sciences, setSciences] = useState([])
   const [SciencesList, setSciencesList] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -51,7 +53,7 @@ export default function PlanSciences() {
   }
 
   useEffect(() => {
-    getAcademic_Science(`${academic_plan_science}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_plan=${state}`, response => {
+    getAcademic_Science(`${academic_plan_science}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_plan=${state.id}`, response => {
       console.log(response.data.results);
       setSciences(response.data.results)
       setAllCount(response.data.count)
@@ -60,7 +62,7 @@ export default function PlanSciences() {
       console.log(error)
     })
 
-    getAcademic_ShortScience(`${science}short/`, response => {
+    getAcademic_ShortScience(`${science}short/?degree=${state.degree}&direction=${state.id}&semester=${state.semester}`, response => {
       let list = []
       console.log(response);
       response.data.map(elem => {

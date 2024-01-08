@@ -169,9 +169,11 @@ import AdditionalResubmission from './components/AdminList/AdditionalResubmissio
 function App() {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
+  const [UsersRole, setUsersRole] = useState(null)
 
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
+    setUsersRole(response.data.role[0]) 
   }
 
   const errorFunctionGetRole = (error) => {
@@ -190,6 +192,7 @@ function App() {
         <Snow />
         <BrowserRouter>
           <Routes>
+            {UsersRole === "admin" && document?.querySelector('jdiv')?.classList?.add("d-none")}
             <Route path="/" element={<SignInSide />} />
             {sessionStorage.getItem("access_token") || user ? (
               <>
@@ -398,17 +401,17 @@ function App() {
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="dashboard" element={<TeacherDashboard />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
-                  <Route path="addtest" element={<AddTest />} />
+                  {/* <Route path="addtest" element={<AddTest />} /> */}
                   <Route path="students" element={<StudentSciences />} >
                     <Route index element={<DekanStudent />} />
-                    <Route path='information' element={<InformationStudent />} />
+                    {/* <Route path='information' element={<InformationStudent />} /> */}
                   </Route>
 
-                  <Route path="streams" element={<StudentSciences />} >
+                  {/* <Route path="streams" element={<StudentSciences />} >
                     <Route index element={<Streams />} />
                     <Route path='schedule' element={<Schedule />} />
                     <Route path="vedomost" element={<Vedomost />} />
-                  </Route>
+                  </Route> */}
                   <Route path='Call' element={<StudentSciences />}>
                     <Route index element={<CallStudents />} />
                     <Route path='see' element={<SeeStudnetsInfoInvation />} />
@@ -430,7 +433,7 @@ function App() {
                   <Route path="reference" element={<Reference />} />
 
 
-                  <Route path='statistika' element={<StudentSciences />}>
+                  {/* <Route path='statistika' element={<StudentSciences />}>
                     <Route index element={<DekanStatistic />} />
                     <Route path='kontingent' element={<Kontingent />} />
                     <Route path='finalquestion' element={<FinalQuestion />} />
@@ -448,11 +451,11 @@ function App() {
                     </Route>
                     <Route path='lessontable' element={<LessonTable />} />
                     <Route path='missedclasses' element={<MissedClasses />} />
-                  </Route>
-                  <Route path='dekanquestions' element={<StudentSciences />}>
+                  </Route> */}
+                  {/* <Route path='dekanquestions' element={<StudentSciences />}>
                     <Route index element={<DekanQuestions />} />
                     <Route path='template' element={<Template />} />
-                  </Route>
+                  </Route> */}
                   <Route path='dekanolympics' element={<StudentSciences />}>
                     <Route index element={<DekanOlympics />} />
                   </Route>
@@ -676,7 +679,7 @@ function App() {
                     <Route index element={<Directions />} />
                     <Route path='sciences' element={<ScienesStudent />} />
                   </Route>
-                  <Route path='group' element={<Group />} />
+                  {/* <Route path='group' element={<Group />} /> */}
                   <Route path='news' element={<News />} />
                   <Route path='contractprices' element={<Contractprices />} />
 
@@ -713,12 +716,19 @@ function App() {
                     <Route path='sciences' element={<ScienesStudent />} />
                   </Route>
 
+                  <Route path='Call' element={<StudentSciences />}>
+                    <Route index element={<CallStudents />} />
+                    <Route path='see' element={<SeeStudnetsInfoInvation />} />
+                  </Route>
+
                   <Route path='group' element={<StudentSciences />}>
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
                     {/* <Route path='personalplan' element={<StudentSciences />}> */}
                     <Route path='personalplan' element={<GroupPersonalPlan />} />
                     <Route path='personalplan/editscore' element={<GroupEditStudents />} />
+                    <Route path='students/edit' element={<EditStudents />} />
+
                     {/* </Route> */}
                   </Route>
 
