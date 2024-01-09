@@ -208,7 +208,7 @@ export default function Plan() {
                         <th>{elem.name}</th>
                         <th>{elem.season}</th>
                         <th>
-                          <Link to={'curriculum'} state={elem.id}>
+                          <Link to={'curriculum'} state={{id: elem.id, year: elem.season}}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               O’quv reja
                             </IconButton>

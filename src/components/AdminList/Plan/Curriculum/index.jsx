@@ -56,7 +56,7 @@ export default function Curriculum() {
 
   useEffect(() => {
     if (DirectionID) {
-      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}&direction=${DirectionID}`, response => {
+      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state.id}&direction=${DirectionID}`, response => {
         console.log(response.data.results);
         setPlans(response.data.results)
         setAllCount(response.data.count)
@@ -348,7 +348,7 @@ export default function Curriculum() {
                         <th>{elem.study_type}</th>
                         <th>{elem.semester}</th>
                         <th>
-                          <Link to={'sciences'} state={{id: elem.id, direction: parseInt(elem.direction_id), degree: elem.degree, semester: elem.semester}}>
+                          <Link to={'sciences'} state={{id: elem.id, year: state.year, study_type: elem.study_type, direction: parseInt(elem.direction_id), degree: elem.degree, semester: elem.semester}}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               Fanlar
                             </IconButton>
