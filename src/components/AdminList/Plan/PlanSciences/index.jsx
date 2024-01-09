@@ -62,7 +62,7 @@ export default function PlanSciences() {
       console.log(error)
     })
 
-    getAcademic_ShortScience(`${science}short/?degree=${state.degree}&direction=${state.id}&semester=${state.semester}`, response => {
+    getAcademic_ShortScience(`${science}short/?degree=${state.degree}&direction=${state.direction}&semester=${state.semester}`, response => {
       let list = []
       console.log(response);
       response.data.map(elem => {

@@ -348,7 +348,7 @@ export default function Curriculum() {
                         <th>{elem.study_type}</th>
                         <th>{elem.semester}</th>
                         <th>
-                          <Link to={'sciences'} state={{id: elem.id, direction: elem.direction, degree: elem.degree, semester: elem.semester}}>
+                          <Link to={'sciences'} state={{id: elem.id, direction: parseInt(elem.direction_id), degree: elem.degree, semester: elem.semester}}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               Fanlar
                             </IconButton>

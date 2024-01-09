@@ -557,6 +557,15 @@ function App() {
                     <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
                   </Route>
+
+                  <Route path="readagain" element={<StudentSciences />} >
+                    <Route index element={<Readagain />} />
+                    {/* <Route path='control' element={<InterimControl />} /> */}
+                    <Route path="students" element={<ReadAgainStudents />} >
+                      <Route index element={<ReadAgainStudents />} />
+                      <Route path='additional' element={<AdditionalResubmission />} />
+                    </Route>
+                  </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
                   <Route path="filingapplication" element={<FilingApplication />} />
