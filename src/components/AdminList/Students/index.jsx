@@ -127,32 +127,7 @@ export default function Students() {
     })
   }, []);
 
-  useEffect(() => {
-    setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
-      console.log(response.data)
-      setStudents(response.data.results)
-      setAllCount(response.data.count)
-      setPageCount(response.data.page_count)
-      dispatch(setTable({
-        page, 
-        pageSize, 
-        searchText, 
-        DirectionID, 
-        GroupID, 
-        AcademekYear, 
-        StudyTypeSelect, 
-        DegreeSelect,
-        Gender,
-        FormPayment
-      }))
-      if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
-      setYearStatus(false)
-    }, error => {
-      setModalText("Ma'lumot yo'q")
-      console.log(error)
-    })
-  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender,FormPayment])
+
 
   useEffect(() => {
 
@@ -208,6 +183,33 @@ export default function Students() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
+  useEffect(() => {
+    setStudents([])
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
+      console.log(response.data)
+      setStudents(response.data.results)
+      setAllCount(response.data.count)
+      setPageCount(response.data.page_count)
+      dispatch(setTable({
+        page, 
+        pageSize, 
+        searchText, 
+        DirectionID, 
+        GroupID, 
+        AcademekYear, 
+        StudyTypeSelect, 
+        DegreeSelect,
+        Gender,
+        FormPayment
+      }))
+      if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
+      setYearStatus(false)
+    }, error => {
+      setModalText("Ma'lumot yo'q")
+      console.log(error)
+    })
+  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect,Gender,FormPayment])
 
   return (
     <>

@@ -17,6 +17,7 @@ import { useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { getAcademecYear } from '../Semestr/requests'
 import { InputsWrapper } from '../../CourseManagement/styles'
+import degree from '../../../dictionary/degree'
 
 export default function Directions() {
   const [open, setOpen] = useState(false);
@@ -47,7 +48,7 @@ export default function Directions() {
     setSelectedValues(values)
   };
 
-  
+
   // useEffect(() => {
   //   getAcademecYear(academic_year, (response) => {
   //     console.log(response.data.results);
@@ -79,7 +80,7 @@ export default function Directions() {
       console.log(error)
     })
 
-  }, [Status,SearchText])
+  }, [Status, SearchText])
 
 
 
@@ -160,6 +161,19 @@ export default function Directions() {
             <table>
               <thead>
                 <tr>
+                  <TableTHHeader
+                    text="#"
+                    iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <g clipPath="url(#clip0_78_23314)">
+                        <path d="M16.0008 0.666667C16.0008 1.03533 15.7021 1.33333 15.3341 1.33333H6.66746C6.29946 1.33333 6.00079 1.03533 6.00079 0.666667C6.00079 0.298 6.29946 0 6.66746 0H15.3341C15.7021 0 16.0008 0.298 16.0008 0.666667ZM13.3341 3.33333H6.66746C6.29946 3.33333 6.00079 3.63133 6.00079 4C6.00079 4.36867 6.29946 4.66667 6.66746 4.66667H13.3341C13.7021 4.66667 14.0008 4.36867 14.0008 4C14.0008 3.63133 13.7021 3.33333 13.3341 3.33333ZM11.3341 6.66667H6.66746C6.29946 6.66667 6.00079 6.96467 6.00079 7.33333C6.00079 7.702 6.29946 8 6.66746 8H11.3341C11.7021 8 12.0008 7.702 12.0008 7.33333C12.0008 6.96467 11.7021 6.66667 11.3341 6.66667ZM9.33412 10H6.66746C6.29946 10 6.00079 10.298 6.00079 10.6667C6.00079 11.0353 6.29946 11.3333 6.66746 11.3333H9.33412C9.70212 11.3333 10.0008 11.0353 10.0008 10.6667C10.0008 10.298 9.70212 10 9.33412 10ZM5.13879 12.862L4.00079 14V0.666667C4.00079 0.298 3.70212 0 3.33412 0C2.96612 0 2.66746 0.298 2.66746 0.666667V14L1.52879 12.8613C1.26812 12.6007 0.846792 12.6007 0.586125 12.8613C0.325458 13.122 0.325458 13.5433 0.586125 13.804L2.39079 15.6087C2.65079 15.8687 2.99212 15.9987 3.33412 15.9987C3.67612 15.9987 4.01679 15.8687 4.27679 15.6087L6.08146 13.804C6.34212 13.5433 6.34212 13.122 6.08146 12.8613C5.82079 12.6007 5.39946 12.6013 5.13879 12.862Z" fill="#B8B8B8" />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_78_23314">
+                          <rect width="16" height="16" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>}
+                  />
                   <TableTHHeader
                     text="ID"
                     iconc={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -283,17 +297,25 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
     })
   }
 
-  const {state} = useLocation()
+  const { state } = useLocation()
   return (
     <>
       <tr>
+        <th>{index + 1}</th>
         <th>{elem.id}</th>
         <th>{elem.name}</th>
         <th>{elem.code}</th>
-        <th>{elem.degree}</th>
+        <th>
+          {degree?.map(type => {
+            if (type.value === elem.degree) {
+              return type.uz;
+            }
+            return null;
+          })}
+        </th>
         <th>{elem.faculty}</th>
         <th>
-          <Link to={'sciences'} state={{id: elem.id, season: state, degree: elem.degree}}>
+          <Link to={'sciences'} state={{ id: elem.id, season: state, degree: elem.degree }}>
             <Button
               variant="contained"
               sx={{
@@ -308,34 +330,6 @@ const ItemDirections = ({ elem, index, DirectionName, DirectionCode, Faculty }) 
               Fanlar
             </Button>
           </Link>
-          {/* <Button
-            variant="contained"
-            sx={{
-              borderRadius: "10px",
-              textTransform: "capitalize",
-              boxShadow: "none",
-              padding: "6px 12px",
-              marginRight: "20px",
-              backgroundColor: "redButton.main",
-              "&:hover": {
-                backgroundColor: "redButton.main",
-              },
-            }}
-            onClick={() => DeleteClick(elem.id)}
-            startIcon={<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clipPath="url(#clip0_1221_31960)">
-                <path d="M14.5026 2.66667H12.4359C12.2812 1.91428 11.8718 1.23823 11.2768 0.752479C10.6817 0.266727 9.93741 0.000969683 9.16927 0L7.83594 0C7.0678 0.000969683 6.32348 0.266727 5.72844 0.752479C5.13339 1.23823 4.724 1.91428 4.56927 2.66667H2.5026C2.32579 2.66667 2.15622 2.7369 2.0312 2.86193C1.90618 2.98695 1.83594 3.15652 1.83594 3.33333C1.83594 3.51014 1.90618 3.67971 2.0312 3.80474C2.15622 3.92976 2.32579 4 2.5026 4H3.16927V12.6667C3.17033 13.5504 3.52186 14.3976 4.14675 15.0225C4.77164 15.6474 5.61887 15.9989 6.5026 16H10.5026C11.3863 15.9989 12.2336 15.6474 12.8585 15.0225C13.4833 14.3976 13.8349 13.5504 13.8359 12.6667V4H14.5026C14.6794 4 14.849 3.92976 14.974 3.80474C15.099 3.67971 15.1693 3.51014 15.1693 3.33333C15.1693 3.15652 15.099 2.98695 14.974 2.86193C14.849 2.7369 14.6794 2.66667 14.5026 2.66667ZM7.83594 1.33333H9.16927C9.58279 1.33384 9.98602 1.46225 10.3237 1.70096C10.6613 1.93967 10.9169 2.27699 11.0553 2.66667H5.94994C6.08833 2.27699 6.34387 1.93967 6.68153 1.70096C7.01919 1.46225 7.42242 1.33384 7.83594 1.33333ZM12.5026 12.6667C12.5026 13.1971 12.2919 13.7058 11.9168 14.0809C11.5417 14.456 11.033 14.6667 10.5026 14.6667H6.5026C5.97217 14.6667 5.46346 14.456 5.08839 14.0809C4.71332 13.7058 4.5026 13.1971 4.5026 12.6667V4H12.5026V12.6667Z" fill="white" />
-                <path d="M7.16667 11.9998C7.34348 11.9998 7.51305 11.9296 7.63807 11.8046C7.7631 11.6796 7.83333 11.51 7.83333 11.3332V7.33317C7.83333 7.15636 7.7631 6.98679 7.63807 6.86177C7.51305 6.73674 7.34348 6.6665 7.16667 6.6665C6.98986 6.6665 6.82029 6.73674 6.69526 6.86177C6.57024 6.98679 6.5 7.15636 6.5 7.33317V11.3332C6.5 11.51 6.57024 11.6796 6.69526 11.8046C6.82029 11.9296 6.98986 11.9998 7.16667 11.9998Z" fill="white" />
-                <path d="M9.83073 11.9998C10.0075 11.9998 10.1771 11.9296 10.3021 11.8046C10.4272 11.6796 10.4974 11.51 10.4974 11.3332V7.33317C10.4974 7.15636 10.4272 6.98679 10.3021 6.86177C10.1771 6.73674 10.0075 6.6665 9.83073 6.6665C9.65392 6.6665 9.48435 6.73674 9.35932 6.86177C9.2343 6.98679 9.16406 7.15636 9.16406 7.33317V11.3332C9.16406 11.51 9.2343 11.6796 9.35932 11.8046C9.48435 11.9296 9.65392 11.9998 9.83073 11.9998Z" fill="white" />
-              </g>
-              <defs>
-                <clipPath id="clip0_1221_31960">
-                  <rect width="16" height="16" fill="white" transform="translate(0.5)" />
-                </clipPath>
-              </defs>
-            </svg>}
-          >
-          </Button> */}
         </th>
       </tr>
       <Modal

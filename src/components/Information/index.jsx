@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { ContentWrapper } from '../../global_styles/styles'
 import { EditIcon, HeaderWrapper, HeaderWrapperBottom, HeaderWrapperH4, HeaderWrapperP, HeaderWrapperTop, HeaderWrapperTopDiv, Hr, InfoBody, ModalBoxInfo, ModalButtonsInfo, ModalSelectWrapperInfo, WrapperBody, WrapperBodyContract } from './styles'
 import Modal from '@mui/material/Modal'
@@ -10,6 +10,8 @@ import { getStudentInformation, setInformation } from './requests'
 import { host, student_detail, student_district, student_region, studentcontract } from '../../utils/API_urls'
 import CustomizedInputSimple from '../CustomizedInputSimple'
 import MuiAlert from '@mui/material/Alert';
+import study_type from '../../dictionary/study_type'
+import contract_type from '../../dictionary/contract_type'
 
 
 
@@ -145,6 +147,24 @@ export default function Information() {
     }
   }, [changedRegionId1])
 
+  const studytype = useMemo(() => {
+    return [{
+      name: "morning",
+      value: 'morning',
+    },
+    {
+      name: "evening",
+      value: 'evening',
+    },
+    {
+      name: "external",
+      value: 'external',
+    },
+    {
+      name: "remote",
+      value: 'remote',
+    }]
+  }, [])
 
   return (
     <ContentWrapper>
@@ -217,7 +237,14 @@ export default function Information() {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Ta’lim shakli:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.study_type}</HeaderWrapperP>
+            <HeaderWrapperP>
+              {study_type?.map(type => {
+                if (type.value === infoList.study_type) {
+                  return type.uz;
+                }
+                return null;
+              })}
+            </HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Kurs: </HeaderWrapperH4>
@@ -233,11 +260,18 @@ export default function Information() {
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>Stipendiya:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yoq"}</HeaderWrapperP>
+            <HeaderWrapperP>{infoList.is_scholarship === true ? "Bor" : "Yo'q"}</HeaderWrapperP>
           </WrapperBody>
           <WrapperBody>
             <HeaderWrapperH4>O'qish turi:</HeaderWrapperH4>
-            <HeaderWrapperP>{infoList.form_of_payment}</HeaderWrapperP>
+            <HeaderWrapperP>
+              {contract_type?.map(type => {
+                if (type.value === infoList.form_of_payment) {
+                  return type.uz;
+                }
+                return null;
+              })}
+            </HeaderWrapperP>
           </WrapperBody>
           {/* <WrapperBodyContract>
             {

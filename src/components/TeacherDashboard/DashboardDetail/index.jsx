@@ -18,7 +18,7 @@ export default function Index() {
         </DetailWrapperBody>
         <hr />
         <DetailWrapperDate>
-        — {listLanguage.DetailDate["ru"]} {`${new Date(state.element.created_at).getDate()}.${new Date(state.element.created_at).getMonth() + 1}.${new Date(state.element.created_at).getFullYear()}`}
+        — {listLanguage.DetailDate["uz"]} {`${new Date(state.element.created_at).getDate()}.${new Date(state.element.created_at).getMonth() + 1}.${new Date(state.element.created_at).getFullYear()}`}
         </DetailWrapperDate>
       </DashboardDetailWrapper>
     </ContentWrapper>

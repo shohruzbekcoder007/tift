@@ -33,7 +33,7 @@ export default function ClassScheduleTable({ table }) {
                 }
               })
             }
-            {/* <th>{listLanguage.Week['ru']}</th> */}
+            {/* <th>{listLanguage.Week['uz']}</th> */}
             {/* <th>Vaqt</th>
                         <th>{listLanguage.Monday[language]}</th>
                         <th>{listLanguage.Tuesday[language]}</th>

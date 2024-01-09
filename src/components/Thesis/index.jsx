@@ -66,7 +66,7 @@ export default function Thesis() {
                             </svg>
                             }
                         >
-                            {listLanguage.Add['ru']}
+                            {listLanguage.Add['uz']}
                         </Button>
                     </div>
                 </ThesisHeader>
@@ -98,7 +98,7 @@ export default function Thesis() {
                                     color: "#000",
                                 }}
                             >
-                                {listLanguage.Add['ru']}
+                                {listLanguage.Add['uz']}
                             </Typography>
                             <span
                                 onClick={handleClose}
@@ -121,7 +121,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.Curriculum['ru']}
+                            {listLanguage.Curriculum['uz']}
                         </Typography>
                         <AllSelectFullWidth
                             chageValueFunction={val => console.log(val)}
@@ -143,7 +143,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.Degree['ru']}
+                            {listLanguage.Degree['uz']}
 
                         </Typography>
                         <AllSelectFullWidth
@@ -166,7 +166,7 @@ export default function Thesis() {
                                 mb: "10px"
                             }}
                         >
-                            {listLanguage.NumberStudents['ru']}
+                            {listLanguage.NumberStudents['uz']}
 
                         </Typography>
                         <CustomizedInputSimple callback_func={val => console.log(val)} />
@@ -177,14 +177,14 @@ export default function Thesis() {
                             variant="outlined"
                             onClick={handleClose}
                         >
-                            {listLanguage.Cancel['ru']}
+                            {listLanguage.Cancel['uz']}
 
                         </Button>
                         <Button
                             sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
                             variant="contained"
                         >
-                            {listLanguage.Save['ru']}
+                            {listLanguage.Save['uz']}
 
                         </Button>
                     </ModalButtons>

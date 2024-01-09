@@ -77,6 +77,20 @@ export default function SciencesAdmin() {
     })
   }, [])
 
+  const Selection = useMemo(() => {
+    return [
+      {
+        name: "Required",
+        value: 'required',
+        value_uz: "majburiy"
+      },
+      {
+        name: "Selection",
+        value: 'selection',
+        value_uz: "tanlov"
+      }
+    ]
+  }, [])
 
   const SemesterNum = useMemo(() => {
     return [
@@ -152,7 +166,7 @@ export default function SciencesAdmin() {
     }, (error) => {
       console.log(error)
     })
-  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem, pageSize, page, searchText,SemesterNumber])
+  }, [kafedrachoes, studytypechoes, degreechoes, deletedElem, pageSize, page, searchText, SemesterNumber])
 
 
 
@@ -160,13 +174,13 @@ export default function SciencesAdmin() {
     setAdminDeleteScience(`${science}${pk}`, (response) => {
       if (response.status)
         setOpenAlert(true)
-        serChanged(true)
-        setAlertMessage("O'chirildi")
-        setDeleted(prev => !prev)
+      serChanged(true)
+      setAlertMessage("O'chirildi")
+      setDeleted(prev => !prev)
     }, (error) => {
       setOpenAlert(true)
-        serChanged(false)
-        setAlertMessage(error.response.data.detail)
+      serChanged(false)
+      setAlertMessage(error.response.data.detail)
       console.log(error)
     })
   }
@@ -522,7 +536,14 @@ export default function SciencesAdmin() {
                         <th>{elem.practice}</th>
                         <th>{elem.lab}</th>
                         <th>{elem.independently}</th>
-                        <th>{elem.discipline_type}</th>
+                        <th>
+                          {Selection?.map(type => {
+                            if (type.value === elem.discipline_type) {
+                              return type.value_uz; 
+                            }
+                            return null; 
+                          })}
+                        </th>
                         {/* <th>
                           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
                             <rect width="36" height="36" rx="10" fill="url(#pattern0)" />

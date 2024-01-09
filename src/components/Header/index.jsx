@@ -212,7 +212,7 @@ export default function Header() {
             }
           </ContractFilter>
           {/* <HeaderAccountTime>
-          {listLanguage.ServerTime['ru']} 06.06.23
+          {listLanguage.ServerTime['uz']} 06.06.23
         </HeaderAccountTime> */}
           {
             (getRole(user) == "student" || getRole(user) == "teacher") ? <>

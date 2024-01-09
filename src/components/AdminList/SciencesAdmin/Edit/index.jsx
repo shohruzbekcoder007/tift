@@ -109,19 +109,19 @@ export default function Edit() {
 
   const adminstudytype = useMemo(() => {
     return [{
-      name: "morning",
+      name: "kundizgi",
       value: 'morning',
     },
     {
-      name: "evening",
+      name: "kechki",
       value: 'evening',
     },
     {
-      name: "external",
+      name: "sirtqi",
       value: 'external',
     },
     {
-      name: "remote",
+      name: "masofaviy",
       value: 'remote',
     }]
   }, [])
@@ -141,11 +141,11 @@ export default function Edit() {
   const Selection = useMemo(() => {
     return [
       {
-        name: "Required",
+        name: "Majburiy",
         value: 'required',
       },
       {
-        name: "Selection",
+        name: "Tanlov",
         value: 'selection',
       }
     ]

@@ -173,7 +173,7 @@ function App() {
 
   const successfulFunctionGetRole = (response) => {
     dispatch(setUser(response.data))
-    setUsersRole(response.data.role[0]) 
+    setUsersRole(response.data.role[0])
   }
 
   const errorFunctionGetRole = (error) => {
@@ -405,7 +405,14 @@ function App() {
                     <Route index element={<DekanStudent />} />
                     {/* <Route path='information' element={<InformationStudent />} /> */}
                   </Route>
-
+                  <Route path="readagain" element={<StudentSciences />} >
+                    <Route index element={<Readagain />} />
+                    {/* <Route path='control' element={<InterimControl />} /> */}
+                    <Route path="students" element={<ReadAgainStudents />} >
+                      <Route index element={<ReadAgainStudents />} />
+                      <Route path='additional' element={<AdditionalResubmission />} />
+                    </Route>
+                  </Route>
                   {/* <Route path="streams" element={<StudentSciences />} >
                     <Route index element={<Streams />} />
                     <Route path='schedule' element={<Schedule />} />
@@ -549,6 +556,15 @@ function App() {
                     <Route path='ScienceDirection/sciences/add' element={<Add />} />
                     <Route path='ScienceDirection/sciences/edit' element={<Edit />} />
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
+                  </Route>
+
+                  <Route path="readagain" element={<StudentSciences />} >
+                    <Route index element={<Readagain />} />
+                    {/* <Route path='control' element={<InterimControl />} /> */}
+                    <Route path="students" element={<ReadAgainStudents />} >
+                      <Route index element={<ReadAgainStudents />} />
+                      <Route path='additional' element={<AdditionalResubmission />} />
+                    </Route>
                   </Route>
                   {/* <Route path="Dclassschedule" element={<ClassScheduleTeacher />} />
                   <Route path="classschedule" element={<ClassScheduleTeacher />} />
@@ -704,6 +720,7 @@ function App() {
                     <Route path='add' element={<AdminUsersAdd />} />
                     <Route path='edit' element={<AdminUsersEdit />} />
                   </Route>
+
                   <Route path='roles' element={<Roles />} />
                   <Route path='server' element={<Server />} />
                   <Route path="students" element={<StudentSciences />} >
@@ -741,22 +758,6 @@ function App() {
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
                   </Route>
 
-                  <Route path="plan" element={<StudentSciences />} >
-                    <Route index element={<Plan />} />
-                    <Route path="curriculum" element={<Outlet />} >
-                      <Route index element={<Curriculum />} />
-                      <Route path='sciences' element={<PlanSciences />} />
-                    </Route>
-                  </Route>
-
-                  <Route path="adminusers" element={<StudentSciences />} >
-                    <Route index element={<AdminUsers />} />
-                    <Route path='add' element={<AdminUsersAdd />} />
-                    <Route path='edit' element={<AdminUsersEdit />} />
-                  </Route>
-
-                  <Route path='roles' element={<Roles />} />
-                  <Route path='server' element={<Server />} />
                   <Route path='schedule' element={<ScheduleStudy />} />
                   <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
 

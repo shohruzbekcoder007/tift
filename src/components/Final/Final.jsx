@@ -108,7 +108,7 @@ export default function Final() {
                 color: "#000"
               }}
             >
-              {listLanguage.clearance['ru']}
+              {listLanguage.clearance['uz']}
             </Typography>
             <span
               onClick={handleClose}
@@ -132,7 +132,7 @@ export default function Final() {
               mb: "20px"
             }}
           >
-            {listLanguage.ClearanceText['ru']}
+            {listLanguage.ClearanceText['uz']}
 
           </Typography>
         </ModalBox>

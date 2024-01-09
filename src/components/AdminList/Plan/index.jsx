@@ -20,6 +20,8 @@ import { academic_year, gpa_reflesh, my_semesters } from '../../../utils/API_url
 import { GetGpaRefresh, getAcademic_Year } from './request'
 import AlertDialog from '../../AlertDialog'
 import { getSemester } from '../ScheduleStudy/requests'
+import { getRole } from '../../../utils/getRole'
+import { useSelector } from 'react-redux'
 
 export default function Plan() {
   const [open, setOpen] = React.useState(false);
@@ -30,7 +32,7 @@ export default function Plan() {
   const handleOpen2 = () => setOpen(true);
   const handleClose2 = () => setOpen(false);
   const [file, setFile] = useState(null);
-  
+
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
@@ -51,6 +53,7 @@ export default function Plan() {
   const [alert, setAlert] = useState(false)
   const openAlert = () => { setAlert(true) }
 
+  const user = useSelector((state) => state.user);
   const [semesters, setSemesters] = useState([])
   const [semester, setSemester] = useState(null)
 
@@ -205,28 +208,32 @@ export default function Plan() {
                         <th>{elem.name}</th>
                         <th>{elem.season}</th>
                         <th>
-                          <Link to={'curriculum'} state={elem.id}>
+                          <Link to={'curriculum'} state={{id: elem.id, year: elem.season}}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               O’quv reja
                             </IconButton>
                           </Link>
-                          <Button
-                            variant="contained"
-                            onClick={(_) => handleOpen(elem.season)}
-                            sx={{
-                              borderRadius: "10px",
-                              textTransform: "capitalize",
-                              boxShadow: "none",
-                              padding: "10px 12px",
-                              backgroundColor: "BlueButton.main",
-                              "&:hover": {
+
+                          {
+                            getRole(user) == 'admin' &&
+                            <Button
+                              variant="contained"
+                              onClick={(_) => handleOpen(elem.season)}
+                              sx={{
+                                borderRadius: "10px",
+                                textTransform: "capitalize",
+                                boxShadow: "none",
+                                padding: "10px 12px",
                                 backgroundColor: "BlueButton.main",
-                              },
-                            }}
-                            startIcon={null}
-                          >
-                            GPA ni yangilash
-                          </Button>
+                                "&:hover": {
+                                  backgroundColor: "BlueButton.main",
+                                },
+                              }}
+                              startIcon={null}
+                            >
+                              GPA ni yangilash
+                            </Button>
+                          }
                           {/* <Button
                             variant="contained"
                             sx={{
@@ -352,7 +359,7 @@ export default function Plan() {
 
               <AllSelectFullWidth
                 chageValueFunction={val => setSemester(val)}
-                selectedOptionP={semesters[0]?.value}        
+                selectedOptionP={semesters[0]?.value}
                 selectOptions={semesters}
               />
 

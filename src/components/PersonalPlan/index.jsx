@@ -32,7 +32,19 @@ export default function PersonalPlan() {
   )
 }
 
+
 const Semester = ({ title, data, index}) => {
+  let allCredit = 0
+  let allGrade = 0
+  console.log(data);
+  data.map(item => {
+    allCredit += item.credit
+    allGrade += item.credit * item.gpa
+  })
+  console.log(allCredit);
+  console.log(allGrade);
+
+
   return (
     <PersonalPlanPaper elevation={0} sx={{ borderRadius: "10px" }}>
       <Typography
@@ -90,7 +102,7 @@ const Semester = ({ title, data, index}) => {
         </table>
       </ClassScheduleTableWrapper>
       <div style={{ display: "flex", justifyContent: 'end' }}>
-        <h3>GPA: {data?.[index]?.gpa ?? "0"}</h3>
+        <h3>GPA: {parseFloat(allGrade / allCredit).toFixed(2)}</h3>
       </div>
     </PersonalPlanPaper>
   )
