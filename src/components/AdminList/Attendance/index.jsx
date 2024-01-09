@@ -232,7 +232,7 @@ export default function Attend() {
                             </svg>
                             }
                         >
-                            {listLanguage.clearance["ru"]}
+                            {listLanguage.clearance["uz"]}
                         </Button>
                     </AttendSearchButton>
                 </BoxHeader>

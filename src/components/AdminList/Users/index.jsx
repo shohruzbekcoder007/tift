@@ -379,7 +379,7 @@ export default function Users() {
             >
               Parol
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { setPassword(val) }} placeholder="Kiriting" />
+            <CustomizedInputSimple  callback_func={(val) => { setPassword(val) }} placeholder="Kiriting" />
           </ModalSelectWrapper>
           <ModalSelectWrapper>
             <Typography
@@ -395,7 +395,7 @@ export default function Users() {
             >
               Parolni tasdiqlang
             </Typography>
-            <CustomizedInputSimple callback_func={(val) => { setCpassword(val) }} placeholder="Kiriting" />
+            <CustomizedInputSimple callback_func={(val) => { setCpassword(val) }} placeholder="Kiriting" /> 
           </ModalSelectWrapper>
           <ModalButtons>
             <Button
@@ -405,14 +405,27 @@ export default function Users() {
             >
               Bekor qilish
             </Button>
-            <Button
-              sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
-              variant="contained"
-              type="submit"
-              onClick={handleChangePassword}
-            >
-              Saqlash
-            </Button>
+            {
+              password && cpassword ?
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+                  onClick={handleChangePassword}
+                >
+                  Saqlash
+                </Button> :
+
+                <Button
+                  sx={{ width: "50%", textTransform: "none", borderRadius: "10px", boxShadow: "none" }}
+                  variant="contained"
+                  type="submit"
+                  onClick={handleChangePassword}
+                  disabled
+                >
+                  Saqlash
+                </Button>
+            }
           </ModalButtons>
         </ModalBox>
         {/* </form> */}

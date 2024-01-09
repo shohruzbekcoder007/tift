@@ -758,10 +758,6 @@ function App() {
                     <Route path='calendarplan' element={<CalendarPlanAdmin />} />
                   </Route>
 
-
-
-
-
                   <Route path='schedule' element={<ScheduleStudy />} />
                   <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
 
