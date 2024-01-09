@@ -59,6 +59,7 @@ export default function AddTest() {
 
   const [TestPriveiwList, setTestPriveiwList] = useState('');
   const [Loader, setLoader] = useState("Tekshirib ko'rish")
+  const [LoaderData, setLoaderData] = useState(<CircularProgress color="success" size={25} />)
 
   const handleCloseAlert = () => setOpenAlert(false);
 
@@ -113,7 +114,9 @@ export default function AddTest() {
   useEffect(() => {
     getTeacheravTasks(`${teacher_tasks}?page_size=${pageSize}&page=${page}&search=${SearchText}`, (response) => {
       settasksList(response.data)
+      response.data.length == 0 && setLoaderData("Ma'lumot yo'q")
     }, (error) => {
+      setLoaderData("Ma'lumot yo'q")
       console.log(error)
     })
   }, [pageSize, page,SearchText])
@@ -416,7 +419,7 @@ export default function AddTest() {
                   })
                     :
                     <tr>
-                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                      <th colSpan={12} align='center'>{LoaderData}</th>
                     </tr>
                 }
               </tbody>
