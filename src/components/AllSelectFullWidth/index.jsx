@@ -6,7 +6,7 @@ import Select from '@mui/material/Select'
 
 export default memo(function AllSelectFullWidth({ chageValueFunction, selectOptions, selectedOptionP }) {
   const selectedOption = selectOptions.find(option => option?.selected) || {};
-  const [age, setAge] = React.useState(selectedOption?.value || selectOptions[0]?.value || 0);
+  const [age, setAge] = React.useState(selectedOptionP??(selectedOption?.value || selectOptions[0]?.value || 0));
 
 
   const handleChange = (event) => {
@@ -19,9 +19,9 @@ export default memo(function AllSelectFullWidth({ chageValueFunction, selectOpti
     setAge(newSelectedOption?.value || selectOptions[0]?.value || 0);
   }, [selectOptions])
 
-  useEffect(() => {
-    setAge(selectedOptionP)
-  }, [selectedOptionP])
+  // useEffect(() => {
+  //   setAge(selectedOptionP)
+  // }, [selectedOptionP])
 
   return (
     <div>

@@ -48,10 +48,10 @@ const CssTextField = withStyles({
     }
 })(TextField);
 
-export default function CustomizedInput({ label, callback_func }) {
+export default function CustomizedInput({ label, callback_func, defVal }) {
 
     const language = useSelector(state => state.language)
-    const [searchTerm, setSearchTerm] = useState('')
+    const [searchTerm, setSearchTerm] = useState(defVal??'')
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -70,6 +70,7 @@ export default function CustomizedInput({ label, callback_func }) {
                 variant="outlined"
                 id="custom-css-outlined-input"
                 // helperText="Incorrect entry."
+                value={searchTerm}
                 onChange={event => { setSearchTerm(event.target.value) }}
                 placeholder={listLanguage.Search[language]}
             />

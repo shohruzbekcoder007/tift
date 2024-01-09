@@ -119,7 +119,7 @@ export default function Students() {
           value: item.season
         })
       })
-      setAcademekYear(mass[0].value)
+      setAcademekYear(AcademekYear??mass[0].value)
       setYearList(mass)
 
     }, (error) => {
@@ -280,14 +280,14 @@ export default function Students() {
               </Button>
             </Link>
             }
-            <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
+            <CustomizedInput callback_func={(val) => { setSearchText(val) }} defVal={searchText}/>
           </AttendSearchButton>
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
-              selectedOptionP={YearList?.[0]?.value}
+              selectedOptionP={AcademekYear ?? YearList?.[1]?.value}
               selectOptions={YearList}
             />
             <AutocompleteJames width={'150px'} selectOptions={Directions}  chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
