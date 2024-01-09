@@ -8,8 +8,8 @@ const initialTable = {
     page: 1,
     DirectionID: "&",
     GroupID: "",
-    AcademekYear: 0,
-    DegreeSelect: "",
+    AcademekYear: "&",
+    DegreeSelect: "&",
     StudyTypeSelect: "",
     Gender: "&",
     FormPayment: "&"

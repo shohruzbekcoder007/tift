@@ -119,7 +119,7 @@ export default function Students() {
           value: item.season
         })
       })
-      setAcademekYear(AcademekYear??mass[0].value)
+      setAcademekYear(AcademekYear)
       setYearList(mass)
 
     }, (error) => {
@@ -289,14 +289,14 @@ export default function Students() {
           <InputsWrapper>
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
-              selectedOptionP={AcademekYear ?? YearList?.[1]?.value}
+              selectedOptionP={AcademekYear}
               selectOptions={YearList}
             />
-            <AutocompleteJames width={'150px'} selectOptions={Directions}  chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} />
-            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} />
+            <AutocompleteJames width={'150px'} selectOptions={Directions}  chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} defaultValue={DirectionID}/>
+            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} defaultValue={GroupID} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
-              selectedOptionP={DegreeList[0].value}
+              selectedOptionP={DegreeSelect}
               selectOptions={DegreeList}
             />
             <AllSelectFullWidth

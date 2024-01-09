@@ -1,8 +1,16 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useState } from 'react';
 
-export default function AutocompleteJames({selectOptions, chageValueFunction, callback_func, label, width}) {
+export default function AutocompleteJames({selectOptions, chageValueFunction, label, width, defaultValue}) {
+
+  const selectedOption = React.useMemo(() => {
+    let selectedDV = selectOptions.find(elem => elem.value == defaultValue)
+    console.log(selectedDV, "selectedDV", selectOptions)
+    return selectedDV
+  }, [selectOptions, defaultValue])
+  
   return (
     <Autocomplete
       disablePortal
@@ -34,14 +42,14 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, ca
             borderColor: "#F6F6F6",
         },
     }}
-    isMulti
+      defaultValue={selectedOption}
       getOptionLabel={(option) => option.name}
       filterOptions={(options, { inputValue }) =>
         options.filter(
           ({ name }) => name.toLowerCase().includes(inputValue.toLowerCase())
         )
       }
-      renderInput={(params) => <TextField  {...params} label={label} />}
+      renderInput={(params) => <TextField  {...params} label={label}/>}
       renderOption={(props, option) => {
         return <li {...props} key={option.value}>
           {option.name}

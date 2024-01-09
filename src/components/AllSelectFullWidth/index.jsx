@@ -5,23 +5,12 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
 export default memo(function AllSelectFullWidth({ chageValueFunction, selectOptions, selectedOptionP }) {
-  const selectedOption = selectOptions.find(option => option?.selected) || {};
-  const [age, setAge] = React.useState(selectedOptionP??(selectedOption?.value || selectOptions[0]?.value || 0));
-
+  const [age, setAge] = React.useState(selectedOptionP ?? selectOptions[0]?.value);
 
   const handleChange = (event) => {
     setAge(event.target.value);
     chageValueFunction(event.target.value)
   };
-
-  useEffect(() => {
-    const newSelectedOption = selectOptions.find(option => option?.selected) || {};
-    setAge(newSelectedOption?.value || selectOptions[0]?.value || 0);
-  }, [selectOptions])
-
-  // useEffect(() => {
-  //   setAge(selectedOptionP)
-  // }, [selectedOptionP])
 
   return (
     <div>
