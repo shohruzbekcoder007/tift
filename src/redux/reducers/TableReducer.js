@@ -15,6 +15,7 @@ const initialTable = {
     FormPayment: "&"
 }
 
+
 export const TableReducer = (state = initialTable, { type, payload }) => {
     switch (type) {
         case ActionTypes.SET_TABLE:

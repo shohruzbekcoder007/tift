@@ -1204,6 +1204,26 @@ export const dekan_Links = [
   // },
   {
     img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_313_9528)">
+        <path d="M20 0H5C4.20435 0 3.44129 0.31607 2.87868 0.87868C2.31607 1.44129 2 2.20435 2 3V21C2 21.7956 2.31607 22.5587 2.87868 23.1213C3.44129 23.6839 4.20435 24 5 24H22V2C22 1.46957 21.7893 0.960859 21.4142 0.585786C21.0391 0.210714 20.5304 0 20 0ZM20 18H8V2H20V18ZM5 2H6V18H5.017C4.66973 18.003 4.32562 18.0663 4 18.187V3C4 2.73478 4.10536 2.48043 4.29289 2.29289C4.48043 2.10536 4.73478 2 5 2ZM5 22C4.73616 22 4.48301 21.8958 4.29571 21.7099C4.1084 21.5241 4.00211 21.2718 4 21.008H4.015C4.01394 20.876 4.03903 20.7451 4.08881 20.6229C4.13859 20.5006 4.21209 20.3894 4.30505 20.2957C4.39801 20.202 4.50861 20.1276 4.63046 20.0769C4.75231 20.0261 4.883 20 5.015 20H20V22H5Z" fill="currentcolor" />
+      </g>
+      <defs>
+        <clipPath id="clip0_313_9528">
+          <rect width="24" height="24" fill="currentcolor" />
+        </clipPath>
+      </defs>
+    </svg>
+    ,
+    text: {
+      uz: "Qayta Topshirish",
+      ru: "Прочитай заново",
+      eng: "Read again"
+    },
+    to: "readagain",
+    type: "text"
+  },
+  {
+    img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_107_13325)">
         <path d="M19 2H5C2.243 2 0 4.243 0 7V17C0 19.757 2.243 22 5 22H19C21.757 22 24 19.757 24 17V7C24 4.243 21.757 2 19 2ZM2 8H11V13H2V8ZM13 8H22V13H13V8ZM5 4H19C20.304 4 21.415 4.836 21.828 6H2.172C2.585 4.836 3.696 4 5 4ZM2 17V15H11V20H5C3.346 20 2 18.654 2 17ZM19 20H13V15H22V17C22 18.654 20.654 20 19 20Z" fill="currentcolor" />
       </g>
@@ -2378,6 +2398,8 @@ export const admin_links = [
     type: "text"
   },
 ]
+
+
 export const rector_links = [
   // {
   //   img: <svg width="24" height="24" viewBox="0 0 24 24" fill="currentcolor" xmlns="http://www.w3.org/2000/svg">

@@ -10,7 +10,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { getQuizs, postQuiz } from './requests';
 import { student_test_detail, student_test_solve } from '../../utils/API_urls';
 import MyTimer from './MyTimer';
-import { Alert, Modal, Snackbar } from '@mui/material';
+import { Alert, CircularProgress, Modal, Snackbar } from '@mui/material';
 import { QuizBack } from '../QuizWrapper/styles';
 import MuiAlert from '@mui/material/Alert';
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles';
@@ -60,6 +60,11 @@ function PaperSheet(props) {
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [taskType, settaskType] = useState('')
+  
+  const [TextLoader, setTextLoader] = useState("Yakunlash va natijani ko'rish")
+  const [TextLoader2, setTextLoader2] = useState("Yakunlash va vazifalarga qaytish")
+
+
 
   const handleCloseAlert = () => setOpenAlert(false);
   const confirmExit = (e) => {
@@ -156,6 +161,8 @@ function PaperSheet(props) {
   }
 
   const revealCorrect = () => {
+    setTextLoader(<CircularProgress color="inherit" size={25} />)
+    setTextLoader2(<CircularProgress color="inherit" size={25} />)
     let my_answers = {
       task: taskId,
       answers: []
@@ -165,12 +172,17 @@ function PaperSheet(props) {
         answer: element.aswer_id
       })
     })
+
     postQuiz(student_test_solve, my_answers, response => {
       console.log(response)
       setOpen(true)
       setTestTime(0)
       setGraduate(response.grade)
+      setTextLoader("Yakunlash va natijani ko'rish")
+      setTextLoader2("Yakunlash va vazifalarga qaytish")
     }, error => {
+      setTextLoader("Yakunlash va natijani ko'rish")
+      setTextLoader2("Yakunlash va vazifalarga qaytish")
       console.log(error)
     })
   }
@@ -300,6 +312,7 @@ function PaperSheet(props) {
                       revealCorrect()
                       navigate(-1)
                     }}
+                    disabled={typeof(TextLoader2) != 'string' ? true : false}
                     sx={{
                       borderRadius: "10px",
                       // textTransform: "capitalize",
@@ -308,13 +321,17 @@ function PaperSheet(props) {
                       marginRight: "20px"
                     }}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  {
+                  typeof(TextLoader2) == 'string' && 
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path d="M19 10.9998H9L12.29 7.70982C12.3837 7.61685 12.4581 7.50625 12.5089 7.38439C12.5597 7.26253 12.5858 7.13183 12.5858 6.99982C12.5858 6.8678 12.5597 6.7371 12.5089 6.61524C12.4581 6.49338 12.3837 6.38278 12.29 6.28982C12.1026 6.10356 11.8492 5.99902 11.585 5.99902C11.3208 5.99902 11.0674 6.10356 10.88 6.28982L6.59 10.5898C6.21441 10.9632 6.00223 11.4702 6 11.9998C6.00487 12.5259 6.21684 13.0289 6.59 13.3998L10.88 17.6998C10.9732 17.7924 11.0838 17.8657 11.2054 17.9156C11.3269 17.9654 11.4571 17.9908 11.5885 17.9904C11.7199 17.9899 11.8499 17.9636 11.9712 17.9129C12.0924 17.8621 12.2024 17.7881 12.295 17.6948C12.3876 17.6016 12.4609 17.491 12.5107 17.3694C12.5606 17.2479 12.586 17.1177 12.5856 16.9863C12.5851 16.8549 12.5588 16.7249 12.508 16.6037C12.4573 16.4824 12.3832 16.3724 12.29 16.2798L9 12.9998H19C19.2652 12.9998 19.5196 12.8945 19.7071 12.7069C19.8946 12.5194 20 12.265 20 11.9998C20 11.7346 19.8946 11.4802 19.7071 11.2927C19.5196 11.1052 19.2652 10.9998 19 10.9998Z" fill="black" />
                     </svg>
-                    Yakunlash va vazifalarga qaytish
+                  }  
+                   
+                    {TextLoader2}
                   </Button>
-                  <Button onClick={revealCorrect} variant="contained" color="primary" sx={{ padding: '14px' }}>
-                    Yakunlash va natijani ko'rish
+                  <Button disabled={typeof(TextLoader) != 'string' ? true : false} onClick={revealCorrect} variant="contained" color="primary" sx={{ padding: '14px' }}>
+                    {TextLoader}
                   </Button>
                 </>
                 : ""
