@@ -78,7 +78,7 @@ export default function StudentsAccountant() {
 
   useEffect(() => {
     setStudents([])
-    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}&specialty=${DirectionID}`, (response) => {
+    getStudents(`${accountant_students}?page_size=${pageSize}&page=${page}&search=${searchText}&year=${AcademekYear}&specialty=${DirectionID}&academic_group=${GroupID}`, (response) => {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
@@ -87,7 +87,7 @@ export default function StudentsAccountant() {
       console.log(error);
       setModalText("Ma'lumot yo'q")
     })
-  }, [page, pageSize, Status, searchText, AcademekYear,FormPayment,DirectionID])
+  }, [page, pageSize, Status, searchText, AcademekYear,FormPayment,DirectionID,GroupID])
 
   
   

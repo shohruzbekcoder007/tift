@@ -9,14 +9,14 @@ export default function QuestionnaireTabs() {
     return (
         <Tabs defaultValue={0} style={{ width: "100%" }}>
             <TabsList>
-                <Tab>{listLanguage.practice['ru']}</Tab>
-                <Tab>{listLanguage.Completed['ru']}</Tab>
+                <Tab>{listLanguage.practice['uz']}</Tab>
+                <Tab>{listLanguage.Completed['uz']}</Tab>
             </TabsList>
             <TabPanel value={0}>
-                <EmptyPanel text={listLanguage.currentQuestionnaires['ru']}/>
+                <EmptyPanel text={listLanguage.currentQuestionnaires['uz']}/>
             </TabPanel>
             <TabPanel value={1}>
-                <EmptyPanel text={listLanguage.completedSurveys['ru']}/>
+                <EmptyPanel text={listLanguage.completedSurveys['uz']}/>
             </TabPanel>
         </Tabs>
     );

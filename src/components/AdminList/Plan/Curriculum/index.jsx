@@ -18,7 +18,8 @@ import { Directions, academic_plan } from '../../../../utils/API_urls'
 import { addAcademic_Plan, deletAcademic_Plan, editAcademic_Plan, getAcademic_Plan } from './request'
 import { getDirections } from '../../Directions/request'
 import AlertDialog from '../../../AlertDialog'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTable } from '../../../../redux/action/tableActions'
 
 export default function Curriculum() {
   const [open, setOpen] = useState(false);
@@ -29,7 +30,8 @@ export default function Curriculum() {
   const handleClose2 = () => setOpen2(false);
   const user = useSelector((state) => state.user);
   const { state } = useLocation()
-
+  const searchSelects = useSelector((state) => state.table);
+  const dispatch = useDispatch()
   const [Plans, setPlans] = useState([])
   const [DirectionsList, setDirectionsList] = useState([])
   const [pageSize, setPageSize] = useState(10)
@@ -42,9 +44,11 @@ export default function Curriculum() {
 
   const [Semester, setSemester] = useState(1)
   const [Direction, setDirection] = useState(null)
-  const [DirectionID, setDirectionID] = useState(null)
+  const [DirectionID, setDirectionID] = useState(searchSelects.DirectionID)
   const [Degree, setDegree] = useState('bachelor')
   const [StudyType, setStudyType] = useState('morning')
+
+ 
 
   const [alert, setAlert] = useState(false)
   const [DeletedID, setDeletedID] = useState(null)
@@ -54,13 +58,23 @@ export default function Curriculum() {
     setAlert(true)
   }
 
+  
+
   useEffect(() => {
     if (DirectionID) {
+      console.log(searchSelects.DirectionID);
       getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state.id}&direction=${DirectionID}`, response => {
         console.log(response.data.results);
         setPlans(response.data.results)
         setAllCount(response.data.count)
         setPageCount(response.data.page_count)
+        dispatch(setTable({
+          page, 
+          pageSize, 
+          searchText, 
+          DirectionID, 
+        }))
+
       }, error => {
         console.log(error)
       })
@@ -74,7 +88,7 @@ export default function Curriculum() {
   useEffect(() => {
     getDirections(Directions, (response) => {
       console.log(response);
-      setDirectionID(response[0].id)
+      searchSelects.DirectionID == "&" && setDirectionID(response[0].id)
       let list = []
       response.map(item => {
         list.push({
@@ -209,10 +223,11 @@ export default function Curriculum() {
             console.log(val)
           }} />
           <AttendSearchButton>
-            <AllSelectFullWidth
+           {DirectionsList.length > 0 &&  <AllSelectFullWidth
               chageValueFunction={val => setDirectionID(val)}
+              selectedOptionP={searchSelects.DirectionID == "&" ? DirectionsList[0]?.id : searchSelects.DirectionID }
               selectOptions={DirectionsList}
-            />
+            />}
             {
               user['role'] != 'rector' &&
               <Button
@@ -348,7 +363,7 @@ export default function Curriculum() {
                         <th>{elem.study_type}</th>
                         <th>{elem.semester}</th>
                         <th>
-                          <Link to={'sciences'} state={{id: elem.id, year: state.year, study_type: elem.study_type, direction: parseInt(elem.direction_id), degree: elem.degree, semester: elem.semester}}>
+                          <Link to={'sciences'} state={{ id: elem.id, year: state.year, study_type: elem.study_type, direction: parseInt(elem.direction_id), degree: elem.degree, semester: elem.semester }}>
                             <IconButton style={{ padding: "12px 18px" }}>
                               Fanlar
                             </IconButton>
@@ -565,7 +580,6 @@ export default function Curriculum() {
             </ModalButtons>
           </ModalBox>
         </Modal>
-
 
         <Modal
           keepMounted

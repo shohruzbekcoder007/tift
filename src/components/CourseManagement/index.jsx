@@ -177,7 +177,7 @@ export default function CourseManagement() {
                                                         </svg>
                                                         }
                                                     >
-                                                        {listLanguage.CalendarPlan['ru']}
+                                                        {listLanguage.CalendarPlan['uz']}
                                                     </Button>
                                                     </Link>
                                                 </th>
