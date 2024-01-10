@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
-import { CircularProgress, Pagination, Paper, Typography } from '@mui/material'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper, ModalBox, ModalButtons, ModalHeader } from '../../global_styles/styles'
+import { CircularProgress, Modal, Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
 import { TableTHHeader } from '../DiplomaTable'
@@ -9,7 +9,7 @@ import { AttendSearchButton } from './styles'
 import { InputsWrapper } from '../CourseManagement/styles'
 import { Link } from 'react-router-dom'
 import { deleteStudent, getUsers } from './request'
-import { academic_group_short, academic_year, additional_student, directions, host, users_student } from '../../utils/API_urls'
+import { academic_group_short, academic_year, additional_student, admin_students_contingent, directions, host, users_student } from '../../utils/API_urls'
 import AutocompleteJames from '../AutocompleteJames'
 import { getDirections } from '../AdminList/Directions/request'
 import { getAcademicGroup } from '../AdminList/Streams/request'
@@ -21,6 +21,7 @@ import jins from '../../dictionary/jins'
 import contract_type from '../../dictionary/contract_type'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTable } from '../../redux/action/tableActions'
+import { getLawyerStudentExcel } from '../LawyerAllStudents/requests'
 
 export default function DekanStudents() {
   const [open, setOpen] = React.useState(false);
@@ -55,7 +56,10 @@ export default function DekanStudents() {
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
   const [FormPayment, setFormPayment] = useState('&')
+  const [LoaderData, setLoaderData] = useState(true)
+  const [Excel, setExcel] = useState(null)
 
+  const [vedemostopen, setvedemostopen] = useState(false);
 
   const Contract = useMemo(() => {
     return contract_type.map(elem => {
@@ -85,7 +89,20 @@ export default function DekanStudents() {
       }
     })
   }, [])
-
+  const OpenVedemost = () => {
+    if (!Excel) {
+      setLoaderData(true)
+      getLawyerStudentExcel(`${admin_students_contingent}?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`, (response) => {
+        setExcel(response.data.url)
+        setLoaderData(false)
+      }, (error) => {
+        console.log(error);
+        setExcel(null)
+        setLoaderData(false)
+      })
+    }
+    setvedemostopen(true)
+  }
 
   useEffect(() => {
     getAcademecYear(academic_year, (response) => {
@@ -216,7 +233,7 @@ export default function DekanStudents() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
-            <a href={host + `/api/v1/documents/admin-students-contingent/?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`} target='_blank'>
+            <a onClick={OpenVedemost}>
               <Button
                 variant="contained"
                 sx={{
@@ -440,6 +457,69 @@ export default function DekanStudents() {
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + students.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination  count={pageCount} shape="rounded" color="primary" onChange={(_, value) => {setPage(value); setDefaultPage(10)}} />
         </BoxFooter>
+
+        <Modal
+          keepMounted
+          open={vedemostopen}
+          onClose={(_) => setvedemostopen(false)}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <ModalBox>
+            <div style={{ marginBottom: '20px' }}>
+              <ModalHeader>
+                <Typography
+                  id="keep-mounted-modal-title"
+                  variant="h6"
+                  component="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 600,
+                    color: "#000",
+                  }}
+                >
+                  Excel
+                </Typography>
+                <span
+                  onClick={(_) => setvedemostopen(false)}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.0037 6.00006C17.8162 5.81259 17.5619 5.70728 17.2967 5.70728C17.0316 5.70728 16.7773 5.81259 16.5897 6.00006L12.0037 10.5861L7.41772 6.00006C7.2302 5.81259 6.97589 5.70728 6.71072 5.70728C6.44556 5.70728 6.19125 5.81259 6.00372 6.00006C5.81625 6.18759 5.71094 6.4419 5.71094 6.70706C5.71094 6.97223 5.81625 7.22653 6.00372 7.41406L10.5897 12.0001L6.00372 16.5861C5.81625 16.7736 5.71094 17.0279 5.71094 17.2931C5.71094 17.5582 5.81625 17.8125 6.00372 18.0001C6.19125 18.1875 6.44556 18.2928 6.71072 18.2928C6.97589 18.2928 7.2302 18.1875 7.41772 18.0001L12.0037 13.4141L16.5897 18.0001C16.7773 18.1875 17.0316 18.2928 17.2967 18.2928C17.5619 18.2928 17.8162 18.1875 18.0037 18.0001C18.1912 17.8125 18.2965 17.5582 18.2965 17.2931C18.2965 17.0279 18.1912 16.7736 18.0037 16.5861L13.4177 12.0001L18.0037 7.41406C18.1912 7.22653 18.2965 6.97223 18.2965 6.70706C18.2965 6.4419 18.1912 6.18759 18.0037 6.00006Z" fill="black" />
+                  </svg>
+                </span>
+
+              </ModalHeader>
+            </div>
+
+            {
+              Excel ?
+                <a href={Excel} target='_blank'>
+                  <ModalButtons>
+                    <Button
+                      sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "10px" }}
+                      variant="contained"
+                    >
+                      <svg style={{ margin: "0 1rem" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                      </svg> <h3>Yuklab olish</h3>
+                    </Button>
+                  </ModalButtons>
+                </a> :
+                <ModalButtons>
+                  <Button
+                    disabled
+                    sx={{ width: "100%", textTransform: "none", borderRadius: "10px", boxShadow: "none", padding: "10px" }}
+                    variant="contained"
+                  >
+                    {LoaderData ? <CircularProgress color="success" size={25} /> : <><svg style={{ margin: "0 1rem" }} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z" />
+                    </svg> <h3>Yuklab olish</h3></>}
+                  </Button>
+                </ModalButtons>
+            }
+          </ModalBox>
+
+        </Modal>
       </Paper>
     </>
   )

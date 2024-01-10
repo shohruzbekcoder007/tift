@@ -54,8 +54,8 @@ export default function Students() {
   const [YearStatus, setYearStatus] = useState(true)
   const [DefaultPage, setDefaultPage] = useState(1)
   const [Gender, setGender] = useState(searchSelects.Gender)
-  const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   localStorage.setItem('status', true)
+  const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   const [Excel, setExcel] = useState(null)
 
   const [vedemostopen, setvedemostopen] = useState(false);
