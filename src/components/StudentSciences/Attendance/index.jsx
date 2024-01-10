@@ -157,7 +157,7 @@ export default function Attendance() {
                                 {
                                  nbList.length > 0 ?   nbList.map((elem, index) => {
                                         return (
-                                            <tr key={elem.id}>
+                                            <tr key={index}>
                                                 <th>{elem.lesson_date}</th>
                                                 <th>{elem.science}</th>
                                                 <th>{elem.lesson_type}</th>

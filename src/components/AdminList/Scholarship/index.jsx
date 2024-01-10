@@ -94,9 +94,9 @@ export default function Scholarship() {
               </thead>
               <tbody>
                 {
-                  [1, 2, 3, 4, 5, 6,].map(item => {
+                  [1, 2, 3, 4, 5, 6,].map((item,index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th>1234</th>
                         <th>1-курс (Бюджетники)</th>
                         <th>

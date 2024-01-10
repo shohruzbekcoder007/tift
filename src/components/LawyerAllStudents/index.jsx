@@ -791,6 +791,7 @@ const LawyerStudent = ({ elem, callback_func, status }) => {
                             studentDocument.map((elem, index) => {
                               return (
                                 <TableTHHeader
+                                  key={index}
                                   text={elem.type}
                                   iconc={null}
                                 />

@@ -397,7 +397,7 @@ export default function StudentsAccountant() {
                 {
                   students.length > 0 ? students.map((elem, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th>{elem.student_id}</th>
                         <th>{elem.student}</th>
                         <th>{elem.student_passport}</th>

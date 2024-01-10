@@ -46,9 +46,9 @@ export default function ClassScheduleTable({ table }) {
         </thead>
         <tbody>
           {
-            table?.length > 0 ? table?.map(elem => {
+            table?.length > 0 ? table?.map((elem,index) => {
               return (
-                <TableWeek weekNumber={1} start={elem.start_time} end={elem.end_time} para={elem.name} timetable={elem.timetable} />
+                <TableWeek key={index} weekNumber={1} start={elem.start_time} end={elem.end_time} para={elem.name} timetable={elem.timetable} />
               )
             })
               :

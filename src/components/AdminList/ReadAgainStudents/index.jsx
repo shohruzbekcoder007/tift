@@ -648,7 +648,7 @@ const OneStudent = ({ student, setDeleted }) => {
                     OneStudentList.length > 0 ? OneStudentList.map((item, index) => {
                       return (
                         <>
-                          <tr>
+                          <tr key={index}>
                             <th>{item.id}</th>
                             <th>{item.student_name}</th>
                             <th>{item.science_name}</th>

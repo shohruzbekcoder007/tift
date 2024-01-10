@@ -9,9 +9,9 @@ export default function TableWeek({ weekNumber, start, end, para, timetable }) {
                 <th>{para}</th>
                 <th>{start}- {end}</th>
                 {
-                    timetable?.length > 0 && timetable.map(elem => {
+                    timetable?.length > 0 && timetable.map((elem,index) => {
                         return (
-                            <th style={{ padding: " 0 2px" }}><ScheduleTableBox group={elem.groups} status={elem.status} /></th>
+                            <th key={index} style={{ padding: " 0 2px" }}><ScheduleTableBox group={elem.groups} status={elem.status} /></th>
                         )
                     })
                 }

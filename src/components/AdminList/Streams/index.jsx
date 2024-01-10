@@ -572,7 +572,7 @@ export default function Streams() {
                 {
                   StreamsList?.length > 0 ? StreamsList?.map((elem, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th>{elem.id}</th>
                         <th>{elem.name}</th>
                         <th>{elem.lang}</th>

@@ -245,9 +245,9 @@ export default function ServicesTable() {
         </thead>
         <tbody>
           {
-            Data.length > 0 ? Data.map(elem => {
+            Data.length > 0 ? Data.map((elem,index) => {
               return (
-                <tr>
+                <tr key={index}>
                   <th>{elem.call_id}</th>
                   <th>{elem.type}</th>
                   <th>{elem.date}</th>

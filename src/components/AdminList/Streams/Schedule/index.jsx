@@ -327,9 +327,9 @@ export default function Schedule() {
               </thead>
               <tbody>
                 {
-                  ScheduleGroupList.map(elem => {
+                  ScheduleGroupList.map((elem,index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th style={{ border: "0px", padding: '12px 5px' }}>
                           <AllSelectFullWidth
                             chageValueFunction={val => setDaySelectChange(val)}

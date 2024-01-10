@@ -147,12 +147,9 @@ export default function DekanOlympics() {
               </thead>
               <tbody>
                 {
-                  [1].map((elem, index) => {
-                    return (
                       <tr>
                         <th colSpan={12} align='center'>Ma'lumot yo'q</th>
                       </tr>
-                    )
                       // <tr key={index}>
                       //   <th>1220</th>
                       //   <th>Axborot xavfsizligi protokollari</th>
@@ -208,7 +205,6 @@ export default function DekanOlympics() {
                       //     </div>
                       //   </th>
                       // </tr>
-                  })
                 }
               </tbody>
             </table>

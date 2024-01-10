@@ -269,7 +269,7 @@ export default function TutorNbStudents() {
                 {
                   students.length > 0 ? students.map((elem, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th>{elem.id}</th>
                         <th>{elem.student}</th>
                         <th>{elem.patok}</th>

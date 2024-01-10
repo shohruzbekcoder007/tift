@@ -318,9 +318,9 @@ export default function Student_services() {
               </thead>
               <tbody>
                 {
-                  Data.length > 0 ? Data.map(elem => {
+                  Data.length > 0 ? Data.map((elem,index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <th>{elem.id}</th>
                         <th>{elem.type}</th>
                         <th>{elem.date}</th>
