@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 
 const CssTextField = withStyles({
     root: {
+        
         width: "100%",
         "& input.MuiInputBase-input": {
             color: "#6A6A6A",
@@ -62,10 +63,11 @@ export default function CustomizedInput({ label, callback_func, defVal }) {
       }, [searchTerm])
 
     return (
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative",order: 1, }}>
             <img src={search} style={{position: "absolute", top: "12px", left: "12px", zIndex: "2"}} alt="search iconc" />
             <CssTextField
                 // error
+                
                 label={label}
                 variant="outlined"
                 id="custom-css-outlined-input"

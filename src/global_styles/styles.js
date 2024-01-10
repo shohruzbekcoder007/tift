@@ -45,61 +45,7 @@ export const BoxFooterText = styled.p`
     font-size: ${props => props.theme.text.subtitle1.font_size};
 `
 
-export const ClassScheduleTableWrapper = styled.div`
-    width: 100%;
-    overflow-y: auto;
-    table {
-        width: 100%;
-        color: ${props => props.theme.color.text_color};
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 170%;
-        border-collapse: collapse;
-        text-align: left;
-        thead {
-            border-radius: 10px;
-            tr {
-                /* background-color: #F6F5F1; */
-                background-color: ${props => props.color=="transparent"? "transparent":"#F6F5F1"};
-            }
-        }
-        tr {
-            th {
-                padding: 12px 12px;
-                border: 1px solid #EEE;
-                line-height: 170%;
-                color: #6A6A6A;
-                font-weight: 500;
-                min-width: 80px;
-            }
-        }
-        tr {
-            td {
-                padding: 12px 12px;
-                border: 1px solid #EEE;
-                line-height: 170%;
-                color: #6A6A6A;
-                font-weight: 500;
-                min-width: 80px;
-            }
-        }
-        tr.hr-tr {
-            background-color: ${props => props.theme.color.main_color};
-            td {
-                margin: 0;
-                padding: 0;
-                height: 5px;
-            }
-        }
-    }
 
-    @media (max-width: 576px) {
-        
-    }
-
-
-
-`
 
 export const TrHeaderBox = styled.div`
     width: 100%;
@@ -166,3 +112,177 @@ export const ModalHeader = styled.div`
         cursor: pointer;
     }
 `
+
+export const ClassScheduleTableWrapper = styled.div`
+    width: 100%;
+    overflow-x: auto;
+    
+    table {
+        /* sizning joriy stil bilan bog'liq qismingiz */
+        width: 100%;
+        color: ${props => props.theme.color.text_color};
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 170%;
+        border-collapse: collapse;
+        text-align: left;
+        
+        thead {
+            border-radius: 10px;
+            tr {
+                background-color: ${props => props.color === "transparent" ? "transparent" : "#F6F5F1"};
+            }
+        }
+
+        tr {
+            th,
+            td {
+                padding: 12px 12px;
+                border: 1px solid #EEE;
+                line-height: 170%;
+                color: #6A6A6A;
+                font-weight: 500;
+                min-width: 80px;
+            }
+        }
+
+        tr.hr-tr {
+            background-color: ${props => props.theme.color.main_color};
+            td {
+                margin: 0;
+                padding: 0;
+                height: 5px;
+            }
+        }
+        
+      }
+
+`;
+
+export const ClassScheduleTableWrapper2 = styled.div`
+    width: 100%;
+    overflow-x: auto;
+    
+    table {
+        /* sizning joriy stil bilan bog'liq qismingiz */
+        width: 100%;
+        color: ${props => props.theme.color.text_color};
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 170%;
+        border-collapse: collapse;
+        text-align: left;
+        
+        thead {
+            border-radius: 10px;
+            tr {
+                background-color: ${props => props.color === "transparent" ? "transparent" : "#F6F5F1"};
+            }
+        }
+
+        tr {
+            th,
+            td {
+                padding: 12px 12px;
+                border: 1px solid #EEE;
+                line-height: 170%;
+                color: #6A6A6A;
+                font-weight: 500;
+                min-width: 80px;
+            }
+        }
+
+        tr.hr-tr {
+            background-color: ${props => props.theme.color.main_color};
+            td {
+                margin: 0;
+                padding: 0;
+                height: 5px;
+            }
+        }
+        
+      }
+    /* Ekran o'lchami kichik bo'lganda */
+    @media screen and (max-width:678px) 
+    {
+      tbody, td, th, thead,table tr{
+        display:block;
+        }
+        table thead tr{
+            position:absolute;
+            top:-9999px;
+            left:-9999px;
+            /* border-bottom:2px solid #333; */
+            }
+            
+            table tbody tr{
+                display: flex;
+                border:1px solid rgb(238, 238, 238);
+                padding:.25em;
+              }
+              tr {
+                display: flex;
+                flex-direction: column !important;
+            }
+            thead > tr > th {
+              display: none;
+            }
+
+            th {
+              border: none !important;
+            }
+
+            tbody > tr > th::before {
+              content: attr(data-cell) ": ";
+              font-size: 14px;
+              margin: 5px 0;
+            }
+
+            tbody > tr > th {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              flex-wrap: wrap;
+              text-align: end;
+
+            }
+
+                table td{
+                    border:none!important;
+                    position:relative;
+                    padding-left:calc(50% + 10px)!important
+                }
+                
+                table td td,table td{
+                    text-align:left!important;white-space:pre-wrap;overflow-wrap:break-word
+                    
+                    }
+                    table td td{
+                        position:absolute;display:block;left:1rem;width:calc(50% - 20px);font-weight:600
+                        }
+                      }
+
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

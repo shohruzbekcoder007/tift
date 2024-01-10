@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2 } from '../../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
@@ -82,7 +82,7 @@ export default function StudentSciencesMain() {
         <CustomizedInput callback_func={(val) => { console.log(val) }} />
       </StudentSciencesMainHeader>
       <BoxBody>
-        <ClassScheduleTableWrapper>
+        <ClassScheduleTableWrapper2>
           <table>
             <thead>
               <tr>
@@ -164,27 +164,28 @@ export default function StudentSciencesMain() {
             <tbody>
               {
                 sciences.length === 0 ? <tr>
-                  <th colSpan={5} align='center'>Ma’lumot yo’q</th>
+                  <th data-cell="Malumot" colSpan={5} align='center'>Ma’lumot yo’q</th>
                 </tr> : <>
                   {
                     sciences.map((elem, index) => {
                       return (
                         <tr key={index}>
-                          <th> <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
+                          <th data-cell={ListLanguage.Science[language]}>  
+                            <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
                             {elem.name}
                           </Link>
                           </th>
-                          <th>
+                          <th data-cell={ListLanguage.Teacher[language]}>
                             {
                               elem.groups?.length === 0 ? <></> :
                                 elem.groups.map((elems, index) => {
-                                  return <Link style={{ color: "gray" }} to='tasks' state={{ data: elem.groups[0].id }}>
-                                    <p key={"t" + index}><span>{elems.name}</span>-<span>{elems.teacher}</span><br /></p>
+                                  return <Link style={{ color: "gray",  }} to='tasks' state={{ data: elem.groups[0].id }}>
+                                    <p key={"t" + index}>  <span>{elems.name}</span>-<span>{elems.teacher}</span><br /></p>
                                   </Link>
                                 })
                             }
                           </th>
-                          <th align='center'>
+                          <th data-cell={ListLanguage.Attendance[language]} align='center'>
                             <Link
                               to="attendance"
                               state={{ data: elem.id }}
@@ -203,7 +204,7 @@ export default function StudentSciencesMain() {
                               </Button>
                             </Link>
                           </th>
-                          <th>
+                          <th data-cell={"Amal"}>
                             <Link to='tasks' state={{ data: elem.groups[0].id }}>
                               <Button
                                 variant="contained"
@@ -231,7 +232,7 @@ export default function StudentSciencesMain() {
                               </Button>
                             </Link>
                           </th>
-                          <th>
+                          <th data-cell={ListLanguage.Plan[language]}>
                             <Link to='calendarplan' state={{ data: elem.groups[0].id }}>
                               <Button
                                 variant="contained"
@@ -268,7 +269,7 @@ export default function StudentSciencesMain() {
               }
             </tbody>
           </table>
-        </ClassScheduleTableWrapper>
+        </ClassScheduleTableWrapper2>
       </BoxBody>
       {/* <BoxFooter>
         <BoxFooterText>{`Jami ${sciences[0]?.science?.length} ta, 1 dan ${sciences[0]?.science?.length} gachasi ko'rsatilmoqda`}</BoxFooterText>

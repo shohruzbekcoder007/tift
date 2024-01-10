@@ -388,6 +388,7 @@ function App() {
                   <Route path="final" element={<Final />} />
                   <Route path="ScienceSelection" element={<ScienceSelection />} />
                   <Route path="services" element={<Student_services />} />
+                  {/* TableExample */}
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="details/:id" element={<DashboardDetail />} />

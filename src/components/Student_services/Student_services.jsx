@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
+import { ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ContentWrapper } from '../../global_styles/styles'
 import { BoxFooter, BoxFooterText } from '../../global_styles/styles'
 import { Button, Pagination, Paper, Snackbar, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader, ThesisHeaderRight } from './styles'
@@ -17,7 +17,6 @@ import { additional_documents, my_semesters, student_doc, student_documents } fr
 import MuiAlert from '@mui/material/Alert'
 import { getDocumentStudents } from '../ServicesTable/request'
 import { getSemester } from '../FilingApplication/requests'
-
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
   const [ListSelect, setListSelect] = React.useState('');
@@ -216,7 +215,8 @@ export default function Student_services() {
         }}
       >
         <ThesisHeader>
-          <PageSelector chageValueFunction={chageRowHadler} />
+          {/* <PageSelector chageValueFunction={chageRowHadler} /> */}
+          <div></div>
           <ThesisHeaderRight >
             <CustomizedInput callback_func={chageSearch} />
             <Button
@@ -237,7 +237,7 @@ export default function Student_services() {
           </ThesisHeaderRight>
         </ThesisHeader>
         <ThesisBody>
-          <ClassScheduleTableWrapper>
+          <ClassScheduleTableWrapper2>
             <table>
               <thead>
                 <tr>
@@ -321,14 +321,14 @@ export default function Student_services() {
                   Data.length > 0 ? Data.map((elem,index) => {
                     return (
                       <tr key={index}>
-                        <th>{elem.id}</th>
-                        <th>{elem.type}</th>
-                        <th>{elem.date}</th>
-                        {elem.status == "success" ? <th style={{ color: "green" }}>{elem.status}</th> : ""}
-                        {elem.status == "processing" ? <th style={{ color: 'rgba(214, 177, 13, 0.993)' }}>{elem.status}</th> : ""}
-                        {elem.status == "error" ? <th style={{ color: 'red' }}>{elem?.description} </th> : ""}
-                        {elem.status == "pending" ? <th style={{ color: "rgba(214, 177, 13, 0.993)" }}>{elem.status}</th> : ""}
-                        <th>
+                        <th data-cell="ID" >{elem.id}</th>
+                        <th data-cell="Turi" >{elem.type}</th>
+                        <th data-cell="Sana">{elem.date}</th>
+                        {elem.status == "success" ? <th data-cell="Holati" style={{ color: "green" }}>{elem.status}</th> : ""}
+                        {elem.status == "processing" ? <th data-cell="Holati" style={{ color: 'rgba(214, 177, 13, 0.993)' }}>{elem.status}</th> : ""}
+                        {elem.status == "error" ? <th data-cell="Holati" style={{ color: 'red' }}>{elem?.description} </th> : ""}
+                        {elem.status == "pending" ? <th data-cell="Holati" style={{ color: "rgba(214, 177, 13, 0.993)" }}>{elem.status}</th> : ""}
+                        <th data-cell='Fayl'>
                           {
                             elem.file ? <a href={`${elem.file}`} target='_blank' >
                               <Button
@@ -386,7 +386,7 @@ export default function Student_services() {
 
               </tbody>
             </table>
-          </ClassScheduleTableWrapper>
+          </ClassScheduleTableWrapper2>
         </ThesisBody>
         {/* <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>

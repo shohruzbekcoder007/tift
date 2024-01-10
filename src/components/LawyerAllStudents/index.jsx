@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Modal, Pagination, Paper, Typography } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, Modal, Pagination, Paper, Typography } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
@@ -36,6 +36,7 @@ export default function LawyerAllStudents() {
   // const [file2, setFile2] = useState(null)
   // const handleClose = () => setOpen(false)
   const [GroupList, setGroupList] = useState([])
+
   const [DirectionID, setDirectionID] = useState('&')
   const [GroupID, setGroupID] = useState('')
   const [StudyTypeSelect, setStudyTypeSelect] = useState('&')
@@ -44,6 +45,7 @@ export default function LawyerAllStudents() {
   const [Excel, setExcel] = useState(null)
   const [vedemostopen, setvedemostopen] = useState(false);
 
+  const [LoaderData, setLoaderData] = useState(<CircularProgress color="success" size={25} />)
 
   const StudyTipeList = useMemo(() => {
     study_type[0].value = '&'

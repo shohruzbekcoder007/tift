@@ -15,13 +15,24 @@ export default function PageSelector({chageValueFunction, defPage }) {
         chageValueFunction(event.target.value)
     };
 
+//     const styles = {
+//     order: 2,
+//     '@media (max-width: 600px)': {
+//         width: "100%"
+//     },
+// }
+
     return (
-        <div>
+        <div >
+
+            
             <FormControl sx={{ 
+                
                 display: 'flex', 
                 flexDirection: 'row', 
                 alignItems: 'center', 
-                gap: "10px" 
+                gap: "10px",
+                // float: "right"
             }}>
                 <Select
                     labelId="demo-simple-select-autowidth-label"
@@ -37,6 +48,7 @@ export default function PageSelector({chageValueFunction, defPage }) {
                         fontWeight: '500',
                         color: '#151515',
                         borderRadius: "10px",
+                        // order: 2,
                         // minWidth: '70px',
                         '@media screen and (max-width: 576px)': { 
                             fontSize: "12px", 

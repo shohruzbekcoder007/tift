@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
+import { ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ContentWrapper } from '../../global_styles/styles'
 import { PersonalPlanPaper, PersonalPlanWrapper } from './styles'
 import { Paper, Typography } from '@mui/material'
 import { TableTHHeader } from '../DiplomaTable'
@@ -58,7 +58,7 @@ const Semester = ({ title, data, index}) => {
       >
         {title}
       </Typography>
-      <ClassScheduleTableWrapper style={{ flexDirection: "column", display: "flex", justifyContent: "space-between", height: "80%" }}>
+      <ClassScheduleTableWrapper style={{ flexDirection: "column", display: "flex", justifyContent: "space-between", }}>
         <table>
           <thead>
             <tr>
@@ -71,11 +71,11 @@ const Semester = ({ title, data, index}) => {
                 iconc={null}
               />
               <TableTHHeader
-                text="ball"
+                text="Ball"
                 iconc={null}
               />
               <TableTHHeader
-                text="baho"
+                text="Baho"
                 iconc={null}
               />
             </tr>
@@ -86,23 +86,30 @@ const Semester = ({ title, data, index}) => {
               data?.length > 0 ? data.map((elem, index) => {
                 return (
                   <tr key={index}>
-                    <th>{elem.science}</th>
-                    <th>{elem.credit}</th>
-                    <th>{elem.score}</th>
-                    <th>{elem.gpa}</th>
+                    <th data-cell="Fan">
+                      {
+                        elem.discipline_type == 'selection' ? elem.science + " (tanlov fan)" : elem.science
+                      }
+                      </th>
+                    <th data-cell="Kredit">{elem.credit}</th>
+                    <th data-cell="Ball">{elem.score}</th>
+                    <th data-cell="Baho">{elem.gpa}</th>
                   </tr>
                 )
               })
                 :
                 <tr>
-                  <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  <th data-cell="Malumot" colSpan={12} align='center'>Ma'lumot yo'q</th>
                 </tr>
             }
           </tbody>
         </table>
       </ClassScheduleTableWrapper>
       <div style={{ display: "flex", justifyContent: 'end' }}>
-        <h3>GPA: {parseFloat(allGrade / allCredit).toFixed(2)}</h3>
+        {
+          parseFloat(allGrade / allCredit).toFixed(2) != "NaN" ?  <h3>GPA: {parseFloat(allGrade / allCredit).toFixed(2)}</h3> : ""
+        }
+        
       </div>
     </PersonalPlanPaper>
   )
