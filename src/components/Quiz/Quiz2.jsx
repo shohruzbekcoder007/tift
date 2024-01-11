@@ -20,9 +20,12 @@ const styles = theme => ({
     paddingTop: 16,
     paddingBottom: 16,
     marginTop: theme.spacing.unit * 3,
-    minWidth: "1000px",
-    margin: "10px auto"
+    maxWidth: "800px",
+    minWidth: "70%",
+    margin: "10px auto",
+    height: "auto"
   },
+
   button: {
     pointerEvents: "none",
     boxShadow: "none"
@@ -33,12 +36,24 @@ const styles = theme => ({
   },
   footer: {
     marginTop: "40px"
+  },
+
+  '@media (max-width: 600px)': {
+    QuestionTitle: {
+      fontSize: '15px'
+    },
+    footer: {
+      // display: "flex",
+      // justifyContent: "end"
+    }
   }
+
 });
 
 function PaperSheet(props) {
 
   const [open, setOpen] = useState(false);
+  const [Open2, setOpen2] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -60,7 +75,7 @@ function PaperSheet(props) {
   const [changed, serChanged] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [taskType, settaskType] = useState('')
-  
+
   const [TextLoader, setTextLoader] = useState("Yakunlash va natijani ko'rish")
   const [TextLoader2, setTextLoader2] = useState("Yakunlash va vazifalarga qaytish")
 
@@ -194,20 +209,20 @@ function PaperSheet(props) {
           {alertMessage}
         </Alert>
       </Snackbar> */}
-      <Paper className={props.classes.root} elevation={4} sx={{ p: 3 }}>
+      <Paper className={props.classes.root} elevation={4} sx={{ p: 3, }}>
         <QuizBack>
           <Button
             variant="contained"
             color='secondary'
             onClick={() => {
-              revealCorrect()
-              navigate(-1)
+              setOpen2(true)
             }}
             sx={{
               borderRadius: "10px",
               textTransform: "capitalize",
               boxShadow: "none",
               padding: "14px",
+              
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -228,9 +243,9 @@ function PaperSheet(props) {
         </> : <>
           {(testTime != 0) ? <MyTimer testTime={testTime * 60} finishFunction={revealCorrect} /> : <></>}
           <Typography component="h3" variant="headline" sx={{ my: 1 }}>Qolgan urinishlar soni: {tryCount}</Typography>
-          
-          
-          
+
+
+
           {/* <Typography component="h3">
             <Button variant="fab" color="primary" aria-label="add" className={props.classes.button}>
               <LiveHelp />
@@ -261,21 +276,21 @@ function PaperSheet(props) {
           } */}
 
           {
-            taskType != 'latex' ? <Typography variant="headline" component="h3">
+            taskType != 'latex' ? <Typography className={props.classes.QuestionTitle} variant="headline" component="h3">
               {current + 1} / {quiz?.length} | {quiz[current]?.question}
-            </Typography> 
-            
-            : 
-            
-            <Typography variant="headline" component="h3">
-              {current + 1} / {quiz?.length} | <img src={`${quiz[current]?.question}`} alt="" />
             </Typography>
+
+              :
+
+              <Typography className={props.classes.QuestionTitle} variant="headline" component="h3">
+                {current + 1} / {quiz?.length} | <img src={`${quiz[current]?.question}`} alt="" />
+              </Typography>
           }
           <hr style={{ marginBottom: "20px" }} />
 
           {quiz[current]?.answers.map((opt, index) => {
             return (
-              <div key={index} style={{ marginTop: "5px" }}>
+              <div className={props.classes.QuestionTitle} key={index} style={{ marginTop: "5px" }}>
                 {
                   taskType != 'latex' ? <>
                     <Radio
@@ -302,10 +317,31 @@ function PaperSheet(props) {
           })}
           <div className={props.classes.footer}>
             {/* {komentni uchirmang} */}
+
+            
+
+            <>
+            <Button variant="contained" color="primary" sx={{ padding: '14px', opacity: 0 }}>
+              {/* Yakunlash va natijani ko'rish */}
+            </Button>
+            {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="contained" color="primary" style={{ float: "right" }} sx={{ padding: '14px' }}>
+              Keyingi
+            </Button>) : (<Button onClick={moveNext} disabled variant="contained" color="primary" style={{ float: "right" }} sx={{ padding: '14px' }}>
+              Keyingi
+            </Button>)}
+
+            {(current == 0) ? (<Button onClick={movePrevious} disabled variant="contained" color="primary" style={{ float: "right", marginRight: "50px" }} sx={{ padding: '14px' }}>
+              Oldingi
+            </Button>) : (<Button onClick={movePrevious} variant="contained" color="primary" style={{ float: "right", marginRight: "50px" }} sx={{ padding: '14px' }}>
+              Oldingi
+            </Button>)}
+            </>
+
+
             {
               current == quiz.length - 1 ?
                 <>
-                  <Button
+                  {/* <Button
                     variant="contained"
                     color='secondary'
                     onClick={() => {
@@ -329,27 +365,22 @@ function PaperSheet(props) {
                   }  
                    
                     {TextLoader2}
-                  </Button>
-                  <Button disabled={typeof(TextLoader) != 'string' ? true : false} onClick={revealCorrect} variant="contained" color="primary" sx={{ padding: '14px' }}>
+                  </Button> */}
+                  <Button disabled={typeof(TextLoader) != 'string' ? true : false} onClick={revealCorrect} variant="contained" color="primary" 
+                  sx={{ 
+                    padding: '10px',
+                     margin: "10px 0" ,
+                    '@media (max-width: 650px)': {
+                      width: '100%'
+                    }
+                     }}>
                     {TextLoader}
                   </Button>
                 </>
                 : ""
             }
-            <Button variant="contained" color="primary" sx={{ padding: '14px', opacity: 0 }}>
-              {/* Yakunlash va natijani ko'rish */}
-            </Button>
-            {(current + 1 < quiz.length) ? (<Button onClick={moveNext} variant="contained" color="primary" style={{ float: "right" }} sx={{ padding: '14px' }}>
-              Keyingi
-            </Button>) : (<Button onClick={moveNext} disabled variant="contained" color="primary" style={{ float: "right" }} sx={{ padding: '14px' }}>
-              Keyingi
-            </Button>)}
 
-            {(current == 0) ? (<Button onClick={movePrevious} disabled variant="contained" color="primary" style={{ float: "right", marginRight: "50px" }} sx={{ padding: '14px' }}>
-              Oldingi
-            </Button>) : (<Button onClick={movePrevious} variant="contained" color="primary" style={{ float: "right", marginRight: "50px" }} sx={{ padding: '14px' }}>
-              Oldingi
-            </Button>)}
+            
             {/* {
               (!finishedTest) ? <>
                 {
@@ -406,6 +437,59 @@ function PaperSheet(props) {
                 onClick={(_) => { navigate(-1) }}
               >
                 Ortga qaytish
+              </Button>
+
+            </ModalButtons>
+          </ModalBox>
+        </Modal>
+
+        <Modal
+          keepMounted
+          open={Open2}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <ModalBox>
+            <ModalHeader>
+              <Typography
+                id="keep-mounted-modal-title"
+                variant="h6"
+                component="h4"
+                sx={{
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#000"
+                }}
+              >
+                Rostdan ham qaytmoqchimisz ?                       </Typography>
+
+            </ModalHeader>
+            <Alert
+              variant="outlined"
+              severity="warning"
+              sx={{ mt: 2 }}
+            >
+              <h3>Ortga qaytsangiz urinishlar soni 1taga kamayadi</h3>
+              {/* <h4>Qayta urinib koring sizda hali yana {tryCount} ta urinish mavjud</h4> */}
+            </Alert>
+            <ModalButtons>
+              <Button
+                sx={{ width: "100%", textTransform: "none", margin: '1rem 0', '@media (max-width: 650px)': {
+                 padding: "1.2rem"
+                } }}
+                variant="contained"
+                onClick={(_) => { 
+                  revealCorrect() 
+                  navigate(-1) }}
+              >
+                Ortga qaytish
+              </Button>
+              <Button
+                sx={{ width: "100%", textTransform: "none", margin: '1rem 0' }}
+                variant="contained"
+                onClick={(_) => { setOpen2(false) }}
+              >
+                Testni davom etish
               </Button>
 
             </ModalButtons>

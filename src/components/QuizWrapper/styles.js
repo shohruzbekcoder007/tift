@@ -9,6 +9,6 @@ export const QuizWrapperStyle = styled.div`
 
 export const QuizBack = styled.div`
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 30px;
+    left: 10px;
 `

@@ -1,17 +1,21 @@
 import React from 'react'
 import { TrBox, TrBoxActive, TrBoxFooter, TrBoxFooterActive, TrBoxHeader, TrBoxHeaderActive, TrBoxTrBoxActive } from './styles'
+import { useSelector } from 'react-redux'
+import WeekDay from '../../dictionary/WeekDay'
 
 export default function TableWeek({ weekNumber, start, end, para, timetable }) {
+  const language = useSelector(state => state.language)
+
     return (
         <>
             <tr>
                 {/* <th rowSpan={6}>{weekNumber}</th> */}
-                <th>{para}</th>
-                <th>{start}- {end}</th>
+                <th data-cell="Para">{para}</th>
+                <th data-cell="Vaqt">{start}- {end}</th>
                 {
                     timetable?.length > 0 && timetable.map((elem,index) => {
                         return (
-                            <th key={index} style={{ padding: " 0 2px" }}><ScheduleTableBox group={elem.groups} status={elem.status} /></th>
+                            <th data-cell={WeekDay[index][language]} key={index} style={{ padding: " 0 2px" }}><ScheduleTableBox group={elem.groups} status={elem.status} /></th>
                         )
                     })
                 }

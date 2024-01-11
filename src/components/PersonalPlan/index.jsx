@@ -99,7 +99,7 @@ const Semester = ({ title, data, index}) => {
               })
                 :
                 <tr>
-                  <th data-cell="Malumot" colSpan={12} align='center'>Ma'lumot yo'q</th>
+                  <th data-cell="Ma'lumot" colSpan={12} align='center'>Ma'lumot yo'q</th>
                 </tr>
             }
           </tbody>

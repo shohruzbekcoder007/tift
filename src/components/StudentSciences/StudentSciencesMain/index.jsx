@@ -164,7 +164,7 @@ export default function StudentSciencesMain() {
             <tbody>
               {
                 sciences.length === 0 ? <tr>
-                  <th data-cell="Malumot" colSpan={5} align='center'>Ma’lumot yo’q</th>
+                  <th data-cell="Ma'lumot" colSpan={5} align='center'>Ma’lumot yo’q</th>
                 </tr> : <>
                   {
                     sciences.map((elem, index) => {

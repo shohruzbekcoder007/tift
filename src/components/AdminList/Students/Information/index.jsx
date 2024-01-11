@@ -172,7 +172,7 @@ export default function Information() {
               </thead>
               <tbody>
                 <tr>
-                  <th colSpan={8} align='center'>Malumot yo'q</th>
+                  <th colSpan={8} align='center'>Ma'lumot yo'q</th>
                 </tr>
               </tbody>
             </table>
