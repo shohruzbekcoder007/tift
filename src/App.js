@@ -126,7 +126,7 @@ import TutorGroups from './components/AdminList/TutorGroups'
 import TutorStudents from './components/TutorStudents'
 import SignInSide from './components/SignInSide'
 import DekanStudent from './components/DekanStudent'
-// import IndividualPysical from './components/IndividualPysical'
+import IndividualPysical from './components/IndividualPysical'
 import TutorSeeSchedule from './components/TutorSeeSchedule'
 import MainArchive from './components/MainLawyer'
 import LawyerAllStudents from './components/LawyerAllStudents'
@@ -165,6 +165,7 @@ import GroupPersonalPlan from './components/AdminList/GroupPersonalPlan'
 import GroupEditStudents from './components/AdminList/GroupEditStudents'
 import ReadAgainStudents from './components/AdminList/ReadAgainStudents'
 import AdditionalResubmission from './components/AdminList/AdditionalResubmission'
+import AdminDashboard from './components/AdminList/AdminDashboard'
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -183,7 +184,6 @@ function App() {
   useEffect(() => {
     getRole(user_me, successfulFunctionGetRole, errorFunctionGetRole)
   }, [])
-
 
 
   return (
@@ -470,6 +470,7 @@ function App() {
 
                 <Route path="tutor" element={<MainTutor />}>
                   <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="IndividualPysical" element={<IndividualPysical />} />
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="groups" element={<StudentSciences />} >
                     <Route index element={<TutorGroups />} />
@@ -611,8 +612,7 @@ function App() {
                 <Route path="admin" element={<MainAdmin />}>
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="users" element={<Users />} />

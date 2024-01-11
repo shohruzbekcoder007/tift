@@ -1,3 +1,4 @@
+// import 'dotenv/config'
 // export const host = "https://8754-194-93-24-105.ngrok-free.app"
 // export const host = "https://e0f2-194-93-24-106.ngrok-free.app"
 // export const host = "http://oqdevpy.jprq.live"
@@ -5,7 +6,9 @@
 // export const host = "https://api.tift.uz"
 // export const host = "http://192.168.10.164:8000"
 // export const host = "http://jaloliddinruzikulov.jprq.site"
+// require('dotenv').config()
 export const host = "https://api.tift.uz"
+// console.log(process.env.REACT_APP_API_URL);
 // export const host = "http://jaloliddinruzikulov.jprq.site/"
 // export const host = "https://oqdevpy.jprq.live"
 // export const host = "https://c68d-178-218-200-199.ngrok-free.app"
