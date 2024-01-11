@@ -22,6 +22,7 @@ import contract_type from '../../../dictionary/contract_type'
 import { useDispatch, useSelector } from 'react-redux'
 import { setTable } from '../../../redux/action/tableActions'
 import { getLawyerStudentExcel } from '../../LawyerAllStudents/requests'
+import NewAutocomplete from '../../AutocompleteJames/NewAutocomplete'
 
 export default function Students() {
   const [open, setOpen] = React.useState(false);
@@ -204,7 +205,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
+    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID??"&"}&academic_group=${GroupID??"&"}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
@@ -310,8 +311,8 @@ export default function Students() {
               selectedOptionP={AcademekYear}
               selectOptions={YearList}
             />
-            <AutocompleteJames width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} defaultValue={DirectionID} />
-            <AutocompleteJames width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} defaultValue={GroupID} />
+            <NewAutocomplete width={'150px'} selectOptions={Directions} chageValueFunction={val => setDirectionID(val)} label={"Yo'nalish"} defaultValue={DirectionID} />
+            <NewAutocomplete width={'150px'} selectOptions={GroupList} chageValueFunction={val => setGroupID(val)} label={"Guruh"} defaultValue={GroupID} />
             <AllSelectFullWidth
               chageValueFunction={(val) => setDegreeSelect(val)}
               selectedOptionP={DegreeSelect}

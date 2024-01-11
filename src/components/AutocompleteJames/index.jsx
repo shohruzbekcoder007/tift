@@ -5,9 +5,12 @@ import { useState } from 'react';
 
 export default function AutocompleteJames({selectOptions, chageValueFunction, label, width, defaultValue}) {
 
+  const [defVal, setDefVal] = useState({})
+
   const selectedOption = React.useMemo(() => {
     let selectedDV = selectOptions.find(elem => elem.value == defaultValue)
     console.log(selectedDV, "selectedDV", selectOptions)
+    setDefVal(selectedDV)
     return selectedDV
   }, [selectOptions, defaultValue])
   
@@ -42,7 +45,8 @@ export default function AutocompleteJames({selectOptions, chageValueFunction, la
             borderColor: "#F6F6F6",
         },
     }}
-      defaultValue={selectedOption}
+      // defaultValue={defVal}
+      // value={defVal?.value}
       getOptionLabel={(option) => option.name}
       filterOptions={(options, { inputValue }) =>
         options.filter(
