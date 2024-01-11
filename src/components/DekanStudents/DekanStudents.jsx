@@ -270,7 +270,7 @@ export default function Students() {
               </Button>
             </a>
             {
-              user['role'] != 'rector' || user['role'] != 'dekan'&&
+              (user['role'] != 'rector' || user['role'] != 'dekan') &&
               <Link to={'add'}>
                 <Button
                   variant="contained"

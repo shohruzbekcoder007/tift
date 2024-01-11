@@ -256,7 +256,7 @@ export default function DekanStudents() {
               </Button>
             </a>
             {
-              user['role'] != 'rector' || user['role'] != 'dekan' &&
+              (user['role'] != 'rector' || user['role'] != 'dekan') &&
             <Link to={'add'}>
               <Button
                 variant="contained"
