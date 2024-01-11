@@ -30,6 +30,9 @@ export const getRole = (user) => {
     if (user?.role[0] === "rector") {
       return 'rector'
     }
+    if (user?.role[0] === "stylist") {
+      return 'stylist'
+    }
   } else {
     return ''
   }

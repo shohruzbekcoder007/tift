@@ -56,7 +56,7 @@ export default function Curriculum() {
 
   useEffect(() => {
     if (DirectionID) {
-      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state}&direction=${DirectionID}`, response => {
+      getAcademic_Plan(`${academic_plan}?page_size=${pageSize}&search=${searchText}&page=${page}&academic_year=${state.id}&direction=${DirectionID}`, response => {
         console.log(response.data.results);
         setPlans(response.data.results)
         setAllCount(response.data.count)

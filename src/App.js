@@ -166,6 +166,7 @@ import GroupEditStudents from './components/AdminList/GroupEditStudents'
 import ReadAgainStudents from './components/AdminList/ReadAgainStudents'
 import AdditionalResubmission from './components/AdminList/AdditionalResubmission'
 import AdminDashboard from './components/AdminList/AdminDashboard'
+import MainStylist from './components/MainStylist'
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -198,8 +199,7 @@ function App() {
                 <Route path="rector" element={<MainRector />}>
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
-                  <Route path="dashboard" element={<TeacherDashboard />} />
-                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="users" element={<Users />} />
@@ -484,6 +484,18 @@ function App() {
                     <Route path="NB" element={<TutorNbStudents />} />
                   </Route>
                   <Route path="profile" element={<Profile />} />
+                </Route>
+
+                <Route path="stylist" element={<MainStylist />}>
+                  <Route path="dashboard" element={<TeacherDashboard />} />
+                  <Route path="dashboard/:id" element={<DashboardDetail />} />
+                  <Route path="profile" element={<Profile />} />
+                  <Route path='schedule' element={<ScheduleStudy />} />
+                  <Route path="streams" element={<StudentSciences />} >
+                    <Route index element={<Streams />} />
+                    <Route path='schedule' element={<Schedule />} />
+                    <Route path="vedomost" element={<Vedomost />} />
+                  </Route>
                 </Route>
 
                 <Route path="hr" element={<MainHr />}>

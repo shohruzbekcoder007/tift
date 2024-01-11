@@ -6,12 +6,9 @@ import { useSelector } from "react-redux"
 import { useDispatch } from 'react-redux'
 import { setSidebar } from '../../redux/action/sidebarActions'
 import { setTitle } from '../../redux/action/titleActions'
-import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links, admin_links, hr_Links, accountant_links, rector_links, archive_Links } from './sidebarlinks'
+import { student_Links, teacher_Links, headofthedepartment_Links, tutor_Links, dekan_Links, admin_links, hr_Links, accountant_links, rector_links, archive_Links, stylist_Links } from './sidebarlinks'
 import { additional_action_permission } from '../../utils/API_urls'
 import { getAcademic_Year } from '../CallStudents/request'
-import Lottie from 'lottie-react'
-import Snow from '../../imgs/snow2.json'
-
 
 export default function Sidebar({ role }) {
 
@@ -119,6 +116,7 @@ const chageLinks = (role) => {
   if (role === "hr") return hr_Links
   if (role === "accountant") return accountant_links
   if (role === "rector") return rector_links
+  if (role === "stylist") return stylist_Links
   return []
 }
 

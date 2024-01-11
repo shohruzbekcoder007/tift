@@ -265,6 +265,85 @@ export const ClassScheduleTableWrapper2 = styled.div`
 `;
 
 
+export const ClassScheduleTableWrapperAdmin = styled.div`
+    width: 100%;
+    overflow-x: auto;
+    
+    table {
+        /* sizning joriy stil bilan bog'liq qismingiz */
+        width: 100%;
+        /* color: ${props => props.theme.color.text_color}; */
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 170%;
+        border-collapse: collapse;
+        text-align: left;
+        
+        thead {
+            border-radius: 10px;
+            tr {
+                background-color: ${props => props.color === "transparent" ? "transparent" : "#F6F5F1"};
+            }
+        }
+
+        tr {
+            th,
+            td {
+                padding: 12px 12px;
+                border: 1px solid #EEE;
+                line-height: 170%;
+                color: #6A6A6A;
+                font-weight: 500;
+                /* min-width: -20px; */
+            }
+        }
+
+        .kurslar {
+            color: ${props => props.theme.color.main_color};
+            font-size: 16px;
+        }
+
+        
+        /* .study_type {
+            color: ${props => props.theme.color.main_color};
+            font-size: 14px;
+        } */
+        .study_type_tr > td {
+            font-size: 14px;
+        }
+
+        .study_type_tr > td:nth-child(2n){
+            color: ${props => props.theme.color.Orange_color};
+        }
+        .study_type_tr > td:nth-child(2n-1){
+            color: ${props => props.theme.color.Blue_color};
+        }
+
+        .count_and_sum > td {
+            font-size: 12px;
+            /* font-style: italic; */
+        }
+
+        .count_and_sum > td:nth-child(2n){
+            color: ${props => props.theme.color.main_color};
+        }
+        .count_and_sum > td:nth-child(2n-1){
+            color: ${props => props.theme.color.main_color};
+        }
+
+        tr.hr-tr {
+            background-color: ${props => props.theme.color.main_color};
+            td {
+                margin: 0;
+                padding: 0;
+                height: 5px;
+            }
+        }
+        
+      }
+
+`;
+
 
 
 
