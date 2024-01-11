@@ -171,7 +171,7 @@ export default function SciencesAdmin() {
 
 
   const DeleteScience = (pk) => {
-    setAdminDeleteScience(`${science}${pk}`, (response) => {
+    setAdminDeleteScience(`${science}${pk}/`, (response) => {
       if (response.status)
         setOpenAlert(true)
       serChanged(true)

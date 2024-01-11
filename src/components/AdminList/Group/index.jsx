@@ -239,7 +239,7 @@ export default function Group() {
           <AttendSearchButton>
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             {
-              user['role'] != 'rector' || user['role'] != 'dekan' &&
+              (user['role'] == 'admin' || user['role'] == 'department_user') &&
               <Button
                 variant="contained"
                 onClick={handleOpen}
