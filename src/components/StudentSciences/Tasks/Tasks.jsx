@@ -1,6 +1,6 @@
 import { Modal, Paper, Snackbar, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import { Pagination } from '@mui/material'
 import { TableTHHeader } from '../../DiplomaTable'
 import Button from '@mui/material/Button'
@@ -148,7 +148,7 @@ export default function Tasks() {
           </Typography>
         </BoxHeader>
         <BoxBody>
-          <ClassScheduleTableWrapper>
+          <ClassScheduleTableWrapper2>
             <table>
               <thead>
                 <tr>
@@ -263,8 +263,8 @@ export default function Tasks() {
                     console.log(elem)
                     return (
                       <tr key={index}>
-                        <th>{elem.teacher}</th>
-                        <th>
+                        <th data-cell="O'qituvchi">{elem.teacher}</th>
+                        <th data-cell="Topshiriq">
                           {elem.title}
                           {
                             (elem.method === 'test' || elem.method === 'oddiy') ?
@@ -295,10 +295,10 @@ export default function Tasks() {
                               </>
                           }
                         </th>
-                        <th>{elem.method}</th>
-                        <th>{elem.type}</th>
-                        <th>{elem.deadline}</th>
-                        <th>
+                        <th data-cell="Method">{elem.method}</th>
+                        <th data-cell="Turi">{elem.type}</th>
+                        <th data-cell="Topshiriq muddati">{elem.deadline}</th>
+                        <th data-cell="Bal. maks">
                           <Button
                             sx={{
                               borderRadius: "10px",
@@ -320,7 +320,7 @@ export default function Tasks() {
                             {elem.grade}
                           </Button>
                         </th>
-                        <th>
+                        <th data-cell="Fayl">
                           {
                             elem.method === 'oddiy' ?
                               <></> :
@@ -373,7 +373,7 @@ export default function Tasks() {
                   })
                     :
                     <tr>
-                      <th colSpan={12} align='center'>Ma'lumot yo'q</th>
+                      <th data-cell="Ma'lumot" colSpan={12} align='center'>Ma'lumot yo'q</th>
                     </tr>
                 }
               </tbody>
@@ -397,7 +397,7 @@ export default function Tasks() {
                   <a href="https://t.me/S_R_M_0">Buxgalteriya</a></h4>
               </ModalBox>
             </Modal>
-          </ClassScheduleTableWrapper>
+          </ClassScheduleTableWrapper2>
         </BoxBody>
         {/* <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>

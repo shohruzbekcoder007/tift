@@ -60,6 +60,7 @@ export default function Students() {
 
   const [vedemostopen, setvedemostopen] = useState(false);
   const [FormPayment, setFormPayment] = useState(searchSelects.FormPayment)
+  const [Course_number, setCourse_number] = useState('&')
 
   const [LoaderData, setLoaderData] = useState(true)
 
@@ -204,7 +205,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
+    getUsers(`${additional_student}?page_size=${pageSize}&course_number=${Course_number}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
@@ -227,7 +228,37 @@ export default function Students() {
       setModalText("Ma'lumot yo'q")
       console.log(error)
     })
-  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect, Gender, FormPayment])
+  }, [page, pageSize, searchText, DirectionID, GroupID, AcademekYear, StudyTypeSelect, DegreeSelect, Gender, FormPayment,Course_number])
+
+
+  const CourseNumber = useMemo(() => {
+    return [
+      {
+        name: 'Kurslar',
+        value: "&",
+      },
+      {
+        name: '1-kurs',
+        value: 1,
+      },
+      {
+        name: '2-kurs',
+        value: 2,
+      },
+      {
+        name: '3-kurs',
+        value: 3,
+      },
+      {
+        name: '4-kurs',
+        value: 4,
+      },
+      {
+        name: '5-kurs',
+        value: 5,
+      }
+    ]
+  }, [])
 
   return (
     <>
@@ -305,6 +336,10 @@ export default function Students() {
         </BoxHeader>
         <BoxHeader>
           <InputsWrapper>
+          <AllSelectFullWidth
+            chageValueFunction={val => { setCourse_number(val); }}
+            selectOptions={CourseNumber}
+          />
             <AllSelectFullWidth
               chageValueFunction={(val) => setAcademekYear(val)}
               selectedOptionP={AcademekYear}

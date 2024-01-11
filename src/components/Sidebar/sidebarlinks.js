@@ -565,7 +565,7 @@ export const headofthedepartment_Links = [
       </defs>
     </svg>,
     text: {
-      uz: "Malumot",
+      uz: "Ma'lumot",
       ru: "Справка",
       eng: "Reference"
     },
@@ -1131,7 +1131,7 @@ export const dekan_Links = [
       </defs>
     </svg>,
     text: {
-      uz: "Malumot",
+      uz: "Ma'lumot",
       ru: "Справка",
       eng: "Reference"
     },
@@ -1492,7 +1492,7 @@ export const admin_links = [
       </defs>
     </svg>,
     text: {
-      uz: "Malumot",
+      uz: "Ma'lumot",
       ru: "Справка",
       eng: "Reference"
     },
@@ -2606,7 +2606,7 @@ export const rector_links = [
       </defs>
     </svg>,
     text: {
-      uz: "Malumot",
+      uz: "Ma'lumot",
       ru: "Справка",
       eng: "Reference"
     },
