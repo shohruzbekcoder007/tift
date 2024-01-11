@@ -125,7 +125,9 @@ export default function Tasks() {
             </div>
             <div style={{ textAlign: "center", display: "grid", gap: "10px" }}>
               <p>Hozirgi bahosi</p>
-              <b>{baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
+              {
+                !myPatokList.status ? <b>2</b> : <b> {baho(ball1 !== 0 ? Math.round((ball2 / ball1) * 100) : 0)}</b>
+              }
             </div>
           </StudentTasksBox>
         </BoxHeader>

@@ -59,6 +59,7 @@ export default function SignInSide() {
   const [pageLoading, setPageLoading] = useState(false)
   const [openAlert, setOpenAlert] = useState(false)
   const [haveatoken, setHaveatoken] = useState(false)
+  const [TextLogin, setTextLogin] = useState(true)
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -76,7 +77,7 @@ export default function SignInSide() {
   };
 
   const successfulFunctionGetToken = (response) => {
-
+    setTextLogin(true)
     const sec_token = AES.encrypt(response.data.access, '@q1y1npar0l@').toString()
     sessionStorage.setItem('access_token', sec_token)
     setHaveatoken(true)
@@ -86,6 +87,7 @@ export default function SignInSide() {
   const errorFunctionGetToken = (error) => {
     // console.log({ errorMessage: error.toString() });
     // console.error("There was an error!", error);
+    setTextLogin(true)
     setPageLoading(false)
     setOpenAlert(true)
   }
@@ -95,8 +97,8 @@ export default function SignInSide() {
     const user_role = getRoleUser(response.data)
     setPageLoading(false)
     if (user_role == "admin" || user_role == "rector") {
-      navigate(`/${user_role}/users`) 
-      
+      navigate(`/${user_role}/users`)
+
     } else if (user_role == "student") {
       navigate(`/${user_role}/personalplan`)
     }
@@ -114,6 +116,7 @@ export default function SignInSide() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setTextLogin(false)
     const data = new FormData(event.currentTarget);
     getToken(token_url, {
       username: data.get('username'),
@@ -227,7 +230,7 @@ export default function SignInSide() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Tizimga Kirish
+              {TextLogin ? "Tizimga Kirish" : <CircularProgress color="success" size={25} />}
             </Button>
             {/* <Typography variant="body2" color="text.secondary" align="center">
               <a href="https://t.me/creditsystembot">Telegram bot</a>
