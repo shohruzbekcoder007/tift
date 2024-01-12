@@ -145,7 +145,6 @@ export default function ScheduleStudy() {
                     iconc={null}
                     colspan={7}
                   />
-                  
                 </tr>
                 <tr>
                   <TableTHHeader

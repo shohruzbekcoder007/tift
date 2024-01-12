@@ -278,23 +278,30 @@ export const ClassScheduleTableWrapperAdmin = styled.div`
         line-height: 170%;
         border-collapse: collapse;
         text-align: left;
-        
+        .alltr > td {
+            font-weight: bold;
+        }
         thead {
             border-radius: 10px;
             tr {
-                background-color: ${props => props.color === "transparent" ? "transparent" : "#F6F5F1"};
+                background-color: ${props => props.color === "transparent" ? "transparent" : "#FFFFFF"};
+                td {
+                    padding: 8px;
+                    margin: 0 !important;
+                }
             }
         }
 
         tr {
             th,
             td {
-                padding: 12px 12px;
+                padding: 5px 12px;
                 border: 1px solid #EEE;
                 line-height: 170%;
                 color: #6A6A6A;
                 font-weight: 500;
                 /* min-width: -20px; */
+                margin: 0px;
             }
         }
 

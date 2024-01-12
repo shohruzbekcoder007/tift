@@ -167,6 +167,7 @@ import ReadAgainStudents from './components/AdminList/ReadAgainStudents'
 import AdditionalResubmission from './components/AdminList/AdditionalResubmission'
 import AdminDashboard from './components/AdminList/AdminDashboard'
 import MainStylist from './components/MainStylist'
+import { AdminDashboardChart } from './components/AdminList/AdminDashboardChart'
 
 function App() {
   const user = useSelector((state) => state.user);
@@ -434,6 +435,8 @@ function App() {
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
                     <Route path='students/edit' element={<EditStudents />} />
+                    <Route path="dept" element={<TutorDept />} />
+                    <Route path="NB" element={<TutorNbStudents />} />
                   </Route>
                   <Route path='schedule' element={<ScheduleStudy />} />
 
@@ -625,6 +628,7 @@ function App() {
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="AdminDashboardChart" element={<AdminDashboardChart />} />
                   <Route path="profile" element={<Profile />} />
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="users" element={<Users />} />
@@ -758,6 +762,8 @@ function App() {
                     <Route path='personalplan/editscore' element={<GroupEditStudents />} />
                     <Route path='students/edit' element={<EditStudents />} />
 
+                    <Route path="dept" element={<TutorDept />} />
+                    <Route path="NB" element={<TutorNbStudents />} />
                     {/* </Route> */}
                   </Route>
 

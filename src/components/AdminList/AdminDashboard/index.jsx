@@ -70,7 +70,8 @@ export default function AdminDashboard() {
     })
   }, [AcademekYear]);
 
-
+  console.log(window.innerHeight);
+  // document.querySelector(".iLdgRa")
   return (
     <ContentWrapper>
       <Paper
@@ -91,8 +92,9 @@ export default function AdminDashboard() {
           </InputsWrapper>
         </BoxHeader>
         <BoxBody>
-          <ClassScheduleTableWrapperAdmin>
+          <ClassScheduleTableWrapperAdmin style={{height: `${window.innerWidth > 768 ? window.innerHeight/1.5 + 40 : window.innerHeight/1.5 +20}px`}}>
             <table border="1" cellpadding="0" cellspacing="0">
+              <thead style={{position: "sticky",top:0, zIndex: "9" }}>
               <tr>
                 <td align="center" width="1" rowspan="3">#No</td>
                 <td align="center" width="1" rowspan="3">                Yo'nalish                    </td>
@@ -133,20 +135,25 @@ export default function AdminDashboard() {
                   })
                 }
               </tr>
+              </thead>
+
+
+
+
               {Data.length > 0 &&
-              <tr>
-                <td>#</td>
+              <tr className='alltr'>
+                <td >#</td>
                 <td>Jami</td>
                 {
                   AllData.length > 0 && AllData.map((item, index) => {
                     return (
                       <>
-                        <td>{Number(item.morning) == 0 ? " " : Number(item.morning)}</td>
-                        <td>{Number(item.morning_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(item.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
-                        <td>{Number(item.morning_paid_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(item.morning_paid_contract).toLocaleString().replace(/,/g, '.')}</td>
-                        <td>{Number(item.external) == 0 ? " " : Number(item.external)}</td>
-                        <td>{Number(item.external_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(item.external_contract).toLocaleString().replace(/,/g, '.')}</td>
-                        <td>{Number(item.external_paid_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(item.external_paid_contract).toLocaleString().replace(/,/g, '.')}</td>
+                        <td>{Number(item.morning)}</td>
+                        <td>{Number(item.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
+                        <td>{Number(item.morning_paid_contract).toLocaleString().replace(/,/g, '.')}</td>
+                        <td>{Number(item.external)}</td>
+                        <td>{Number(item.external_contract).toLocaleString().replace(/,/g, '.') }</td>
+                        <td>{Number(item.external_paid_contract).toLocaleString().replace(/,/g, '.')}</td>
                       </>
                     )
                   })
@@ -172,12 +179,12 @@ export default function AdminDashboard() {
                                   item.courses.map((elem, index2) => {
                                     return (
                                       <>
-                                        <td>{Number(elem.morning[0]) == 0 ? " " : Number(elem.morning[0])}</td>
-                                        <td>{Number(elem.morning_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.morning[1]).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.morning[1]).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.external[0]) == 0 ? " " : Number(elem.external[0]) == 0}</td>
-                                        <td>{Number(elem.external_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.external_contract).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.external[1]).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.external[1]).toLocaleString().replace(/,/g, '.')}</td>
+                                        <td>{Number(elem.morning[0]) }</td>
+                                        <td>{Number(elem.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
+                                        <td>{Number(elem.morning[1]).toLocaleString().replace(/,/g, '.') }</td>
+                                        <td>{Number(elem.external[0])}</td>
+                                        <td>{Number(elem.external_contract).toLocaleString().replace(/,/g, '.') }</td>
+                                        <td>{Number(elem.external[1]).toLocaleString().replace(/,/g, '.')}</td>
                                       </>
                                     )
                                   })
@@ -203,12 +210,12 @@ export default function AdminDashboard() {
                                   item.courses.map((elem, index2) => {
                                     return (
                                       <>
-                                        <td>{Number(elem.morning[0]) == 0 ? " " : Number(elem.morning[0])}</td>
-                                        <td>{Number(elem.morning_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.morning[1]).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.morning[1]).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.external[0]) == 0 ? " " : Number(elem.external[0]) == 0}</td>
-                                        <td>{Number(elem.external_contract).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.external_contract).toLocaleString().replace(/,/g, '.')}</td>
-                                        <td>{Number(elem.external[1]).toLocaleString().replace(/,/g, '.') == 0 ? " " : Number(elem.external[1]).toLocaleString().replace(/,/g, '.')}</td>
+                                        <td>{Number(elem.morning[0]) }</td>
+                                        <td>{Number(elem.morning_contract).toLocaleString().replace(/,/g, '.')}</td>
+                                        <td>{Number(elem.morning[1]).toLocaleString().replace(/,/g, '.') }</td>
+                                        <td>{Number(elem.external[0])}</td>
+                                        <td>{Number(elem.external_contract).toLocaleString().replace(/,/g, '.') }</td>
+                                        <td>{Number(elem.external[1]).toLocaleString().replace(/,/g, '.')}</td>
                                       </>
                                     )
                                   })
