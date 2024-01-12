@@ -561,6 +561,10 @@ function App() {
                     <Route index element={<Group />} />
                     <Route path='students' element={<GroupStudents />} />
                     <Route path='students/edit' element={<EditStudents />} />
+                    <Route path="dept" element={<TutorDept />} />
+                    <Route path="NB" element={<TutorNbStudents />} />
+                    <Route path='personalplan' element={<GroupPersonalPlan />} />
+                    <Route path='personalplan/editscore' element={<GroupEditStudents />} />
                   </Route>
                   <Route path='Call' element={<StudentSciences />}>
                     <Route index element={<CallStudents />} />
@@ -760,6 +764,7 @@ function App() {
                     {/* <Route path='personalplan' element={<StudentSciences />}> */}
                     <Route path='personalplan' element={<GroupPersonalPlan />} />
                     <Route path='personalplan/editscore' element={<GroupEditStudents />} />
+                    <Route path='personalplan/editscore/add' element={<GroupEditStudents />} />
                     <Route path='students/edit' element={<EditStudents />} />
 
                     <Route path="dept" element={<TutorDept />} />

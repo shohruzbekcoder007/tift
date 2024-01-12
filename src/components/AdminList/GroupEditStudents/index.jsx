@@ -24,6 +24,7 @@ import MuiAlert from '@mui/material/Alert';
 import { Link, useLocation } from 'react-router-dom'
 import degree from '../../../dictionary/degree'
 import study_type from '../../../dictionary/study_type'
+import { useSelector } from 'react-redux'
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -86,6 +87,7 @@ export default function GroupEditStudents() {
 
   const { state } = useLocation()
 
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     setAcademikGroup([])
@@ -204,6 +206,7 @@ export default function GroupEditStudents() {
             setPageSize(val)
           }} />
           <AttendSearchButton>
+            { user['role'] == 'admin' &&
             <Button
               sx={{ width: "50%", textTransform: "none", boxShadow: "none", borderRadius: "10px" }}
               variant="contained"
@@ -211,6 +214,7 @@ export default function GroupEditStudents() {
               >
               Saqlash
             </Button>
+}
             <CustomizedInput callback_func={(val) => { setSearchText(val) }} />
             {/* <Button
               variant="contained"

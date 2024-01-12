@@ -308,6 +308,7 @@ export default function SciencesAdmin() {
             />
           </InputsWrapper>
         </BoxHeader>
+
         <BoxBody>
           <ClassScheduleTableWrapper>
             <table>
@@ -636,6 +637,7 @@ export default function SciencesAdmin() {
             </table>
           </ClassScheduleTableWrapper>
         </BoxBody>
+        
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + scienceAdmin.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
           <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />

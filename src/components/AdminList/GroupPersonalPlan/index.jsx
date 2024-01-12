@@ -36,6 +36,8 @@ const anchorOrigin2 = {
   horizontal: "left"
 }
 
+
+
 export default function SciencesAdmin() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -66,6 +68,8 @@ export default function SciencesAdmin() {
   const setFileHandler = (newValue, info) => {
     setFile(newValue)
   }
+
+
   const { state } = useLocation()
 
   const admindegree = useMemo(() => {
@@ -141,6 +145,12 @@ export default function SciencesAdmin() {
       setModalText("Saqlash")
     }
   }, [open2])
+
+  // useEffect(() => {
+    const location = useLocation();
+    console.log(location);
+  // }, [])
+  
 
 
 
@@ -238,7 +248,8 @@ export default function SciencesAdmin() {
             </Button>
             <CustomizedInput callback_func={(val) => { setsearchText(val) }} />
             {
-              user['role'] != 'rector' &&
+              // alert(location.pathname !=  `/${user['role']}/group/personalplan`)
+             ( user['role'] != 'rector' && location.pathname ==  `/${user['role']}/group/personalplan`) &&
               <Link to={'add'} state={{ year: state.season, id: state.id, degree: state.degree }}>
                 <Button
                   variant="contained"
