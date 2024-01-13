@@ -137,7 +137,7 @@ export default function Students() {
   const OpenVedemost = () => {
     if (!Excel) {
       setLoaderData(true)
-      getLawyerStudentExcel(`${admin_students_contingent}?year=${AcademekYear}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`, (response) => {
+      getLawyerStudentExcel(`${admin_students_contingent}?year=${AcademekYear}&course_number=${Course_number}&study_type=${StudyTypeSelect}&direction=${DirectionID}&degree=${DegreeSelect}&academic_group=${GroupID}&form_of_payment=${FormPayment}`, (response) => {
         setExcel(response.data.url)
         setLoaderData(false)
       }, (error) => {
@@ -206,8 +206,7 @@ export default function Students() {
 
   useEffect(() => {
     setStudents([])
-    // getUsers(`${additional_student}?page_size=${pageSize}&course_number=${Course_number}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
-    getUsers(`${additional_student}?page_size=${pageSize}&search=${searchText}&page=${page}&specialty=${DirectionID??"&"}&academic_group=${GroupID??"&"}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
+      getUsers(`${additional_student}?page_size=${pageSize}&course_number=${Course_number}&search=${searchText}&page=${page}&specialty=${DirectionID}&academic_group=${GroupID}&year_of_admission=${AcademekYear}&degree=${DegreeSelect}&study_type=${StudyTypeSelect}&gender=${Gender}&form_of_payment=${FormPayment}`, response => {
       console.log(response.data)
       setStudents(response.data.results)
       setAllCount(response.data.count)
