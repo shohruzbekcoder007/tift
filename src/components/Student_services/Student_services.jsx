@@ -19,7 +19,7 @@ import { getDocumentStudents } from '../ServicesTable/request'
 import { getSemester } from '../FilingApplication/requests'
 export default function Student_services() {
   const [open, setOpen] = React.useState(false);
-  const [ListSelect, setListSelect] = React.useState('');
+  const [ListSelect, setListSelect] = React.useState('information');
   const [KontraktTypeSelect, setKontraktTypeSelect] = React.useState('');
   const [JobInput, setJobInput] = React.useState('');
   const handleOpen = () => setOpen(true);
@@ -32,7 +32,6 @@ export default function Student_services() {
   const handleCloseAlert = () => setOpenAlert(false);
   // const [semesters, setSemesters] = useState([])
   const [semester, setSemester] = useState(1)
-
 
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -74,8 +73,8 @@ export default function Student_services() {
       name: "To'lov shartnomasini olish",
       value: "payment_contract"
     }
-    ]
-  }, [])
+  ]
+}, [])
 
   const SemesterNum = useMemo(() => {
     return [
