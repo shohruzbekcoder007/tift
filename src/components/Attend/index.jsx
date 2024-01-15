@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ContentWrapper } from '../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ContentWrapper } from '../../global_styles/styles'
 import { Pagination, Paper, Typography } from '@mui/material'
 import PageSelector from '../PageSelector'
 import CustomizedInput from '../CustomizedInput'
@@ -166,7 +166,7 @@ export default function Attend() {
           </AttendSearchButton>
         </BoxHeader>
         <BoxBody>
-          <ClassScheduleTableWrapper>
+          <ClassScheduleTableWrapper2>
             <table>
               <thead>
                 <tr>
@@ -280,15 +280,15 @@ export default function Attend() {
                   teacherGetNbList.length > 0 ? teacherGetNbList.map((elem, index) => {
                     return (
                       <tr key={index}>
-                        <th>{elem.id}</th>
-                        <th>{elem.patok}</th>
-                        <th style={{ width: "100px" }}>{elem.created_at}</th>
-                        <th>{elem.para}</th>
-                        <th>{elem.lesson}</th>
-                        <th>{elem.student.map((element, index) => {
+                        <th data-cell={"ID"}>{elem.id}</th>
+                        <th data-cell={listLanguage.Patok['uz']}>{elem.patok}</th>
+                        <th data-cell={listLanguage.Date['uz']} style={{ width: "100px" }}>{elem.created_at}</th>
+                        <th data-cell={listLanguage.Para['uz']}>{elem.para}</th>
+                        <th data-cell={listLanguage.Theme['uz']}>{elem.lesson}</th>
+                        <th data-cell={listLanguage.Students['uz']}>{elem.student.map((element, index) => {
                           return (<p key={index}>{element.full_name}</p>)
                         })}</th>
-                        <th style={{ width: "400px" }}>
+                        <th data-cell={listLanguage.Status['uz']} style={{ width: "100%", display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: "10px" }}>
                           {
                             elem.status === 'confirmed' &&
                             <Button
@@ -437,7 +437,7 @@ export default function Attend() {
                 }
               </tbody>
             </table>
-          </ClassScheduleTableWrapper>
+          </ClassScheduleTableWrapper2>
         </BoxBody>
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + teacherGetNbList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>

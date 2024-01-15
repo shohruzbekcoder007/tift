@@ -32,11 +32,19 @@ export const BoxFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    @media (max-width: 780){
-        flex-wrap: wrap;
+    @media (max-width: 780px){
+        /* flex-wrap: wrap;  */
         gap: 20px;
-        justify-content: flex-end;
-    }
+        justify-content: space-between;
+
+        p {
+            font-size: 13px;
+        }
+
+        nav {
+            width: 180%;
+        }
+}
 `
 
 export const BoxFooterText = styled.p`

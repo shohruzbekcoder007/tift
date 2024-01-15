@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper } from '../../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2 } from '../../../global_styles/styles'
 import { Pagination, Paper } from '@mui/material'
 import PageSelector from '../../PageSelector'
 import CustomizedInput from '../../CustomizedInput'
@@ -80,7 +80,7 @@ export default function TeacherSciencesMain() {
         <CustomizedInput callback_func={(val) => { console.log(val) }} />
       </BoxHeader>
       <BoxBody>
-        <ClassScheduleTableWrapper>
+        <ClassScheduleTableWrapper2>
           <table>
             <thead>
               <tr>
@@ -163,11 +163,11 @@ export default function TeacherSciencesMain() {
                 teacheMyLessonList.length > 0 ? teacheMyLessonList.map((elem, index) => {
                   return (
                     <tr key={index}>
-                      <th>{elem.science}</th>
-                      <th>{elem.name}</th>
-                      <th>{elem.science_type}</th>
-                      <th>{elem.students}</th>
-                      <th style={{ width: "500px" }}>
+                      <th data-cell={"Fan"}>{elem.science}</th>
+                      <th data-cell={"Patok"}>{elem.name}</th>
+                      <th data-cell={"Turi"}>{elem.science_type}</th>
+                      <th data-cell={"Talabalar"}>{elem.students}</th>
+                      <th data-cell={"Sozlamalar"} style={{}}>
                         <TeacherSciencesButtonBox>
                           <Link to="calendarplan" state={{ data: elem.id }}>
                             <Button
@@ -298,7 +298,7 @@ export default function TeacherSciencesMain() {
               }
             </tbody>
           </table>
-        </ClassScheduleTableWrapper>
+        </ClassScheduleTableWrapper2>
       </BoxBody>
       <BoxFooter>
         <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + teacheMyLessonList.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
