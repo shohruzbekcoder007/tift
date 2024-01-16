@@ -156,6 +156,7 @@ export default function AdminDashboard() {
   }, [AcademekYear]);
 
   useEffect(() => {
+    setStatus(false)
     getStudentsStatistics(`${statistic}all/?year=${AcademekYear}`, (response) => {
       setAllData(response.data.data)
       let currData = []
@@ -225,7 +226,6 @@ export default function AdminDashboard() {
             <Tab>Diagramma</Tab>
             <Tab>Jadval</Tab>
           </TabsList>
-          <TabPanel value={1}>
             <BoxHeader>
               <InputsWrapper>
                 <AllSelectFullWidth
@@ -235,6 +235,7 @@ export default function AdminDashboard() {
                 />
               </InputsWrapper>
             </BoxHeader>
+          <TabPanel value={1}>
             <BoxBody>
               <ClassScheduleTableWrapperAdmin style={{ height: `${window.innerWidth > 768 ? window.innerHeight / 1.5 + 40 : window.innerHeight / 1.5 + 20}px` }}>
                 <table border="1" cellpadding="0" cellspacing="0">
