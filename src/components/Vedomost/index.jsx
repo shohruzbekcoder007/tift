@@ -1,6 +1,6 @@
 import { Box, Button, Modal, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
+import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
 import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
@@ -160,7 +160,7 @@ export default function Vedomost() {
 
       </BoxHeader>
       <BoxBody>
-        <ClassScheduleTableWrapper>
+        <ClassScheduleTableWrapper2>
           <table>
             <thead>
               <tr>
@@ -196,13 +196,13 @@ export default function Vedomost() {
                 tasksStudents.length > 0 ? tasksStudents.map((elem, index) => {
                   return (
                     <tr key={index}>
-                      <th>{index + 1}</th>
-                      <th>{elem.full_name}</th>
-                      <th>{elem.group}</th>
+                      <th data-cell={"#"}>{index + 1}</th>
+                      <th data-cell={tasksName}>{elem.full_name}</th>
+                      <th data-cell={"guruh"}>{elem.group}</th>
                       {
                         elem.tasks.map((element, index) => {
                           return (
-                            <th style={{ width: "200px" }} key={index}>
+                            <th data-cell={tasksTasks[index].title?.slice(0, 20)} style={{ width: "200px" }} key={index}>
                               {
 
                                 element.submission?.source ?
@@ -306,7 +306,7 @@ export default function Vedomost() {
 
             </tbody>
           </table>
-        </ClassScheduleTableWrapper>
+        </ClassScheduleTableWrapper2>
 
 
         <Modal

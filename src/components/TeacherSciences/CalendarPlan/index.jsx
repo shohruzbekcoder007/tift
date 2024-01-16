@@ -1,9 +1,9 @@
 import { Button, Modal, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
+import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../../global_styles/styles'
 import { TableTHHeader } from '../../DiplomaTable'
 import { TeacherSciencesButtonBox } from '../styles'
-import { UnableToSpecify } from './styles'
+import { TeacherSciencesButtonBox2, UnableToSpecify } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { lesson_edit, teacher_calendar_delay, teacher_calendar_plan } from '../../../utils/API_urls'
 import { getTeacheravCalendar } from './requests'
@@ -74,7 +74,9 @@ export default function CalendarPlan() {
             padding: "10px",
             alignItem: "center",
             bgcolor: "rgba(0, 138, 22, 0.08)",
-            borderRadius: "10px"
+            borderRadius: "10px",
+            margin: "1rem 0",
+
           }}
         >
           Kalendar planni belgilash va davomatni qo'yish muddati: 2 kun
@@ -88,7 +90,9 @@ export default function CalendarPlan() {
             borderRadius: "10px",
             fontWeight: "600",
             fontSize: "14px",
-            lineHeight: "17px"
+            lineHeight: "17px",
+            margin: "10px 0",
+            
           }}
           startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
             <g clipPath="url(#clip0_493_2456)">
@@ -106,7 +110,7 @@ export default function CalendarPlan() {
         </Button>
       </BoxHeader>
       <BoxBody>
-        <ClassScheduleTableWrapper>
+        <ClassScheduleTableWrapper2>
           <table>
             <thead>
               <tr>
@@ -143,7 +147,7 @@ export default function CalendarPlan() {
             </tbody>
           </table>
 
-          <Typography
+          {/* <Typography
             variant='h2'
             sx={{
               color: '#000',
@@ -158,8 +162,8 @@ export default function CalendarPlan() {
             }}
           >
             Ko’chirilgan vaqt
-          </Typography>
-          <table>
+          </Typography> */}
+          {/* <table>
             <thead>
               <tr>
                 <TableTHHeader
@@ -236,8 +240,8 @@ export default function CalendarPlan() {
                 })
               }
             </tbody>
-          </table>
-        </ClassScheduleTableWrapper>
+          </table> */}
+        </ClassScheduleTableWrapper2>
       </BoxBody>
     </Paper>
   )
@@ -262,7 +266,10 @@ const StatusLesson = ({ status, status_day }) => {
           borderRadius: "10px",
           boxShadow: "none",
           width: "181px",
-          backgroundColor: "red"
+          backgroundColor: "red",
+          "&:hover": {
+            backgroundColor: "red",
+          },
         }}
         startIcon={<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16">
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
@@ -375,7 +382,7 @@ const StatusLessonAttendece = ({ status, status_day, id }) => {
       <Link to="thematicblock" state={{ data: false, id: id }}>
         <Button
           variant="contained"
-          size="small"
+          size="medium"
           color="secondary"
           sx={{
             textTransform: "none",
@@ -503,9 +510,9 @@ const Fakultets = ({ elem, callback_func, status }) => {
   return (
     <>
       <tr>
-        <th>{elem.number}</th>
-        <th >
-          <div style={{display: 'flex', justifyContent: "space-between"}}>
+        <th data-cell="Raqam">{elem.number}</th>
+        <th data-cell="Mavzu" >
+          <div style={{display: 'flex', flexWrap: "wrap", justifyContent: "space-between"}}>
           {elem.lesson} 
            <Button
               variant="contained"
@@ -534,8 +541,8 @@ const Fakultets = ({ elem, callback_func, status }) => {
             </Button>
           </div>
         </th>
-        <th>
-         <div style={{display: 'flex', justifyContent: "space-between"}}>
+        <th data-cell="Mashg'ulot vaqti">
+         <div style={{display: 'flex', flexWrap: "wrap", justifyContent: "space-between"}}>
          {elem.lesson_date} 
           <Button
                 variant="contained"
@@ -544,7 +551,7 @@ const Fakultets = ({ elem, callback_func, status }) => {
                   textTransform: "capitalize",
                   boxShadow: "none",
                   padding: "6px",
-                  marginRight: "20px",
+                  margin: "0 10px",
                 }}
                 onClick={handleOpen}
                 startIcon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -563,12 +570,12 @@ const Fakultets = ({ elem, callback_func, status }) => {
           </Button>
          </div>
         </th>
-        <th style={{ width: "200px" }}>
-          <TeacherSciencesButtonBox>
+        <th data-cell="Status" >
+          <TeacherSciencesButtonBox2>
            
             <StatusLesson status={elem.status} status_day={elem.status_day} />
             <StatusLessonAttendece status={elem.status} status_day={elem.status_day} id={elem.id} />
-          </TeacherSciencesButtonBox>
+          </TeacherSciencesButtonBox2>
         </th>
       </tr>
       <Modal

@@ -47,6 +47,7 @@ export default function SciencesAdmin() {
   const [kafedrachoes, setkafedrachoes] = useState([]);
   const [degreechoes, setdegreechoes] = useState([]);
   const [studytypechoes, setstudytypechoes] = useState([]);
+  const [studytypechoes2, setstudytypechoes2] = useState([]);
   const [scienceAdmin, setscienceAdmin] = useState([]);
   const [file, setFile] = useState(null);
   const [ModalText, setModalText] = useState('Saqlash');
@@ -129,10 +130,12 @@ export default function SciencesAdmin() {
       {
         name: "8",
         value: 8,
-      }, {
+      }, 
+      {
         name: "9",
         value: 9,
-      }, {
+      }, 
+      {
         name: "10",
         value: 10,
       }]
@@ -191,7 +194,7 @@ export default function SciencesAdmin() {
       academic_year: state.season,
       excel_file: file,
       direction: state.id,
-      study_type: studytypechoes
+      study_type: studytypechoes2
     }, (res) => {
       setModalText('Saqlash')
       setAlertMessage("Yuklandi")
@@ -821,7 +824,7 @@ export default function SciencesAdmin() {
               >
               </Typography>
               <AllSelectFullWidth
-                chageValueFunction={val => setstudytypechoes(val)}
+                chageValueFunction={val => setstudytypechoes2(val)}
                 selectedOptionP={adminstudytype[0].value}
                 selectOptions={adminstudytype}
               />

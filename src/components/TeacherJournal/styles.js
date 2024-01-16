@@ -19,6 +19,13 @@ export const TeacherSciencesButtonBox = styled.div`
     gap: 10px;
 `
 
+
+export const TeacherSciencesButtonBox2 = styled.div`
+     width: 100%;
+     cursor: pointer; 
+     justify-content: center;
+`
+
 export const ModalSubtitle = styled.p`
   margin: 10px 0;
 `

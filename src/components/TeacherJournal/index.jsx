@@ -1,8 +1,8 @@
 import { Box, Button, Modal, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
+import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
-import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from './styles'
+import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle, TeacherSciencesButtonBox2 } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
@@ -65,6 +65,18 @@ export default function TeacherJournal() {
   //   })
   // }
 
+  const tableStyle = {
+    justifyContent: "center",
+    '@media screen and (max-width: 576px)': {
+      justifyContent: "space-between",
+      display: "flex"
+    },
+  }
+
+  const GradeBox = {
+    
+  }
+
 
   return (
     <Paper
@@ -89,7 +101,7 @@ export default function TeacherJournal() {
         O'qituvchi Jurnali
       </Typography>
       <BoxBody>
-        <ClassScheduleTableWrapper>
+        <ClassScheduleTableWrapper2>
           <table>
             <thead>
               <tr>
@@ -106,7 +118,7 @@ export default function TeacherJournal() {
                      return (
                       <>
                         <TableTHHeader key={index}
-                          text={elem.name?.slice(0, 20)}
+                          text={`${elem.name?.slice(0, 20)}...`}
                           iconc={null}
                           />
                       </>
@@ -121,14 +133,14 @@ export default function TeacherJournal() {
               tasksStudents.length > 0 ?  tasksStudents.map((elem, index) => {
                   return (
                       <tr key={index}>
-                        <th>{index + 1}</th>
-                        <th>{elem.full_name}</th>
+                        <th data-cell="Raqam">{index + 1}</th>
+                        <th data-cell={"Talaba"}>{elem.full_name}</th>
                         {
                           elem.tasks.map((element, index) => {
                             return(
-                              <th style={{ width: "200px" }} key={index}>
-                                    <TeacherSciencesButtonBox style={{ justifyContent: "center", cursor: "pointer  " }}>
-                                      <div style={{width: "60px"}}>
+                              <th data-cell={tasksTasks[index]?.name?.slice(0, 20)} style={tableStyle} key={index}>
+                                    <TeacherSciencesButtonBox2 >
+                                      <div >
                                         {
                                           element.submission?.grade == '1.00' ?  <Button
                                           sx={
@@ -165,7 +177,7 @@ export default function TeacherJournal() {
                                         }
                                     
                                       </div>
-                                    </TeacherSciencesButtonBox>
+                                    </TeacherSciencesButtonBox2>
 
                                 
                               </th>
@@ -184,7 +196,7 @@ export default function TeacherJournal() {
               
             </tbody>
           </table>
-        </ClassScheduleTableWrapper>
+        </ClassScheduleTableWrapper2>
         {/* <Modal
             keepMounted
             open={open}

@@ -60,8 +60,6 @@ export default function AdminDashboard() {
       '1-kurs',
       '2-kurs',
       '3-kurs',
-      '4-kurs',
-      '5-kurs',
       // '1-kurs talabalar',
     ],
     datasets: [{
@@ -92,7 +90,7 @@ export default function AdminDashboard() {
     }]
   })
 
-  const Kurslar = ['1-kurs', '2-kurs', '3-kurs', '4-kurs', '5-kurs'];
+  const Kurslar = ['1-kurs', '2-kurs', '3-kurs'];
 
   const [Courses, setCourses] = useState({
     labels: Kurslar,
@@ -173,8 +171,8 @@ export default function AdminDashboard() {
       let oneCourseContractPayed = 0
       let oneCourseContractUnPayed = 0
       response.data.data.map(item => {
-        oneCourseContractPayed += Number(item.external_paid_contract)
-        oneCourseContractUnPayed += Number(item.external_contract)
+        oneCourseContractPayed += Number(item.external_paid_contract) + Number(item.morning_paid_contract)
+        oneCourseContractUnPayed += Number(item.external_contract) + Number(item.morning_contract)
       })
       currData2.push(oneCourseContractPayed)
       currData2.push(oneCourseContractUnPayed)
@@ -191,8 +189,8 @@ export default function AdminDashboard() {
       let currData4 = []
 
       response.data.data.map(item => {
-        currData3.push(Number(item.external_contract))
-        currData4.push(Number(item.external_paid_contract))
+        currData3.push(Number(item.external_contract) + Number(item.morning_contract))
+        currData4.push(Number(item.external_paid_contract) + Number(item.morning_paid_contract))
       })
 
       Courses.datasets[0].data = currData3
@@ -393,43 +391,43 @@ export default function AdminDashboard() {
 
 
 
-           <div style={{display: "flex"}}>
-           <Paper
-              elevation={0}
-              sx={{
-                width: '49%',
-                display: 'grid',
-                justifyContent: 'center',
-                textAlign: 'center',
-                height: '350px',
-                padding: "30px",
-                borderRadius: "10px"
-              }}
-            >
-              <h3>Talabalar</h3>
-              {
-                !Status ? <CircularProgress color="success" size={25} /> :  <Doughnut data={Students} />
-              }
-            </Paper>
+            <div style={{ display: "flex" }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  width: '49%',
+                  display: 'grid',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  height: '350px',
+                  padding: "30px",
+                  borderRadius: "10px"
+                }}
+              >
+                <h3>Talabalar</h3>
+                {
+                  !Status ? <CircularProgress color="success" size={25} /> : <Doughnut data={Students} />
+                }
+              </Paper>
 
-            <Paper
-              elevation={0}
-              sx={{
-                width: '49%',
-                display: 'grid',
-                justifyContent: 'center',
-                textAlign: 'center',
-                height: '350px',
-                padding: "30px",
-                borderRadius: "10px"
-              }}
-            >
-              <h3>Umumiy Kontrakt to'lovlar</h3>
-              {
-                !Status ? <CircularProgress color="success" size={25} /> :  <Doughnut data={Contract} />
-              }
-            </Paper>
-           </div>
+              <Paper
+                elevation={0}
+                sx={{
+                  width: '49%',
+                  display: 'grid',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  height: '350px',
+                  padding: "30px",
+                  borderRadius: "10px"
+                }}
+              >
+                <h3>Umumiy Kontrakt to'lovlar</h3>
+                {
+                  !Status ? <CircularProgress color="success" size={25} /> : <Doughnut data={Contract} />
+                }
+              </Paper>
+            </div>
 
             <Paper
               elevation={0}
@@ -445,7 +443,7 @@ export default function AdminDashboard() {
             >
               <p> <h3>Kontrakt to'lovlar</h3></p>
               {
-                !Status ? <CircularProgress color="success" size={25} /> :  <Bar options={options} data={Courses} />
+                !Status ? <CircularProgress color="success" size={25} /> : <Bar options={options} data={Courses} />
               }
             </Paper>
           </TabPanel>
