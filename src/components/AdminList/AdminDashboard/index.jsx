@@ -55,13 +55,10 @@ export default function AdminDashboard() {
   const [Status, setStatus] = useState(false)
   // const [AllMaster, setAllMaster] = useState([])
   const [AcademekYear, setAcademekYear] = useState(2023)
+
+
   const [Students, setStudents] = useState({
-    labels: [
-      '1-kurs',
-      '2-kurs',
-      '3-kurs',
-      // '1-kurs talabalar',
-    ],
+    labels: [],
     datasets: [{
       label: 'Talabalar Soni',
       backgroundColor: [
@@ -90,10 +87,9 @@ export default function AdminDashboard() {
     }]
   })
 
-  const Kurslar = ['1-kurs', '2-kurs', '3-kurs'];
 
   const [Courses, setCourses] = useState({
-    labels: Kurslar,
+    labels: [],
     datasets: [
       {
         label: ' Kontrakt summa',
@@ -160,39 +156,40 @@ export default function AdminDashboard() {
     getStudentsStatistics(`${statistic}all/?year=${AcademekYear}`, (response) => {
       setAllData(response.data.data)
       let currData = []
-      response.data.data.map(item => {
-        let oneCourseStudents = item.external + item.morning
-        currData.push(oneCourseStudents)
-      })
-      Students.datasets[0].data = currData
-      setStudents(Students)
-
-
       let currData2 = []
       let oneCourseContractPayed = 0
       let oneCourseContractUnPayed = 0
-      response.data.data.map(item => {
-        oneCourseContractPayed += Number(item.external_paid_contract) + Number(item.morning_paid_contract)
-        oneCourseContractUnPayed += Number(item.external_contract) + Number(item.morning_contract)
-      })
-      currData2.push(oneCourseContractPayed)
-      currData2.push(oneCourseContractUnPayed)
-      console.log(currData2);
-
-      console.log(currData);
-      Contract.datasets[0].data = currData2
-      setContract(Contract)
-
-
-
 
       let currData3 = []
       let currData4 = []
+      let KurslarRoyxati = []
 
-      response.data.data.map(item => {
+
+      response.data.data.map((item,index) => {
+        if (item.morning != 0 || item.external != 0) {
+          KurslarRoyxati.push(`${index+1}-kurs`)
+        }
+
+        let oneCourseStudents = item.external + item.morning
+        currData.push(oneCourseStudents)
+
+        oneCourseContractPayed += Number(item.external_paid_contract) + Number(item.morning_paid_contract)
+        oneCourseContractUnPayed += Number(item.external_contract) + Number(item.morning_contract)
+
         currData3.push(Number(item.external_contract) + Number(item.morning_contract))
         currData4.push(Number(item.external_paid_contract) + Number(item.morning_paid_contract))
+
       })
+      
+      Courses.labels = KurslarRoyxati
+      Students.labels = KurslarRoyxati
+      currData2.push(oneCourseContractPayed)
+      currData2.push(oneCourseContractUnPayed)
+      
+      Students.datasets[0].data = currData
+      setStudents(Students)
+      Contract.datasets[0].data = currData2
+      setContract(Contract)
 
       Courses.datasets[0].data = currData3
       Courses.datasets[1].data = currData4
