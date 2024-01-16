@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper, ClassScheduleTableWrapper } from '../../global_styles/styles'
+import { BoxBody, BoxFooter, BoxFooterText, BoxHeader, ContentWrapper, ClassScheduleTableWrapper, ClassScheduleTableWrapper2 } from '../../global_styles/styles'
 import { Button, CircularProgress, Pagination, Paper, Typography } from '@mui/material'
 import { ThesisBody, ThesisHeader } from './styles'
 import CustomizedInput from '../CustomizedInput'
@@ -221,7 +221,7 @@ export default function Tasks() {
           </div>
         </ThesisHeader> */}
         <BoxBody>
-          <ClassScheduleTableWrapper>
+          <ClassScheduleTableWrapper2>
             <table>
               <thead>
                 <tr>
@@ -339,7 +339,7 @@ export default function Tasks() {
                 }
               </tbody>
             </table>
-          </ClassScheduleTableWrapper>
+          </ClassScheduleTableWrapper2>
         </BoxBody>
         {/* <BoxFooter>
           <BoxFooterText>{`Jami 3 ta, 1 dan 3 gachasi ko'rsatilmoqda`}</BoxFooterText>
@@ -581,13 +581,13 @@ const ItemTasks = ({ elem, index }) => {
   const [deleted, setDeleted] = useState(false)
   return (deleted ? <></> :
     <tr >
-      <th>{index + 1}</th>
-      <th>{elem.title}</th>
-      <th>{elem.method}</th>
-      <th>{elem.type}</th>
-      <th>{elem.grade}</th>
-      <th>{elem.deadline}</th>
-      <th>
+      <th data-cell="ID">{index + 1}</th>
+      <th data-cell="Vazifa nomi">{elem.title}</th>
+      <th data-cell="Method">{elem.method}</th>
+      <th data-cell="Turi">{elem.type}</th>
+      <th data-cell="Baho">{elem.grade}</th>
+      <th data-cell="Vazifani topshirish uchun oxirgi muddati">{elem.deadline}</th>
+      <th data-cell="Status">
         <Button
           variant="contained"
           sx={{
@@ -612,7 +612,7 @@ const ItemTasks = ({ elem, index }) => {
           Tasdiqlangan
         </Button>
       </th>
-      <th>
+      <th data-cell="qo'shimcha">
 
         <DeleteUpdate key={index} elem={elem} setDeleted={(val) => { setDeleted(val) }} />
 

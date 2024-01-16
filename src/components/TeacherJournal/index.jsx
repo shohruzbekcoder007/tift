@@ -2,7 +2,7 @@ import { Box, Button, Modal, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
-import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle, TeacherSciencesButtonBox2 } from './styles'
+import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle, TeacherSciencesButtonBox2, TableStyle } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import AllSelectFullWidth from '../AllSelectFullWidth'
 import CustomizedInputSimple from '../CustomizedInputSimple'
@@ -65,18 +65,6 @@ export default function TeacherJournal() {
   //   })
   // }
 
-  const tableStyle = {
-    justifyContent: "center",
-    '@media screen and (max-width: 576px)': {
-      justifyContent: "space-between",
-      display: "flex"
-    },
-  }
-
-  const GradeBox = {
-    
-  }
-
 
   return (
     <Paper
@@ -138,7 +126,7 @@ export default function TeacherJournal() {
                         {
                           elem.tasks.map((element, index) => {
                             return(
-                              <th data-cell={tasksTasks[index]?.name?.slice(0, 20)} style={tableStyle} key={index}>
+                              <TableStyle data-cell={tasksTasks[index]?.name?.slice(0, 20)} key={index}>
                                     <TeacherSciencesButtonBox2 >
                                       <div >
                                         {
@@ -180,7 +168,7 @@ export default function TeacherJournal() {
                                     </TeacherSciencesButtonBox2>
 
                                 
-                              </th>
+                              </TableStyle>
                             )
                         })
                       }
