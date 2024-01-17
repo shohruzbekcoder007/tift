@@ -38,49 +38,32 @@ export default function Students() {
   const dispatch = useDispatch()
   // ======
   const [students, setStudents] = useState([])
-  const [pageSize, setPageSize] = useState(searchSelects.pageSize)
-  const [searchText, setSearchText] = useState(searchSelects.searchText)
+  const [pageSize, setPageSize] = useState(searchSelects.student.pageSize)
+  const [searchText, setSearchText] = useState(searchSelects.student.searchText)
   const [allCount, setAllCount] = useState(0)
-  const [page, setPage] = useState(searchSelects.page)
+  const [page, setPage] = useState(searchSelects.student.page)
   const [pageCount, setPageCount] = useState(1)
   const [deleted, setDeleted] = useState(true)
   const [Directions, setDirections] = useState([])
   const [GroupList, setGroupList] = useState([])
-  const [AcademekYear, setAcademekYear] = useState(searchSelects.AcademekYear)
-  const [DegreeSelect, setDegreeSelect] = useState(searchSelects.DegreeSelect)
-  const [StudyTypeSelect, setStudyTypeSelect] = useState(searchSelects.StudyTypeSelect)
-  const [DirectionID, setDirectionID] = useState(searchSelects.DirectionID)
-  const [GroupID, setGroupID] = useState(searchSelects.GroupID)
+  const [AcademekYear, setAcademekYear] = useState(searchSelects.student.AcademekYear)
+  const [DegreeSelect, setDegreeSelect] = useState(searchSelects.student.DegreeSelect)
+  const [StudyTypeSelect, setStudyTypeSelect] = useState(searchSelects.student.StudyTypeSelect)
+  const [DirectionID, setDirectionID] = useState(searchSelects.student.DirectionID)
+  const [GroupID, setGroupID] = useState(searchSelects.student.GroupID)
   const [YearList, setYearList] = useState([])
   const [YearStatus, setYearStatus] = useState(true)
   const [DefaultPage, setDefaultPage] = useState(1)
-  const [Gender, setGender] = useState(searchSelects.Gender)
+  const [Gender, setGender] = useState(searchSelects.student.Gender)
   localStorage.setItem('status', true)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   const [Excel, setExcel] = useState(null)
 
   const [vedemostopen, setvedemostopen] = useState(false);
-  const [FormPayment, setFormPayment] = useState(searchSelects.FormPayment)
+  const [FormPayment, setFormPayment] = useState(searchSelects.student.FormPayment)
   const [Course_number, setCourse_number] = useState('&')
 
   const [LoaderData, setLoaderData] = useState(true)
-
-  useEffect(() => {
-
-    // setPageSize(searchSelects.pageSize)
-    // setSearchText(searchSelects.searchText)
-    // setPage(searchSelects.page)
-    // setDirectionID(searchSelects.DirectionID)
-    // setGroupID(searchSelects.GroupID)
-    // setAcademekYear(searchSelects.AcademekYear)
-    // setDegreeSelect(searchSelects.DegreeSelect)
-    // setStudyTypeSelect(searchSelects.StudyTypeSelect)
-    // setGender(searchSelects.Gender)
-    // setFormPayment(searchSelects.FormPayment)
-
-    console.log(searchSelects, "<===")
-  }, [])
-
 
   const Contract = useMemo(() => {
     return contract_type.map(elem => {
@@ -211,7 +194,8 @@ export default function Students() {
       setStudents(response.data.results)
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
-      dispatch(setTable({
+      let oldSearchSelects = Object.assign({}, searchSelects)
+      oldSearchSelects.student = {
         page,
         pageSize,
         searchText,
@@ -222,7 +206,8 @@ export default function Students() {
         DegreeSelect,
         Gender,
         FormPayment
-      }))
+      }
+      dispatch(setTable(oldSearchSelects))
       if (response.data.results.length == 0) setModalText("Ma'lumot yo'q")
       setYearStatus(false)
     }, error => {
