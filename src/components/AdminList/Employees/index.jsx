@@ -30,7 +30,6 @@ export default function Employees() {
   const [SelectRole, setSelectRole] = useState('')
   useEffect(() => {
     getRoleList(`${role}`, (response) => {
-      setSelectRole(response.data?.[0]?.id)
       setaddRoleList(response.data.map(elem => {
         return {
           value: elem.id,
