@@ -32,11 +32,15 @@ ChartJs.register(
   Legend
 );
 
-export const options = {
+
+
+let options = {
   responsive: true,
+  maintainAspectRatio: true,
+  aspectRatio: window.innerWidth < 768 ? 0.5 : 2,
   plugins: {
     legend: {
-      position: 'top',
+      position: window.innerWidth < 768 ? 'bottom' : 'top' ,
     },
     title: {
       display: true,
@@ -45,7 +49,8 @@ export const options = {
   },
 };
 
-export default function AdminDashboard() {
+
+export default function   AdminDashboard() {
   const [YearList, setYearList] = useState([])
   const [Data, setData] = useState([])
   const [Data1, setData1] = useState([])
@@ -55,6 +60,7 @@ export default function AdminDashboard() {
   const [Status, setStatus] = useState(false)
   // const [AllMaster, setAllMaster] = useState([])
   const [AcademekYear, setAcademekYear] = useState(2023)
+
 
 
   const [Students, setStudents] = useState({
@@ -389,7 +395,7 @@ export default function AdminDashboard() {
 
 
 
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", flexWrap: "wrap" }}>
               <Paper
                 elevation={0}
                 sx={{
@@ -399,7 +405,11 @@ export default function AdminDashboard() {
                   textAlign: 'center',
                   height: '350px',
                   padding: "30px",
-                  borderRadius: "10px"
+                  borderRadius: "10px",
+
+                  '@media (max-width: 768px)':{
+                    width: "100%"
+                  } 
                 }}
               >
                 <h3>Talabalar</h3>
@@ -417,7 +427,11 @@ export default function AdminDashboard() {
                   textAlign: 'center',
                   height: '350px',
                   padding: "30px",
-                  borderRadius: "10px"
+                  borderRadius: "10px",
+
+                  '@media (max-width: 768px)':{
+                    width: "100%"
+                  } 
                 }}
               >
                 <h3>Umumiy Kontrakt to'lovlar</h3>
@@ -430,20 +444,22 @@ export default function AdminDashboard() {
             <Paper
               elevation={0}
               sx={{
-                width: '100%',
+                width: 'auto',
                 // display: 'grid',
                 // justifyContent: 'center',
                 textAlign: 'center',
                 height: 'auto',
-                padding: "30px",
+                // padding: "30px",
                 borderRadius: "10px"
               }}
             >
               <p> <h3>Kontrakt to'lovlar</h3></p>
               {
-                !Status ? <CircularProgress color="success" size={25} /> : <Bar options={options} data={Courses} />
+                !Status ? <CircularProgress color="success" size={25} /> : <Bar  options={options} data={Courses} />
               }
             </Paper>
+
+
           </TabPanel>
         </Tabs>
       </Paper>

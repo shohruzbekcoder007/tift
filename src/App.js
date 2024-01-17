@@ -636,7 +636,7 @@ function App() {
                   <Route path="addtest" element={<AddTest />} />
                   <Route path="variables" element={<Variables />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
-                  <Route path="AdminDashboardChart" element={<AdminDashboardChart />} />
+                  {/* <Route path="AdminDashboardChart" element={<AdminDashboardChart />} /> */}
                   <Route path="profile" element={<Profile />} />
                   <Route path="videoguide" element={<VideoGuide />} />
                   <Route path="users" element={<Users />} />

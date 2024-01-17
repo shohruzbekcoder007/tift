@@ -256,7 +256,7 @@ export default function DekanStudents() {
               </Button>
             </a>
             {
-              (user['role'] != 'rector' || user['role'] != 'dekan') &&
+              (user['role'] != 'rector' && user['role'] != 'dekan') &&
             <Link to={'add'}>
               <Button
                 variant="contained"
@@ -432,7 +432,7 @@ export default function DekanStudents() {
                     }
                   />
                   {
-                    (user['role'] != 'rector' || user['role'] != 'dekan') &&
+                    (user['role'] != 'rector' && user['role'] != 'dekan') &&
                   <th></th>
                   }
                 </tr>
@@ -564,7 +564,7 @@ const OneStudent = ({ student, setDeleted }) => {
       <th>{student.specialty}</th>
       <th>{student.course_number}</th>
       {
-        (user['role'] != 'rector' || user['role'] != 'dekan')  &&
+        (user['role'] != 'rector' && user['role'] != 'dekan')  &&
       <th>
         <Link to={'edit'} state={{ StudentID: student.id }}>
           <Button
