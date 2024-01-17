@@ -14,20 +14,23 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTitle } from '../../../redux/action/titleActions'
 import AllSelectFullWidth from '../../AllSelectFullWidth'
 import { WrapperInputsCard } from '../../AddHrEmployees/styles'
+import { setTable } from '../../../redux/action/tableActions'
 
 export default function Employees() {
 
   const dispatch = useDispatch()
+  const searchSelects = useSelector((state) => state.table);
   const user = useSelector((state) => state.user);
   const [employes, setEmployes] = useState([])
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(searchSelects.employees.pageSize)
   const [searchText, setSearchText] = useState('')
   const [allCount, setAllCount] = useState(0)
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(searchSelects.employees.page)
   const [pageCount, setPageCount] = useState(1)
   const [deleted, setDeleted] = useState(true)
   const [addRoleList, setaddRoleList] = useState([])
-  const [SelectRole, setSelectRole] = useState('')
+  const [SelectRole, setSelectRole] = useState(searchSelects.employees.selectRole)
+  
   useEffect(() => {
     getRoleList(`${role}`, (response) => {
       setaddRoleList(response.data.map(elem => {
@@ -46,6 +49,13 @@ export default function Employees() {
         setEmployes(response.data.results)
         setAllCount(response.data.count)
         setPageCount(response.data.page_count)
+        let oldSearchSelects = Object.assign({}, searchSelects)
+        oldSearchSelects.employees = {
+          page,
+          pageSize,
+          selectRole: SelectRole
+        }
+        dispatch(setTable(oldSearchSelects))
       }, error => {
         console.log(error)
       })
@@ -66,9 +76,12 @@ export default function Employees() {
         }}
       >
         <BoxHeader>
-          <PageSelector chageValueFunction={(val) => {
-            setPageSize(val)
-          }} />
+          <PageSelector 
+            defPage={pageSize}
+            chageValueFunction={(val) => {
+              setPageSize(val)
+            }}
+          />
 
           <AttendSearchButton>
             {
@@ -113,6 +126,7 @@ export default function Employees() {
         </BoxHeader>
         <BoxHeader>
           <AllSelectFullWidth
+            selectedOptionP={SelectRole}
             chageValueFunction={val => {setSelectRole(val) }}
             selectOptions={addRoleList}
           />
@@ -218,7 +232,7 @@ export default function Employees() {
         </BoxBody>
         <BoxFooter>
           <BoxFooterText>{`Jami ${allCount} ta, ${pageSize * (page - 1) + 1} dan ${pageSize * (page - 1) + employes.length} gachasi ko'rsatilmoqda`}</BoxFooterText>
-          <Pagination count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
+          <Pagination defaultPage={page} count={pageCount} shape="rounded" color="primary" onChange={(_, value) => { setPage(value) }} />
         </BoxFooter>
       </Paper>
     </>
