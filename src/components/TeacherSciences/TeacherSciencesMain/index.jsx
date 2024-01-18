@@ -11,17 +11,25 @@ import AllSelect from '../../AllSelect'
 import { my_semesters, teacher_mylessons } from '../../../utils/API_urls'
 import { getSemester } from '../../FilingApplication/requests'
 import { getTeacherMyLesson } from './requests'
+import { useDispatch, useSelector } from 'react-redux'
+import { setTable } from '../../../redux/action/tableActions'
 
 export default function TeacherSciencesMain() {
   const [semesters, setSemesters] = useState([])
-  const [semester, setSemester] = useState(0)
-
-  const [pageSize, setPageSize] = useState(10)
-  const [page, setPage] = useState(1)
   const [allCount, setAllCount] = useState(0)
   const [pageCount, setPageCount] = useState(1)
   const [teacheMyLessonList, setteacheMyLessonList] = useState([])
+  
+  const searchSelects = useSelector((state) => state.table);
+  const dispatch = useDispatch()
+  
+  const [semester, setSemester] = useState(searchSelects.teacher_science.semester)
+  const [pageSize, setPageSize] = useState(searchSelects.teacher_science.pageSize)
+  const [page, setPage] = useState(searchSelects.teacher_science.page)
+  const [searchText, setSearchText] = useState(searchSelects.teacher_science.searchText)
 
+
+  console.log(searchSelects.teacher_science);
 
 
 
@@ -34,7 +42,7 @@ export default function TeacherSciencesMain() {
         name: element.parent + " " + element.name
       }
     })
-    setSemester(semester_firstly[0].value)
+    semester == 0 && setSemester(semester_firstly[0].value)
     setSemesters(semester_firstly)
   }
 
@@ -48,15 +56,23 @@ export default function TeacherSciencesMain() {
 
   useEffect(() => {
     if (semester !== 0) {
-      getTeacherMyLesson(`${teacher_mylessons}?semester=${semester}&page_size=${pageSize}&page=${page}`, (response) => {
+      getTeacherMyLesson(`${teacher_mylessons}?semester=${semester}&page_size=${pageSize}&page=${page}&search=${searchText}`, (response) => {
         setAllCount(response.data.count)
         setPageCount(response.data.page_count)
         setteacheMyLessonList(response.data.results)
+        let oldSearchSelects = Object.assign({}, searchSelects)
+        oldSearchSelects.teacher_science = {
+          page,
+          pageSize,
+          searchText,
+          semester,
+        }
+        dispatch(setTable(oldSearchSelects))
       }, (error) => {
         console.log(error)
       })
     }
-  }, [page, pageSize, semester])
+  }, [page, pageSize, semester,searchText])
 
   return (
     <Paper
@@ -70,14 +86,17 @@ export default function TeacherSciencesMain() {
       <BoxHeader>
         <AllSelect
           chageValueFunction={val => { setSemester(val) }}
+          selectedOptionP={semester}
           selectOptions={semesters}
         />
       </BoxHeader>
       <BoxHeader>
-        <PageSelector chageValueFunction={(val) => {
+        <PageSelector 
+          defPage={pageSize}
+          chageValueFunction={(val) => {
           setPageSize(val)
         }} />
-        <CustomizedInput callback_func={(val) => { console.log(val) }} />
+        <CustomizedInput defVal={searchText} callback_func={(val) => { setSearchText(val) }} />
       </BoxHeader>
       <BoxBody>
         <ClassScheduleTableWrapper2>

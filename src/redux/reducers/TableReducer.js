@@ -19,7 +19,13 @@ const initialTable = {
         pageSize: 10,
         selectRole: "",
         page: 1,
-    }
+    },
+    teacher_science: {
+        pageSize: 10,
+        semester: 0,
+        page: 1,
+        searchText: "",
+    },
 }
 
 export const TableReducer = (state = initialTable, { type, payload }) => {
