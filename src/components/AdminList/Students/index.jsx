@@ -55,7 +55,7 @@ export default function Students() {
   const [YearStatus, setYearStatus] = useState(true)
   const [DefaultPage, setDefaultPage] = useState(1)
   const [Gender, setGender] = useState(searchSelects.student.Gender)
-  localStorage.setItem('status', true)
+  // localStorage.setItem('status', true)
   const [ModalText, setModalText] = useState(<CircularProgress color="success" size={25} />);
   const [Excel, setExcel] = useState(null)
 
@@ -186,6 +186,7 @@ export default function Students() {
       return { value: elem.value, name: elem.uz }
     })
   }, [])
+
 
   useEffect(() => {
     setStudents([])

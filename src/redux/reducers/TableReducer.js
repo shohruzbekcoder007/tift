@@ -22,11 +22,10 @@ const initialTable = {
     }
 }
 
-
 export const TableReducer = (state = initialTable, { type, payload }) => {
     switch (type) {
         case ActionTypes.SET_TABLE:
-            console.log(payload, "<-- shuda");
+            // console.log(payload, "<-- shuda");
             return payload
         default:
             return state;

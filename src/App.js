@@ -335,7 +335,7 @@ function App() {
                   <Route path='server' element={<Server />} />
                   <Route path='schedule' element={<ScheduleStudy />} />
                   <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
-                  
+
                   <Route path='Call' element={<StudentSciences />}>
                     <Route index element={<CallStudents />} />
                     <Route path='see' element={<SeeStudnetsInfoInvation />} />
@@ -790,8 +790,6 @@ function App() {
                   <Route path='scheduletwo' element={<ScheduleStudyTwo />} />
 
                 </Route>
-
-
               </>
             ) : <></>}
             <Route path="pagenotfound" element={<PageNotFound />} />

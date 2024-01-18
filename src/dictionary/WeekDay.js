@@ -16,9 +16,9 @@ export default [
       eng: "Wednesday"
     },
      {
-      uz: "payshanba",
+      uz: "Payshanba",
       ru: "четверг",
-      eng: "thursday"
+      eng: "Thursday"
     },
      {
       uz: "Juma",
@@ -26,13 +26,13 @@ export default [
       eng: "Friday"
     },
      {
-      uz: "shanba",
+      uz: "Shanba",
       ru: "суббота",
-      eng: "saturday"
+      eng: "Saturday"
     },
      {
       uz: "Yakshanba",
       ru: "Воскресенье",
-      eng: "sunday"
+      eng: "Sunday"
   }
 ]
