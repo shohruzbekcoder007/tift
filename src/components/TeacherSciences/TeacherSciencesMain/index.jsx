@@ -28,13 +28,6 @@ export default function TeacherSciencesMain() {
   const [page, setPage] = useState(searchSelects.teacher_science.page)
   const [searchText, setSearchText] = useState(searchSelects.teacher_science.searchText)
 
-
-  console.log(searchSelects.teacher_science);
-
-
-
-
-
   const getSemesters = (response) => {
     const semester_firstly = response.data.map(element => {
       return {
