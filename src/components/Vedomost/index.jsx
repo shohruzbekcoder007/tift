@@ -1,6 +1,6 @@
 import { Box, Button, Modal, Paper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles'
+import { BoxBody, BoxHeader, ClassScheduleTableWrapper, ClassScheduleTableWrapper2, ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper, TrHeaderBox } from '../../global_styles/styles'
 import { TableTHHeader } from '../DiplomaTable'
 import { UnableToSpecify, TeacherSciencesButtonBox, ModalSubtitle } from './styles'
 import { Link, Outlet, useLocation } from 'react-router-dom'
@@ -172,6 +172,10 @@ export default function Vedomost() {
                   text={tasksName}
                   iconc={null}
                 />
+                {/* <TableTHHeader
+                  text="O'qtuvchi"
+                  iconc={null}
+                /> */}
                 <TableTHHeader
                   text="Guruh"
                   iconc={null}
@@ -180,10 +184,16 @@ export default function Vedomost() {
                   tasksTasks.map((elem, index) => {
                     return (
                       <>
-                        <TableTHHeader key={index}
-                          text={elem.title?.slice(0, 20)}
+                        {/* <TableTHHeader key={index}
+                          text={elem.title?.slice(0, 20) + " / " + elem.group + " / " + elem.teacher}
                           iconc={null}
-                        />
+                        /> */}
+                        <th>
+                          <TrHeaderBox>
+                            <span style={{flexWrap: "wrap"}} ><span className="text">{elem.title?.slice(0, 25)}</span> <br /> <span style={{fontSize: "11px", margin: 0}}>{elem.group} </span> <br /> <span style={{fontSize: "11px"}}>{elem.teacher}</span></span>
+                            <span className="iconc"></span>
+                          </TrHeaderBox>
+                        </th>
                       </>
                     )
                   })
@@ -198,11 +208,12 @@ export default function Vedomost() {
                     <tr key={index}>
                       <th data-cell={"#"}>{index + 1}</th>
                       <th data-cell={tasksName}>{elem.full_name}</th>
+                      {/* <th data-cell={"O'qtuvchi"}>{tasksTasks[index]?.teacher}</th> */}
                       <th data-cell={"guruh"}>{elem.group}</th>
                       {
                         elem.tasks.map((element, index) => {
                           return (
-                            <th data-cell={tasksTasks[index].title?.slice(0, 20)} style={{ width: "200px" }} key={index}>
+                            <th data-cell={tasksTasks[index].title?.slice(0, 20)} key={index}>
                               {
 
                                 element.submission?.source ?

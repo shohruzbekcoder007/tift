@@ -253,7 +253,7 @@ export default function TeacherSciencesMain() {
                               Jurnal
                             </Button>
                           </Link>
-                          <Link to={"tasks"} state={{ data: elem.id, name: elem.name, type: elem.science_type, parent: elem.parent }}>
+                          <Link to={"tasks"} state={{ data: elem.id, name: elem.name, type: elem.science_type, parent: elem.parent, science: elem.science }}>
                             <Button
                               variant="contained"
                               size="small"
