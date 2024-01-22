@@ -191,7 +191,7 @@ function App() {
   return (
     <MuiTheme theme={muiTheme}>
       <ThemeProvider theme={defaultTheme}>
-        <Snow />
+        {/* <Snow /> */}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignInSide />} />

@@ -155,7 +155,7 @@ export default function SciencesAdmin() {
 
 
   useEffect(() => {
-    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${state.study_type}&degree=${degreechoes}&search=${searchText}&direction=${state.id}&semester=${SemesterNumber}&academic_year=${state.year}`, (response) => {
+    getAdminKafedra(`${science}?page_size=${pageSize}&page=${page}&kafedra=${kafedrachoes}&study_type=${state.study_type}&degree=${state.degree}&search=${searchText}&direction=${state.id}&semester=${SemesterNumber}&academic_year=${state.year}`, (response) => {
       setAllCount(response.data.count)
       setPageCount(response.data.page_count)
       setscienceAdmin(response.data.results)
@@ -288,11 +288,11 @@ export default function SciencesAdmin() {
               chageValueFunction={val => setkafedrachoes(val)}
               selectOptions={adminkafedra}
             /> */}
-            <AllSelectFullWidth
+            {/* <AllSelectFullWidth
               chageValueFunction={val => setdegreechoes(val)}
               selectedOptionP={admindegree[0].value}
               selectOptions={admindegree}
-            />
+            /> */}
             {/* <AllSelectFullWidth
               chageValueFunction={val => setstudytypechoes(val)}
               selectedOptionP={adminstudytype[0].value}
