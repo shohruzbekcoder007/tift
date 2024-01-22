@@ -377,7 +377,7 @@ function App() {
                   <Route path="dashboard/:id" element={<DashboardDetail />} />
                   <Route path="readagain" element={<ReadAgain />} />
                   <Route path="personalplan" element={<PersonalPlan />} />
-                  <Route path="library" element={<Library />} />
+                  {/* <Route path="https://unilibrary.uz/" element={<Library />} /> */}
                   {/* <Route path="olympics" element={<Olympics />} /> */}
                   {/* <Route path="thesisresult" element={<ThesisResult />} /> */}
                   <Route path="information" element={<Information />} />

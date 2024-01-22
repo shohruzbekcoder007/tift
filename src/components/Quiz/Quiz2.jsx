@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@mui/styles';
 import Paper from '@mui/material/Paper';
@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import LiveHelp from '@mui/icons-material/LiveHelp';
 import Button from '@mui/material/Button';
 import Radio from '@mui/material/Radio';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, generatePath, useParams  } from 'react-router-dom';
 import { getQuizs, postQuiz } from './requests';
 import { student_test_detail, student_test_solve } from '../../utils/API_urls';
 import MyTimer from './MyTimer';
@@ -14,6 +14,7 @@ import { Alert, CircularProgress, Modal, Snackbar } from '@mui/material';
 import { QuizBack } from '../QuizWrapper/styles';
 import MuiAlert from '@mui/material/Alert';
 import { ModalBox, ModalButtons, ModalHeader, ModalSelectWrapper } from '../../global_styles/styles';
+import { useStateWithHistory } from 'react-use';
 
 const styles = theme => ({
   root: {
@@ -81,6 +82,7 @@ function PaperSheet(props) {
 
 
 
+
   const handleCloseAlert = () => setOpenAlert(false);
   const confirmExit = (e) => {
     // Display a confirmation message
@@ -123,6 +125,7 @@ function PaperSheet(props) {
 
 
   useEffect(() => {
+
     getQuizs(`${student_test_detail}${testId}`, response => {
       const startDate = new Date('1995-12-17T00:00:00')
       const endDate = new Date(`1995-12-17T${response.time}`)
@@ -145,6 +148,7 @@ function PaperSheet(props) {
       setAlertMessage(msg)
 
     })
+    // return setOpen2(true)
   }, [nextTime])
 
   const handleChange = event => {

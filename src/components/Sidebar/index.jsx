@@ -76,6 +76,7 @@ export default function Sidebar({ role }) {
                   text={elem.text[language]}
                   fullText={elem.text}
                   to={elem.to}
+                  target={elem.target}
                 />
               )
             }
@@ -93,6 +94,7 @@ export default function Sidebar({ role }) {
                   text={elem.text[language]}
                   fullText={elem.text}
                   to={elem.to}
+                  target={elem.target}
                 />
               )
             }
@@ -121,7 +123,7 @@ const chageLinks = (role) => {
 }
 
 
-const ListItem = ({ img, text, to, fullText }) => {
+const ListItem = ({ img, text, to, fullText, target }) => {
 
   const dispatch = useDispatch()
 
@@ -129,6 +131,7 @@ const ListItem = ({ img, text, to, fullText }) => {
     <SidebarLinkListItem>
       <NavLink
         to={to}
+        target={target}
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? "active" : ""
         }

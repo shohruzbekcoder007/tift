@@ -13,7 +13,7 @@ export default function QuizWrapper() {
     return (
         <QuizWrapperStyle>
             {
-                getRole(user) === "student" ? <Quiz2/>:user == null ? 
+                getRole(user) === "student" ? <Quiz2/> : user == null ? 
                     <Spinner/>:
                     <PageNotFound/>
             }
